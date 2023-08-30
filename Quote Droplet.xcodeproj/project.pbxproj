@@ -51,7 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DCAB2D9B2A9FA91300A822D7 /* QuoteDroplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteDroplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quote Droplet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletApp.swift; sourceTree = "<group>"; };
 		DCAB2DA02A9FA91300A822D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		DCAB2D9C2A9FA91300A822D7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DCAB2D9B2A9FA91300A822D7 /* QuoteDroplet.app */,
+				DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */,
 				DCAB2DB02A9FA95900A822D7 /* QuoteDropletWidgetExtension.appex */,
 			);
 			name = Products;
@@ -156,9 +156,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DCAB2D9A2A9FA91300A822D7 /* QuoteDroplet */ = {
+		DCAB2D9A2A9FA91300A822D7 /* Quote Droplet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DCAB2DA92A9FA91900A822D7 /* Build configuration list for PBXNativeTarget "QuoteDroplet" */;
+			buildConfigurationList = DCAB2DA92A9FA91900A822D7 /* Build configuration list for PBXNativeTarget "Quote Droplet" */;
 			buildPhases = (
 				DCAB2D972A9FA91300A822D7 /* Sources */,
 				DCAB2D982A9FA91300A822D7 /* Frameworks */,
@@ -170,9 +170,9 @@
 			dependencies = (
 				DCAB2DC42A9FA96100A822D7 /* PBXTargetDependency */,
 			);
-			name = QuoteDroplet;
+			name = "Quote Droplet";
 			productName = QuoteDroplet;
-			productReference = DCAB2D9B2A9FA91300A822D7 /* QuoteDroplet.app */;
+			productReference = DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DCAB2DAF2A9FA95900A822D7 /* QuoteDropletWidgetExtension */ = {
@@ -210,7 +210,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DCAB2D962A9FA91300A822D7 /* Build configuration list for PBXProject "QuoteDroplet" */;
+			buildConfigurationList = DCAB2D962A9FA91300A822D7 /* Build configuration list for PBXProject "Quote Droplet" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -223,7 +223,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DCAB2D9A2A9FA91300A822D7 /* QuoteDroplet */,
+				DCAB2D9A2A9FA91300A822D7 /* Quote Droplet */,
 				DCAB2DAF2A9FA95900A822D7 /* QuoteDropletWidgetExtension */,
 			);
 		};
@@ -413,6 +413,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuoteDroplet/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Quote Droplet";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -444,6 +445,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuoteDroplet/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Quote Droplet";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -519,7 +521,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DCAB2D962A9FA91300A822D7 /* Build configuration list for PBXProject "QuoteDroplet" */ = {
+		DCAB2D962A9FA91300A822D7 /* Build configuration list for PBXProject "Quote Droplet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCAB2DA72A9FA91900A822D7 /* Debug */,
@@ -528,7 +530,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DCAB2DA92A9FA91900A822D7 /* Build configuration list for PBXNativeTarget "QuoteDroplet" */ = {
+		DCAB2DA92A9FA91900A822D7 /* Build configuration list for PBXNativeTarget "Quote Droplet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCAB2DAA2A9FA91900A822D7 /* Debug */,
