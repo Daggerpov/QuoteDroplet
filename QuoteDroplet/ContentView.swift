@@ -35,56 +35,62 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Text("Quote Category:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
-                .padding(.bottom, 5)
-            
-            Picker("", selection: $selectedCategory) {
-                ForEach(QuoteCategory.allCases, id: \.self) { category in
-                    Text(category.displayName)
-                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+            Group {
+                Text("Quote Category:")
+                    .font(.title2) // Increased font size
+                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                
+                Picker("", selection: $selectedCategory) {
+                    ForEach(QuoteCategory.allCases, id: \.self) { category in
+                        Text(category.displayName)
+                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    }
                 }
+                .pickerStyle(MenuPickerStyle())
             }
-            .pickerStyle(MenuPickerStyle())
+            .padding(.bottom, 20) // Increased spacing
             
-            Text("Time interval between quotes:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
-                .padding(.top, 20)
-            
-            Picker("", selection: $quoteFrequencyIndex) {
-                ForEach(0..<frequencyOptions.count, id: \.self) { index in
-                    Text(self.frequencyOptions[index])
-                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+            Group {
+                Text("Time interval between quotes:")
+                    .font(.title2) // Increased font size
+                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    .padding(.top, 20)
+                
+                Picker("", selection: $quoteFrequencyIndex) {
+                    ForEach(0..<frequencyOptions.count, id: \.self) { index in
+                        Text(self.frequencyOptions[index])
+                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    }
                 }
+                .pickerStyle(SegmentedPickerStyle())
             }
-            .pickerStyle(SegmentedPickerStyle())
+            .padding(.bottom, 20) // Increased spacing
             
-            Text("Color Palette:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
-                .padding(.top, 20)
-            
-            HStack(spacing: 20) {
-                ForEach(0..<colorPalettes.count, id: \.self) { paletteIndex in
-                    ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
-                        .frame(width: 100, height: 100)
-                        .border(selectedPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            selectedPaletteIndex = paletteIndex
-                        }
+            Group {
+                Text("Color Palette:")
+                    .font(.title2) // Increased font size
+                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    .padding(.top, 20)
+                
+                HStack(spacing: 20) {
+                    ForEach(0..<colorPalettes.count, id: \.self) { paletteIndex in
+                        ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
+                            .frame(width: 100, height: 100)
+                            .border(selectedPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                selectedPaletteIndex = paletteIndex
+                            }
+                    }
                 }
             }
             Spacer()
             
             // About Me Section
             VStack(spacing: 20) {
-                Divider() // Add a divider line
                 
                 Text("About Me")
-                    .font(.headline)
+                    .font(.title2) // Increased font size
                     .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
                 
                 HStack {
