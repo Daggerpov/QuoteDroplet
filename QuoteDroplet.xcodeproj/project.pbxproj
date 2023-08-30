@@ -11,7 +11,44 @@
 		DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCAB2DA32A9FA91900A822D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */; };
 		DCAB2DA62A9FA91900A822D7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCAB2DA52A9FA91900A822D7 /* Preview Assets.xcassets */; };
+		DCAB2DB32A9FA95A00A822D7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAB2DB22A9FA95A00A822D7 /* WidgetKit.framework */; };
+		DCAB2DB52A9FA95A00A822D7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAB2DB42A9FA95A00A822D7 /* SwiftUI.framework */; };
+		DCAB2DB82A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DB72A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift */; };
+		DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DB92A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift */; };
+		DCAB2DBC2A9FA95A00A822D7 /* QuoteDropletWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DBB2A9FA95A00A822D7 /* QuoteDropletWidget.swift */; };
+		DCAB2DBF2A9FA96100A822D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCAB2DBE2A9FA96100A822D7 /* Assets.xcassets */; };
+		DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DBD2A9FA95B00A822D7 /* QuoteDropletWidget.intentdefinition */; };
+		DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DBD2A9FA95B00A822D7 /* QuoteDropletWidget.intentdefinition */; };
+		DCAB2DC52A9FA96100A822D7 /* QuoteDropletWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DCAB2DB02A9FA95900A822D7 /* QuoteDropletWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DCAB2DCB2A9FAACA00A822D7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */; };
+		DCAB2DCD2A9FACC300A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
+		DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */; };
+		DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DCAB2DC32A9FA96100A822D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCAB2D932A9FA91300A822D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DCAB2DAF2A9FA95900A822D7;
+			remoteInfo = QuoteDropletWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DCAB2DC92A9FA96200A822D7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DCAB2DC52A9FA96100A822D7 /* QuoteDropletWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DCAB2D9B2A9FA91300A822D7 /* QuoteDroplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteDroplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -19,6 +56,17 @@
 		DCAB2DA02A9FA91300A822D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCAB2DA52A9FA91900A822D7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DCAB2DB02A9FA95900A822D7 /* QuoteDropletWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuoteDropletWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCAB2DB22A9FA95A00A822D7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		DCAB2DB42A9FA95A00A822D7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		DCAB2DB72A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletWidgetBundle.swift; sourceTree = "<group>"; };
+		DCAB2DB92A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		DCAB2DBB2A9FA95A00A822D7 /* QuoteDropletWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletWidget.swift; sourceTree = "<group>"; };
+		DCAB2DBD2A9FA95B00A822D7 /* QuoteDropletWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = QuoteDropletWidget.intentdefinition; sourceTree = "<group>"; };
+		DCAB2DBE2A9FA96100A822D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DCAB2DC02A9FA96100A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		DCAB2DCC2A9FACC300A822D7 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +77,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DCAB2DAD2A9FA95900A822D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCAB2DB52A9FA95A00A822D7 /* SwiftUI.framework in Frameworks */,
+				DCAB2DB32A9FA95A00A822D7 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -36,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */,
+				DCAB2DB62A9FA95A00A822D7 /* QuoteDropletWidget */,
+				DCAB2DB12A9FA95A00A822D7 /* Frameworks */,
 				DCAB2D9C2A9FA91300A822D7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				DCAB2D9B2A9FA91300A822D7 /* QuoteDroplet.app */,
+				DCAB2DB02A9FA95900A822D7 /* QuoteDropletWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -51,9 +111,11 @@
 		DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */ = {
 			isa = PBXGroup;
 			children = (
+				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
 				DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */,
 				DCAB2DA02A9FA91300A822D7 /* ContentView.swift */,
 				DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */,
+				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
 				DCAB2DA42A9FA91900A822D7 /* Preview Content */,
 			);
 			path = QuoteDroplet;
@@ -67,6 +129,28 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		DCAB2DB12A9FA95A00A822D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCAB2DB22A9FA95A00A822D7 /* WidgetKit.framework */,
+				DCAB2DB42A9FA95A00A822D7 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCAB2DB62A9FA95A00A822D7 /* QuoteDropletWidget */ = {
+			isa = PBXGroup;
+			children = (
+				DCAB2DB72A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift */,
+				DCAB2DB92A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift */,
+				DCAB2DBB2A9FA95A00A822D7 /* QuoteDropletWidget.swift */,
+				DCAB2DBD2A9FA95B00A822D7 /* QuoteDropletWidget.intentdefinition */,
+				DCAB2DBE2A9FA96100A822D7 /* Assets.xcassets */,
+				DCAB2DC02A9FA96100A822D7 /* Info.plist */,
+			);
+			path = QuoteDropletWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,15 +161,34 @@
 				DCAB2D972A9FA91300A822D7 /* Sources */,
 				DCAB2D982A9FA91300A822D7 /* Frameworks */,
 				DCAB2D992A9FA91300A822D7 /* Resources */,
+				DCAB2DC92A9FA96200A822D7 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DCAB2DC42A9FA96100A822D7 /* PBXTargetDependency */,
 			);
 			name = QuoteDroplet;
 			productName = QuoteDroplet;
 			productReference = DCAB2D9B2A9FA91300A822D7 /* QuoteDroplet.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DCAB2DAF2A9FA95900A822D7 /* QuoteDropletWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCAB2DC62A9FA96200A822D7 /* Build configuration list for PBXNativeTarget "QuoteDropletWidgetExtension" */;
+			buildPhases = (
+				DCAB2DAC2A9FA95900A822D7 /* Sources */,
+				DCAB2DAD2A9FA95900A822D7 /* Frameworks */,
+				DCAB2DAE2A9FA95900A822D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuoteDropletWidgetExtension;
+			productName = QuoteDropletWidgetExtension;
+			productReference = DCAB2DB02A9FA95900A822D7 /* QuoteDropletWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -98,6 +201,9 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					DCAB2D9A2A9FA91300A822D7 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					DCAB2DAF2A9FA95900A822D7 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
@@ -116,6 +222,7 @@
 			projectRoot = "";
 			targets = (
 				DCAB2D9A2A9FA91300A822D7 /* QuoteDroplet */,
+				DCAB2DAF2A9FA95900A822D7 /* QuoteDropletWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -130,6 +237,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DCAB2DAE2A9FA95900A822D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCAB2DBF2A9FA96100A822D7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -138,11 +253,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
+				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
+				DCAB2DCB2A9FAACA00A822D7 /* APIService.swift in Sources */,
+				DCAB2DCD2A9FACC300A822D7 /* Quote.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DCAB2DAC2A9FA95900A822D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
+				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
+				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
+				DCAB2DB82A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift in Sources */,
+				DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */,
+				DCAB2DBC2A9FA95A00A822D7 /* QuoteDropletWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DCAB2DC42A9FA96100A822D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DCAB2DAF2A9FA95900A822D7 /* QuoteDropletWidgetExtension */;
+			targetProxy = DCAB2DC32A9FA96100A822D7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DCAB2DA72A9FA91900A822D7 /* Debug */ = {
@@ -262,6 +401,7 @@
 		DCAB2DAA2A9FA91900A822D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -291,6 +431,7 @@
 		DCAB2DAB2A9FA91900A822D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -317,6 +458,60 @@
 			};
 			name = Release;
 		};
+		DCAB2DC72A9FA96200A822D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GUW483PXY6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuoteDropletWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QuoteDropletWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Daggerpov.QuoteDroplet.QuoteDropletWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DCAB2DC82A9FA96200A822D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GUW483PXY6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuoteDropletWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QuoteDropletWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Daggerpov.QuoteDroplet.QuoteDropletWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -334,6 +529,15 @@
 			buildConfigurations = (
 				DCAB2DAA2A9FA91900A822D7 /* Debug */,
 				DCAB2DAB2A9FA91900A822D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCAB2DC62A9FA96200A822D7 /* Build configuration list for PBXNativeTarget "QuoteDropletWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCAB2DC72A9FA96200A822D7 /* Debug */,
+				DCAB2DC82A9FA96200A822D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

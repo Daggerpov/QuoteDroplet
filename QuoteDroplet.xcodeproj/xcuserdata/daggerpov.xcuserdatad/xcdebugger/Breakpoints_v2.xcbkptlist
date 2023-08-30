@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "31CFC27B-973B-4DB4-9CD7-DD98F7BB946A"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ED120A84-80CA-47FB-80B0-F00503BDB478"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuoteDropletWidget/QuoteDropletWidget.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "placeholder(in:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3741EE74-052A-460C-A676-6EE819C995F0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuoteDropletWidget/QuoteDropletWidget.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "placeholder(in:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FD687B91-536F-4A75-9E8A-321E6142B0EF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuoteDropletWidget/QuoteDropletWidget.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "getTimeline(for:in:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "859B7E94-4DF9-4A26-ABDB-B22AF9E843A4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuoteDropletWidget/QuoteDropletWidget.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "getTimeline(for:in:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "859B7E94-4DF9-4A26-ABDB-B22AF9E843A4 - 2f54a627ed4d36c1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;QuoteDropletWidgetExtension.Quote&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in QuoteDropletWidgetExtension.Provider.getTimeline(for: QuoteDropletWidgetExtension.ConfigurationIntent, in: WidgetKit.TimelineProviderContext, completion: (WidgetKit.Timeline&lt;QuoteDropletWidgetExtension.SimpleEntry&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "QuoteDropletWidgetExtension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/daggerpov/Documents/GitHub/QuoteDroplet/QuoteDropletWidget/QuoteDropletWidget.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "1361">
+               </Location>
+               <Location
+                  uuid = "859B7E94-4DF9-4A26-ABDB-B22AF9E843A4 - fd90070781df9067"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;QuoteDropletWidgetExtension.Quote&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in QuoteDropletWidgetExtension.Provider.__preview__getTimeline(for: QuoteDropletWidgetExtension.ConfigurationIntent, in: WidgetKit.TimelineProviderContext, completion: (WidgetKit.Timeline&lt;QuoteDropletWidgetExtension.SimpleEntry&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "QuoteDropletWidget.1.preview-thunk.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/daggerpov/Documents/GitHub/QuoteDroplet/QuoteDropletWidget/QuoteDropletWidget.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "2142">
+               </Location>
+               <Location
+                  uuid = "859B7E94-4DF9-4A26-ABDB-B22AF9E843A4 - 2f54a627ed4d3622"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;QuoteDropletWidgetExtension.Quote&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in QuoteDropletWidgetExtension.Provider.getTimeline(for: QuoteDropletWidgetExtension.ConfigurationIntent, in: WidgetKit.TimelineProviderContext, completion: (WidgetKit.Timeline&lt;QuoteDropletWidgetExtension.SimpleEntry&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "QuoteDropletWidgetExtension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/daggerpov/Documents/GitHub/QuoteDroplet/QuoteDropletWidget/QuoteDropletWidget.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "1922">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
