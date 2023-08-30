@@ -67,6 +67,7 @@
 		DCAB2DC02A9FA96100A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		DCAB2DCC2A9FACC300A822D7 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
+		DCAB2DD02A9FBAB800A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +112,7 @@
 		DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */ = {
 			isa = PBXGroup;
 			children = (
+				DCAB2DD02A9FBAB800A822D7 /* Info.plist */,
 				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
 				DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */,
 				DCAB2DA02A9FA91300A822D7 /* ContentView.swift */,
@@ -410,6 +412,7 @@
 				DEVELOPMENT_TEAM = GUW483PXY6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuoteDroplet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -440,6 +443,7 @@
 				DEVELOPMENT_TEAM = GUW483PXY6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuoteDroplet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

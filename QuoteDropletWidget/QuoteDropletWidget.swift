@@ -12,39 +12,31 @@ import Foundation
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Default Quote", author: nil, classification: nil))
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: Quote(id: 1, text: "Default Quote", author: nil, classification: nil))
+        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil)
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
         let currentDate = Date()
-        var fetchedQuoteCount = 0  // Track the number of fetched quotes
-
-        for minuteOffset in 0 ..< 5 {  // Fetch 5 quotes, one every minute
-            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate)!
-
-            // Fetch a new quote here
-            getRandomQuoteByClassification(classification: "all") { quote, error in
-                fetchedQuoteCount += 1
-
-                if let quote = quote {
-                    Swift.print("Fetched quote: \(quote)") // Print the fetched quote
-                    let entry = SimpleEntry(date: entryDate, configuration: configuration, quote: quote)
-                    entries.append(entry)
-                }else {
-                    Swift.print("no quote")
-                }
-
-                if fetchedQuoteCount == 5 {  // Check if you've fetched quotes for all 5 entries
-                    let timeline = Timeline(entries: entries, policy: .atEnd)
-                    completion(timeline)
-                }
+        let entryDate = Calendar.current.date(byAdding: .minute, value: 0, to: currentDate)!
+        
+        // Retrieve the selected category from user defaults
+        let selectedCategory = UserDefaults(suiteName: "group.com.your.app.group")?.string(forKey: "selectedCategory") ?? "all"
+        
+        // Fetch a new quote based on the selected category
+        getRandomQuoteByClassification(classification: selectedCategory) { quote, error in
+            if let quote = quote {
+                let entry = SimpleEntry(date: entryDate, configuration: configuration, quote: quote)
+                let timeline = Timeline(entries: [entry], policy: .atEnd)
+                completion(timeline)
+            } else {
+                let entry = SimpleEntry(date: entryDate, configuration: configuration, quote: nil)
+                let timeline = Timeline(entries: [entry], policy: .atEnd)
+                completion(timeline)
             }
         }
     }
@@ -85,15 +77,11 @@ struct QuoteDropletWidget: Widget {
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
         .supportedFamilies([.systemSmall])
-        .onBackgroundURLSessionEvents { (sessionIdentifier, completionHandler) in
-            // Handle background URL session events if needed
-        }
     }
 }
-
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Default Quote", author: nil, classification: nil)))
+        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification")))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
