@@ -28,7 +28,7 @@ struct Provider: IntentTimelineProvider {
 
         // Fetch quotes until a suitable one is found
         func fetchQuote() {
-            let selectedCategory = UserDefaults(suiteName: "group.com.your.app.group")?.string(forKey: "selectedCategory") ?? "all"
+            let selectedCategory = UserDefaults(suiteName: "com.Daggerpov.QuoteDroplet")?.string(forKey: "selectedCategory") ?? "all"
             getRandomQuoteByClassification(classification: selectedCategory) { quote, error in
                 if let quote = quote, !isQuoteTooLong(text: quote.text, context: context) {
                     let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote)
@@ -53,11 +53,18 @@ struct Provider: IntentTimelineProvider {
             case .systemLarge:
                 return 200 // Adjust as needed
             case .systemExtraLarge:
-                return 250 // Not sure about value
+                return 250 // Adjust as needed
+            case .accessoryCircular:
+                return 120 // Adjust as needed for circular widgets
+            case .accessoryRectangular:
+                return 180 // Adjust as needed for rectangular widgets
+            case .accessoryInline:
+                return 100 // Adjust as needed for inline widgets
             @unknown default:
                 return 100
             }
         }()
+
         
         let font = UIFont.systemFont(ofSize: 17) // Use an appropriate font size
         let boundingBox = text.boundingRect(
@@ -95,7 +102,7 @@ struct QuoteDropletWidgetEntryView : View {
     @Environment(\.widgetFamily) var family
     
     var colors: [Color] {
-        let selectedPaletteIndex = UserDefaults(suiteName: "group.com.your.app.group")?.integer(forKey: "selectedPaletteIndex") ?? 0
+        let selectedPaletteIndex = UserDefaults(suiteName: "com.Daggerpov.QuoteDroplet")?.integer(forKey: "selectedPaletteIndex") ?? 0
         return colorPalettes[safe: selectedPaletteIndex] ?? [Color.clear]
     }
 

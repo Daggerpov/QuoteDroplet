@@ -8,58 +8,62 @@
 import SwiftUI
 
 let colorPalettes = [
-    [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "93B5C6")],
-    [Color(hex: "27233A"), Color(hex: "FCAA67"), Color(hex: "444545")],
-    [Color(hex: "505168"), Color(hex: "C5E0D8"), Color(hex: "EFF8E2")]
+    [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "CC5803")],
+    [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "FAF4D3")],
+    [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")]
 ]
 
+enum QuoteCategory: String, CaseIterable {
+    case wisdom = "Wisdom"
+    case motivation = "Motivation"
+    case discipline = "Discipline"
+    case philosophy = "Philosophy"
+    case inspiration = "Inspiration"
+    case all = "All"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+}
+
 struct ContentView: View {
-    @State private var selectedCategory = "All"
+    @State private var selectedCategory: QuoteCategory = .all
     @State private var quoteFrequencyIndex = 3
     @State private var selectedPaletteIndex = 0
     
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
 
-    
     var body: some View {
         VStack {
             Text("Quote Category:")
                 .font(.headline)
-                .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
                 .padding(.bottom, 5)
             
             Picker("", selection: $selectedCategory) {
-                Text("Wisdom").tag("Wisdom")
-                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
-                Text("Motivation").tag("Motivation")
-                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
-                Text("Discipline").tag("Discipline")
-                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
-                Text("Philosophy").tag("Philosophy")
-                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
-                Text("Inspiration").tag("Inspiration")
-                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
-                Text("All").tag("All")
-                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                ForEach(QuoteCategory.allCases, id: \.self) { category in
+                    Text(category.displayName)
+                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                }
             }
             .pickerStyle(MenuPickerStyle())
             
             Text("Time interval between quotes:")
                 .font(.headline)
-                .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
                 .padding(.top, 20)
             
             Picker("", selection: $quoteFrequencyIndex) {
                 ForEach(0..<frequencyOptions.count, id: \.self) { index in
                     Text(self.frequencyOptions[index])
-                        .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             
             Text("Color Palette:")
                 .font(.headline)
-                .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
                 .padding(.top, 20)
             
             HStack(spacing: 20) {
@@ -73,10 +77,46 @@ struct ContentView: View {
                         }
                 }
             }
+            Spacer()
+            
+            // About Me Section
+            VStack(spacing: 20) {
+                Divider() // Add a divider line
+                
+                Text("About Me")
+                    .font(.headline)
+                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                
+                HStack {
+                    Spacer()
+                    Link(destination: URL(string: "https://github.com/Daggerpov")!) {
+                        Image("githublogo")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    }
+                    
+                    Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
+                        Image("linkedinlogo")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    }
+                    Spacer()
+                }
+            }
+            .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+            .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))
+            .cornerRadius(20)
+            .shadow(radius: 5)
+            .padding(.horizontal)
+            
+            Spacer()
         }
         .padding()
-                .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))
+        .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))
     }
+
     
     private func formattedFrequency() -> String {
         return frequencyOptions[quoteFrequencyIndex]
