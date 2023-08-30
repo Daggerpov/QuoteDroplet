@@ -26,21 +26,49 @@ struct Provider: IntentTimelineProvider {
         // Define the start date for the timeline
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
 
-        // Fetch a new quote based on the selected category
-        let selectedCategory = UserDefaults(suiteName: "group.com.your.app.group")?.string(forKey: "selectedCategory") ?? "all"
-        getRandomQuoteByClassification(classification: selectedCategory) { quote, error in
-            if let quote = quote {
-                let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote)
-                let timeline = Timeline(entries: [entry], policy: .atEnd)
-                completion(timeline)
-            } else {
-                let entry = SimpleEntry(date: startDate, configuration: configuration, quote: nil)
-                let timeline = Timeline(entries: [entry], policy: .atEnd)
-                completion(timeline)
+        // Fetch quotes until a suitable one is found
+        func fetchQuote() {
+            let selectedCategory = UserDefaults(suiteName: "group.com.your.app.group")?.string(forKey: "selectedCategory") ?? "all"
+            getRandomQuoteByClassification(classification: selectedCategory) { quote, error in
+                if let quote = quote, !isQuoteTooLong(text: quote.text, context: context) {
+                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote)
+                    let timeline = Timeline(entries: [entry], policy: .atEnd)
+                    completion(timeline)
+                } else {
+                    fetchQuote() // Try again if the quote is too long
+                }
             }
         }
-        
+        fetchQuote()
     }
+
+    // Helper function to check if a quote is too long
+    private func isQuoteTooLong(text: String, context: Context) -> Bool {
+        let maxWidth: CGFloat = {
+            switch context.family {
+            case .systemSmall:
+                return 100 // Adjust as needed
+            case .systemMedium:
+                return 150 // Adjust as needed
+            case .systemLarge:
+                return 200 // Adjust as needed
+            case .systemExtraLarge:
+                return 250 // Not sure about value
+            @unknown default:
+                return 100
+            }
+        }()
+        
+        let font = UIFont.systemFont(ofSize: 17) // Use an appropriate font size
+        let boundingBox = text.boundingRect(
+            with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin],
+            attributes: [NSAttributedString.Key.font: font],
+            context: nil
+        )
+        return boundingBox.height > 100 // Adjust the maximum height as needed
+    }
+
 
     // Helper function to convert selected frequency index to seconds
     private func getFrequencyInSeconds(for index: Int) -> Int {
@@ -64,21 +92,36 @@ struct SimpleEntry: TimelineEntry {
 
 struct QuoteDropletWidgetEntryView : View {
     var entry: Provider.Entry
+    @Environment(\.widgetFamily) var family
+    
+    var colors: [Color] {
+        let selectedPaletteIndex = UserDefaults(suiteName: "group.com.your.app.group")?.integer(forKey: "selectedPaletteIndex") ?? 0
+        return colorPalettes[safe: selectedPaletteIndex] ?? [Color.clear]
+    }
 
     var body: some View {
-        VStack {
-            if let quote = entry.quote {
-                Text(quote.text)
-                    .font(.headline)
-                if let author = quote.author {
-                    Text("- \(author)")
-                        .font(.subheadline)
+        ZStack {
+            colors[0] // Use the first color as the background color
+            
+            VStack {
+                if let quote = entry.quote {
+                    Text(quote.text)
+                        .font(.headline)
+                        .foregroundColor(colors[1]) // Use the second color for text color
+                        .padding(.horizontal, 5)
+                    if let author = quote.author {
+                        Text("- \(author)")
+                            .font(.subheadline)
+                            .foregroundColor(colors[2]) // Use the third color for author text color
+                            .padding(.horizontal, 5)
+                    }
+                } else {
+                    Text("Issue retrieving quote...")
+                        .foregroundColor(.red)
                 }
-            } else {
-                Text("Issue retrieving quote...")
-                    .foregroundColor(.red)
             }
         }
+        .widgetURL(URL(string: "yourapp://widget-tap")) // Change "yourapp" to your app's scheme
     }
 }
 

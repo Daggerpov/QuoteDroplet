@@ -7,18 +7,19 @@
 
 import SwiftUI
 
+let colorPalettes = [
+    [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "93B5C6")],
+    [Color(hex: "27233A"), Color(hex: "FCAA67"), Color(hex: "444545")],
+    [Color(hex: "505168"), Color(hex: "C5E0D8"), Color(hex: "EFF8E2")]
+]
+
 struct ContentView: View {
     @State private var selectedCategory = "All"
     @State private var quoteFrequencyIndex = 3
     @State private var selectedPaletteIndex = 0
     
-    let frequencyOptions = ["30 sec", "10 min", "1 hour", "2 hours", "4 hours", "8 hours", "1 day"]
-    
-    let colorPalettes = [
-        [Color(hex: "FCAA67"), Color(hex: "27233A"), Color(hex: "444545")],
-        [Color(hex: "505168"), Color(hex: "C5E0D8"), Color(hex: "EFF8E2")],
-        [Color(hex: "93B5C6"), Color(hex: "504136"), Color(hex: "EEC584")]
-    ]
+    let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
+
     
     var body: some View {
         VStack {
@@ -33,6 +34,12 @@ struct ContentView: View {
                 Text("Motivation").tag("Motivation")
                     .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
                 Text("Discipline").tag("Discipline")
+                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                Text("Philosophy").tag("Philosophy")
+                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                Text("Inspiration").tag("Inspiration")
+                    .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
+                Text("All").tag("All")
                     .foregroundColor(selectedPaletteIndex == 0 ? .white : .black)
             }
             .pickerStyle(MenuPickerStyle())
@@ -68,7 +75,7 @@ struct ContentView: View {
             }
         }
         .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))
+                .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))
     }
     
     private func formattedFrequency() -> String {
@@ -82,7 +89,7 @@ struct ColorPaletteView: View {
     
     var body: some View {
         LinearGradient(gradient: Gradient(colors: colors), startPoint: .topLeading, endPoint: .bottomTrailing)
-            .edgesIgnoringSafeArea(.all)
+            .ignoresSafeArea() // This line will make the background take up the whole screen
     }
 }
 
