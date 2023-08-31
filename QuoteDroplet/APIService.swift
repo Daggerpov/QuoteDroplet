@@ -3,7 +3,6 @@
 import Foundation
 
 func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void) {
-
     var urlString: String;
     if classification == "all" {
         urlString = "http://quote-dropper.fly.dev/quotes"

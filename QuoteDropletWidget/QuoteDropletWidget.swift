@@ -11,27 +11,34 @@ import Intents
 import Foundation
 
 struct Provider: IntentTimelineProvider {
+    var data = DataService()
+    
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil)
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil, colorPaletteIndex: data.getIndex(), streak: data.getStreak())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil)
+        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, colorPaletteIndex: data.getIndex(), streak: data.getStreak())
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
-
-        // Define the start date for the timeline
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
+        
+        let selectedCategory = "all"
+
+//        guard let selectedCategory = UserDefaults(suiteName: "group.selectedSettings")?.string(forKey: "selectedCategory") else {
+//            completion(Timeline(entries: [], policy: .atEnd))
+//            return
+//        }
 
         // Fetch quotes until a suitable one is found
         func fetchQuote() {
-            let selectedCategory = UserDefaults(suiteName: "com.Daggerpov.QuoteDroplet")?.string(forKey: "selectedCategory") ?? "all"
+//            let selectedCategory = UserDefaults(suiteName: "com.Daggerpov.QuoteDroplet")?.string(forKey: "selectedCategory") ?? "all"
             getRandomQuoteByClassification(classification: selectedCategory) { quote, error in
                 if let quote = quote, !isQuoteTooLong(text: quote.text, context: context) {
-                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote)
+                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), streak: data.getStreak())
                     let timeline = Timeline(entries: [entry], policy: .atEnd)
                     completion(timeline)
                 } else {
@@ -95,15 +102,19 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let quote: Quote?  // Include the fetched quote here
+    let colorPaletteIndex: Int
+    // TODO: add frequency later
+    let streak: Int
 }
 
 struct QuoteDropletWidgetEntryView : View {
+    var data = DataService()
+    
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
     
     var colors: [Color] {
-        let selectedPaletteIndex = UserDefaults(suiteName: "com.Daggerpov.QuoteDroplet")?.integer(forKey: "selectedPaletteIndex") ?? 0
-        return colorPalettes[safe: selectedPaletteIndex] ?? [Color.clear]
+        return colorPalettes[safe: data.getIndex()] ?? [Color.clear]
     }
 
     var body: some View {
@@ -111,6 +122,8 @@ struct QuoteDropletWidgetEntryView : View {
             colors[0] // Use the first color as the background color
             
             VStack {
+                Text(String(data.getStreak()))
+                Text(String(data.getIndex()))
                 if let quote = entry.quote {
                     Text(quote.text)
                         .font(.headline)
@@ -128,9 +141,10 @@ struct QuoteDropletWidgetEntryView : View {
                 }
             }
         }
-        .widgetURL(URL(string: "yourapp://widget-tap")) // Change "yourapp" to your app's scheme
     }
 }
+
+
 
 struct QuoteDropletWidget: Widget {
     let kind: String = "QuoteDropletWidget"
@@ -144,9 +158,10 @@ struct QuoteDropletWidget: Widget {
         .supportedFamilies([.systemSmall])
     }
 }
+
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification")))
+        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification"), colorPaletteIndex: 420, streak: 69))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

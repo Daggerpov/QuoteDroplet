@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 let colorPalettes = [
     [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "CC5803")],
-    [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "FAF4D3")],
+    [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "83781B")],
     [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")]
 ]
 
@@ -27,28 +28,49 @@ enum QuoteCategory: String, CaseIterable {
 }
 
 struct ContentView: View {
+    @AppStorage("streak", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var streak = 0
+    
+    @AppStorage("selectedPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var selectedPaletteIndex = 0
+    
+    
     @State private var selectedCategory: QuoteCategory = .all
     @State private var quoteFrequencyIndex = 3
-    @State private var selectedPaletteIndex = 0
+    
+    @State private var showInstructions = false
+    
+    
     
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
 
     var body: some View {
         VStack {
             Group {
+                Text(String(streak))
+                Button(action: {
+                    streak += 1
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                }, label: {
+                    Text("+1")
+                })
+            }
+            
+            HStack {
                 Text("Quote Category:")
-                    .font(.title2) // Increased font size
+                    .font(.title2)
                     .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
                 
                 Picker("", selection: $selectedCategory) {
                     ForEach(QuoteCategory.allCases, id: \.self) { category in
                         Text(category.displayName)
+                            .font(.headline)
                             .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
+                .accentColor(colorPalettes[safe: selectedPaletteIndex]?[2] ?? .blue)
             }
-            .padding(.bottom, 20) // Increased spacing
             
             Group {
                 Text("Time interval between quotes:")
@@ -67,6 +89,7 @@ struct ContentView: View {
             .padding(.bottom, 20) // Increased spacing
             
             Group {
+                Text(String(selectedPaletteIndex))
                 Text("Color Palette:")
                     .font(.title2) // Increased font size
                     .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
@@ -80,15 +103,69 @@ struct ContentView: View {
                             .cornerRadius(8)
                             .onTapGesture {
                                 selectedPaletteIndex = paletteIndex
+                                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                             }
                     }
                 }
             }
+            
+            Spacer() // Create spacing
+            
+            if showInstructions {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("1. Press and hold an empty area of your home screen.")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal)
+                    
+                    Text("2. Tap the '+' button (top left).")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal)
+                    
+                    Text("3. Find and select 'Quote Droplet'.")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal)
+                    
+                    Text("4. Tap 'Add Widget,' then place it.")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal)
+                }
+                .padding(.horizontal)
+            } else {
+                Text("Be sure to add this widget to your home screen.")
+                    .font(.title)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+            
+            Spacer()
+            
+            Button(action: {
+                showInstructions.toggle()
+            }) {
+                if showInstructions{
+                    Text("Hide Instructions")
+                        .font(.headline)
+                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[2] ?? .blue)
+                } else {
+                    Text("Show Instructions")
+                        .font(.headline)
+                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[2] ?? .blue)
+                }
+            }
+               
             Spacer()
             
             // About Me Section
-            VStack(spacing: 20) {
-                
+            VStack {
                 Text("About Me")
                     .font(.title2) // Increased font size
                     .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
@@ -116,8 +193,6 @@ struct ContentView: View {
             .cornerRadius(20)
             .shadow(radius: 5)
             .padding(.horizontal)
-            
-            Spacer()
         }
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))

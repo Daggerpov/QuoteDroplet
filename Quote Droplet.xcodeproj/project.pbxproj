@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC8279442AA09134004E2BBF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8279432AA09134004E2BBF /* DataService.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */; };
 		DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
@@ -52,6 +53,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
+		DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuoteDropletWidgetExtension.entitlements; sourceTree = "<group>"; };
+		DC8279432AA09134004E2BBF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quote Droplet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletApp.swift; sourceTree = "<group>"; };
 		DCAB2DA02A9FA91300A822D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 		DCAB2D922A9FA91300A822D7 = {
 			isa = PBXGroup;
 			children = (
+				DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */,
+				DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */,
 				DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */,
 				DCAB2DB62A9FA95A00A822D7 /* QuoteDropletWidget */,
 				DCAB2DB12A9FA95A00A822D7 /* Frameworks */,
@@ -150,6 +156,7 @@
 				DCAB2DBD2A9FA95B00A822D7 /* QuoteDropletWidget.intentdefinition */,
 				DCAB2DBE2A9FA96100A822D7 /* Assets.xcassets */,
 				DCAB2DC02A9FA96100A822D7 /* Info.plist */,
+				DC8279432AA09134004E2BBF /* DataService.swift */,
 			);
 			path = QuoteDropletWidget;
 			sourceTree = "<group>";
@@ -274,6 +281,7 @@
 				DCAB2DB82A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift in Sources */,
 				DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */,
 				DCAB2DBC2A9FA95A00A822D7 /* QuoteDropletWidget.swift in Sources */,
+				DC8279442AA09134004E2BBF /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +416,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Quote Droplet.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuoteDroplet/Preview Content\"";
@@ -440,6 +449,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Quote Droplet.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QuoteDroplet/Preview Content\"";
@@ -471,6 +481,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = QuoteDropletWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GUW483PXY6;
@@ -498,6 +509,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = QuoteDropletWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GUW483PXY6;
