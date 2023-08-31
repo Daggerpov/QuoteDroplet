@@ -31,8 +31,8 @@ struct ContentView: View {
     @AppStorage("streak", store: UserDefaults(suiteName: "group.selectedSettings"))
     var streak = 0
     
-    @AppStorage("selectedPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var selectedPaletteIndex = 0
+    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var colorPaletteIndex = 0
     
     
     @State private var selectedCategory: QuoteCategory = .all
@@ -59,29 +59,29 @@ struct ContentView: View {
             HStack {
                 Text("Quote Category:")
                     .font(.title2)
-                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 
                 Picker("", selection: $selectedCategory) {
                     ForEach(QuoteCategory.allCases, id: \.self) { category in
                         Text(category.displayName)
                             .font(.headline)
-                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
-                .accentColor(colorPalettes[safe: selectedPaletteIndex]?[2] ?? .blue)
+                .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
             }
             
             Group {
                 Text("Time interval between quotes:")
                     .font(.title2) // Increased font size
-                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                     .padding(.top, 20)
                 
                 Picker("", selection: $quoteFrequencyIndex) {
                     ForEach(0..<frequencyOptions.count, id: \.self) { index in
                         Text(self.frequencyOptions[index])
-                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
@@ -89,20 +89,20 @@ struct ContentView: View {
             .padding(.bottom, 20) // Increased spacing
             
             Group {
-                Text(String(selectedPaletteIndex))
+                Text(String(colorPaletteIndex))
                 Text("Color Palette:")
                     .font(.title2) // Increased font size
-                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                     .padding(.top, 20)
                 
                 HStack(spacing: 20) {
                     ForEach(0..<colorPalettes.count, id: \.self) { paletteIndex in
                         ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
                             .frame(width: 100, height: 100)
-                            .border(selectedPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
+                            .border(colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
                             .cornerRadius(8)
                             .onTapGesture {
-                                selectedPaletteIndex = paletteIndex
+                                colorPaletteIndex = paletteIndex
                                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                             }
                     }
@@ -154,11 +154,11 @@ struct ContentView: View {
                 if showInstructions{
                     Text("Hide Instructions")
                         .font(.headline)
-                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
                 } else {
                     Text("Show Instructions")
                         .font(.headline)
-                        .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
                 }
             }
                
@@ -168,7 +168,7 @@ struct ContentView: View {
             VStack {
                 Text("About Me")
                     .font(.title2) // Increased font size
-                    .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 
                 HStack {
                     Spacer()
@@ -176,26 +176,26 @@ struct ContentView: View {
                         Image("githublogo")
                             .resizable()
                             .frame(width: 60, height: 60)
-                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                     }
                     
                     Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
                         Image("linkedinlogo")
                             .resizable()
                             .frame(width: 60, height: 60)
-                            .foregroundColor(colorPalettes[safe: selectedPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                     }
                     Spacer()
                 }
             }
             .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
-            .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))
+            .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
             .cornerRadius(20)
             .shadow(radius: 5)
             .padding(.horizontal)
         }
         .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: selectedPaletteIndex]?[0] ?? Color.clear]))
+        .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
     }
 
     
