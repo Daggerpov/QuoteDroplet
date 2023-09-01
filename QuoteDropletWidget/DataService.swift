@@ -16,7 +16,17 @@ struct DataService {
         return colorPaletteIndex
     }
     
-    // TODO: Add frequency
+    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var quoteFrequencyIndex = 3
     
-    // TODO: Add quote category
+    func getQuoteFrequencyIndex() -> Int {
+        return quoteFrequencyIndex
+    }
+    
+    @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var quoteCategory = "all"
+    
+    func getQuoteCategory() -> String {
+        return quoteCategory
+    }
 }

@@ -30,10 +30,10 @@ enum QuoteCategory: String, CaseIterable {
 struct ContentView: View {
     @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var colorPaletteIndex = 0
-    
-    
-    @State private var selectedCategory: QuoteCategory = .all
-    @State private var quoteFrequencyIndex = 3
+    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var quoteFrequencyIndex = 3
+    @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var quoteCategory: QuoteCategory = .all
     
     @State private var showInstructions = false
     
@@ -48,7 +48,7 @@ struct ContentView: View {
                     .font(.title2)
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 
-                Picker("", selection: $selectedCategory) {
+                Picker("", selection: $quoteCategory) {
                     ForEach(QuoteCategory.allCases, id: \.self) { category in
                         Text(category.displayName)
                             .font(.headline)
@@ -57,6 +57,9 @@ struct ContentView: View {
                 }
                 .pickerStyle(MenuPickerStyle())
                 .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                .onTapGesture{
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                }
             }
             
             Group {
@@ -72,11 +75,14 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                .onReceive([self.quoteFrequencyIndex].publisher.first()) { _ in
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                }
+                
             }
             .padding(.bottom, 20) // Increased spacing
             
             Group {
-                Text(String(colorPaletteIndex))
                 Text("Color Palette:")
                     .font(.title2) // Increased font size
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)

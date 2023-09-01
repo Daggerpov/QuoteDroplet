@@ -14,31 +14,23 @@ struct Provider: IntentTimelineProvider {
     var data = DataService()
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil, colorPaletteIndex: data.getIndex())
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, colorPaletteIndex: data.getIndex())
+        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
-        
-        let selectedCategory = "all"
-
-//        guard let selectedCategory = UserDefaults(suiteName: "group.selectedSettings")?.string(forKey: "selectedCategory") else {
-//            completion(Timeline(entries: [], policy: .atEnd))
-//            return
-//        }
 
         // Fetch quotes until a suitable one is found
         func fetchQuote() {
-//            let selectedCategory = UserDefaults(suiteName: "com.Daggerpov.QuoteDroplet")?.string(forKey: "selectedCategory") ?? "all"
-            getRandomQuoteByClassification(classification: selectedCategory) { quote, error in
+            getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
                 if let quote = quote, !isQuoteTooLong(text: quote.text, context: context) {
-                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex())
+                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                     let timeline = Timeline(entries: [entry], policy: .atEnd)
                     completion(timeline)
                 } else {
@@ -82,28 +74,30 @@ struct Provider: IntentTimelineProvider {
         )
         return boundingBox.height > 100 // Adjust the maximum height as needed
     }
+    
+}
 
-
-    // Helper function to convert selected frequency index to seconds
-    private func getFrequencyInSeconds(for index: Int) -> Int {
-        switch index {
-        case 0: return 30 // 30 sec
-        case 1: return 600  // 10 minutes
-        case 2: return 3600 // 1 hour
-        case 3: return 7200 // 2 hours
-        case 4: return 14400 // 4 hours
-        case 5: return 28800 // 8 hours
-        case 6: return 86400 // 1 day
-        default: return 7200
-        }
+// Helper function to convert selected frequency index to seconds
+public func getFrequencyInSeconds(for index: Int) -> Int {
+    switch index {
+    case 0: return 30 // 30 sec
+    case 1: return 600  // 10 minutes
+    case 2: return 3600 // 1 hour
+    case 3: return 7200 // 2 hours
+    case 4: return 14400 // 4 hours
+    case 5: return 28800 // 8 hours
+    case 6: return 86400 // 1 day
+    default: return 7200
     }
 }
+
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let quote: Quote?  // Include the fetched quote here
     let colorPaletteIndex: Int
-    // TODO: add frequency later
+    let quoteFrequencyIndex: Int
+    let quoteCategory: String
 }
 
 struct QuoteDropletWidgetEntryView : View {
@@ -121,6 +115,7 @@ struct QuoteDropletWidgetEntryView : View {
             colors[0] // Use the first color as the background color
             
             VStack {
+                Text(String(data.getQuoteFrequencyIndex()))
                 if let quote = entry.quote {
                     Text(quote.text)
                         .font(.headline)
@@ -158,7 +153,7 @@ struct QuoteDropletWidget: Widget {
 
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification"), colorPaletteIndex: 420))
+        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification"), colorPaletteIndex: 420, quoteFrequencyIndex: 3, quoteCategory: "all"))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
