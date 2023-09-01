@@ -25,21 +25,41 @@ struct Provider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
-
+        
+        // Calculate the frequency in seconds based on the selected index
+        let frequencyInSeconds = getFrequencyInSeconds(for: data.getQuoteFrequencyIndex())
+        
+        // Schedule the next update based on the calculated frequency
+        var nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
+        
+        // Create an array to hold timeline entries
+        var entries: [SimpleEntry] = []
+        
         // Fetch quotes until a suitable one is found
-        func fetchQuote() {
+        func fetchQuotes() {
             getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
                 if let quote = quote, !isQuoteTooLong(text: quote.text, context: context) {
-                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
-                    let timeline = Timeline(entries: [entry], policy: .atEnd)
-                    completion(timeline)
+                    let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+                    entries.append(entry)
+                    
+                    // Calculate the time for the next update
+                    nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: nextUpdate)!
+                    
+                    // Check if we've reached the maximum number of timeline entries
+                    if entries.count >= 10 { // You can adjust the number of entries as needed
+                        let timeline = Timeline(entries: entries, policy: .atEnd)
+                        completion(timeline)
+                    } else {
+                        fetchQuotes() // Fetch more quotes
+                    }
                 } else {
-                    fetchQuote() // Try again if the quote is too long
+                    fetchQuotes() // Try again if the quote is too long
                 }
             }
         }
-        fetchQuote()
+        fetchQuotes()
     }
+
 
     // Helper function to check if a quote is too long
     private func isQuoteTooLong(text: String, context: Context) -> Bool {
@@ -115,7 +135,6 @@ struct QuoteDropletWidgetEntryView : View {
             colors[0] // Use the first color as the background color
             
             VStack {
-                Text(String(data.getQuoteFrequencyIndex()))
                 if let quote = entry.quote {
                     Text(quote.text)
                         .font(.headline)
