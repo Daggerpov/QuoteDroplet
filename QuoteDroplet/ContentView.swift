@@ -28,9 +28,6 @@ enum QuoteCategory: String, CaseIterable {
 }
 
 struct ContentView: View {
-    @AppStorage("streak", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var streak = 0
-    
     @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var colorPaletteIndex = 0
     
@@ -46,16 +43,6 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Group {
-                Text(String(streak))
-                Button(action: {
-                    streak += 1
-                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                }, label: {
-                    Text("+1")
-                })
-            }
-            
             HStack {
                 Text("Quote Category:")
                     .font(.title2)

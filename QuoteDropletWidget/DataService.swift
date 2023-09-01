@@ -16,10 +16,7 @@ struct DataService {
         return colorPaletteIndex
     }
     
-    @AppStorage("streak", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var streak = 0
+    // TODO: Add frequency
     
-    func getStreak() -> Int {
-        return streak
-    }
+    // TODO: Add quote category
 }

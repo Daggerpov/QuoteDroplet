@@ -14,11 +14,11 @@ struct Provider: IntentTimelineProvider {
     var data = DataService()
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil, colorPaletteIndex: data.getIndex(), streak: data.getStreak())
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil, colorPaletteIndex: data.getIndex())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, colorPaletteIndex: data.getIndex(), streak: data.getStreak())
+        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, colorPaletteIndex: data.getIndex())
         completion(entry)
     }
 
@@ -38,7 +38,7 @@ struct Provider: IntentTimelineProvider {
 //            let selectedCategory = UserDefaults(suiteName: "com.Daggerpov.QuoteDroplet")?.string(forKey: "selectedCategory") ?? "all"
             getRandomQuoteByClassification(classification: selectedCategory) { quote, error in
                 if let quote = quote, !isQuoteTooLong(text: quote.text, context: context) {
-                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), streak: data.getStreak())
+                    let entry = SimpleEntry(date: startDate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex())
                     let timeline = Timeline(entries: [entry], policy: .atEnd)
                     completion(timeline)
                 } else {
@@ -104,7 +104,6 @@ struct SimpleEntry: TimelineEntry {
     let quote: Quote?  // Include the fetched quote here
     let colorPaletteIndex: Int
     // TODO: add frequency later
-    let streak: Int
 }
 
 struct QuoteDropletWidgetEntryView : View {
@@ -122,8 +121,6 @@ struct QuoteDropletWidgetEntryView : View {
             colors[0] // Use the first color as the background color
             
             VStack {
-                Text(String(data.getStreak()))
-                Text(String(data.getIndex()))
                 if let quote = entry.quote {
                     Text(quote.text)
                         .font(.headline)
@@ -161,7 +158,7 @@ struct QuoteDropletWidget: Widget {
 
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification"), colorPaletteIndex: 420, streak: 69))
+        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification"), colorPaletteIndex: 420))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
