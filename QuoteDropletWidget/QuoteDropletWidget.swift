@@ -140,6 +140,7 @@ struct QuoteDropletWidgetEntryView : View {
                         .font(.headline)
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 5)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                     if let author = quote.author {
                         Text("- \(author)")
                             .font(.subheadline)
