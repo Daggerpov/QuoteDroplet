@@ -148,8 +148,16 @@ struct QuoteDropletWidgetEntryView : View {
                             .padding(.horizontal, 5)
                     }
                 } else {
-                    Text("Issue retrieving quote...")
-                        .foregroundColor(.red)
+                    Text("More is lost by indecision than by wrong decision.")
+                        .font(.headline)
+                        .foregroundColor(colors[1]) // Use the second color for text color
+                        .padding(.horizontal, 5)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                    
+                    Text("- Cicero")
+                        .font(.subheadline)
+                        .foregroundColor(colors[2]) // Use the third color for author text color
+                        .padding(.horizontal, 5)
                 }
             }
         }
@@ -165,8 +173,8 @@ struct QuoteDropletWidget: Widget {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Example Widget")
+        .description("Note that the color palette is modifiable.")
         .supportedFamilies([.systemSmall])
     }
 }
