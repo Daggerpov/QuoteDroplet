@@ -36,7 +36,17 @@ struct Provider: IntentTimelineProvider {
         
         // Fetch the initial quote
         getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
-            if let quote = quote, !isQuoteTooLong(text: quote.text, context: context, author: quote.author) {
+            if var quote = quote {
+                // Check if the quote is too long
+                while isQuoteTooLong(text: quote.text, context: context, author: quote.author) {
+                    // Fetch a new quote
+                    getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { newQuote, _ in
+                        if let newQuote = newQuote {
+                            quote = newQuote
+                        }
+                    }
+                }
+                
                 let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                 
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
@@ -50,13 +60,13 @@ struct Provider: IntentTimelineProvider {
         let maxWidth: CGFloat = {
             switch context.family {
             case .systemSmall:
-                return 100 // Adjust as needed
+                return 20 // Adjust as needed for small widgets
             case .systemMedium:
-                return 150 // Adjust as needed for .systemMedium
+                return 100 // Adjust as needed for medium widgets
             case .systemLarge:
-                return 200 // Adjust as needed
+                return 300 // Adjust as needed for large widgets
             case .systemExtraLarge:
-                return 250 // Adjust as needed
+                return 400 // Adjust as needed for extra-large widgets
             case .accessoryCircular:
                 return 120 // Adjust as needed for circular widgets
             case .accessoryRectangular:
@@ -71,27 +81,27 @@ struct Provider: IntentTimelineProvider {
         let maxHeight: CGFloat = {
             switch context.family {
             case .systemSmall:
-                return 100 // Adjust as needed
+                return 20 // Adjust as needed for small widgets
             case .systemMedium:
-                return 200 // Adjust as needed for .systemMedium
+                return 50 // Adjust as needed for medium widgets
             case .systemLarge:
-                return 200 // Adjust as needed
+                return 150 // Adjust as needed for large widgets
             case .systemExtraLarge:
-                return 250 // Adjust as needed
+                return 200 // Adjust as needed for extra-large widgets
             case .accessoryCircular:
                 return 120 // Adjust as needed for circular widgets
             case .accessoryRectangular:
                 return 180 // Adjust as needed for rectangular widgets
             case .accessoryInline:
-                return 100 // Adjust as needed for inline widgets
+                return 60 // Adjust as needed for inline widgets
             @unknown default:
-                return 100
+                return 20
             }
         }()
         
-        let font = UIFont.systemFont(ofSize: 17) // Use an appropriate font size
+        let font = UIFont.systemFont(ofSize: 16) // Use an appropriate font size
         let boundingBox = text.boundingRect(
-            with: CGSize(width: maxWidth, height: maxHeight), // Use maxHeight for .systemMedium
+            with: CGSize(width: maxWidth, height: maxHeight),
             options: [.usesLineFragmentOrigin],
             attributes: [NSAttributedString.Key.font: font],
             context: nil
@@ -99,10 +109,10 @@ struct Provider: IntentTimelineProvider {
 
         // Check if the quote has an author
         if let author = author, !author.isEmpty {
-            return boundingBox.height > maxHeight // Adjust the maximum height as needed
+            return boundingBox.height > maxHeight
         } else {
             // Allow the quote to be 10% longer when there is no author
-            let maxAllowedHeight = maxHeight * 1.1 // 10% longer than maxHeight
+            let maxAllowedHeight = maxHeight * 1.1
             return boundingBox.height > maxAllowedHeight
         }
     }
@@ -131,6 +141,19 @@ struct SimpleEntry: TimelineEntry {
     let quoteCategory: String
 }
 
+struct MinimumFontModifier: ViewModifier {
+    let size: CGFloat
+    let weight: Font.Weight
+    let design: Font.Design
+    let minimumSize: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .font(Font.system(size: max(size, minimumSize), weight: weight, design: design))
+            .lineLimit(nil) // Remove line limit to prevent truncation
+    }
+}
+
 struct QuoteDropletWidgetEntryView : View {
     var data = DataService()
     
@@ -144,7 +167,7 @@ struct QuoteDropletWidgetEntryView : View {
     var isLoading: Bool {
         return entry.quote == nil
     }
-
+    
     var body: some View {
         ZStack {
             colors[0] // Use the first color as the background color
@@ -167,6 +190,8 @@ struct QuoteDropletWidgetEntryView : View {
                             .foregroundColor(colors[2])
                             .padding(.horizontal, 20) // Adjust horizontal padding
                             .padding(.bottom, 10) // Adjust bottom padding
+                            .lineLimit(1) // Ensure the author text is limited to one line
+                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
                     }
                 } else {
                     if family == .systemMedium {
@@ -185,6 +210,8 @@ struct QuoteDropletWidgetEntryView : View {
                             .foregroundColor(colors[2])
                             .padding(.horizontal, 20)
                             .padding(.bottom, 10)
+                            .lineLimit(1) // Ensure the author text is limited to one line
+                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
                     } else {
                         Text("More is lost by indecision than by wrong decision.")
                             .font(.headline)
@@ -201,12 +228,15 @@ struct QuoteDropletWidgetEntryView : View {
                             .foregroundColor(colors[2])
                             .padding(.horizontal, 20)
                             .padding(.bottom, 10)
+                            .lineLimit(1) // Ensure the author text is limited to one line
+                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
                     }
                 }
             }
         }
     }
 }
+
 
 
 struct QuoteDropletWidget: Widget {
