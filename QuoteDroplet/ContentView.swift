@@ -20,6 +20,7 @@ enum QuoteCategory: String, CaseIterable {
     case discipline = "Discipline"
     case philosophy = "Philosophy"
     case inspiration = "Inspiration"
+    case upliftment = "Upliftment"
     case all = "All"
     
     var displayName: String {
