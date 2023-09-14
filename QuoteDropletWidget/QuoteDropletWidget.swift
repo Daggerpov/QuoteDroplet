@@ -30,39 +30,21 @@ struct Provider: IntentTimelineProvider {
         let frequencyInSeconds = getFrequencyInSeconds(for: data.getQuoteFrequencyIndex())
         
         // Schedule the next update based on the calculated frequency
-        var nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
+        let nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
         
-        // Create an array to hold timeline entries
-        var entries: [SimpleEntry] = []
-        
-        // Fetch quotes until a suitable one is found
-        func fetchQuotes() {
-            getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
-                if let quote = quote, !isQuoteTooLong(text: quote.text, context: context) {
-                    let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
-                    entries.append(entry)
-                    
-                    // Calculate the time for the next update
-                    nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: nextUpdate)!
-                    
-                    // Check if we've reached the maximum number of timeline entries
-                    if entries.count >= 10 { // You can adjust the number of entries as needed
-                        let timeline = Timeline(entries: entries, policy: .atEnd)
-                        completion(timeline)
-                    } else {
-                        fetchQuotes() // Fetch more quotes
-                    }
-                } else {
-                    fetchQuotes() // Try again if the quote is too long
-                }
+        // Fetch the initial quote
+        getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
+            if let quote = quote, !isQuoteTooLong(text: quote.text, context: context, author: quote.author) {
+                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+                
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
             }
         }
-        fetchQuotes()
     }
 
-
     // Helper function to check if a quote is too long
-    private func isQuoteTooLong(text: String, context: Context) -> Bool {
+    private func isQuoteTooLong(text: String, context: Context, author: String?) -> Bool {
         let maxWidth: CGFloat = {
             switch context.family {
             case .systemSmall:
@@ -84,7 +66,6 @@ struct Provider: IntentTimelineProvider {
             }
         }()
 
-        
         let font = UIFont.systemFont(ofSize: 17) // Use an appropriate font size
         let boundingBox = text.boundingRect(
             with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
@@ -92,9 +73,16 @@ struct Provider: IntentTimelineProvider {
             attributes: [NSAttributedString.Key.font: font],
             context: nil
         )
-        return boundingBox.height > 100 // Adjust the maximum height as needed
+
+        // Check if the quote has an author
+        if let author = author, !author.isEmpty {
+            return boundingBox.height > 100.0 // Adjust the maximum height as needed
+        } else {
+            // Allow the quote to be 10% longer when there is no author
+            let maxAllowedHeight = 110.0 // 10% longer than 100.0
+            return boundingBox.height > maxAllowedHeight
+        }
     }
-    
 }
 
 // Helper function to convert selected frequency index to seconds
@@ -129,20 +117,30 @@ struct QuoteDropletWidgetEntryView : View {
     var colors: [Color] {
         return colorPalettes[safe: data.getIndex()] ?? [Color.clear]
     }
+    
+    var isLoading: Bool {
+        return entry.quote == nil
+    }
 
     var body: some View {
         ZStack {
             colors[0] // Use the first color as the background color
             
             VStack {
-                if let quote = entry.quote {
+                if isLoading {
+                    Text("Retrieving quote...") // Display loading message
+                        .font(.headline)
+                        .foregroundColor(colors[1]) // Use the second color for text color
+                        .padding(.horizontal, 5)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                } else if let quote = entry.quote {
                     Text(quote.text)
                         .font(.headline)
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 5)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    if let author = quote.author {
-                        Text("- \(author)")
+                    if quote.author != "Unknown Author" {
+                        Text("- \(quote.author ?? "")")
                             .font(.subheadline)
                             .foregroundColor(colors[2]) // Use the third color for author text color
                             .padding(.horizontal, 5)
