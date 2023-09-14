@@ -14,8 +14,10 @@ struct Provider: IntentTimelineProvider {
     var data = DataService()
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: nil, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+        let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification")
+        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
     }
+
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
@@ -50,7 +52,7 @@ struct Provider: IntentTimelineProvider {
             case .systemSmall:
                 return 100 // Adjust as needed
             case .systemMedium:
-                return 150 // Adjust as needed
+                return 150 // Adjust as needed for .systemMedium
             case .systemLarge:
                 return 200 // Adjust as needed
             case .systemExtraLarge:
@@ -65,10 +67,31 @@ struct Provider: IntentTimelineProvider {
                 return 100
             }
         }()
-
+        
+        let maxHeight: CGFloat = {
+            switch context.family {
+            case .systemSmall:
+                return 100 // Adjust as needed
+            case .systemMedium:
+                return 200 // Adjust as needed for .systemMedium
+            case .systemLarge:
+                return 200 // Adjust as needed
+            case .systemExtraLarge:
+                return 250 // Adjust as needed
+            case .accessoryCircular:
+                return 120 // Adjust as needed for circular widgets
+            case .accessoryRectangular:
+                return 180 // Adjust as needed for rectangular widgets
+            case .accessoryInline:
+                return 100 // Adjust as needed for inline widgets
+            @unknown default:
+                return 100
+            }
+        }()
+        
         let font = UIFont.systemFont(ofSize: 17) // Use an appropriate font size
         let boundingBox = text.boundingRect(
-            with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+            with: CGSize(width: maxWidth, height: maxHeight), // Use maxHeight for .systemMedium
             options: [.usesLineFragmentOrigin],
             attributes: [NSAttributedString.Key.font: font],
             context: nil
@@ -76,10 +99,10 @@ struct Provider: IntentTimelineProvider {
 
         // Check if the quote has an author
         if let author = author, !author.isEmpty {
-            return boundingBox.height > 100.0 // Adjust the maximum height as needed
+            return boundingBox.height > maxHeight // Adjust the maximum height as needed
         } else {
             // Allow the quote to be 10% longer when there is no author
-            let maxAllowedHeight = 110.0 // 10% longer than 100.0
+            let maxAllowedHeight = maxHeight * 1.1 // 10% longer than maxHeight
             return boundingBox.height > maxAllowedHeight
         }
     }
@@ -127,41 +150,63 @@ struct QuoteDropletWidgetEntryView : View {
             colors[0] // Use the first color as the background color
             
             VStack {
-                if isLoading {
-                    Text("Retrieving quote...") // Display loading message
-                        .font(.headline)
-                        .foregroundColor(colors[1]) // Use the second color for text color
-                        .padding(.horizontal, 5)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                } else if let quote = entry.quote {
+                if let quote = entry.quote {
                     Text(quote.text)
                         .font(.headline)
-                        .foregroundColor(colors[1]) // Use the second color for text color
-                        .padding(.horizontal, 5)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                        .foregroundColor(colors[1])
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4) // Add line spacing for readability
+                        .minimumScaleFactor(0.5) // Allow text to scale down if needed
+                        .padding(.horizontal, 20) // Adjust horizontal padding
+                        .padding(.vertical, 10) // Adjust vertical padding
+                        .frame(maxHeight: .infinity) // Allow the text to expand vertically
+                    Spacer() // Add a spacer to push the author text to the center
                     if quote.author != "Unknown Author" {
                         Text("- \(quote.author ?? "")")
                             .font(.subheadline)
-                            .foregroundColor(colors[2]) // Use the third color for author text color
-                            .padding(.horizontal, 5)
+                            .foregroundColor(colors[2])
+                            .padding(.horizontal, 20) // Adjust horizontal padding
+                            .padding(.bottom, 10) // Adjust bottom padding
                     }
                 } else {
-                    Text("More is lost by indecision than by wrong decision.")
-                        .font(.headline)
-                        .foregroundColor(colors[1]) // Use the second color for text color
-                        .padding(.horizontal, 5)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    
-                    Text("- Cicero")
-                        .font(.subheadline)
-                        .foregroundColor(colors[2]) // Use the third color for author text color
-                        .padding(.horizontal, 5)
+                    if family == .systemMedium {
+                        Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
+                            .font(.headline)
+                            .foregroundColor(colors[1])
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(4)
+                            .minimumScaleFactor(0.5)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .frame(maxHeight: .infinity)
+                        Spacer() // Add a spacer to push the author text to the center
+                        Text("- Khalil Gibran")
+                            .font(.subheadline)
+                            .foregroundColor(colors[2])
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
+                    } else {
+                        Text("More is lost by indecision than by wrong decision.")
+                            .font(.headline)
+                            .foregroundColor(colors[1])
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(4)
+                            .minimumScaleFactor(0.5)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .frame(maxHeight: .infinity)
+                        Spacer() // Add a spacer to push the author text to the center
+                        Text("- Cicero")
+                            .font(.subheadline)
+                            .foregroundColor(colors[2])
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
+                    }
                 }
             }
         }
     }
 }
-
 
 
 struct QuoteDropletWidget: Widget {
@@ -173,7 +218,7 @@ struct QuoteDropletWidget: Widget {
         }
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette is modifiable.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
