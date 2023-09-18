@@ -68,7 +68,7 @@ struct Provider: IntentTimelineProvider {
             case .systemSmall:
                 return 100 // Adjust as needed
             case .systemMedium:
-                return 150 // Adjust as needed
+                return 200 // Adjust as needed
             case .systemLarge:
                 return 200 // Adjust as needed
             case .systemExtraLarge:
@@ -141,30 +141,55 @@ struct QuoteDropletWidgetEntryView : View {
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 5)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    if let author = quote.author {
-                        Text("- \(author)")
+                    if quote.author != "Unknown Author" {
+                        Text("- \(quote.author ?? "")")
                             .font(.subheadline)
                             .foregroundColor(colors[2]) // Use the third color for author text color
                             .padding(.horizontal, 5)
                     }
                 } else {
-                    Text("More is lost by indecision than by wrong decision.")
-                        .font(.headline)
-                        .foregroundColor(colors[1]) // Use the second color for text color
-                        .padding(.horizontal, 5)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    
-                    Text("- Cicero")
-                        .font(.subheadline)
-                        .foregroundColor(colors[2]) // Use the third color for author text color
-                        .padding(.horizontal, 5)
+                    if family == .systemMedium {
+                        Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
+                            .font(.headline)
+                            .foregroundColor(colors[1])
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(4)
+                            .minimumScaleFactor(0.5)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .frame(maxHeight: .infinity)
+                        Spacer() // Add a spacer to push the author text to the center
+                        Text("- Khalil Gibran")
+                            .font(.subheadline)
+                            .foregroundColor(colors[2])
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
+                            .lineLimit(1) // Ensure the author text is limited to one line
+                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
+                    } else {
+                        Text("More is lost by indecision than by wrong decision.")
+                            .font(.headline)
+                            .foregroundColor(colors[1])
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(4)
+                            .minimumScaleFactor(0.5)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .frame(maxHeight: .infinity)
+                        Spacer() // Add a spacer to push the author text to the center
+                        Text("- Cicero")
+                            .font(.subheadline)
+                            .foregroundColor(colors[2])
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
+                            .lineLimit(1) // Ensure the author text is limited to one line
+                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
+                    }
                 }
             }
         }
     }
 }
-
-
 
 struct QuoteDropletWidget: Widget {
     let kind: String = "QuoteDropletWidget"
@@ -175,7 +200,7 @@ struct QuoteDropletWidget: Widget {
         }
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette is modifiable.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemMedium, .systemSmall])
     }
 }
 
