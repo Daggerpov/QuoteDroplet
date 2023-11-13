@@ -38,7 +38,7 @@ struct ContentView: View {
     
     @State private var showInstructions = false
     
-    
+    @State private var customPalette: [Color] = [.red, .green, .blue] // Default custom colors
     
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
 
@@ -83,25 +83,97 @@ struct ContentView: View {
             }
             .padding(.bottom, 20) // Increased spacing
             
+            // Color Palette Section
             Group {
-                Text("Color Palette:")
-                    .font(.title2) // Increased font size
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                    .padding(.top, 20)
-                
                 HStack(spacing: 20) {
-                    ForEach(0..<colorPalettes.count, id: \.self) { paletteIndex in
-                        ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
-                            .frame(width: 100, height: 100)
-                            .border(colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                colorPaletteIndex = paletteIndex
-                                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                    VStack(spacing: 10) {
+                        Text("Sample Colour Palettes:")
+                            .font(.subheadline) // Increased font size
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                            .padding(.top, 10)
+                        HStack(spacing: 10) {
+                            ForEach(0..<colorPalettes.count, id: \.self) { paletteIndex in
+                                ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
+                                    .frame(width: 60, height: 60) // Adjusted size
+                                    .border(colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
+                                    .cornerRadius(8)
+                                    .onTapGesture {
+                                        colorPaletteIndex = paletteIndex
+                                        WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                                    }
                             }
+                        }
+                        
+                        VStack(spacing: 10) {
+                            Text("Custom Colour Palette:")
+                                .font(.subheadline) // Increased font size
+                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                                .padding(.top, 10)
+                            
+                        }
+                        HStack(spacing: 10) {
+                            ForEach(0..<customPalette.count, id: \.self) { customIndex in
+                                // Use ColorPicker for each custom color
+                                ColorPicker(
+                                    "",
+                                    selection: Binding(
+                                        get: {
+                                            customPalette[customIndex]
+                                        },
+                                        set: { newColor in
+                                            customPalette[customIndex] = newColor
+                                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                                        }
+                                    ),
+                                    supportsOpacity: false
+                                )
+                                .frame(width: 60, height: 60)
+                                .cornerRadius(8)
+                            }
+                        }
+                        .onChange(of: customPalette) { _ in
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                        }
                     }
+                    
+                    VStack {
+                        Text("Widget Preview:")
+                            .font(.subheadline) // Increased font size
+                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear) // Use the first color as the background color
+                                .overlay(
+                                    VStack {
+                                        Spacer()
+                                        Text("More is lost by indecision than by wrong decision.")
+                                            .font(.headline)
+                                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white) // Use the second color for text color
+                                            .padding(.horizontal, 20) // SPLIT BY ME
+                                            .padding(.vertical, 10) // SPLIT BY ME
+                                            .multilineTextAlignment(.center) // Center-align the text
+                                            .lineSpacing(4) // Adjusted line spacing
+                                            .minimumScaleFactor(0.5)
+                                            .frame(maxHeight: .infinity)
+
+                                        Text("- Cicero")
+                                            .font(.subheadline)
+                                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .white) // Use the third color for author text color
+                                            .padding(.horizontal, 20) // ! SPLIT BY ME
+                                            .padding(.bottom, 10) // ! CHANGED BY ME
+                                            .lineLimit(1) // Ensure the author text is limited to one line
+                                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
+                                    }
+                                )
+                                .cornerRadius(8)
+                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 0) // Add a subtle shadow for depth
+                                .padding(.trailing, 0)
+                        }
+                        .frame(width: 150, height: 150)
+                    }                    
                 }
             }
+
             
             Spacer() // Create spacing
             
@@ -111,30 +183,25 @@ struct ContentView: View {
                         .font(.title3)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
-                        .padding(.horizontal)
                     
                     Text("2. Tap the '+' button (top left).")
                         .font(.title3)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
-                        .padding(.horizontal)
                     
                     Text("3. Find and select 'Quote Droplet'.")
                         .font(.title3)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
-                        .padding(.horizontal)
                     
                     Text("4. Tap 'Add Widget,' then place it.")
                         .font(.title3)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.leading)
-                        .padding(.horizontal)
                 }
-                .padding(.horizontal)
             } else {
                 Text("Be sure to add this widget to your home screen.")
-                    .font(.title)
+                    .font(.title2)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
