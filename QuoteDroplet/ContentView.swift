@@ -200,41 +200,20 @@ struct ContentView: View {
             "",
             selection: Binding(
                 get: {
-                    colorPalettes.last?[index] ?? .clear
+                    colorPalettes[3][index]
                 },
                 set: { newColor in
                     // Update the last element with the custom color palette
                     colorPalettes[3][index] = newColor
                     // Set colorPaletteIndex to the index of the custom color palette
                     colorPaletteIndex = 3
-
-                    // No need to reload widget timelines here
-
                 }
             ),
             supportsOpacity: false
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)
-        .onChange(of: colorPalettes.last?[index]) { _ in
-            // Reload the widget timeline whenever the custom color changes
-            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-        }
-        .onChange(of: colorPalettes) { _ in
-            // Set the app and widget's colors to the last index of the custom color palette
-            colorPalettes[3] = colorPalettes.last ?? []
-            // Set colorPaletteIndex to the index of the custom color palette
-            colorPaletteIndex = 3
-        }
     }
-
-
-
-
-
-
-
-
     
     private var customColourSection: some View {
         VStack(spacing: 10) {
