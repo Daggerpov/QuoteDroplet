@@ -213,8 +213,12 @@ struct ContentView: View {
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)
+        .onChange(of: colorPalettes) { _ in
+            // Reload the widget timeline whenever the custom color changes
+            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+        }
     }
-    
+
     private var customColourSection: some View {
         VStack(spacing: 10) {
             Text("Custom Colours:")
