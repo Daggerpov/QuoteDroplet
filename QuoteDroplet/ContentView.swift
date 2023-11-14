@@ -39,7 +39,6 @@ struct ContentView: View {
     
     @State private var showInstructions = false
     // Add a property to track whether a custom color has been picked
-    @State private var customColorPicked = false
     
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
     
@@ -170,7 +169,7 @@ struct ContentView: View {
                         .cornerRadius(8)
                         .onTapGesture {
                             colorPaletteIndex = paletteIndex
-                            customColorPicked = false // Reset the flag when selecting a sample color palette
+                            
                             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                         }
                 }
@@ -193,11 +192,14 @@ struct ContentView: View {
             "",
             selection: Binding(
                 get: {
-                    colorPalettes[colorPaletteIndex][index]
+                    colorPalettes.last?[index] ?? .clear
                 },
                 set: { newColor in
-                    // Update custom color palette
-                    colorPalettes[colorPaletteIndex][index] = newColor
+                    // Update the last element with the custom color palette
+                    colorPalettes[3][index] = newColor
+                    // Set colorPaletteIndex to the index of the custom color palette
+                    colorPaletteIndex = 3
+                    
                     WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 }
             ),
@@ -205,11 +207,23 @@ struct ContentView: View {
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)
-        .onChange(of: colorPalettes) { _ in
-            // Reload timelines
+        .onReceive([colorPalettes.last?[index]].publisher.first()) { _ in
+            // Reload the widget timeline whenever the custom color changes
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
         }
+        .onChange(of: colorPalettes) { _ in
+            // Set the app and widget's colors to the last index of the custom color palette
+            colorPalettes[3] = colorPalettes.last ?? []
+            // Set colorPaletteIndex to the index of the custom color palette
+            colorPaletteIndex = 3
+        }
     }
+
+
+
+
+
+
 
     
     private var customColourSection: some View {
