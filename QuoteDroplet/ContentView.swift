@@ -42,6 +42,15 @@ struct ContentView: View {
     
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
     
+    init() {
+        // Check if the app is launched for the first time
+        if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
+            // Set the default color palette index to 0 (first sample color palette)
+            colorPaletteIndex = 0
+            UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
+        }
+    }
+    
     private var quoteCategoryPicker: some View {
         HStack {
             Text("Quote Category:")
@@ -187,7 +196,6 @@ struct ContentView: View {
     }
 
     private func customColorPicker(index: Int) -> some View {
-        // Use ColorPicker for each custom color
         ColorPicker(
             "",
             selection: Binding(
@@ -199,15 +207,16 @@ struct ContentView: View {
                     colorPalettes[3][index] = newColor
                     // Set colorPaletteIndex to the index of the custom color palette
                     colorPaletteIndex = 3
-                    
-                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+
+                    // No need to reload widget timelines here
+
                 }
             ),
             supportsOpacity: false
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)
-        .onReceive([colorPalettes.last?[index]].publisher.first()) { _ in
+        .onChange(of: colorPalettes.last?[index]) { _ in
             // Reload the widget timeline whenever the custom color changes
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
         }
@@ -218,6 +227,7 @@ struct ContentView: View {
             colorPaletteIndex = 3
         }
     }
+
 
 
 
