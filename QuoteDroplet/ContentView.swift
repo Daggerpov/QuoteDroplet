@@ -305,7 +305,7 @@ struct ContentView: View {
                 }
             }
             
-            Text("Note: To make more than one change to the custom colours, click on a sample in between.")
+            Text("Note: To make more than a singular change to the custom colours, click a sample to force an update (this is a bug I intend to fix.")
                 .font(.title3)
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
                 .multilineTextAlignment(.center)
