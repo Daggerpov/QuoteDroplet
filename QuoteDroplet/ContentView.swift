@@ -96,8 +96,8 @@ struct ContentView: View {
     
     private var widgetPreviewSection: some View {
         VStack {
-            Text("Widget Preview:")
-                .font(.subheadline) // Increased font size
+            Text("Preview:")
+                .font(.title3) // Increased font size
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
@@ -167,7 +167,7 @@ struct ContentView: View {
     private var sampleColourSection: some View {
         VStack {
             Text("Sample Colours:")
-                .font(.subheadline) // Increased font size
+                .font(.title3) // Increased font size
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
             HStack(spacing: 10) {
@@ -222,7 +222,7 @@ struct ContentView: View {
     private var customColourSection: some View {
         VStack(spacing: 10) {
             Text("Custom Colours:")
-                .font(.subheadline) // Increased font size
+                .font(.title3) // Increased font size
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
             
@@ -248,9 +248,16 @@ struct ContentView: View {
                     widgetPreviewSection
                 }
             }
+            
+            Text("Bug: If the custom colours don't change, try clicking on a sample then making the change again.")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
 
             
             Spacer() // Create spacing
+            
+            
             
             if showInstructions {
                 InstructionsSection()
