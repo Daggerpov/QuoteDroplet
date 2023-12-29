@@ -39,6 +39,8 @@ struct ContentView: View {
     var quoteCategory: QuoteCategory = .all
     
     @State private var showInstructions = false
+    
+    @State private var counts: [String: Int] = [:]
     // Add a property to track whether a custom color has been picked
     
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
@@ -52,32 +54,60 @@ struct ContentView: View {
         }
     }
     
+    private func getCategoryCounts(completion: @escaping ([String: Int]) -> Void) {
+        let group = DispatchGroup()
+        var counts: [String: Int] = [:]
+
+        for category in QuoteCategory.allCases {
+            group.enter()
+            getCountForCategory(category: category) { categoryCount in
+                counts[category.rawValue] = categoryCount
+                group.leave()
+            }
+        }
+
+        group.notify(queue: .main) {
+            completion(counts)
+        }
+    }
+    
     private var quoteCategoryPicker: some View {
         HStack {
             Text("Quote Category:")
                 .font(.title2)
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-            
+
             Picker("", selection: $quoteCategory) {
-                ForEach(QuoteCategory.allCases, id: \.self) {   category in
-                    // Retrieve the count for each category
-                    let categoryCount = getCountForCategory(category: category)
-                    
-                    // Append count information to the category display name
-                    let displayNameWithCount = "\(category.displayName) (\(categoryCount))"
-                    
-                    Text(displayNameWithCount)
-                        .font(.headline)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                if counts.isEmpty {
+                    // Placeholder while counts are being fetched
+                    Text("Loading...")
+                } else {
+                    ForEach(QuoteCategory.allCases, id: \.self) { category in
+                        if let categoryCount = counts[category.rawValue] {
+                            let displayNameWithCount = "\(category.displayName) (\(categoryCount))"
+
+                            Text(displayNameWithCount)
+                                .font(.headline)
+                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        }
+                    }
                 }
             }
             .pickerStyle(MenuPickerStyle())
             .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-            .onTapGesture{
+            .onAppear {
+                // Fetch category counts asynchronously when the view appears
+                getCategoryCounts { fetchedCounts in
+                    // Update the counts and trigger a view update
+                    counts = fetchedCounts
+                }
+            }
+            .onTapGesture {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }
         }
     }
+
     
     private var timeIntervalPicker: some View {
         Group {
@@ -202,15 +232,24 @@ struct ContentView: View {
         }
     }
     
-    private func getCountForCategory(category: QuoteCategory) -> Int {
-        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteCount?category=\(category.rawValue.lowercased())"),
-              let data = try? Data(contentsOf: url),
-              let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-              let count = json["count"] as? Int else {
-            return 0
+    private func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
+        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteCount?category=\(category.rawValue.lowercased())") else {
+            completion(0)
+            return
         }
-        return count
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+               let count = json["count"] as? Int {
+                completion(count)
+            } else {
+                completion(0)
+            }
+        }.resume()
     }
+
+
 
     private func customColorPicker(index: Int) -> some View {
         ColorPicker(
@@ -278,7 +317,7 @@ struct ContentView: View {
             if showInstructions {
                 InstructionsSection()
             } else {
-                Text("Be sure to add the Quote Droplet widget to your home screen.")
+                Text("Be sure to add the widget.")
                     .font(.title2)
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
                     .multilineTextAlignment(.center)
