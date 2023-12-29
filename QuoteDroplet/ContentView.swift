@@ -22,6 +22,7 @@ enum QuoteCategory: String, CaseIterable {
     case philosophy = "Philosophy"
     case inspiration = "Inspiration"
     case upliftment = "Upliftment"
+    case love = "Love"
     case all = "All"
     
     var displayName: String {
@@ -62,6 +63,7 @@ struct ContentView: View {
                     Text(category.displayName)
                         .font(.headline)
                         .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    
                 }
             }
             .pickerStyle(MenuPickerStyle())
@@ -249,14 +251,13 @@ struct ContentView: View {
                 }
             }
             
-            Text("Bug: If the custom colours don't change, try clicking on a sample then making the change again.")
-                .font(.subheadline)
+            Text("Note: To make more than one change to the custom colours, click on a sample in between. This is a bug I intend to fix.")
+                .font(.title3)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
 
             
             Spacer() // Create spacing
-            
             
             
             if showInstructions {
@@ -284,7 +285,7 @@ struct ContentView: View {
 //                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
 //                }
 //            }
-//               
+               
 //            Spacer()
             
             aboutMeSection
@@ -360,8 +361,7 @@ struct InstructionsSection: View {
     let instructions = [
         "Press and hold an empty area of your home screen.",
         "Tap the '+' button (top left).",
-        "Find and select 'Quote Droplet'.",
-        "Tap 'Add Widget,' then place it."
+        "Find and select 'Quote Droplet'."
     ]
 
     var body: some View {
