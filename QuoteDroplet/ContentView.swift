@@ -59,11 +59,16 @@ struct ContentView: View {
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
             
             Picker("", selection: $quoteCategory) {
-                ForEach(QuoteCategory.allCases, id: \.self) { category in
-                    Text(category.displayName)
+                ForEach(QuoteCategory.allCases, id: \.self) {   category in
+                    // Retrieve the count for each category
+                    let categoryCount = getCountForCategory(category: category)
+                    
+                    // Append count information to the category display name
+                    let displayNameWithCount = "\(category.displayName) (\(categoryCount))"
+                    
+                    Text(displayNameWithCount)
                         .font(.headline)
                         .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                    
                 }
             }
             .pickerStyle(MenuPickerStyle())
@@ -195,6 +200,16 @@ struct ContentView: View {
                 customColorPicker(index: customIndex)
             }
         }
+    }
+    
+    private func getCountForCategory(category: QuoteCategory) -> Int {
+        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteCount?category=\(category.rawValue.lowercased())"),
+              let data = try? Data(contentsOf: url),
+              let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+              let count = json["count"] as? Int else {
+            return 0
+        }
+        return count
     }
 
     private func customColorPicker(index: Int) -> some View {
