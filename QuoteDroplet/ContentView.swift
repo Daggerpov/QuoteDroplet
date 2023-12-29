@@ -12,7 +12,7 @@ var colorPalettes = [
     [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "CC5803")],
     [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "83781B")],
     [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")],
-    [Color.red, Color.green, Color.blue]
+    [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")]
 ]
 
 enum QuoteCategory: String, CaseIterable {
@@ -134,30 +134,30 @@ struct ContentView: View {
     
     private var aboutMeSection: some View {
         // About Me Section
-        VStack {
-            Text("About Me")
+        
+        HStack {
+            Text("About Me:")
                 .font(.title2) // Increased font size
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-            
-            HStack {
-                Spacer()
-                Link(destination: URL(string: "https://github.com/Daggerpov")!) {
-                    Image("githublogo")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                }
-                
-                Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
-                    Image("linkedinlogo")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                }
-                Spacer()
+                .padding(.leading, 10)
+            Spacer()
+            Link(destination: URL(string: "https://github.com/Daggerpov")!) {
+                Image("githublogo")
+                    .resizable()
+                    .frame(width: 60, height: 60)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
             }
+            
+            Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
+                Image("linkedinlogo")
+                    .resizable()
+                    .frame(width: 60, height: 60)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+            }
+            Spacer()
         }
-        .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+        
+        .padding(EdgeInsets(top: 15, leading: 0, bottom: 10, trailing: 0))
         .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)
         .shadow(radius: 5)
@@ -255,7 +255,7 @@ struct ContentView: View {
             if showInstructions {
                 InstructionsSection()
             } else {
-                Text("Be sure to add this widget to your home screen.")
+                Text("Be sure to add the Quote Droplet widget to your home screen.")
                     .font(.title2)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
@@ -264,21 +264,21 @@ struct ContentView: View {
             
             Spacer()
             
-            Button(action: {
-                showInstructions.toggle()
-            }) {
-                if showInstructions{
-                    Text("Hide Instructions")
-                        .font(.headline)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-                } else {
-                    Text("Show Instructions")
-                        .font(.headline)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-                }
-            }
-               
-            Spacer()
+//            Button(action: {
+//                showInstructions.toggle()
+//            }) {
+//                if showInstructions{
+//                    Text("Hide Instructions")
+//                        .font(.headline)
+//                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+//                } else {
+//                    Text("Show Instructions")
+//                        .font(.headline)
+//                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+//                }
+//            }
+//               
+//            Spacer()
             
             aboutMeSection
         }
