@@ -251,9 +251,9 @@ struct ContentView: View {
                 }
             }
             
-            Text("Note: To make more than one change to the custom colours, click on a sample in between. This is a bug I intend to fix.")
+            Text("Note: To make more than one change to the custom colours, click on a sample in between.")
                 .font(.title3)
-                .foregroundColor(.gray)
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
                 .multilineTextAlignment(.center)
 
             
@@ -265,7 +265,7 @@ struct ContentView: View {
             } else {
                 Text("Be sure to add the Quote Droplet widget to your home screen.")
                     .font(.title2)
-                    .foregroundColor(.gray)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
             }
