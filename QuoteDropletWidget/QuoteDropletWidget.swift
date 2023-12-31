@@ -62,7 +62,7 @@ struct Provider: IntentTimelineProvider {
             case .systemSmall:
                 return 20 // Adjust as needed for small widgets
             case .systemMedium:
-                return 100 // Adjust as needed for medium widgets
+                return 200 // Adjust as needed
             case .systemLarge:
                 return 300 // Adjust as needed for large widgets
             case .systemExtraLarge:
@@ -176,22 +176,14 @@ struct QuoteDropletWidgetEntryView : View {
                 if let quote = entry.quote {
                     Text(quote.text)
                         .font(.headline)
-                        .foregroundColor(colors[1])
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(4) // Add line spacing for readability
-                        .minimumScaleFactor(0.5) // Allow text to scale down if needed
-                        .padding(.horizontal, 20) // Adjust horizontal padding
-                        .padding(.vertical, 10) // Adjust vertical padding
-                        .frame(maxHeight: .infinity) // Allow the text to expand vertically
-                    Spacer() // Add a spacer to push the author text to the center
+                        .foregroundColor(colors[1]) // Use the second color for text color
+                        .padding(.horizontal, 5)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                     if quote.author != "Unknown Author" {
                         Text("- \(quote.author ?? "")")
                             .font(.subheadline)
-                            .foregroundColor(colors[2])
-                            .padding(.horizontal, 20) // Adjust horizontal padding
-                            .padding(.bottom, 10) // Adjust bottom padding
-                            .lineLimit(1) // Ensure the author text is limited to one line
-                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
+                            .foregroundColor(colors[2]) // Use the third color for author text color
+                            .padding(.horizontal, 5)
                     }
                 } else {
                     if family == .systemMedium {
@@ -237,8 +229,6 @@ struct QuoteDropletWidgetEntryView : View {
     }
 }
 
-
-
 struct QuoteDropletWidget: Widget {
     let kind: String = "QuoteDropletWidget"
 
@@ -248,7 +238,7 @@ struct QuoteDropletWidget: Widget {
         }
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette is modifiable.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemMedium, .systemSmall])
     }
 }
 
