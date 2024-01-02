@@ -10,6 +10,17 @@ import SwiftUI
 import Intents
 import Foundation
 
+// Extension to disable content margins
+extension WidgetConfiguration {
+    func disableContentMarginsIfNeeded() -> some WidgetConfiguration {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return self.contentMarginsDisabled()
+        } else {
+            return self
+        }
+    }
+}
+
 struct Provider: IntentTimelineProvider {
     var data = DataService()
     
@@ -236,6 +247,7 @@ struct QuoteDropletWidget: Widget {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry)
         }
+        .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette is modifiable.")
         .supportedFamilies([.systemMedium, .systemSmall])
