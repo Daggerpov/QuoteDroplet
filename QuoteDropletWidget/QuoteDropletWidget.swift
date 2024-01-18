@@ -71,45 +71,60 @@ struct Provider: IntentTimelineProvider {
         let maxWidth: CGFloat = {
             switch context.family {
             case .systemSmall:
-                return 20 // Adjust as needed for small widgets
+                return 20
             case .systemMedium:
-                return 200 // Adjust as needed
+                return 200
             case .systemLarge:
-                return 300 // Adjust as needed for large widgets
+                return 300
             case .systemExtraLarge:
-                return 400 // Adjust as needed for extra-large widgets
+                return 400
             case .accessoryCircular:
-                return 120 // Adjust as needed for circular widgets
+                return 120
             case .accessoryRectangular:
-                return 180 // Adjust as needed for rectangular widgets
+                return 180
             case .accessoryInline:
-                return 100 // Adjust as needed for inline widgets
+                return 100
             @unknown default:
                 return 100
             }
         }()
-        
-        let maxHeight: CGFloat = {
+
+        var maxHeight: CGFloat = {
             switch context.family {
             case .systemSmall:
-                return 20 // Adjust as needed for small widgets
+                return 20
             case .systemMedium:
-                return 50 // Adjust as needed for medium widgets
+                return 50
             case .systemLarge:
-                return 150 // Adjust as needed for large widgets
+                return 150
             case .systemExtraLarge:
-                return 200 // Adjust as needed for extra-large widgets
+                return 200
             case .accessoryCircular:
-                return 120 // Adjust as needed for circular widgets
+                return 120
             case .accessoryRectangular:
-                return 180 // Adjust as needed for rectangular widgets
+                return 180
             case .accessoryInline:
-                return 60 // Adjust as needed for inline widgets
+                return 60
             @unknown default:
                 return 20
             }
         }()
         
+        // Check if the author is going to take up 2 lines and adjust the maxHeight accordingly
+        if let author = author, !author.isEmpty {
+            let authorFont = UIFont.systemFont(ofSize: 14) // Use an appropriate font size for the author
+            let authorBoundingBox = author.boundingRect(
+                with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+                options: [.usesLineFragmentOrigin],
+                attributes: [NSAttributedString.Key.font: authorFont],
+                context: nil
+            )
+            
+            if authorBoundingBox.height > maxHeight / 2 {
+                maxHeight = maxHeight * 0.85 // Adjust the factor as needed
+            }
+        }
+
         let font = UIFont.systemFont(ofSize: 16) // Use an appropriate font size
         let boundingBox = text.boundingRect(
             with: CGSize(width: maxWidth, height: maxHeight),
@@ -122,11 +137,12 @@ struct Provider: IntentTimelineProvider {
         if let author = author, !author.isEmpty {
             return boundingBox.height > maxHeight
         } else {
-            // Allow the quote to be 10% longer when there is no author
-            let maxAllowedHeight = maxHeight * 1.1
+            // Allow the quote to be 5% longer when there is no author
+            let maxAllowedHeight = maxHeight * 1.05
             return boundingBox.height > maxAllowedHeight
         }
     }
+
 }
 
 // Helper function to convert selected frequency index to seconds
