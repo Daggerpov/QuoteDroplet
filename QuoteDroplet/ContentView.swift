@@ -43,7 +43,7 @@ struct ContentView: View {
     
     // Add a new @AppStorage property for notificationFrequencyIndex
     @AppStorage("notificationFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var notificationFrequencyIndex = 4
+    var notificationFrequencyIndex = 3
     
     // This is for the widget
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
@@ -79,7 +79,7 @@ struct ContentView: View {
         HStack {
             Picker("", selection: $notificationFrequencyIndex) {
                 ForEach(0..<notificationFrequencyOptions.count, id: \.self) { index in
-                    Text(self.notificationFrequencyOptions[index])
+                    Text("Every " + self.notificationFrequencyOptions[index])
                         .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 }
             }
@@ -479,12 +479,6 @@ struct ContentView: View {
             
             Spacer()
             
-            Text("Be sure to add the widget.")
-                .font(.title2)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
             // Notifications Section
             Section {
                 HStack {
@@ -506,9 +500,9 @@ struct ContentView: View {
                             }
                         }
 
-                    Text("every")
-                        .font(.headline)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+//                    Text("every")
+//                        .font(.headline)
+//                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
 
                     notificationFrequencyPicker
                 }
@@ -523,8 +517,14 @@ struct ContentView: View {
                 )
             }
 
-
-
+            Spacer()
+            
+            Text("Be sure to add the widget.")
+                .font(.title2)
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
             Spacer()
 
             
