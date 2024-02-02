@@ -48,7 +48,7 @@ struct ContentView: View {
     // This is for the widget
     let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
     
-    let notificationFrequencyOptions = ["30 minutes", "1 hour", "2 hours", "4 hours", "8 hours", "1 day"]
+    let notificationFrequencyOptions = ["1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "1 day"]
     
     // Added for customColorsNote
     @State private var showCustomColorsPopover = false
@@ -110,7 +110,7 @@ struct ContentView: View {
                 content.sound = UNNotificationSound.default
 
                 // Calculate the time interval based on the selected frequency
-                let frequencyOptionsInSeconds: [TimeInterval] = [1800, 3600, 7200, 14400, 28800, 86400]
+                let frequencyOptionsInSeconds: [TimeInterval] = [3600, 7200, 14400, 28800, 43200, 86400]
                 let selectedTimeInterval = frequencyOptionsInSeconds[self.notificationFrequencyIndex]
 
                 // Create a trigger to fire the notification based on the selected time interval
