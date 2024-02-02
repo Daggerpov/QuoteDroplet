@@ -41,6 +41,15 @@ struct ContentView: View {
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
     
+    // Add a new @AppStorage property for notificationFrequencyIndex
+    @AppStorage("notificationFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var notificationFrequencyIndex = 4
+    
+    // This is for the widget
+    let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
+    
+    let notificationFrequencyOptions = ["30 minutes", "1 hour", "2 hours", "4 hours", "8 hours", "1 day"]
+    
     // Added for customColorsNote
     @State private var showCustomColorsPopover = false
     
@@ -49,12 +58,13 @@ struct ContentView: View {
     
     @State private var showNotificationsAlert = false
     
+    @State private var notificationPermissionGranted = false
+
+    
     @State private var showInstructions = false
     
     @State private var counts: [String: Int] = [:]
     // Add a property to track whether a custom color has been picked
-    
-    let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
     
     init() {
         // Check if the app is launched for the first time
@@ -65,6 +75,22 @@ struct ContentView: View {
         }
     }
     
+    private var notificationFrequencyPicker: some View {
+        HStack {
+            Picker("", selection: $notificationFrequencyIndex) {
+                ForEach(0..<notificationFrequencyOptions.count, id: \.self) { index in
+                    Text(self.notificationFrequencyOptions[index])
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+            .onReceive([self.notificationFrequencyIndex].publisher.first()) { _ in
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            }
+        }
+    }
+    
     // Function to schedule local notifications
     private func scheduleNotifications() {
         // Fetch a random quote for the notification body
@@ -72,12 +98,23 @@ struct ContentView: View {
             if let quote = quote {
                 // Create a notification content with the fetched quote
                 let content = UNMutableNotificationContent()
-                content.title = "\(getSelectedQuoteCategory()) Quote"
+
+                // Check if the selected category is "All"
+                if getSelectedQuoteCategory() == QuoteCategory.all.rawValue {
+                    content.title = "Quote Droplet"
+                } else {
+                    content.title = "Quote Droplet: \(getSelectedQuoteCategory()) Quote"
+                }
+
                 content.body = "\(quote.text)\n\n- \(quote.author ?? "Unknown Author")"
                 content.sound = UNNotificationSound.default
 
-                // Create a trigger to fire the notification every 5 minutes
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 300, repeats: true)
+                // Calculate the time interval based on the selected frequency
+                let frequencyOptionsInSeconds: [TimeInterval] = [1800, 3600, 7200, 14400, 28800, 86400]
+                let selectedTimeInterval = frequencyOptionsInSeconds[self.notificationFrequencyIndex]
+
+                // Create a trigger to fire the notification based on the selected time interval
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: selectedTimeInterval, repeats: true)
 
                 // Create a request for the notification
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -440,67 +477,65 @@ struct ContentView: View {
             
             customColorNote
             
-            Spacer() // Create spacing
-            
-            
-            if showInstructions {
-                InstructionsSection()
-            } else {
-                Text("Be sure to add the widget.")
-                    .font(.title2)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-            }
-            
-            Button(action: {
-                showNotificationsAlert.toggle()
-            }) {
-                Text("Allow Push Notifications")
-                    .font(.headline)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                            )
-                    )
-                    .buttonStyle(CustomButtonStyle())
-            }
-            .alert(isPresented: $showNotificationsAlert, content: {
-                Alert(
-                    title: Text("Allow Push Notifications"),
-                    message: Text("Do you want to allow push notifications?"),
-                    primaryButton: .default(Text("Allow"), action: {
-                        // Handle user's choice when "Allow" is tapped
-                        scheduleNotifications() // Call the function to schedule notifications
-                    }),
-                    secondaryButton: .cancel(Text("Don't Allow"))
-                )
-            })
-            
             Spacer()
             
-//            Button(action: {
-//                showInstructions.toggle()
-//            }) {
-//                if showInstructions{
-//                    Text("Hide Instructions")
-//                        .font(.headline)
-//                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-//                } else {
-//                    Text("Show Instructions")
-//                        .font(.headline)
-//                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-//                }
-//            }
-               
-//            Spacer()
+            Text("Be sure to add the widget.")
+                .font(.title2)
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            // Notifications Section
+            Section {
+                HStack {
+                    Text("Notifications:")
+                        .font(.headline)
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                        .padding(.horizontal, 5)
+                    
+                    // Toggle for push notifications
+                    Toggle("", isOn: $notificationPermissionGranted)
+                        .labelsHidden()
+                        .onChange(of: notificationPermissionGranted) { newValue in
+                            if newValue {
+                                // User has enabled notifications, schedule them
+                                scheduleNotifications()
+                            } else {
+                                // User has disabled notifications, cancel any scheduled notifications
+                                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                            }
+                        }
+
+                    Text("every")
+                        .font(.headline)
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+
+                    notificationFrequencyPicker
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
+                )
+            }
+
+
+
+            Spacer()
+
             
             aboutMeSection
+        }
+        .onAppear {
+            UNUserNotificationCenter.current().getNotificationSettings { settings in
+                DispatchQueue.main.async {
+                    notificationPermissionGranted = settings.authorizationStatus == .authorized
+                }
+            }
         }
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
@@ -565,23 +600,5 @@ struct GridStack<Content: View>: View {
 extension Collection {
     subscript(safe index: Index) -> Element? {
         indices.contains(index) ? self[index] : nil
-    }
-}
-
-
-struct InstructionsSection: View {
-    let instructions = [
-        "Press and hold an empty area of your home screen.",
-        "Tap the '+' button (top left).",
-        "Find and select 'Quote Droplet'."
-    ]
-
-    var body: some View {
-        List(instructions, id: \.self) { instruction in
-            Text(instruction)
-                .font(.title3)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.leading)
-        }
     }
 }
