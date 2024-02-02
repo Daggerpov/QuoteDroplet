@@ -7,6 +7,9 @@
 
 import SwiftUI
 import WidgetKit
+import UserNotifications
+import UIKit
+
 
 var colorPalettes = [
     [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "CC5803")],
@@ -38,6 +41,14 @@ struct ContentView: View {
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
     
+    // Added for customColorsNote
+    @State private var showCustomColorsPopover = false
+    
+    // Alert for the custom colors popover
+    @State private var showAlert = false
+    
+    @State private var showNotificationsAlert = false
+    
     @State private var showInstructions = false
     
     @State private var counts: [String: Int] = [:]
@@ -51,6 +62,47 @@ struct ContentView: View {
             // Set the default color palette index to 0 (first sample color palette)
             colorPaletteIndex = 0
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
+        }
+    }
+    
+    // Function to schedule local notifications
+    private func scheduleNotifications() {
+        // Fetch a random quote for the notification body
+        getRandomQuoteByClassification(classification: getSelectedQuoteCategory().lowercased()) { quote, error in
+            if let quote = quote {
+                // Create a notification content with the fetched quote
+                let content = UNMutableNotificationContent()
+                content.title = "\(getSelectedQuoteCategory()) Quote"
+                content.body = "\(quote.text)\n\n- \(quote.author ?? "Unknown Author")"
+                content.sound = UNNotificationSound.default
+
+                // Create a trigger to fire the notification every 5 minutes
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 300, repeats: true)
+
+                // Create a request for the notification
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+                // Add the notification request to the notification center
+                UNUserNotificationCenter.current().add(request) { error in
+                    if let error = error {
+                        print("Error scheduling notification: \(error.localizedDescription)")
+                    } else {
+                        print("Notification scheduled successfully.")
+                    }
+                }
+            }
+        }
+    }
+    
+    // Function to request push notification permission
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                // Post a notification indicating that authorization is granted
+                NotificationCenter.default.post(name: NSNotification.Name("NotificationPermissionGranted"), object: nil)
+            } else if let error = error {
+                print("Error requesting notification permission: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -106,6 +158,11 @@ struct ContentView: View {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }
         }
+    }
+    
+    // Function to get the selected quote category as a string
+    private func getSelectedQuoteCategory() -> String {
+        return quoteCategory.rawValue
     }
 
     
@@ -201,9 +258,9 @@ struct ContentView: View {
         .padding(.horizontal)
     }
     
-    private var sampleColourSection: some View {
+    private var sampleColorSection: some View {
         VStack {
-            Text("Sample Colours:")
+            Text("Sample Colors:")
                 .font(.title3) // Increased font size
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
@@ -275,9 +332,9 @@ struct ContentView: View {
         }
     }
 
-    private var customColourSection: some View {
+    private var customColorSection: some View {
         VStack(spacing: 10) {
-            Text("Custom Colours:")
+            Text("Custom Colors:")
                 .font(.title3) // Increased font size
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
@@ -285,6 +342,82 @@ struct ContentView: View {
             customColorPickers
         }
     }
+    
+    private var customColorNote: some View {
+        VStack(spacing: 10) {
+            // Note about Custom Colors Button
+            Button(action: {
+                showInstructions = false // Close instructions if open
+                showAlert = true
+            }) {
+                HStack {
+                    Image(systemName: "info.circle")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+
+                    Text("Note About Custom Colors")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        .padding(.leading, 5)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear) // Use the first color as the background color
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2) // Add a border with the third color
+                        )
+                )
+                .buttonStyle(CustomButtonStyle()) // Apply the custom button style
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Note About Custom Colors"),
+                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+        }
+        .popover(isPresented: $showCustomColorsPopover) {
+            CustomColorsPopoverContent()
+        }
+    }
+
+    struct CustomButtonStyle: ButtonStyle {
+        func makeBody(configuration: Self.Configuration) -> some View {
+            configuration.label
+                .padding()
+                .background(configuration.isPressed ? Color.gray.opacity(0.5) : Color.clear) // Change the background color when pressed
+                .cornerRadius(8)
+                .border(configuration.isPressed ? Color.clear : Color.blue, width: 2) // Add a border when not pressed
+        }
+    }
+    
+    // New View for the Popover content
+    struct CustomColorsPopoverContent: View {
+        var body: some View {
+            VStack {
+                Text("Custom Colors Instructions")
+                    .font(.headline)
+                    .padding()
+
+                Text("To customize your own colors, tap and hold on the colored circles below. Each circle represents a different color in the palette.")
+                    .font(.body)
+                    .padding()
+
+                Text("Note: Changes will apply to the 'Custom Colors' palette.")
+                    .font(.body)
+                    .foregroundColor(.gray)
+                    .padding()
+
+                Spacer()
+            }
+            .padding()
+            .frame(minWidth: 200, maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
+        }
+    }
+
 
 
     var body: some View {
@@ -297,19 +430,15 @@ struct ContentView: View {
             Group {
                 HStack(spacing: 20) {
                     VStack(spacing: 10) {
-                        sampleColourSection
+                        sampleColorSection
                         
-                        customColourSection
+                        customColorSection
                     }
                     widgetPreviewSection
                 }
             }
             
-            Text("Note: To make more than a singular change to the custom colours, click a sample to make it update. This is a bug I intend to fix.")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
-                .multilineTextAlignment(.center)
-
+            customColorNote
             
             Spacer() // Create spacing
             
@@ -323,6 +452,35 @@ struct ContentView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
             }
+            
+            Button(action: {
+                showNotificationsAlert.toggle()
+            }) {
+                Text("Allow Push Notifications")
+                    .font(.headline)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                            )
+                    )
+                    .buttonStyle(CustomButtonStyle())
+            }
+            .alert(isPresented: $showNotificationsAlert, content: {
+                Alert(
+                    title: Text("Allow Push Notifications"),
+                    message: Text("Do you want to allow push notifications?"),
+                    primaryButton: .default(Text("Allow"), action: {
+                        // Handle user's choice when "Allow" is tapped
+                        scheduleNotifications() // Call the function to schedule notifications
+                    }),
+                    secondaryButton: .cancel(Text("Don't Allow"))
+                )
+            })
             
             Spacer()
             
