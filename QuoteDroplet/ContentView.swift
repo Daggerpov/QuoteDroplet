@@ -59,7 +59,6 @@ struct ContentView: View {
     @State private var showNotificationsAlert = false
     
     @State private var notificationPermissionGranted = false
-
     
     @State private var showInstructions = false
     
@@ -106,7 +105,12 @@ struct ContentView: View {
                     content.title = "Quote Droplet: \(getSelectedQuoteCategory()) Quote"
                 }
 
-                content.body = "\(quote.text)\n\n- \(quote.author ?? "Unknown Author")"
+                if quote.author != nil && quote.author != "Unknown Author"{
+                    content.body = "\(quote.text)\n\n- \(quote.author ?? "")"
+                } else {
+                    content.body = "\(quote.text)"
+                }
+                
                 content.sound = UNNotificationSound.default
 
                 // Calculate the time interval based on the selected frequency
@@ -202,7 +206,6 @@ struct ContentView: View {
         return quoteCategory.rawValue
     }
 
-    
     private var timeIntervalPicker: some View {
         Group {
             Text("Time interval between quotes:")
@@ -317,7 +320,6 @@ struct ContentView: View {
         }
     }
 
-    
     private var customColorPickers: some View {
         HStack(spacing: 10) {
             ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
@@ -342,8 +344,6 @@ struct ContentView: View {
             }
         }.resume()
     }
-
-
 
     private func customColorPicker(index: Int) -> some View {
         ColorPicker(
@@ -455,8 +455,6 @@ struct ContentView: View {
         }
     }
 
-
-
     var body: some View {
         VStack {
             quoteCategoryPicker
@@ -499,10 +497,6 @@ struct ContentView: View {
                                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                             }
                         }
-
-//                    Text("every")
-//                        .font(.headline)
-//                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
 
                     notificationFrequencyPicker
                 }
