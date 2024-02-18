@@ -148,14 +148,13 @@ struct Provider: IntentTimelineProvider {
 // Helper function to convert selected frequency index to seconds
 public func getFrequencyInSeconds(for index: Int) -> Int {
     switch index {
-    case 0: return 30 // 30 sec
-    case 1: return 600  // 10 minutes
-    case 2: return 3600 // 1 hour
-    case 3: return 7200 // 2 hours
-    case 4: return 14400 // 4 hours
-    case 5: return 28800 // 8 hours
-    case 6: return 86400 // 1 day
-    default: return 7200
+    case 0: return 28800                // 8 hrs
+    case 1: return 43200                // 12 hrs
+    case 2: return 86400                // 1 day
+    case 3: return 172800               // 2 days
+    case 4: return 345600               // 4 days
+    case 5: return 604800               // 1 week
+    default: return 86400               // 1 Day
     }
 }
 

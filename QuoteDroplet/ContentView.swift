@@ -33,6 +33,8 @@ enum QuoteCategory: String, CaseIterable {
     }
 }
 
+//let notificationPermissionKey = "notificationPermissionGranted"
+
 struct ContentView: View {
     @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var colorPaletteIndex = 0
@@ -46,9 +48,9 @@ struct ContentView: View {
     var notificationFrequencyIndex = 3
     
     // This is for the widget
-    let frequencyOptions = ["30 sec", "10 min", "1 hr", "2 hrs", "4 hrs", "8 hrs", "1 day"]
+    let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     
-    let notificationFrequencyOptions = ["1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "1 day"]
+    let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     
     // Added for customColorsNote
     @State private var showCustomColorsPopover = false
@@ -58,7 +60,15 @@ struct ContentView: View {
     
     @State private var showNotificationsAlert = false
     
+    // old, to be removed
     @State private var notificationPermissionGranted = false
+    
+//    @State private var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey) {
+//        didSet {
+//            // Save the state to UserDefaults whenever it changes
+//            UserDefaults.standard.set(notificationPermissionGranted, forKey: notificationPermissionKey)
+//        }
+//    }
     
     @State private var showInstructions = false
     
@@ -114,7 +124,7 @@ struct ContentView: View {
                 content.sound = UNNotificationSound.default
 
                 // Calculate the time interval based on the selected frequency
-                let frequencyOptionsInSeconds: [TimeInterval] = [3600, 7200, 14400, 28800, 43200, 86400]
+                let frequencyOptionsInSeconds: [TimeInterval] = [28800, 43200, 86400, 172800, 345600, 604800]
                 let selectedTimeInterval = frequencyOptionsInSeconds[self.notificationFrequencyIndex]
 
                 // Create a trigger to fire the notification based on the selected time interval
