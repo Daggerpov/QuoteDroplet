@@ -33,7 +33,8 @@ enum QuoteCategory: String, CaseIterable {
     }
 }
 
-//let notificationPermissionKey = "notificationPermissionGranted"
+let notificationPermissionKey = "notificationPermissionGranted"
+let notificationToggleKey = "notificationToggleEnabled" // New key for notification toggle
 
 struct ContentView: View {
     @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -61,14 +62,15 @@ struct ContentView: View {
     @State private var showNotificationsAlert = false
     
     // old, to be removed
-    @State private var notificationPermissionGranted = false
+//    @State private var notificationPermissionGranted = false
     
-//    @State private var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey) {
-//        didSet {
-//            // Save the state to UserDefaults whenever it changes
-//            UserDefaults.standard.set(notificationPermissionGranted, forKey: notificationPermissionKey)
-//        }
-//    }
+    @AppStorage(notificationPermissionKey) // Use the same key for @AppStorage
+    var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
+    
+    // Add a new @AppStorage property for notificationToggleEnabled
+    @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
+    var notificationToggleEnabled: Bool = false
+
     
     @State private var showInstructions = false
     
@@ -82,6 +84,9 @@ struct ContentView: View {
             colorPaletteIndex = 0
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
         }
+        
+        // Initialize notificationPermissionGranted based on stored value
+        notificationPermissionGranted = UserDefaults.standard.bool(forKey: notificationPermissionKey)
     }
     
     private var notificationFrequencyPicker: some View {
@@ -496,9 +501,11 @@ struct ContentView: View {
                         .padding(.horizontal, 5)
                     
                     // Toggle for push notifications
-                    Toggle("", isOn: $notificationPermissionGranted)
+                    Toggle("", isOn: $notificationToggleEnabled)
                         .labelsHidden()
-                        .onChange(of: notificationPermissionGranted) { newValue in
+                        .onChange(of: notificationToggleEnabled) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: notificationToggleKey) // Save the new value
+                            
                             if newValue {
                                 // User has enabled notifications, schedule them
                                 scheduleNotifications()
@@ -521,20 +528,23 @@ struct ContentView: View {
                 )
             }
 
+
             Spacer()
             
-            Text("Be sure to add the widget.")
-                .font(.title2)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
-            Spacer()
+//            Text("Be sure to add the widget.")
+//                .font(.title2)
+//                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
+//                .multilineTextAlignment(.center)
+//                .padding(.horizontal)
+//            
+//            Spacer()
 
             
             aboutMeSection
         }
         .onAppear {
+            notificationToggleEnabled = UserDefaults.standard.bool(forKey: notificationToggleKey)
+
             UNUserNotificationCenter.current().getNotificationSettings { settings in
                 DispatchQueue.main.async {
                     notificationPermissionGranted = settings.authorizationStatus == .authorized
