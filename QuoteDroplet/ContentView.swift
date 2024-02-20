@@ -313,28 +313,42 @@ struct ContentView: View {
         // About Me Section
         
         HStack {
-            Text("About Me:")
+            Text("Contact:")
                 .font(.title2) // Increased font size
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                 .padding(.leading, 10)
+            
             Spacer()
-            Link(destination: URL(string: "https://github.com/Daggerpov")!) {
-                Image("githublogo")
+            
+            Link(destination: URL(string: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact")!) {
+                Image("gmaillogo")
                     .resizable()
-                    .frame(width: 60, height: 60)
+                    .frame(width: 60, height: 50)
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
             }
+            
+            Spacer()
             
             Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
                 Image("linkedinlogo")
                     .resizable()
-                    .frame(width: 60, height: 60)
+                    .frame(width: 50, height: 50)
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
             }
+            
+            Spacer()
+            
+            Link(destination: URL(string: "https://github.com/Daggerpov")!) {
+                Image("githublogo")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+            }
+            
             Spacer()
         }
         
-        .padding(EdgeInsets(top: 15, leading: 0, bottom: 10, trailing: 0))
+        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
         .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)
         .shadow(radius: 5)
