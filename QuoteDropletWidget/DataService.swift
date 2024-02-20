@@ -29,4 +29,8 @@ struct DataService {
     func getQuoteCategory() -> String {
         return quoteCategory
     }
+    
+    // Add @AppStorage property for selectedFontIndex
+    @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var selectedFontIndex = 0
 }

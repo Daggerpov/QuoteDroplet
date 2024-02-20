@@ -10,6 +10,14 @@ import SwiftUI
 import Intents
 import Foundation
 
+// Fonts for widget and widget preview
+let availableFonts = [
+    "Georgia", "Helvetica", "Times New Roman",
+    "Verdana", "Palatino", "Garamond", "Baskerville", "Didot",
+    "Optima", "Bodoni", "Century Gothic", "Book Antiqua", "Lucida Calligraphy",
+    "Playfair Display", "Lora", "Crimson Text"
+]
+
 // Extension to disable content margins
 extension WidgetConfiguration {
     func disableContentMarginsIfNeeded() -> some WidgetConfiguration {
@@ -201,20 +209,20 @@ struct QuoteDropletWidgetEntryView : View {
             VStack {
                 if let quote = entry.quote {
                     Text(quote.text)
-                        .font(.headline)
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 5)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                     if quote.author != "Unknown Author" {
                         Text("- \(quote.author ?? "")")
-                            .font(.subheadline)
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2]) // Use the third color for author text color
                             .padding(.horizontal, 5)
                     }
                 } else {
                     if family == .systemMedium {
                         Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
-                            .font(.headline)
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                             .foregroundColor(colors[1])
                             .multilineTextAlignment(.center)
                             .lineSpacing(4)
@@ -224,7 +232,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .frame(maxHeight: .infinity)
                         Spacer() // Add a spacer to push the author text to the center
                         Text("- Khalil Gibran")
-                            .font(.subheadline)
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2])
                             .padding(.horizontal, 20)
                             .padding(.bottom, 10)
@@ -232,7 +240,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .minimumScaleFactor(0.5) // Allow author text to scale down if needed
                     } else {
                         Text("More is lost by indecision than by wrong decision.")
-                            .font(.headline)
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                             .foregroundColor(colors[1])
                             .multilineTextAlignment(.center)
                             .lineSpacing(4)
@@ -242,7 +250,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .frame(maxHeight: .infinity)
                         Spacer() // Add a spacer to push the author text to the center
                         Text("- Cicero")
-                            .font(.subheadline)
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2])
                             .padding(.horizontal, 20)
                             .padding(.bottom, 10)

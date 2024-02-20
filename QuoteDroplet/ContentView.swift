@@ -44,6 +44,10 @@ struct ContentView: View {
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
     
+    
+    @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var selectedFontIndex = 0
+    
     // Add a new @AppStorage property for notificationFrequencyIndex
     @AppStorage("notificationFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var notificationFrequencyIndex = 3
@@ -60,9 +64,6 @@ struct ContentView: View {
     @State private var showAlert = false
     
     @State private var showNotificationsAlert = false
-    
-    // old, to be removed
-//    @State private var notificationPermissionGranted = false
     
     @AppStorage(notificationPermissionKey) // Use the same key for @AppStorage
     var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
@@ -83,10 +84,37 @@ struct ContentView: View {
             // Set the default color palette index to 0 (first sample color palette)
             colorPaletteIndex = 0
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
+            selectedFontIndex = 0
         }
         
         // Initialize notificationPermissionGranted based on stored value
         notificationPermissionGranted = UserDefaults.standard.bool(forKey: notificationPermissionKey)
+    }
+    
+    // Fonts for widget and widget preview
+    let availableFonts = [
+        "Georgia", "Helvetica", "Times New Roman",
+        "Verdana", "Palatino", "Garamond", "Baskerville", "Didot",
+        "Optima", "Bodoni", "Century Gothic", "Book Antiqua", "Lucida Calligraphy",
+        "Playfair Display", "Lora", "Crimson Text"
+    ]
+
+    // Font selector
+    private var fontSelector: some View {
+        HStack {
+            Text("Widget Font:")
+                .font(.title2)
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+
+            Picker("", selection: $selectedFontIndex) {
+                ForEach(0..<availableFonts.count, id: \.self) { index in
+                    Text(availableFonts[index])
+                        .font(.custom(availableFonts[index], size: 16))
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+        }
     }
     
     private var notificationFrequencyPicker: some View {
@@ -247,7 +275,7 @@ struct ContentView: View {
         VStack {
             Text("Preview:")
                 .font(.title3) // Increased font size
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear) // Use the first color as the background color
@@ -255,26 +283,26 @@ struct ContentView: View {
                         VStack {
                             Spacer()
                             Text("More is lost by indecision than by wrong decision.")
-                                .font(.headline)
+                                .font(Font.custom(availableFonts[selectedFontIndex], size: 16)) // Use selected font for quote text
                                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white) // Use the second color for text color
-                                .padding(.horizontal, 20) // SPLIT BY ME
-                                .padding(.vertical, 10) // SPLIT BY ME
-                                .multilineTextAlignment(.center) // Center-align the text
-                                .lineSpacing(4) // Adjusted line spacing
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .multilineTextAlignment(.center)
+                                .lineSpacing(4)
                                 .minimumScaleFactor(0.5)
                                 .frame(maxHeight: .infinity)
 
                             Text("- Cicero")
-                                .font(.subheadline)
+                                .font(Font.custom(availableFonts[selectedFontIndex], size: 14)) // Use selected font for author text
                                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .white) // Use the third color for author text color
-                                .padding(.horizontal, 20) // ! SPLIT BY ME
-                                .padding(.bottom, 10) // ! CHANGED BY ME
-                                .lineLimit(1) // Ensure the author text is limited to one line
-                                .minimumScaleFactor(0.5) // Allow author text to scale down if needed
+                                .padding(.horizontal, 20)
+                                .padding(.bottom, 10)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                         }
                     )
                     .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 0) // Add a subtle shadow for depth
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 0)
                     .padding(.trailing, 0)
             }
             .frame(width: 150, height: 150)
@@ -492,6 +520,10 @@ struct ContentView: View {
             
             Spacer()
             
+            fontSelector
+            
+            Spacer()
+            
             // Notifications Section
             Section {
                 HStack {
@@ -530,16 +562,6 @@ struct ContentView: View {
 
 
             Spacer()
-            
-//            Text("Be sure to add the widget.")
-//                .font(.title2)
-//                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .gray)
-//                .multilineTextAlignment(.center)
-//                .padding(.horizontal)
-//            
-//            Spacer()
-
-            
             aboutMeSection
         }
         .onAppear {
