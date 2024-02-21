@@ -120,8 +120,16 @@ struct ContentView: View {
         HStack {
             Picker("", selection: $notificationFrequencyIndex) {
                 ForEach(0..<notificationFrequencyOptions.count, id: \.self) { index in
-                    Text("Every " + self.notificationFrequencyOptions[index])
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    if self.notificationFrequencyOptions[index] == "1 day" {
+                        Text("Every day")
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    } else if self.notificationFrequencyOptions[index] == "1 week" {
+                        Text("Every week")
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    } else {
+                        Text("Every \(self.notificationFrequencyOptions[index])")
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    }
                 }
             }
             .pickerStyle(MenuPickerStyle())
@@ -258,8 +266,16 @@ struct ContentView: View {
             HStack {
                 Picker("", selection: $quoteFrequencyIndex) {
                     ForEach(0..<frequencyOptions.count, id: \.self) { index in
-                        Text("Every " + self.frequencyOptions[index])
-                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        if self.frequencyOptions[index] == "1 day" {
+                            Text("Every day")
+                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        } else if self.frequencyOptions[index] == "1 week" {
+                            Text("Every week")
+                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        } else {
+                            Text("Every \(self.frequencyOptions[index])")
+                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        }
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
@@ -329,15 +345,6 @@ struct ContentView: View {
             
             Spacer()
             
-            Link(destination: URL(string: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact")!) {
-                Image("gmaillogo")
-                    .resizable()
-                    .frame(width: 60, height: 50)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-            }
-            
-            Spacer()
-            
             Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
                 Image("linkedinlogo")
                     .resizable()
@@ -351,6 +358,15 @@ struct ContentView: View {
                 Image("githublogo")
                     .resizable()
                     .frame(width: 50, height: 50)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+            }
+            
+            Spacer()
+            
+            Link(destination: URL(string: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact")!) {
+                Image("gmaillogo")
+                    .resizable()
+                    .frame(width: 60, height: 50)
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
             }
             
