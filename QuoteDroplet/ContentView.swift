@@ -78,6 +78,20 @@ struct ContentView: View {
     @State private var counts: [String: Int] = [:]
     // Add a property to track whether a custom color has been picked
     
+    @State private var isPopupPresented = false
+    
+    // Additional state variable to control the visibility of the "Add New Quote" popup
+    @State private var isAddingQuote = false
+    
+    // Additional state variables to store the input values
+    @State private var quoteText = ""
+    @State private var author = ""
+    @State private var selectedCategory: QuoteCategory = .wisdom // Default category
+    
+    // submission process
+    @State private var showSubmissionAlert = false
+    @State private var submissionMessage = ""
+    
     init() {
         // Check if the app is launched for the first time
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
@@ -332,6 +346,37 @@ struct ContentView: View {
             }
             .frame(width: 150, height: 150)
         }
+    }
+    
+    private var composeButton: some View {
+        Button(action: {
+            isAddingQuote = true
+        }) {
+            HStack {
+                Text("Submit a quote")
+                    .font(.headline)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue) // Use the second color from color palette
+                Image("compose")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue) // Use the second color from color palette
+            }
+        }
+        .padding()
+    }
+
+    
+    // Button for adding a new quote
+    private var addQuoteButton: some View {
+        Button(action: {
+            isAddingQuote = true // Show the popup when tapped
+        }) {
+            Image("compose")
+                .resizable()
+                .frame(width: 50, height: 50)
+                .foregroundColor(.blue) // Set the color of the button
+        }
+        .padding()
     }
     
     private var aboutMeSection: some View {
@@ -600,11 +645,88 @@ struct ContentView: View {
                         )
                 )
             }
-
+            
+            Spacer()
+            
+            composeButton
 
             Spacer()
+            
             aboutMeSection
         }
+        .sheet(isPresented: $isAddingQuote) {
+            // Popup content for adding a new quote
+            VStack {
+                Text("Add New Quote")
+                    .font(.title)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white) // Use the second color from color palette
+                    .padding()
+
+                // Text field for quote text
+                TextEditor(text: $quoteText)
+                    .frame(minHeight: 200) // Adjust height
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .padding()
+
+                // Text field for author
+                TextField("Author", text: $author)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .padding()
+
+                // Selection field for category
+                Picker("Category", selection: $selectedCategory) {
+                    ForEach(QuoteCategory.allCases, id: \.self) { category in
+                        let displayNameWithCount = "\(category.displayName) (\(counts[category.rawValue] ?? 0))"
+
+                        Text(displayNameWithCount)
+                            .font(.headline)
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white) // Use the second color from color palette
+                            .tag(category)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                // Inside the sheet closure for adding a new quote
+                Button("Submit") {
+                    // Perform submission action here
+                    addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
+                        if success {
+                            submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
+                        } else if let error = error {
+                            submissionMessage = "An error occurred: \(error.localizedDescription)"
+                        } else {
+                            submissionMessage = "An unknown error occurred."
+                        }
+                        showSubmissionAlert = true // Show the alert
+                        isAddingQuote = false // Close the popup after submission
+                    }
+                }
+
+                .padding()
+                .alert(isPresented: $showSubmissionAlert) {
+                    Alert(
+                        title: Text("Submission Received"),
+                        message: Text(submissionMessage),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+                .background(colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear) // Use the first color from color palette for background
+                .foregroundColor(.white) // Set text color
+                .cornerRadius(10)
+
+                Spacer()
+            }
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear])) // Use the first color from color palette for background
+            .cornerRadius(20)
+            .padding()
+        }
+
         .onAppear {
             notificationToggleEnabled = UserDefaults.standard.bool(forKey: notificationToggleKey)
 
@@ -616,6 +738,7 @@ struct ContentView: View {
         }
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
+        
     }
 
     
