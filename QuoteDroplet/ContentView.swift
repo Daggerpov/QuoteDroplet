@@ -93,10 +93,9 @@ struct ContentView: View {
     
     // Fonts for widget and widget preview
     let availableFonts = [
-        "Georgia", "Helvetica", "Times New Roman",
-        "Verdana", "Palatino", "Garamond", "Baskerville", "Didot",
-        "Optima", "Bodoni", "Century Gothic", "Book Antiqua", "Lucida Calligraphy",
-        "Playfair Display", "Lora", "Crimson Text"
+        "Georgia", "Times New Roman",
+        "Verdana", "Palatino", "Baskerville", "Didot",
+        "Optima"
     ]
 
     // Font selector
