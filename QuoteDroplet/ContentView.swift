@@ -250,25 +250,35 @@ struct ContentView: View {
     }
 
     private var timeIntervalPicker: some View {
-        Group {
-            Text("Time interval between quotes:")
-                .font(.title2) // Increased font size
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 20)
-            
-            Picker("", selection: $quoteFrequencyIndex) {
-                ForEach(0..<frequencyOptions.count, id: \.self) { index in
-                    Text(self.frequencyOptions[index])
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+        HStack {
+            Text("Widget Quote Frequency:")
+                .font(.headline)
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                .padding(.horizontal, 5)
+
+            HStack {
+                Picker("", selection: $quoteFrequencyIndex) {
+                    ForEach(0..<frequencyOptions.count, id: \.self) { index in
+                        Text("Every " + self.frequencyOptions[index])
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                .onReceive([self.quoteFrequencyIndex].publisher.first()) { _ in
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 }
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .onReceive([self.quoteFrequencyIndex].publisher.first()) { _ in
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-            }
-            
         }
-        .padding(.bottom, 20) // Increased spacing
+        .padding(10)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                )
+        )
     }
     
     private var widgetPreviewSection: some View {
@@ -468,7 +478,7 @@ struct ContentView: View {
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Note About Custom Colors"),
-                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue."),
+                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue. However, my priority is currently to bring quote submission to this app so you, as a user, can contribute quotes."),
                     dismissButton: .default(Text("OK"))
                 )
             }
@@ -516,8 +526,6 @@ struct ContentView: View {
         VStack {
             quoteCategoryPicker
             
-            timeIntervalPicker
-            
             // Color Palette Section
             Group {
                 HStack(spacing: 20) {
@@ -535,6 +543,10 @@ struct ContentView: View {
             Spacer()
             
             fontSelector
+            
+            Spacer()
+            
+            timeIntervalPicker
             
             Spacer()
             
