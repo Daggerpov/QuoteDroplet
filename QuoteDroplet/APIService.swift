@@ -5,9 +5,11 @@ import Foundation
 func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void) {
     var urlString: String;
     if classification == "all" {
-        urlString = "http://quote-dropper-production.up.railway.app/quotes/"
+        // Modify the URL to include a filter for approved quotes
+        urlString = "http://quote-dropper-production.up.railway.app/quotes/?approved=true"
     } else {
-        urlString = "http://quote-dropper-production.up.railway.app/quotes/classification=\(classification)"
+        // Modify the URL to include a filter for approved quotes and classification
+        urlString = "http://quote-dropper-production.up.railway.app/quotes/classification=\(classification)?approved=true"
     }
     
     let url = URL(string: urlString)!

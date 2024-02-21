@@ -478,7 +478,7 @@ struct ContentView: View {
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Note About Custom Colors"),
-                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue. However, my priority is currently to bring quote submission to this app so you, as a user, can contribute quotes."),
+                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue. \n\nHowever, my priority is currently to bring quote submission to this app so you, as a user, can contribute quotes."),
                     dismissButton: .default(Text("OK"))
                 )
             }
