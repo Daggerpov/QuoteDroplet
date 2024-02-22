@@ -62,6 +62,9 @@ struct ContentView: View {
     
     // Alert for the custom colors popover
     @State private var showAlert = false
+
+    // Alert for the submission info popover
+    @State private var showSubmissionInfoAlert = false
     
     @State private var showNotificationsAlert = false
     
@@ -265,6 +268,25 @@ struct ContentView: View {
         }
     }
     
+    private var submissionQuoteCategoryPicker: some View {
+        HStack {
+            Text("Quote Category:")
+                .font(.title2)
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+            Picker("", selection: $selectedCategory) {
+                ForEach(QuoteCategory.allCases, id: \.self) { category in
+                    Text(category.displayName)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .padding()
+            .background(colorPalettes[safe: colorPaletteIndex]?[0])
+            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1])
+            .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+        }
+    }
+
+    
     // Function to get the selected quote category as a string
     private func getSelectedQuoteCategory() -> String {
         return quoteCategory.rawValue
@@ -272,7 +294,7 @@ struct ContentView: View {
 
     private var timeIntervalPicker: some View {
         HStack {
-            Text("Widget Quote Frequency:")
+            Text("Refresh Widget:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
                 .padding(.horizontal, 5)
@@ -356,15 +378,19 @@ struct ContentView: View {
                 Text("Submit a quote")
                     .font(.headline)
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue) // Use the second color from color palette
-                Image("compose")
+                Image(systemName: "square.and.pencil") // Using SF Symbol for compose image
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue) // Use the second color from color palette
             }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue, lineWidth: 2) // Add a border with the second color
+            )
         }
-        .padding()
     }
-
     
     // Button for adding a new quote
     private var addQuoteButton: some View {
@@ -656,42 +682,87 @@ struct ContentView: View {
         }
         .sheet(isPresented: $isAddingQuote) {
             // Popup content for adding a new quote
-            VStack {
-                Text("Add New Quote")
+            VStack(spacing: 10) {
+                Text("Quote Submission")
                     .font(.title)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white) // Use the second color from color palette
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black) // Use the second color from color palette
                     .padding()
+                
+                Button(action: {
+                    showSubmissionInfoAlert = true
+                }) {
+                    HStack {
+                        Image(systemName: "info.circle")
+                            .font(.title3)
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+
+                        Text("How This Works")
+                            .font(.title3)
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                            .padding(.leading, 5)
+                            .padding(.bottom, 10)
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear) // Use the first color as the background color
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2) // Add a border with the third color
+                            )
+                    )
+                    .buttonStyle(CustomButtonStyle()) // Apply the custom button style
+                }
+                .alert(isPresented: $showSubmissionInfoAlert) {
+                    Alert(
+                        title: Text("How Quote Submission Works"),
+                        message: Text("Once you submit a quote, it'll show up on my admin portal, where I'll be able to edit typos or insert missing fields, such as author and classification—so don't worry about these issues. \n\nThen, I'll either approve the quote submission to be added into the app's quote database, or delete it.\n\nNote that if your quote exactly matches another one's text, the submission will not go through."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
 
                 // Text field for quote text
                 TextEditor(text: $quoteText)
-                    .frame(minHeight: 200) // Adjust height
+                    .frame(minHeight: 100, maxHeight: 150) // Adjust height
                     .padding()
-                    .background(Color.white)
                     .cornerRadius(10)
-                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray, lineWidth: 1) // Add a border to visually indicate the text field
+                    )
+                    .onTapGesture {
+                        if quoteText == "Quote Text" {
+                            quoteText = "" // Clear the placeholder text when tapped
+                        }
+                    }
+                    .onAppear {
+                        // Set the initial value of the quote text to the placeholder text
+                        quoteText = "Quote Text"
+                    }
+
 
                 // Text field for author
-                TextField("Author", text: $author)
+                TextEditor(text: $author)
+                    // All copied and adjusted from quote text field
+                    .frame(minHeight: 25, maxHeight: 50) // Adjust height
                     .padding()
-                    .background(Color.white)
                     .cornerRadius(10)
-                    .padding()
-
-                // Selection field for category
-                Picker("Category", selection: $selectedCategory) {
-                    ForEach(QuoteCategory.allCases, id: \.self) { category in
-                        let displayNameWithCount = "\(category.displayName) (\(counts[category.rawValue] ?? 0))"
-
-                        Text(displayNameWithCount)
-                            .font(.headline)
-                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white) // Use the second color from color palette
-                            .tag(category)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray, lineWidth: 1) // Add a border to visually indicate the text field
+                    )
+                    .onTapGesture {
+                        if author == "Author" {
+                            author = ""
+                        }
                     }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                
-                // Inside the sheet closure for adding a new quote
+                    .onAppear {
+                        author = "Author"
+                    }
+
+                submissionQuoteCategoryPicker
+
+                // Submit button
                 Button("Submit") {
                     // Perform submission action here
                     addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
@@ -706,8 +777,8 @@ struct ContentView: View {
                         isAddingQuote = false // Close the popup after submission
                     }
                 }
-
                 .padding()
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black) // Set text color
                 .alert(isPresented: $showSubmissionAlert) {
                     Alert(
                         title: Text("Submission Received"),
@@ -715,13 +786,8 @@ struct ContentView: View {
                         dismissButton: .default(Text("OK"))
                     )
                 }
-                .background(colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear) // Use the first color from color palette for background
-                .foregroundColor(.white) // Set text color
-                .cornerRadius(10)
-
-                Spacer()
             }
-            .frame(minWidth: 0, maxWidth: .infinity)
+            .frame(width: UIScreen.main.bounds.width * 1) // Adjust width (was 0.7 instead of 1)
             .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear])) // Use the first color from color palette for background
             .cornerRadius(20)
             .padding()
