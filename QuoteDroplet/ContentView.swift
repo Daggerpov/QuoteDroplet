@@ -599,12 +599,11 @@ struct ContentView: View {
 
                 submissionQuoteCategoryPicker
                 Button("Submit") {
-                    showSubmissionAlert = true // Show the alert immediately after the submit button is pressed
                     addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
                         if success {
                             submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
-                            // Set showSubmissionReceivedAlert to true here to display the alert
-                            showSubmissionReceivedAlert = true
+                            // Set showSubmissionReceivedAlert to true after successful submission
+                            showSubmissionReceivedAlert = true // <-- Set to true after successful submission
                         } else if let error = error {
                             submissionMessage = error.localizedDescription
                         } else {
