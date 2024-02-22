@@ -92,7 +92,13 @@ func addQuote(text: String, author: String?, classification: String, completion:
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
             if let httpResponse = response as? HTTPURLResponse {
-                completion(false, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
+                if httpResponse.statusCode == 409 {
+                    // Handle the 409 error here
+                    let conflictError = NSError(domain: "ConflictError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."])
+                                        completion(false, conflictError)
+                } else {
+                    completion(false, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
+                }
             } else {
                 completion(false, NSError(domain: "HTTPError", code: -1, userInfo: nil))
             }
