@@ -94,7 +94,7 @@ func addQuote(text: String, author: String?, classification: String, completion:
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 409 {
                     // Handle the 409 error here
-                    let conflictError = NSError(domain: "ConflictError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."])
+                    let conflictError = NSError(domain: "ConflictError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Thanks for submitting a quote.\n\nIt happens to already exist in the database, though. Great minds think alike."])
                                         completion(false, conflictError)
                 } else {
                     completion(false, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))

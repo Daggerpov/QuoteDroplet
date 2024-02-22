@@ -603,14 +603,15 @@ struct ContentView: View {
                         if success {
                             submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
                             // Set showSubmissionReceivedAlert to true after successful submission
-                            showSubmissionReceivedAlert = true // <-- Set to true after successful submission
                         } else if let error = error {
                             submissionMessage = error.localizedDescription
                         } else {
                             submissionMessage = "An unknown error occurred."
                         }
                         isAddingQuote = false
+                        showSubmissionReceivedAlert = true // <-- Set to true after successful submission
                     }
+                    
                 }
                 .padding()
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
