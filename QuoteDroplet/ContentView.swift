@@ -99,10 +99,17 @@ struct ContentView: View {
                     content.body = "\(quote.text)"
                 }
                 content.sound = UNNotificationSound.default
+                
                 let frequencyOptionsInSeconds: [TimeInterval] = [28800, 43200, 86400, 172800, 345600, 604800]
                 let selectedTimeInterval = frequencyOptionsInSeconds[self.notificationFrequencyIndex]
+                
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: selectedTimeInterval, repeats: true)
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                
+                let identifier = UUID().uuidString
+                scheduledNotificationIDs.insert(identifier)
+                
+                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                
                 UNUserNotificationCenter.current().add(request) { error in
                     if let error = error {
                         print("Error scheduling notification: \(error.localizedDescription)")
@@ -645,6 +652,9 @@ struct ContentView: View {
         return frequencyOptions[quoteFrequencyIndex]
     }
 }
+let notificationPermissionKey = "notificationPermissionGranted"
+let notificationToggleKey = "notificationToggleEnabled"
+private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
 struct ColorPaletteView: View {
     var colors: [Color]
     var body: some View {
@@ -709,5 +719,4 @@ enum QuoteCategory: String, CaseIterable {
         return self.rawValue
     }
 }
-let notificationPermissionKey = "notificationPermissionGranted"
-let notificationToggleKey = "notificationToggleEnabled"
+
