@@ -93,29 +93,35 @@ struct ContentView: View {
                 } else {
                     content.title = "Quote Droplet: \(getSelectedQuoteCategory()) Quote"
                 }
-                if quote.author != nil && quote.author != "Unknown Author"{
-                    content.body = "\(quote.text)\n\n- \(quote.author ?? "")"
+                if let author = quote.author, !author.isEmpty {
+                    content.body = "\(quote.text)\n\n- \(author)"
                 } else {
-                    content.body = "\(quote.text)"
+                    content.body = quote.text
                 }
                 content.sound = UNNotificationSound.default
                 
                 let frequencyOptionsInSeconds: [TimeInterval] = [28800, 43200, 86400, 172800, 345600, 604800]
                 let selectedTimeInterval = frequencyOptionsInSeconds[self.notificationFrequencyIndex]
                 
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: selectedTimeInterval, repeats: true)
+                // Generate a unique identifier for this notification
+                let notificationID = UUID().uuidString
                 
-                let identifier = UUID().uuidString
-                scheduledNotificationIDs.insert(identifier)
-                
-                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-                
-                UNUserNotificationCenter.current().add(request) { error in
-                    if let error = error {
-                        print("Error scheduling notification: \(error.localizedDescription)")
-                    } else {
-                        print("Notification scheduled successfully.")
+                // Check if the notification ID is not already scheduled
+                if !scheduledNotificationIDs.contains(notificationID) {
+                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: selectedTimeInterval, repeats: true)
+                    let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
+                    UNUserNotificationCenter.current().add(request) { error in
+                        if let error = error {
+                            print("Error scheduling notification: \(error.localizedDescription)")
+                        } else {
+                            print("Notification scheduled successfully.")
+                            // Add the notification ID to the set of scheduled IDs
+                            scheduledNotificationIDs.insert(notificationID)
+                        }
                     }
+                } else {
+                    // Notification already scheduled, skip scheduling
+                    print("Notification with ID \(notificationID) already scheduled.")
                 }
             }
         }
