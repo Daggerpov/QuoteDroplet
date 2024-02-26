@@ -33,6 +33,9 @@ struct ContentView: View {
     @State private var showSubmissionAlert = false
     @State private var submissionMessage = ""
     @State private var showSubmissionReceivedAlert = false
+    @State private var notificationTime = Date()
+    @State private var isTimePickerExpanded = false
+    @State private var showNotificationPicker = false
     init() {
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
             colorPaletteIndex = 0
@@ -61,32 +64,133 @@ struct ContentView: View {
             .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
         }
     }
-    private var notificationFrequencyPicker: some View {
-        HStack {
-            Picker("", selection: $notificationFrequencyIndex) {
-                ForEach(0..<notificationFrequencyOptions.count, id: \.self) { index in
-                    if self.notificationFrequencyOptions[index] == "1 day" {
-                        Text("Every day")
+    private var notificationSection: some View {
+        Section {
+            VStack {
+                HStack {
+                    Text("Notifications:")
+                        .font(.headline)
+                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                        .padding(.horizontal, 5)
+                    Toggle("", isOn: $notificationToggleEnabled)
+                        .labelsHidden()
+                        .onChange(of: notificationToggleEnabled) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: notificationToggleKey)
+                            if newValue {
+                                scheduleNotifications()
+                            } else {
+                                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                            }
+                        }
+                }
+                if isTimePickerExpanded {
+                    Button(action: {
+                        isTimePickerExpanded.toggle()
+                    }) {
+                        Text("Close")
                             .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                    } else if self.notificationFrequencyOptions[index] == "1 week" {
-                        Text("Every week")
-                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                    } else {
-                        Text("Every \(self.notificationFrequencyOptions[index])")
-                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                            )
                     }
+                    .padding()
+                    .sheet(isPresented: $isTimePickerExpanded) {
+                        notificationTimePicker
+                    }
+                } else {
+                    Button(action: {
+                        isTimePickerExpanded.toggle()
+                    }) {
+                        Text("Schedule")
+                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                            )
+                    }
+                    .padding()
                 }
             }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-            .onReceive([self.notificationFrequencyIndex].publisher.first()) { _ in
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                    )
+            )
         }
     }
+
+    private var notificationTimePicker: some View {
+        VStack {
+            DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+                .datePickerStyle(WheelDatePickerStyle()) // Customize picker style if needed
+                .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                .onChange(of: notificationTime) { _ in
+                    scheduleNotifications() // Reschedule notifications when time changes
+                }
+            
+            Spacer() // Add Spacer to push the button to the bottom
+            Button(action: {
+                isTimePickerExpanded.toggle()
+            }) {
+                Text("Done")
+                    .padding()
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                    )
+            }
+        }
+        .padding()
+        .frame(minWidth: 200, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity) // Adjust size as needed
+        .background(colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear) // Use app color palette
+        .cornerRadius(8)
+        .shadow(radius: 5)
+    }
+
     private func scheduleNotifications() {
+        // Cancel existing notifications to reschedule them with the new time
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+
+        // Get the selected time from notificationTime
+        let selectedTime = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+
+        // Create a date using the selected time components
+        guard let triggerDate = Calendar.current.date(from: selectedTime) else {
+            print("Error: Couldn't create trigger date.")
+            return
+        }
+
+        // Get the current date and time
+        let currentDate = Date()
+
+        // Calculate the time interval between the current time and the selected time
+        let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: currentDate, to: triggerDate)
+
+        // Ensure that the selected time is in the future
+        guard let timeInterval = timeComponents.hour.flatMap({ hour in
+            timeComponents.minute.flatMap { minute in
+                TimeInterval(hour * 3600 + minute * 60)
+            }
+        }), timeInterval > 0 else {
+            print("Error: Selected time is in the past.")
+            return
+        }
+
+        // Create a trigger for the notification
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: true)
+
+        // Retrieve a new quote
         getRandomQuoteByClassification(classification: getSelectedQuoteCategory().lowercased()) { quote, error in
             if let quote = quote {
+                // Create notification content
                 let content = UNMutableNotificationContent()
                 if getSelectedQuoteCategory() == QuoteCategory.all.rawValue {
                     content.title = "Quote Droplet"
@@ -99,34 +203,29 @@ struct ContentView: View {
                     content.body = quote.text
                 }
                 content.sound = UNNotificationSound.default
-                
-                let frequencyOptionsInSeconds: [TimeInterval] = [28800, 43200, 86400, 172800, 345600, 604800]
-                let selectedTimeInterval = frequencyOptionsInSeconds[self.notificationFrequencyIndex]
-                
+
                 // Generate a unique identifier for this notification
                 let notificationID = UUID().uuidString
-                
-                // Check if the notification ID is not already scheduled
-                if !scheduledNotificationIDs.contains(notificationID) {
-                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: selectedTimeInterval, repeats: true)
-                    let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
-                    UNUserNotificationCenter.current().add(request) { error in
-                        if let error = error {
-                            print("Error scheduling notification: \(error.localizedDescription)")
-                        } else {
-                            print("Notification scheduled successfully.")
-                            // Add the notification ID to the set of scheduled IDs
-                            scheduledNotificationIDs.insert(notificationID)
-                        }
+
+                // Create notification request
+                let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
+
+                // Schedule the notification
+                UNUserNotificationCenter.current().add(request) { error in
+                    if let error = error {
+                        print("Error scheduling notification: \(error.localizedDescription)")
+                    } else {
+                        print("Notification scheduled successfully.")
                     }
-                } else {
-                    // Notification already scheduled, skip scheduling
-                    print("Notification with ID \(notificationID) already scheduled.")
                 }
+            } else if let error = error {
+                print("Error retrieving quote: \(error.localizedDescription)")
+            } else {
+                print("Unknown error retrieving quote.")
             }
         }
     }
-    private func requestNotificationPermission() {
+    func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
                 NotificationCenter.default.post(name: NSNotification.Name("NotificationPermissionGranted"), object: nil)
@@ -508,34 +607,7 @@ struct ContentView: View {
             Spacer()
             timeIntervalPicker
             Spacer()
-            Section {
-                HStack {
-                    Text("Notifications:")
-                        .font(.headline)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-                        .padding(.horizontal, 5)
-                    Toggle("", isOn: $notificationToggleEnabled)
-                        .labelsHidden()
-                        .onChange(of: notificationToggleEnabled) { newValue in
-                            UserDefaults.standard.set(newValue, forKey: notificationToggleKey)
-                            if newValue {
-                                scheduleNotifications()
-                            } else {
-                                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-                            }
-                        }
-                    notificationFrequencyPicker
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
-            }
+            notificationSection
             Spacer()
             composeButton
             Spacer()
