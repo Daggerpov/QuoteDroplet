@@ -33,6 +33,7 @@ struct ContentView: View {
     @State private var showSubmissionAlert = false
     @State private var submissionMessage = ""
     @State private var showSubmissionReceivedAlert = false
+    
     @State private var notificationTime = Date()
     @State private var isTimePickerExpanded = false
     @State private var showNotificationPicker = false
@@ -162,30 +163,17 @@ struct ContentView: View {
         // Get the selected time from notificationTime
         let selectedTime = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
 
-        // Create a date using the selected time components
+        // Create a trigger date for the selected time
         guard let triggerDate = Calendar.current.date(from: selectedTime) else {
             print("Error: Couldn't create trigger date.")
             return
         }
 
-        // Get the current date and time
-        let currentDate = Date()
+        // Create a date components for the trigger time
+        let triggerComponents = Calendar.current.dateComponents([.hour, .minute], from: triggerDate)
 
-        // Calculate the time interval between the current time and the selected time
-        let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: currentDate, to: triggerDate)
-
-        // Ensure that the selected time is in the future
-        guard let timeInterval = timeComponents.hour.flatMap({ hour in
-            timeComponents.minute.flatMap { minute in
-                TimeInterval(hour * 3600 + minute * 60)
-            }
-        }), timeInterval > 0 else {
-            print("Error: Selected time is in the past.")
-            return
-        }
-
-        // Create a trigger for the notification
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: true)
+        // Create a trigger for the notification to repeat daily at the selected time
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: true)
 
         // Retrieve a new quote
         getRandomQuoteByClassification(classification: getSelectedQuoteCategory().lowercased()) { quote, error in
@@ -225,6 +213,7 @@ struct ContentView: View {
             }
         }
     }
+
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
