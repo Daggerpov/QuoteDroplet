@@ -184,7 +184,7 @@ struct ContentView: View {
                     content.title = "Quote Droplet: \(getSelectedQuoteCategory()) Quote"
                 }
                 if let author = quote.author, !author.isEmpty {
-                    content.body = "\(quote.text)\n\n- \(author)"
+                    content.body = "\(quote.text)\n- \(author)"
                 } else {
                     content.body = quote.text
                 }
@@ -203,6 +203,7 @@ struct ContentView: View {
                     } else {
                         print("Notification scheduled successfully.")
                         print("Body of notification scheduled: \(content.body)")
+                        print("Scheduled for this time: \(selectedTime)")
                     }
                 }
             } else if let error = error {
