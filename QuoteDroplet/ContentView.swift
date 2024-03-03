@@ -77,9 +77,7 @@ struct ContentView: View {
                         .labelsHidden()
                         .onChange(of: notificationToggleEnabled) { newValue in
                             UserDefaults.standard.set(newValue, forKey: notificationToggleKey)
-                            if newValue {
-                                scheduleNotifications()
-                            } else {
+                            if !newValue {
                                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                             }
                         }
@@ -132,13 +130,13 @@ struct ContentView: View {
             DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(WheelDatePickerStyle()) // Customize picker style if needed
                 .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-                .onChange(of: notificationTime) { _ in
-                    scheduleNotifications() // Reschedule notifications when time changes
-                }
+                // dont schedule here
             
             Spacer() // Add Spacer to push the button to the bottom
             Button(action: {
                 isTimePickerExpanded.toggle()
+                
+                scheduleNotifications()
             }) {
                 Text("Done")
                     .padding()
@@ -186,7 +184,7 @@ struct ContentView: View {
                     content.title = "Quote Droplet: \(getSelectedQuoteCategory()) Quote"
                 }
                 if let author = quote.author, !author.isEmpty {
-                    content.body = "\(quote.text)\n\n- \(author)"
+                    content.body = "\(quote.text)\n- \(author)"
                 } else {
                     content.body = quote.text
                 }
@@ -204,6 +202,8 @@ struct ContentView: View {
                         print("Error scheduling notification: \(error.localizedDescription)")
                     } else {
                         print("Notification scheduled successfully.")
+                        print("Body of notification scheduled: \(content.body)")
+                        print("Scheduled for this time: \(selectedTime)")
                     }
                 }
             } else if let error = error {
