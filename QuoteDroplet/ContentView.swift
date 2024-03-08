@@ -184,7 +184,11 @@ struct ContentView: View {
                     content.title = "Quote Droplet: \(getSelectedQuoteCategory()) Quote"
                 }
                 if let author = quote.author, !author.isEmpty {
-                    content.body = "\(quote.text)\n- \(author)"
+                    if author == "Unknown Author" {
+                        content.body = quote.text
+                    } else {
+                        content.body = "\(quote.text)\n- \(author)"
+                    }
                 } else {
                     content.body = quote.text
                 }
