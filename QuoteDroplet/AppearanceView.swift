@@ -14,6 +14,7 @@ import Foundation
 struct AppearanceView: View {
     var body: some View {
         Text("Appearance Adjustments")
+        Text("\(ColorPaletteManager.colorPaletteIndex)")
     }
 }
 struct AppearanceView_Previews: PreviewProvider {
