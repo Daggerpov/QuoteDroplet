@@ -10,14 +10,14 @@ struct ContentView: View {
                     Text("Home")
                     Image(systemName: "house.fill")
                 }
-//            AppearanceView()
-//                .tabItem {
-//                    Text("Appearance")
-//                    Image(systemName: "paintbrush.fill")
-//                  }
+            AppearanceView()
+                .tabItem {
+                    Text("Appearance")
+                    Image(systemName: "paintbrush.fill")
+                  }
             QuotesView()
                 .tabItem {
-                    Text("Submit a Quote")
+                    Text("Quotes")
                     Image(systemName: "quote.bubble.fill")
                 }
         }
