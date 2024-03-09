@@ -79,7 +79,3 @@ enum QuoteCategory: String, CaseIterable {
     }
 }
 
-struct ColorPaletteManager {
-    static var colorPaletteIndex: Int = 0
-}
-

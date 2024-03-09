@@ -14,7 +14,6 @@ import Foundation
 struct QuotesView: View {
     var body: some View {
         Text("Quote Adjustments")
-        Text("\(ColorPaletteManager.colorPaletteIndex)")
     }
 }
 struct QuotesView_Previews: PreviewProvider {
