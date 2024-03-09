@@ -3,8 +3,23 @@ import WidgetKit
 import UserNotifications
 import UIKit
 struct ContentView: View {
-    
-    
+    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var colorPaletteIndex = 0
+    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var quoteFrequencyIndex = 3
+    @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var quoteCategory: QuoteCategory = .all
+    @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var selectedFontIndex = 0
+    @AppStorage("notificationFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var notificationFrequencyIndex = 3
+    @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
+    var notificationToggleEnabled: Bool = false
+    @AppStorage(notificationPermissionKey)
+    var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
+    let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
+    let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
+    @State private var showCustomColorsPopover = false
     @State private var showAlert = false
     @State private var showSubmissionInfoAlert = false
     @State private var showNotificationsAlert = false

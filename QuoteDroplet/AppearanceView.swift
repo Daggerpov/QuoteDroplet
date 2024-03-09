@@ -11,18 +11,18 @@ import UserNotifications
 import UIKit
 import Foundation
 
-struct ApperanceView: View {
-    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var colorPaletteIndex = 0
-    @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var selectedFontIndex = 0
-    @State private var showCustomColorsPopover = false
+struct AppearanceView: View {
+//    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+//    var colorPaletteIndex = 0
+//    @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+//    var selectedFontIndex = 0
+//    @State private var showCustomColorsPopover = false
     var body: some View {
-        Text("About Us")
+        Text("Appearance Adjustments")
     }
 }
-struct ApperanceView_Previews: PreviewProvider {
+struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
-        ApperanceView()
+        AppearanceView()
     }
 }
