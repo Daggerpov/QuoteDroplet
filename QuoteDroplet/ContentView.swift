@@ -6,16 +6,16 @@ struct ContentView: View {
     var body: some View {
         
         TabView {
-            AppearanceView()
-                .tabItem {
-                    Text("Appearance")
-                    Image(systemName: "person.fill")
-                  }
             HomeView()
                 .tabItem {
                     Text("Home")
                     Image(systemName: "house.fill")
                 }
+            AppearanceView()
+                .tabItem {
+                    Text("Appearance")
+                    Image(systemName: "person.fill")
+                  }
             QuotesView()
                 .tabItem {
                     Text("Quotes")
