@@ -12,20 +12,6 @@ import UIKit
 import Foundation
 
 struct QuotesView: View {
-//    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-//    var quoteFrequencyIndex = 3
-//    @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
-//    var quoteCategory: QuoteCategory = .all
-//    
-//    @AppStorage("notificationFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-//    var notificationFrequencyIndex = 3
-//    @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
-//    var notificationToggleEnabled: Bool = false
-//    @AppStorage(notificationPermissionKey)
-//    var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
-//    let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-//    let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-//    
     var body: some View {
         Text("Quote Adjustments")
     }

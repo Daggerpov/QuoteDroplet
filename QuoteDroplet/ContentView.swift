@@ -10,16 +10,17 @@ struct ContentView: View {
                     Text("Home")
                     Image(systemName: "house.fill")
                 }
-            AppearanceView()
-                .tabItem {
-                    Text("Appearance")
-                    Image(systemName: "paintbrush.fill")
-                  }
+//            AppearanceView()
+//                .tabItem {
+//                    Text("Appearance")
+//                    Image(systemName: "paintbrush.fill")
+//                  }
             QuotesView()
                 .tabItem {
-                    Text("Quotes")
+                    Text("Submit a Quote")
                     Image(systemName: "quote.bubble.fill")
                 }
         }
     }
 }
+
