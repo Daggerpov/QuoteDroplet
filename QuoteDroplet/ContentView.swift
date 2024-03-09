@@ -4,7 +4,6 @@ import UserNotifications
 import UIKit
 struct ContentView: View {
     var body: some View {
-        
         TabView {
             HomeView()
                 .tabItem {
@@ -14,12 +13,12 @@ struct ContentView: View {
             AppearanceView()
                 .tabItem {
                     Text("Appearance")
-                    Image(systemName: "person.fill")
+                    Image(systemName: "paintbrush.fill")
                   }
             QuotesView()
                 .tabItem {
                     Text("Quotes")
-                    Image(systemName: "phone.fill")
+                    Image(systemName: "quote.bubble.fill")
                 }
         }
     }
