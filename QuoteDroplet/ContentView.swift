@@ -127,16 +127,32 @@ struct ContentView: View {
 
     private var notificationTimePicker: some View {
         VStack {
+            Spacer()
             DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
-                .datePickerStyle(WheelDatePickerStyle()) // Customize picker style if needed
+                .datePickerStyle(WheelDatePickerStyle())
                 .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
                 .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
                 .padding()
             
-            Spacer() // Add Spacer to push the button to the bottom
+            VStack {
+                Text("This is when your notification will be sent out to you daily.")
+                    .font(.title3)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+                
+                Text("Note that I'm currently working on a bug where the notification sends out the same quote every time. If you're facing this, you can work around it by scheduling it again.")
+                    .font(.title3)
+                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
+                    .multilineTextAlignment(.center)
+            }
+            .padding()
+            
+            Spacer()
+            
             Button(action: {
                 isTimePickerExpanded.toggle()
-                
                 scheduleNotifications()
             }) {
                 Text("Done")
@@ -156,6 +172,7 @@ struct ContentView: View {
         .cornerRadius(8)
         .shadow(radius: 5)
     }
+
 
     private func scheduleNotifications() {
         // Cancel existing notifications to reschedule them with the new time
@@ -547,13 +564,10 @@ struct ContentView: View {
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Note About Custom Colors"),
-                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue. \n\nHowever, my priority is currently to bring quote submission to this app so you, as a user, can contribute quotes."),
+                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue."),
                     dismissButton: .default(Text("OK"))
                 )
             }
-        }
-        .popover(isPresented: $showCustomColorsPopover) {
-            CustomColorsPopoverContent()
         }
     }
 
@@ -564,25 +578,6 @@ struct ContentView: View {
                 .background(configuration.isPressed ? Color.gray.opacity(0.5) : Color.clear)
                 .cornerRadius(8)
                 .border(configuration.isPressed ? Color.clear : Color.blue, width: 2)
-        }
-    }
-    struct CustomColorsPopoverContent: View {
-        var body: some View {
-            VStack {
-                Text("Custom Colors Instructions")
-                    .font(.headline)
-                    .padding()
-                Text("To customize your own colors, tap and hold on the colored circles below. Each circle represents a different color in the palette.")
-                    .font(.body)
-                    .padding()
-                Text("Note: Changes will apply to the 'Custom Colors' palette.")
-                    .font(.body)
-                    .foregroundColor(.gray)
-                    .padding()
-                Spacer()
-            }
-            .padding()
-            .frame(minWidth: 200, maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
         }
     }
     var body: some View {
