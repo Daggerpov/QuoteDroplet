@@ -12,8 +12,14 @@ import UIKit
 import Foundation
 
 struct AppearanceView: View {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    
     var body: some View {
-        Text("Appearance Adjustments")
+        VStack {
+            Text("Appearance Adjustments")
+            Text("\(sharedVars.testNumber)")
+            Button("test number change", action: {sharedVars.testNumber = 2})
+        }
     }
 }
 struct AppearanceView_Previews: PreviewProvider {

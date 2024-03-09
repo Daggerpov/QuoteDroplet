@@ -12,8 +12,13 @@ import UIKit
 import Foundation
 
 struct QuotesView: View {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     var body: some View {
-        Text("Quote Adjustments")
+        VStack {
+            Text("Quote Adjustments")
+            Text("\(sharedVars.testNumber)")
+            Button("test number change", action: {sharedVars.testNumber = 3})
+        }
     }
 }
 struct QuotesView_Previews: PreviewProvider {

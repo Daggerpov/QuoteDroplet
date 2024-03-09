@@ -12,6 +12,8 @@ import UIKit
 import Foundation
 
 struct HomeView: View {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    
     @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var colorPaletteIndex = 0
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -691,6 +693,8 @@ struct HomeView: View {
     }
     var body: some View {
         VStack {
+            Text("\(sharedVars.testNumber)")
+            Button("test number change", action: {sharedVars.testNumber = 1})
             quoteCategoryPicker
             Group {
                 HStack(spacing: 20) {
