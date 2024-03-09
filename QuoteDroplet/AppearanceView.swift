@@ -17,8 +17,9 @@ struct AppearanceView: View {
     var body: some View {
         VStack {
             Text("Appearance Adjustments")
-            Text("\(sharedVars.testNumber)")
-            Button("test number change", action: {sharedVars.testNumber = 2})
+//            Text("\(sharedVars.testNumber)")
+//            Button("test number change", action: {sharedVars.testNumber = 2})
+            Text("\(sharedVars.colorPaletteIndex)")
         }
     }
 }

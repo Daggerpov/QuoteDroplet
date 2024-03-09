@@ -16,8 +16,9 @@ struct QuotesView: View {
     var body: some View {
         VStack {
             Text("Quote Adjustments")
-            Text("\(sharedVars.testNumber)")
-            Button("test number change", action: {sharedVars.testNumber = 3})
+//            Text("\(sharedVars.testNumber)")
+//            Button("test number change", action: {sharedVars.testNumber = 3})
+            Text("\(sharedVars.colorPaletteIndex)")
         }
     }
 }

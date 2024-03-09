@@ -27,4 +27,6 @@ struct ContentView: View {
 
 class SharedVarsBetweenTabs: ObservableObject {
     @Published var testNumber = 0
+//    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    @Published var colorPaletteIndex = 0
 }
