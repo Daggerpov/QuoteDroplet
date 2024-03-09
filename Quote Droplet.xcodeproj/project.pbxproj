@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
+		DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
+		DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* HomeView.swift */; };
+		DC5205B42B9CEF620007CB5B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* HomeView.swift */; };
+		DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
+		DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
 		DC8279442AA09134004E2BBF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8279432AA09134004E2BBF /* DataService.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */; };
@@ -53,6 +59,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
+		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
 		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
 		DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuoteDropletWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DC8279432AA09134004E2BBF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -126,6 +135,9 @@
 				DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */,
 				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
 				DCAB2DA42A9FA91900A822D7 /* Preview Content */,
+				DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */,
+				DC5205B22B9CEF620007CB5B /* HomeView.swift */,
+				DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */,
 			);
 			path = QuoteDroplet;
 			sourceTree = "<group>";
@@ -263,10 +275,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
+				DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DCAB2DCB2A9FAACA00A822D7 /* APIService.swift in Sources */,
 				DCAB2DCD2A9FACC300A822D7 /* Quote.swift in Sources */,
+				DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
+				DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,8 +292,11 @@
 				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */,
+				DC5205B42B9CEF620007CB5B /* HomeView.swift in Sources */,
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
+				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCAB2DB82A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift in Sources */,
+				DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 				DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */,
 				DCAB2DBC2A9FA95A00A822D7 /* QuoteDropletWidget.swift in Sources */,
 				DC8279442AA09134004E2BBF /* DataService.swift in Sources */,
