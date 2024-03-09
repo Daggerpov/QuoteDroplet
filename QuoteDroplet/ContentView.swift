@@ -102,7 +102,7 @@ struct ContentView: View {
                     Button(action: {
                         isTimePickerExpanded.toggle()
                     }) {
-                        Text("Schedule")
+                        Text("Schedule Daily")
                             .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
                             .padding()
                             .background(
@@ -130,7 +130,8 @@ struct ContentView: View {
             DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(WheelDatePickerStyle()) // Customize picker style if needed
                 .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-                // dont schedule here
+                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
+                .padding()
             
             Spacer() // Add Spacer to push the button to the bottom
             Button(action: {
@@ -139,17 +140,19 @@ struct ContentView: View {
                 scheduleNotifications()
             }) {
                 Text("Done")
-                    .padding()
                     .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
                             .fill(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
                     )
             }
+            .padding(.horizontal)
+            .padding(.bottom, 20)
         }
-        .padding()
-        .frame(minWidth: 200, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity) // Adjust size as needed
-        .background(colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear) // Use app color palette
+        .frame(minWidth: 200, maxWidth: .infinity)
+        .background(colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear)
         .cornerRadius(8)
         .shadow(radius: 5)
     }
