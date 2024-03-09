@@ -28,12 +28,9 @@ struct HomeView: View {
     var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
     let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-    @State private var showCustomColorsPopover = false
     @State private var showAlert = false
     @State private var showSubmissionInfoAlert = false
-    @State private var showNotificationsAlert = false
     @State private var counts: [String: Int] = [:]
-    @State private var isPopupPresented = false
     @State private var isAddingQuote = false
     @State private var quoteText = ""
     @State private var author = ""
