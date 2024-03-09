@@ -12,11 +12,6 @@ import UIKit
 import Foundation
 
 struct AppearanceView: View {
-//    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-//    var colorPaletteIndex = 0
-//    @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-//    var selectedFontIndex = 0
-//    @State private var showCustomColorsPopover = false
     var body: some View {
         Text("Appearance Adjustments")
     }
