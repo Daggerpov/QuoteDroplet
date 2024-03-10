@@ -38,39 +38,29 @@ struct AppearanceView: View {
             }
             .pickerStyle(MenuPickerStyle())
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            .onChange(of: selectedFontIndex) { _ in
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            }
         }
     }
-    private var customColorNote: some View {
-        VStack(spacing: 10) {
-            Button(action: {
-                showCustomColorAlert = true
-            }) {
-                HStack {
-                    Image(systemName: "info.circle")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    Text("Note About Custom Colors")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.leading, 5)
+    private var sampleColorSection: some View {
+        VStack {
+            Text("Sample Colors:")
+                .font(.title3)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .padding(.top, 10)
+            HStack(spacing: 10) {
+                ForEach(0..<colorPalettes.count - 1, id: \.self) { paletteIndex in
+                    ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
+                        .frame(width: 60, height: 60)
+                        .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
+                        .cornerRadius(8)
+                        .onTapGesture {
+                            sharedVars.colorPaletteIndex = paletteIndex
+                            widgetColorPaletteIndex = paletteIndex
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                        }
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
-                .buttonStyle(CustomButtonStyle())
-            }
-            .alert(isPresented: $showCustomColorAlert) {
-                Alert(
-                    title: Text("Note About Custom Colors"),
-                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue."),
-                    dismissButton: .default(Text("OK"))
-                )
             }
         }
     }
@@ -105,27 +95,7 @@ struct AppearanceView: View {
         }
     }
     
-    private var sampleColorSection: some View {
-        VStack {
-            Text("Sample Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
-            HStack(spacing: 10) {
-                ForEach(0..<colorPalettes.count - 1, id: \.self) { paletteIndex in
-                    ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
-                        .frame(width: 60, height: 60)
-                        .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            sharedVars.colorPaletteIndex = paletteIndex
-                            widgetColorPaletteIndex = paletteIndex
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                        }
-                }
-            }
-        }
-    }
+    
     private var customColorPickers: some View {
         HStack(spacing: 10) {
             ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
@@ -169,6 +139,40 @@ struct AppearanceView: View {
                     .padding(.trailing, 0)
             }
             .frame(width: 150, height: 150)
+        }
+    }
+    private var customColorNote: some View {
+        VStack(spacing: 10) {
+            Button(action: {
+                showCustomColorAlert = true
+            }) {
+                HStack {
+                    Image(systemName: "info.circle")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                    Text("Note About Custom Colors")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.leading, 5)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
+                )
+                .buttonStyle(CustomButtonStyle())
+            }
+            .alert(isPresented: $showCustomColorAlert) {
+                Alert(
+                    title: Text("Note About Custom Colors"),
+                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
     
