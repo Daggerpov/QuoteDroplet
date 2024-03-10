@@ -16,6 +16,7 @@ struct AppearanceView: View {
     
     @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var selectedFontIndex = 0
+    
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
     
@@ -178,6 +179,7 @@ struct AppearanceView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             Group {
                 HStack(spacing: 20) {
                     VStack(spacing: 10) {
@@ -191,6 +193,7 @@ struct AppearanceView: View {
             customColorNote
             Spacer()
             fontSelector
+            Spacer()
         }
         .onAppear {
             sharedVars.colorPaletteIndex = widgetColorPaletteIndex
