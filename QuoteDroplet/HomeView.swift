@@ -14,61 +14,36 @@ import Foundation
 struct HomeView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
-    @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var widgetColorPaletteIndex = 0
-    
-    
-    
-    
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencyIndex = 3
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
-    @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var selectedFontIndex = 0
+    
+    // Notifications------------------------
     @AppStorage("notificationFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var notificationFrequencyIndex = 3
     @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
     var notificationToggleEnabled: Bool = false
     @AppStorage(notificationPermissionKey)
     var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
-    let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
+    
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
+    // Notifications------------------------
+    
+    let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     
     @State private var counts: [String: Int] = [:]
-
-    
-    
     @State private var notificationTime = Date()
     @State private var isTimePickerExpanded = false
     @State private var showNotificationPicker = false
     init() {
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
-            selectedFontIndex = 0
         }
         // Initialize notificationPermissionGranted based on stored value
         notificationPermissionGranted = UserDefaults.standard.bool(forKey: notificationPermissionKey)
     }
-    let availableFonts = [
-        "Georgia", "Times New Roman", "Verdana",
-        "Palatino", "Baskerville", "Didot", "Optima"
-    ]
-    private var fontSelector: some View {
-        HStack {
-            Text("Widget Font:")
-                .font(.title2)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            Picker("", selection: $selectedFontIndex) {
-                ForEach(0..<availableFonts.count, id: \.self) { index in
-                    Text(availableFonts[index])
-                        .font(.custom(availableFonts[index], size: 16))
-                }
-            }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-        }
-    }
+    
     private var notificationSection: some View {
         Section {
             VStack {
@@ -338,43 +313,6 @@ struct HomeView: View {
                 )
         )
     }
-    private var widgetPreviewSection: some View {
-        VStack {
-            Text("Preview:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                    .overlay(
-                        VStack {
-                            Spacer()
-                            Text("More is lost by indecision than by wrong decision.")
-                                .font(Font.custom(availableFonts[selectedFontIndex], size: 16))
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .multilineTextAlignment(.center)
-                                .lineSpacing(4)
-                                .minimumScaleFactor(0.5)
-                                .frame(maxHeight: .infinity)
-
-                            Text("- Cicero")
-                                .font(Font.custom(availableFonts[selectedFontIndex], size: 14))
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.horizontal, 20)
-                                .padding(.bottom, 10)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                        }
-                    )
-                    .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 0)
-                    .padding(.trailing, 0)
-            }
-            .frame(width: 150, height: 150)
-        }
-    }
     
     private var aboutMeSection: some View {
         HStack {
@@ -419,34 +357,7 @@ struct HomeView: View {
         .shadow(radius: 5)
         .padding(.horizontal)
     }
-    private var sampleColorSection: some View {
-        VStack {
-            Text("Sample Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
-            HStack(spacing: 10) {
-                ForEach(0..<colorPalettes.count - 1, id: \.self) { paletteIndex in
-                    ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
-                        .frame(width: 60, height: 60)
-                        .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            sharedVars.colorPaletteIndex = paletteIndex
-                            widgetColorPaletteIndex = paletteIndex
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                        }
-                }
-            }
-        }
-    }
-    private var customColorPickers: some View {
-        HStack(spacing: 10) {
-            ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
-                customColorPicker(index: customIndex)
-            }
-        }
-    }
+    
     private func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
         guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteCount?category=\(category.rawValue.lowercased())") else {
             completion(0)
@@ -462,38 +373,6 @@ struct HomeView: View {
             }
         }.resume()
     }
-    private func customColorPicker(index: Int) -> some View {
-        ColorPicker(
-            "",
-            selection: Binding(
-                get: {
-                    colorPalettes[3][index]
-                },
-                set: { newColor in
-                    colorPalettes[3][index] = newColor
-                    sharedVars.colorPaletteIndex = 3
-                }
-            ),
-            supportsOpacity: false
-        )
-        .frame(width: 60, height: 60)
-        .cornerRadius(8)
-        .onChange(of: colorPalettes) { _ in
-            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-        }
-    }
-    private var customColorSection: some View {
-        VStack(spacing: 10) {
-            Text("Custom Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
-            customColorPickers
-        }
-    }
-    
-    
-
     
     private func formattedFrequency() -> String {
         return frequencyOptions[quoteFrequencyIndex]
@@ -501,17 +380,6 @@ struct HomeView: View {
     var body: some View {
         VStack {
             quoteCategoryPicker
-            Group {
-                HStack(spacing: 20) {
-                    VStack(spacing: 10) {
-                        sampleColorSection
-                        customColorSection
-                    }
-                    widgetPreviewSection
-                }
-            }
-            
-            fontSelector
             Spacer()
             timeIntervalPicker
             Spacer()
@@ -526,7 +394,6 @@ struct HomeView: View {
                     notificationPermissionGranted = settings.authorizationStatus == .authorized
                 }
             }
-            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
         }
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))

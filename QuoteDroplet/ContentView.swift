@@ -28,4 +28,5 @@ struct ContentView: View {
 
 class SharedVarsBetweenTabs: ObservableObject {
     @Published var colorPaletteIndex = 0
+    @Published var selectedFontIndex = 0
 }
