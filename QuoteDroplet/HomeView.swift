@@ -16,6 +16,10 @@ struct HomeView: View {
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
+    
+    
+    
+    
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencyIndex = 3
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -41,7 +45,6 @@ struct HomeView: View {
     @State private var showNotificationPicker = false
     init() {
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
-            sharedVars.colorPaletteIndex = 0
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
             selectedFontIndex = 0
         }
@@ -558,6 +561,7 @@ struct HomeView: View {
                     notificationPermissionGranted = settings.authorizationStatus == .authorized
                 }
             }
+            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
         }
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
