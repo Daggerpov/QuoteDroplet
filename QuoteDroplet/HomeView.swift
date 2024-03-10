@@ -34,7 +34,6 @@ struct HomeView: View {
     var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
     let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-    @State private var showAlert = false
     
     @State private var counts: [String: Int] = [:]
 
@@ -493,40 +492,7 @@ struct HomeView: View {
         }
     }
     
-    private var customColorNote: some View {
-        VStack(spacing: 10) {
-            Button(action: {
-                showAlert = true
-            }) {
-                HStack {
-                    Image(systemName: "info.circle")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    Text("Note About Custom Colors")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.leading, 5)
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
-                .buttonStyle(CustomButtonStyle())
-            }
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Note About Custom Colors"),
-                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue."),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
-        }
-    }
+    
 
     
     private func formattedFrequency() -> String {
@@ -544,8 +510,7 @@ struct HomeView: View {
                     widgetPreviewSection
                 }
             }
-            customColorNote
-            Spacer()
+            
             fontSelector
             Spacer()
             timeIntervalPicker

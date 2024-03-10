@@ -177,8 +177,6 @@ struct QuotesView: View {
 
     var body: some View {
         VStack {
-            Text("Quote Adjustments")
-            Text("\(sharedVars.colorPaletteIndex)")
             Spacer()
             composeButton
         }
