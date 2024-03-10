@@ -18,9 +18,9 @@ struct HomeView: View {
 
     private var quoteSection: some View {
         VStack(alignment: .leading) {
-            Text("Recent Quotes")
+            Text("Recently Submitted Quotes")
                 .font(.title)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.bottom, 5)
             
             ForEach(recentQuotes, id: \.id) { quote in
@@ -33,7 +33,7 @@ struct HomeView: View {
                     if let author = quote.author {
                         Text("- \(author)")
                             .font(.caption)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                             .padding(.bottom, 5)
                     }
                 }
