@@ -21,13 +21,11 @@ struct ContentView: View {
                     Text("Quotes")
                     Image(systemName: "quote.bubble.fill")
                 }
-        }
+        }.environmentObject(sharedVars)
     }
-        .environmentObject(sharedVars)
+        
 }
 
 class SharedVarsBetweenTabs: ObservableObject {
-    @Published var testNumber = 0
-//    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     @Published var colorPaletteIndex = 0
 }
