@@ -23,6 +23,7 @@ struct ContentView: View {
                 }
         }
     }
+        .environmentObject(sharedVars)
 }
 
 class SharedVarsBetweenTabs: ObservableObject {
