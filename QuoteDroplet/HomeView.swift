@@ -18,23 +18,30 @@ struct HomeView: View {
 
     private var quoteSection: some View {
         VStack(alignment: .leading) {
-            Text("Recently Submitted Quotes")
+            Text("Recently Submitted Quotes:")
                 .font(.title)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.bottom, 5)
             
-            ForEach(recentQuotes, id: \.id) { quote in
-                VStack(alignment: .leading) {
-                    Text("\"\(quote.text)\"")
-                        .font(.body)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.bottom, 2)
-                    
-                    if let author = quote.author {
-                        Text("- \(author)")
-                            .font(.caption)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            .padding(.bottom, 5)
+            if recentQuotes.isEmpty {
+                Text("Loading Quotes...")
+                    .font(.title3)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                    .padding(.bottom, 2)
+            } else {
+                ForEach(recentQuotes, id: \.id) { quote in
+                    VStack(alignment: .leading) {
+                        Text("\"\(quote.text)\"")
+                            .font(.title3)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                            .padding(.bottom, 2)
+                        
+                        if let author = quote.author {
+                            Text("- \(author)")
+                                .font(.body)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                                .padding(.bottom, 5)
+                        }
                     }
                 }
             }
