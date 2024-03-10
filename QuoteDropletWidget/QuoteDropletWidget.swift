@@ -33,12 +33,12 @@ struct Provider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> SimpleEntry {
         let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification")
-        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
     }
 
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, widgetColorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
         completion(entry)
     }
 
@@ -65,7 +65,7 @@ struct Provider: IntentTimelineProvider {
                     }
                 }
                 
-                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, colorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                 
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
@@ -169,7 +169,7 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let quote: Quote?  // Include the fetched quote here
-    let colorPaletteIndex: Int
+    let widgetColorPaletteIndex: Int
     let quoteFrequencyIndex: Int
     let quoteCategory: String
 }
@@ -278,7 +278,7 @@ struct QuoteDropletWidget: Widget {
 
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification"), colorPaletteIndex: 420, quoteFrequencyIndex: 3, quoteCategory: "all"))
+        QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification"), widgetColorPaletteIndex: 420, quoteFrequencyIndex: 3, quoteCategory: "all"))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

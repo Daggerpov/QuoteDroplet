@@ -14,8 +14,8 @@ import Foundation
 struct HomeView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
-//    @AppStorage("sharedVars.colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-//    var sharedVars.colorPaletteIndex = 0
+    @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var widgetColorPaletteIndex = 0
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencyIndex = 3
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -485,6 +485,7 @@ struct HomeView: View {
                         .cornerRadius(8)
                         .onTapGesture {
                             sharedVars.colorPaletteIndex = paletteIndex
+                            widgetColorPaletteIndex = paletteIndex
                             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                         }
                 }
