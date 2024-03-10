@@ -13,6 +13,38 @@ import Foundation
 
 struct HomeView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    
+    @State private var recentQuotes: [Quote] = []
+
+    private var quoteSection: some View {
+        VStack(alignment: .leading) {
+            Text("Recent Quotes")
+                .font(.title)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .padding(.bottom, 5)
+            
+            ForEach(recentQuotes, id: \.id) { quote in
+                VStack(alignment: .leading) {
+                    Text("\"\(quote.text)\"")
+                        .font(.body)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.bottom, 2)
+                    
+                    if let author = quote.author {
+                        Text("- \(author)")
+                            .font(.caption)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                            .padding(.bottom, 5)
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+        .cornerRadius(20)
+        .shadow(radius: 5)
+        .padding(.horizontal)
+    }
 
     private var aboutMeSection: some View {
         HStack {
@@ -60,6 +92,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
+            quoteSection
             Spacer()
             aboutMeSection
             Spacer()
@@ -67,7 +100,16 @@ struct HomeView: View {
         .frame(maxWidth: .infinity)
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        
+        .onAppear {
+            // Fetch recent quotes when the view appears
+            getRecentQuotes(limit: 3) { quotes, error in
+                if let quotes = quotes {
+                    recentQuotes = quotes
+                } else if let error = error {
+                    print("Error fetching recent quotes: \(error)")
+                }
+            }
+        }
     }
 }
 struct HomeView_Previews: PreviewProvider {
