@@ -64,9 +64,10 @@ struct HomeView: View {
             aboutMeSection
             Spacer()
         }
+        .frame(maxWidth: .infinity)
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .frame(maxWidth: .infinity)
+        
     }
 }
 struct HomeView_Previews: PreviewProvider {

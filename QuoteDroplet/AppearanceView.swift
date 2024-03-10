@@ -195,12 +195,13 @@ struct AppearanceView: View {
             fontSelector
             Spacer()
         }
+        .frame(maxWidth: .infinity)
         .onAppear {
             sharedVars.colorPaletteIndex = widgetColorPaletteIndex
         }
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .frame(maxWidth: .infinity)
+        
     }
 }
 struct AppearanceView_Previews: PreviewProvider {

@@ -511,12 +511,14 @@ struct QuotesView: View {
             composeButton
             Spacer()
         }
+        .frame(maxWidth: .infinity)
         .sheet(isPresented: $isAddingQuote) {
             quoteAddition
         }
+        
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .frame(maxWidth: .infinity)
+        
         .onAppear {
             notificationToggleEnabled = UserDefaults.standard.bool(forKey: notificationToggleKey)
             UNUserNotificationCenter.current().getNotificationSettings { settings in
