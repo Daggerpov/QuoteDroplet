@@ -79,3 +79,12 @@ enum QuoteCategory: String, CaseIterable {
     }
 }
 
+struct CustomButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding()
+            .background(configuration.isPressed ? Color.gray.opacity(0.5) : Color.clear)
+            .cornerRadius(8)
+            .border(configuration.isPressed ? Color.clear : Color.blue, width: 2)
+    }
+}

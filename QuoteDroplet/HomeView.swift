@@ -12,8 +12,14 @@ import UIKit
 import Foundation
 
 struct HomeView: View {
-    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var colorPaletteIndex = 0
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    
+    @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var widgetColorPaletteIndex = 0
+    
+    
+    
+    
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencyIndex = 3
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -29,22 +35,16 @@ struct HomeView: View {
     let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     @State private var showAlert = false
-    @State private var showSubmissionInfoAlert = false
+    
     @State private var counts: [String: Int] = [:]
-    @State private var isAddingQuote = false
-    @State private var quoteText = ""
-    @State private var author = ""
-    @State private var selectedCategory: QuoteCategory = .wisdom
-    @State private var showSubmissionAlert = false
-    @State private var submissionMessage = ""
-    @State private var showSubmissionReceivedAlert = false
+
+    
     
     @State private var notificationTime = Date()
     @State private var isTimePickerExpanded = false
     @State private var showNotificationPicker = false
     init() {
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
-            colorPaletteIndex = 0
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
             selectedFontIndex = 0
         }
@@ -59,7 +59,7 @@ struct HomeView: View {
         HStack {
             Text("Widget Font:")
                 .font(.title2)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             Picker("", selection: $selectedFontIndex) {
                 ForEach(0..<availableFonts.count, id: \.self) { index in
                     Text(availableFonts[index])
@@ -67,7 +67,7 @@ struct HomeView: View {
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
         }
     }
     private var notificationSection: some View {
@@ -76,7 +76,7 @@ struct HomeView: View {
                 HStack {
                     Text("Notifications:")
                         .font(.headline)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding(.horizontal, 5)
                     Toggle("", isOn: $notificationToggleEnabled)
                         .labelsHidden()
@@ -92,11 +92,11 @@ struct HomeView: View {
                         isTimePickerExpanded.toggle()
                     }) {
                         Text("Close")
-                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             )
                     }
                     .padding()
@@ -108,11 +108,11 @@ struct HomeView: View {
                         isTimePickerExpanded.toggle()
                     }) {
                         Text("Schedule Daily")
-                            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             )
                     }
                     .padding()
@@ -121,10 +121,10 @@ struct HomeView: View {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                     )
             )
         }
@@ -135,21 +135,21 @@ struct HomeView: View {
             Spacer()
             DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
                 .datePickerStyle(WheelDatePickerStyle())
-                .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
+                .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
                 .padding()
             
             VStack {
                 Text("This is when your notification will be sent out to you daily.")
                     .font(.title3)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
                     .multilineTextAlignment(.center)
                 
                 Spacer()
                 
                 Text("Note that I'm currently working on a bug where the notification sends out the same quote every time. If you're facing this, you can work around it by scheduling it again.")
                     .font(.title3)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
                     .multilineTextAlignment(.center)
             }
             .padding()
@@ -161,23 +161,22 @@ struct HomeView: View {
                 scheduleNotifications()
             }) {
                 Text("Done")
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                            .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                     )
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
         }
         .frame(minWidth: 200, maxWidth: .infinity)
-        .background(colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear)
+        .background(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear)
         .cornerRadius(8)
         .shadow(radius: 5)
     }
-
 
     private func scheduleNotifications() {
         // Cancel existing notifications to reschedule them with the new time
@@ -266,11 +265,14 @@ struct HomeView: View {
             completion(counts)
         }
     }
+    private func getSelectedQuoteCategory() -> String {
+        return quoteCategory.rawValue
+    }
     private var quoteCategoryPicker: some View {
         HStack {
             Text("Quote Category:")
                 .font(.title2)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             Picker("", selection: $quoteCategory) {
                 if counts.isEmpty {
                     Text("Loading...")
@@ -280,13 +282,13 @@ struct HomeView: View {
                             let displayNameWithCount = "\(category.displayName) (\(categoryCount))"
                             Text(displayNameWithCount)
                                 .font(.headline)
-                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         }
                     }
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             .onAppear {
                 getCategoryCounts { fetchedCounts in
                     counts = fetchedCounts
@@ -297,32 +299,12 @@ struct HomeView: View {
             }
         }
     }
-    private var submissionQuoteCategoryPicker: some View {
-        HStack {
-            Text("Quote Category:")
-                .font(.title2)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-            Picker("", selection: $selectedCategory) {
-                ForEach(QuoteCategory.allCases, id: \.self) { category in
-                    Text(category.displayName)
-                }
-            }
-            .pickerStyle(MenuPickerStyle())
-            .padding()
-            .background(colorPalettes[safe: colorPaletteIndex]?[0])
-            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1])
-            .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
-        }
-    }
-    private func getSelectedQuoteCategory() -> String {
-        return quoteCategory.rawValue
-    }
 
     private var timeIntervalPicker: some View {
         HStack {
             Text("Refresh Widget:")
                 .font(.headline)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.horizontal, 5)
 
             HStack {
@@ -330,18 +312,18 @@ struct HomeView: View {
                     ForEach(0..<frequencyOptions.count, id: \.self) { index in
                         if self.frequencyOptions[index] == "1 day" {
                             Text("Every day")
-                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         } else if self.frequencyOptions[index] == "1 week" {
                             Text("Every week")
-                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         } else {
                             Text("Every \(self.frequencyOptions[index])")
-                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         }
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
-                .accentColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue)
+                .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .onReceive([self.quoteFrequencyIndex].publisher.first()) { _ in
                     WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 }
@@ -350,10 +332,10 @@ struct HomeView: View {
         .padding(10)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                 )
         )
     }
@@ -361,16 +343,16 @@ struct HomeView: View {
         VStack {
             Text("Preview:")
                 .font(.title3)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
                     .overlay(
                         VStack {
                             Spacer()
                             Text("More is lost by indecision than by wrong decision.")
                                 .font(Font.custom(availableFonts[selectedFontIndex], size: 16))
-                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 10)
                                 .multilineTextAlignment(.center)
@@ -380,7 +362,7 @@ struct HomeView: View {
 
                             Text("- Cicero")
                                 .font(Font.custom(availableFonts[selectedFontIndex], size: 14))
-                                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[2] ?? .white)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
                                 .lineLimit(1)
@@ -394,43 +376,12 @@ struct HomeView: View {
             .frame(width: 150, height: 150)
         }
     }
-    private var composeButton: some View {
-        Button(action: {
-            isAddingQuote = true
-        }) {
-            HStack {
-                Text("Submit a quote")
-                    .font(.headline)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue)
-                Image(systemName: "square.and.pencil")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue)
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(colorPalettes[safe: colorPaletteIndex]?[1] ?? .blue, lineWidth: 2)
-            )
-        }
-    }
-    private var addQuoteButton: some View {
-        Button(action: {
-            isAddingQuote = true
-        }) {
-            Image("compose")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.blue)
-        }
-        .padding()
-    }
+    
     private var aboutMeSection: some View {
         HStack {
             Text("Contact:")
                 .font(.title2)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                 .padding(.leading, 10)
             
             Spacer()
@@ -439,7 +390,7 @@ struct HomeView: View {
                 Image("linkedinlogo")
                     .resizable()
                     .frame(width: 50, height: 50)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             }
             
             Spacer()
@@ -448,7 +399,7 @@ struct HomeView: View {
                 Image("githublogo")
                     .resizable()
                     .frame(width: 50, height: 50)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             }
             
             Spacer()
@@ -457,14 +408,14 @@ struct HomeView: View {
                 Image("gmaillogo")
                     .resizable()
                     .frame(width: 60, height: 50)
-                    .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             }
             
             Spacer()
         }
         
         .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-        .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
+        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)
         .shadow(radius: 5)
         .padding(.horizontal)
@@ -473,16 +424,17 @@ struct HomeView: View {
         VStack {
             Text("Sample Colors:")
                 .font(.title3)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
             HStack(spacing: 10) {
                 ForEach(0..<colorPalettes.count - 1, id: \.self) { paletteIndex in
                     ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
                         .frame(width: 60, height: 60)
-                        .border(colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
+                        .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
                         .cornerRadius(8)
                         .onTapGesture {
-                            colorPaletteIndex = paletteIndex
+                            sharedVars.colorPaletteIndex = paletteIndex
+                            widgetColorPaletteIndex = paletteIndex
                             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                         }
                 }
@@ -520,7 +472,7 @@ struct HomeView: View {
                 },
                 set: { newColor in
                     colorPalettes[3][index] = newColor
-                    colorPaletteIndex = 3
+                    sharedVars.colorPaletteIndex = 3
                 }
             ),
             supportsOpacity: false
@@ -535,113 +487,12 @@ struct HomeView: View {
         VStack(spacing: 10) {
             Text("Custom Colors:")
                 .font(.title3)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
             customColorPickers
         }
     }
-    private var quoteAddition: some View {
-        VStack(spacing: 10) {
-            Text("Quote Submission")
-                .font(.title)
-                .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
-                .padding()
-            Button(action: {
-                showSubmissionInfoAlert = true
-            }) {
-                HStack {
-                    Image(systemName: "info.circle")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                    Text("How This Works")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
-                        .padding(.leading, 5)
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
-                .buttonStyle(CustomButtonStyle())
-            }
-            .alert(isPresented: $showSubmissionInfoAlert) {
-                Alert(
-                    title: Text("How Quote Submission Works"),
-                    message: Text("Once you submit a quote, it'll show up on my admin portal, where I'll be able to edit typos or insert missing fields, such as author and classification—so don't worry about these issues. \n\nThen, I'll either approve the quote submission to be added into the app's quote database, or delete it.\n\nNote that if your quote exactly matches another one's text, the submission will not go through."),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
-            TextEditor(text: $quoteText)
-                .frame(minHeight: 100, maxHeight: 150)
-                .padding()
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
-                .onTapGesture {
-                    if quoteText == "Quote Text" {
-                        quoteText = ""
-                    }
-                }
-                .onAppear {
-                    quoteText = "Quote Text"
-                }
-            TextEditor(text: $author)
-                .frame(minHeight: 25, maxHeight: 50)
-                .padding()
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
-                .onTapGesture {
-                    if author == "Author" {
-                        author = ""
-                    }
-                }
-                .onAppear {
-                    author = "Author"
-                }
-
-            submissionQuoteCategoryPicker
-            Button("Submit") {
-                addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
-                    if success {
-                        submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
-                        // Set showSubmissionReceivedAlert to true after successful submission
-                    } else if let error = error {
-                        submissionMessage = error.localizedDescription
-                    } else {
-                        submissionMessage = "An unknown error occurred."
-                    }
-                    isAddingQuote = false
-                    showSubmissionReceivedAlert = true // <-- Set to true after successful submission
-                }
-                
-            }
-            .padding()
-            .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .black)
-            .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
-                Alert(
-                    title: Text("Submission Received"),
-                    message: Text(submissionMessage),
-                    dismissButton: .default(Text("OK")) {
-                        showSubmissionReceivedAlert = false // Dismisses the alert when OK is clicked
-                    }
-                )
-            }
-        }
-        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
-        .cornerRadius(0) // Remove corner radius
-        .edgesIgnoringSafeArea(.all) // Ignore safe area insets
-    }
+    
     private var customColorNote: some View {
         VStack(spacing: 10) {
             Button(action: {
@@ -650,19 +501,19 @@ struct HomeView: View {
                 HStack {
                     Image(systemName: "info.circle")
                         .font(.title3)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     Text("Note About Custom Colors")
                         .font(.title3)
-                        .foregroundColor(colorPalettes[safe: colorPaletteIndex]?[1] ?? .white)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         .padding(.leading, 5)
                 }
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: colorPaletteIndex]?[0] ?? .clear)
+                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                         )
                 )
                 .buttonStyle(CustomButtonStyle())
@@ -677,15 +528,7 @@ struct HomeView: View {
         }
     }
 
-    struct CustomButtonStyle: ButtonStyle {
-        func makeBody(configuration: Self.Configuration) -> some View {
-            configuration.label
-                .padding()
-                .background(configuration.isPressed ? Color.gray.opacity(0.5) : Color.clear)
-                .cornerRadius(8)
-                .border(configuration.isPressed ? Color.clear : Color.blue, width: 2)
-        }
-    }
+    
     private func formattedFrequency() -> String {
         return frequencyOptions[quoteFrequencyIndex]
     }
@@ -709,12 +552,7 @@ struct HomeView: View {
             Spacer()
             notificationSection
             Spacer()
-            composeButton
-            Spacer()
             aboutMeSection
-        }
-        .sheet(isPresented: $isAddingQuote) {
-            quoteAddition
         }
         .onAppear {
             notificationToggleEnabled = UserDefaults.standard.bool(forKey: notificationToggleKey)
@@ -723,9 +561,11 @@ struct HomeView: View {
                     notificationPermissionGranted = settings.authorizationStatus == .authorized
                 }
             }
+            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
         }
         .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: colorPaletteIndex]?[0] ?? Color.clear]))
+        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+        .frame(maxWidth: .infinity)
     }
 }
 struct HomeView_Previews: PreviewProvider {
@@ -733,4 +573,3 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
-

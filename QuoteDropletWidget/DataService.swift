@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 struct DataService {
-    @AppStorage("colorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var colorPaletteIndex = 0
+    @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetColorPaletteIndex = 0
     
     func getIndex() -> Int {
-        return colorPaletteIndex
+        return widgetColorPaletteIndex
     }
     
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))

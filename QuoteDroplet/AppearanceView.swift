@@ -12,8 +12,16 @@ import UIKit
 import Foundation
 
 struct AppearanceView: View {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    
     var body: some View {
-        Text("Appearance Adjustments")
+        VStack {
+            Text("Appearance Adjustments")
+            Text("\(sharedVars.colorPaletteIndex)")
+        }
+        .padding()
+        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+        .frame(maxWidth: .infinity)
     }
 }
 struct AppearanceView_Previews: PreviewProvider {
