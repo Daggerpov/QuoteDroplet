@@ -55,6 +55,49 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
     }.resume()
 }
 
+func getRecentQuotes(limit: Int, completion: @escaping ([Quote]?, Error?) -> Void) {
+    let urlString = "http://quote-dropper-production.up.railway.app/quotes/recent/\(limit)"
+    guard let url = URL(string: urlString) else {
+        completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
+
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            completion(nil, error)
+            return
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            if let httpResponse = response as? HTTPURLResponse {
+                completion(nil, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
+            } else {
+                completion(nil, NSError(domain: "HTTPError", code: -1, userInfo: nil))
+            }
+            return
+        }
+
+        guard let data = data else {
+            completion(nil, NSError(domain: "NoDataError", code: -1, userInfo: nil))
+            return
+        }
+
+        do {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let quotes = try decoder.decode([Quote].self, from: data)
+            completion(quotes, nil)
+        } catch {
+            completion(nil, error)
+        }
+    }.resume()
+}
+
+
 func addQuote(text: String, author: String?, classification: String, completion: @escaping (Bool, Error?) -> Void) {
     let urlString = "http://quote-dropper-production.up.railway.app/quotes"
     guard let url = URL(string: urlString) else {

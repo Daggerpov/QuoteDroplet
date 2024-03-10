@@ -190,9 +190,9 @@ struct AppearanceView: View {
                 }
             }
             Spacer()
-            customColorNote
-            Spacer()
             fontSelector
+            Spacer()
+            customColorNote
             Spacer()
         }
         .frame(maxWidth: .infinity)
