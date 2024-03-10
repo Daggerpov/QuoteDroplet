@@ -271,7 +271,7 @@ struct QuoteDropletWidget: Widget {
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
-        .description("Note that the color palette is modifiable.")
+        .description("Note that the color palette and font are customizable.")
         .supportedFamilies([.systemMedium, .systemSmall])
     }
 }
