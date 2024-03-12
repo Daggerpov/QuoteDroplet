@@ -107,7 +107,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            AdBannerView(adUnitID: "ca-app-pub-980618482440740/1130989271") // Replace with your ad unit ID
+            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/4071075476") // Replace with your ad unit ID
                             .frame(height: 50)
             quoteSection
             Spacer()
@@ -136,17 +136,27 @@ struct HomeView_Previews: PreviewProvider {
 }
 
 
-// UIViewRepresentable wrapper for AdMob banner view
-struct AdBannerView: UIViewRepresentable {
+// UIViewControllerRepresentable wrapper for AdMob banner view
+struct AdBannerViewController: UIViewControllerRepresentable {
     let adUnitID: String
 
-    func makeUIView(context: Context) -> GADBannerView {
-        let bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: 320, height: 50))) // Set your desired banner ad size
+    func makeUIViewController(context: Context) -> UIViewController {
+        let bannerView = GADBannerView(adSize: GADAdSizeBanner) // Use a predefined ad size
         bannerView.adUnitID = adUnitID
-        bannerView.rootViewController = UIApplication.shared.windows.first?.rootViewController
+        
+        let viewController = UIViewController()
+        viewController.view.addSubview(bannerView)
+        
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            bannerView.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
+            bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+        ])
+        
         bannerView.load(GADRequest())
-        return bannerView
+        
+        return viewController
     }
     
-    func updateUIView(_ uiView: GADBannerView, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
