@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58C409FAC2AEF9737D7FBC0C /* Pods_QuoteDropletWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */; };
 		DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
 		DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
 		DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* HomeView.swift */; };
@@ -34,6 +35,7 @@
 		DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
 		DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
+		E7A00833EB7F4A57F27D2AE0 /* Pods_Quote_Droplet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95461FB5248B4845B525336A /* Pods_Quote_Droplet.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuoteDropletWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C8BE2D0CF8DA61E79354E83 /* Pods-Quote Droplet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quote Droplet.release.xcconfig"; path = "Target Support Files/Pods-Quote Droplet/Pods-Quote Droplet.release.xcconfig"; sourceTree = "<group>"; };
+		593C1A394262CDDE062B3B7E /* Pods-QuoteDropletWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuoteDropletWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-QuoteDropletWidgetExtension/Pods-QuoteDropletWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		92EE9E79963F79E0C5F7FF15 /* Pods-QuoteDropletWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuoteDropletWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-QuoteDropletWidgetExtension/Pods-QuoteDropletWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		95461FB5248B4845B525336A /* Pods_Quote_Droplet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quote_Droplet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quote Droplet.debug.xcconfig"; path = "Target Support Files/Pods-Quote Droplet/Pods-Quote Droplet.debug.xcconfig"; sourceTree = "<group>"; };
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
@@ -92,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7A00833EB7F4A57F27D2AE0 /* Pods_Quote_Droplet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,12 +110,25 @@
 			files = (
 				DCAB2DB52A9FA95A00A822D7 /* SwiftUI.framework in Frameworks */,
 				DCAB2DB32A9FA95A00A822D7 /* WidgetKit.framework in Frameworks */,
+				58C409FAC2AEF9737D7FBC0C /* Pods_QuoteDropletWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B65467DA69664EAF952E390B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */,
+				4C8BE2D0CF8DA61E79354E83 /* Pods-Quote Droplet.release.xcconfig */,
+				92EE9E79963F79E0C5F7FF15 /* Pods-QuoteDropletWidgetExtension.debug.xcconfig */,
+				593C1A394262CDDE062B3B7E /* Pods-QuoteDropletWidgetExtension.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DCAB2D922A9FA91300A822D7 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +138,7 @@
 				DCAB2DB62A9FA95A00A822D7 /* QuoteDropletWidget */,
 				DCAB2DB12A9FA95A00A822D7 /* Frameworks */,
 				DCAB2D9C2A9FA91300A822D7 /* Products */,
+				B65467DA69664EAF952E390B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -159,6 +182,8 @@
 			children = (
 				DCAB2DB22A9FA95A00A822D7 /* WidgetKit.framework */,
 				DCAB2DB42A9FA95A00A822D7 /* SwiftUI.framework */,
+				95461FB5248B4845B525336A /* Pods_Quote_Droplet.framework */,
+				07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -184,6 +209,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCAB2DA92A9FA91900A822D7 /* Build configuration list for PBXNativeTarget "Quote Droplet" */;
 			buildPhases = (
+				6EDE450A420436FFE4855A7F /* [CP] Check Pods Manifest.lock */,
 				DCAB2D972A9FA91300A822D7 /* Sources */,
 				DCAB2D982A9FA91300A822D7 /* Frameworks */,
 				DCAB2D992A9FA91300A822D7 /* Resources */,
@@ -203,6 +229,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCAB2DC62A9FA96200A822D7 /* Build configuration list for PBXNativeTarget "QuoteDropletWidgetExtension" */;
 			buildPhases = (
+				9BE6824EA746BD4CE615EB40 /* [CP] Check Pods Manifest.lock */,
 				DCAB2DAC2A9FA95900A822D7 /* Sources */,
 				DCAB2DAD2A9FA95900A822D7 /* Frameworks */,
 				DCAB2DAE2A9FA95900A822D7 /* Resources */,
@@ -272,6 +299,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6EDE450A420436FFE4855A7F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Quote Droplet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9BE6824EA746BD4CE615EB40 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuoteDropletWidgetExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DCAB2D972A9FA91300A822D7 /* Sources */ = {
@@ -440,6 +514,7 @@
 		};
 		DCAB2DAA2A9FA91900A822D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -478,6 +553,7 @@
 		};
 		DCAB2DAB2A9FA91900A822D7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C8BE2D0CF8DA61E79354E83 /* Pods-Quote Droplet.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -516,6 +592,7 @@
 		};
 		DCAB2DC72A9FA96200A822D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92EE9E79963F79E0C5F7FF15 /* Pods-QuoteDropletWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -545,6 +622,7 @@
 		};
 		DCAB2DC82A9FA96200A822D7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 593C1A394262CDDE062B3B7E /* Pods-QuoteDropletWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;

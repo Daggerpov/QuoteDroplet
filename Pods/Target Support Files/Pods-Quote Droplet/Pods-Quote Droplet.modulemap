@@ -1,0 +1,6 @@
+framework module Pods_Quote_Droplet {
+  umbrella header "Pods-Quote Droplet-umbrella.h"
+
+  export *
+  module * { export * }
+}
