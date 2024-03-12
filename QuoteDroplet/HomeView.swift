@@ -108,11 +108,12 @@ struct HomeView: View {
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID:
-//                                    "ca-app-pub-5189478572039689/4071075476") // My Home Banner one I created as an Ad Unit
-                                    "ca-app-pub-3940256099942544/2435281174") // Working test ad
+                                    "ca-app-pub-5189478572039689/4071075476") // My Home Banner one I created as an Ad Unit
+//                                    "ca-app-pub-3940256099942544/2435281174") // Working test ad
 //                                    "ca-app-pub-3940256099942544/2934735716")
  // Replace with your ad unit ID
                             .frame(height: 50)
+            Spacer()
             quoteSection
             Spacer()
             aboutMeSection

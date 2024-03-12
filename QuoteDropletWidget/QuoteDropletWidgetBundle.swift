@@ -12,6 +12,6 @@ import SwiftUI
 struct QuoteDropletWidgetBundle: WidgetBundle {
     var body: some Widget {
         QuoteDropletWidget()
-        QuoteDropletWidgetLiveActivity()
+//        QuoteDropletWidgetLiveActivity()
     }
 }
