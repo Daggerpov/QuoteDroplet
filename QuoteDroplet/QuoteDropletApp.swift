@@ -9,9 +9,12 @@ import SwiftUI
 //import UIKit
 //import UserNotifications
 
+import GoogleMobileAds
+
 @main
 struct QuoteDropletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -23,6 +26,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UNUserNotificationCenter.current().delegate = self
         registerForNotifications()
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         return true
     }
 

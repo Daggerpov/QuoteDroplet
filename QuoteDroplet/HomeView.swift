@@ -11,10 +11,18 @@ import UserNotifications
 import UIKit
 import Foundation
 
+import GoogleMobileAds
+
 struct HomeView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @State private var recentQuotes: [Quote] = []
+    
+    init() {
+        // Start Google Mobile Ads
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+    }
+
 
     private var quoteSection: some View {
         VStack(alignment: .leading) {
@@ -99,6 +107,8 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
+            AdBannerView(adUnitID: "ca-app-pub-980618482440740/1130989271") // Replace with your ad unit ID
+                            .frame(height: 50)
             quoteSection
             Spacer()
             aboutMeSection
@@ -123,4 +133,20 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
+}
+
+
+// UIViewRepresentable wrapper for AdMob banner view
+struct AdBannerView: UIViewRepresentable {
+    let adUnitID: String
+
+    func makeUIView(context: Context) -> GADBannerView {
+        let bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: 320, height: 50))) // Set your desired banner ad size
+        bannerView.adUnitID = adUnitID
+        bannerView.rootViewController = UIApplication.shared.windows.first?.rootViewController
+        bannerView.load(GADRequest())
+        return bannerView
+    }
+    
+    func updateUIView(_ uiView: GADBannerView, context: Context) {}
 }
