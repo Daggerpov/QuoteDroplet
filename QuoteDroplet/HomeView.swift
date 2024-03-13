@@ -26,16 +26,30 @@ struct HomeView: View {
 
     private var quoteSection: some View {
         VStack(alignment: .leading) {
-            Text("Recently Submitted Quotes:")
+            Text("Recently Added Quotes:")
                 .font(.title)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.bottom, 5)
             
             if recentQuotes.isEmpty {
-                Text("Loading Quotes...")
+                Text("Loading Quotes ...")
                     .font(.title3)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     .padding(.bottom, 2)
+                ForEach(1..<4) { index in
+                    VStack(alignment: .leading) {
+                        Text("Quote Loading")
+                            .font(.title3)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                            .padding(.bottom, 2)
+                        
+                        Text("- Author Loading")
+                            .font(.body)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                            .padding(.bottom, 5)
+                        
+                    }
+                }
             } else {
                 ForEach(recentQuotes, id: \.id) { quote in
                     VStack(alignment: .leading) {

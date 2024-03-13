@@ -107,11 +107,11 @@ struct AppearanceView: View {
     
     private var widgetPreviewSection: some View {
         VStack {
-            Text("Preview:")
+            Text("Widget Preview:")
                 .font(.title3)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             ZStack {
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 20)
                     .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
                     .overlay(
                         VStack {
