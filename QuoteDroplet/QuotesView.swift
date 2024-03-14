@@ -407,7 +407,7 @@ struct QuotesView: View {
                         //                    Section(header: Text("Quote Info"))
                         Section() { // without header
                             TextField("Quote Text", text: $quoteText)
-                            TextField("Author", text: $author)
+                            TextField("Quote Author", text: $author)
                             submissionQuoteCategoryPicker
                         }
                         Button("Submit") {
@@ -434,6 +434,7 @@ struct QuotesView: View {
                                 }
                             )
                         }
+                        
                     }
                     .navigationTitle("Quote Submission")
                     .accentColor(.blue)
@@ -471,6 +472,8 @@ struct QuotesView: View {
                     }
                 }
             }
+            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/5561634002") // Second (appearance) personal banner ad
+                            .frame(height: 50)
         }
             
     }
@@ -488,6 +491,8 @@ struct QuotesView: View {
 
     var body: some View {
         VStack {
+            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/6041992068") // Second personal banner ad
+                            .frame(height: 50)
             Spacer()
             quoteCategoryPicker
             Spacer()

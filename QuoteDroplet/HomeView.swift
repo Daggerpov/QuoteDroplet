@@ -11,18 +11,10 @@ import UserNotifications
 import UIKit
 import Foundation
 
-import GoogleMobileAds
-
 struct HomeView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @State private var recentQuotes: [Quote] = []
-    
-    init() {
-        // Start Google Mobile Ads
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-    }
-
 
     private var quoteSection: some View {
         VStack(alignment: .leading) {
@@ -154,28 +146,3 @@ struct HomeView_Previews: PreviewProvider {
     }
 }
 
-
-// UIViewControllerRepresentable wrapper for AdMob banner view
-struct AdBannerViewController: UIViewControllerRepresentable {
-    let adUnitID: String
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        let bannerView = GADBannerView(adSize: GADAdSizeBanner) // Use a predefined ad size
-        bannerView.adUnitID = adUnitID
-        
-        let viewController = UIViewController()
-        viewController.view.addSubview(bannerView)
-        
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            bannerView.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
-            bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
-        ])
-        
-        bannerView.load(GADRequest())
-        
-        return viewController
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-}

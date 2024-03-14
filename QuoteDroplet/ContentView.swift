@@ -2,8 +2,10 @@ import SwiftUI
 import WidgetKit
 import UserNotifications
 import UIKit
+
 struct ContentView: View {
     @StateObject var sharedVars = SharedVarsBetweenTabs()
+    
     var body: some View {
         TabView {
             HomeView().environmentObject(sharedVars)

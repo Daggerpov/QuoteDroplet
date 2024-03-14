@@ -11,6 +11,8 @@ import UserNotifications
 import UIKit
 import Foundation
 
+import GoogleMobileAds
+
 let notificationPermissionKey = "notificationPermissionGranted"
 let notificationToggleKey = "notificationToggleEnabled"
 private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
@@ -87,4 +89,30 @@ struct CustomButtonStyle: ButtonStyle {
             .cornerRadius(8)
             .border(configuration.isPressed ? Color.clear : Color.blue, width: 2)
     }
+}
+
+
+// UIViewControllerRepresentable wrapper for AdMob banner view
+struct AdBannerViewController: UIViewControllerRepresentable {
+    let adUnitID: String
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let bannerView = GADBannerView(adSize: GADAdSizeBanner) // Use a predefined ad size
+        bannerView.adUnitID = adUnitID
+        
+        let viewController = UIViewController()
+        viewController.view.addSubview(bannerView)
+        
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            bannerView.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
+            bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+        ])
+        
+        bannerView.load(GADRequest())
+        
+        return viewController
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
