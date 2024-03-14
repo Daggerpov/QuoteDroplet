@@ -179,7 +179,7 @@ struct AppearanceView: View {
     
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/5561634002") // Second (appearance) personal banner ad
+            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/6041992068") // Second (appearance) personal banner ad
                             .frame(height: 50)
             Spacer()
             Group {
