@@ -387,20 +387,11 @@ struct QuotesView: View {
                 Text("How This Works")
             }
             .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                    )
-            )
-            .buttonStyle(CustomButtonStyle())
         }
         .alert(isPresented: $showSubmissionInfoAlert) {
             Alert(
                 title: Text("How Quote Submission Works"),
-                message: Text("Once you submit a quote, it'll show up on my admin portal, where I'll be able to edit typos or insert missing fields, such as author and classification—so don't worry about these issues. \n\nThen, I'll either approve the quote submission to be added into the app's quote database, or delete it.\n\nNote that if your quote exactly matches another one's text, the submission will not go through."),
+                message: Text("Submitted quotes will either be approved to be added into the app's quote database, or dismissed.\n\nI'll be able to edit typos or insert missing fields, such as author and classification, so don't worry about this when submitting."),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -416,7 +407,7 @@ struct QuotesView: View {
                         //                    Section(header: Text("Quote Info"))
                         Section() { // without header
                             TextField("Quote Text", text: $quoteText)
-                            TextField("Quote Text", text: $author)
+                            TextField("Author", text: $author)
                             submissionQuoteCategoryPicker
                         }
                         Button("Submit") {
@@ -435,7 +426,6 @@ struct QuotesView: View {
                             
                         }
                         .padding()
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
                         .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
                             Alert(
                                 title: Text("Submission Received"),
