@@ -377,7 +377,7 @@ struct QuotesView: View {
         }
         .padding()
     }
-    var submitButtonNew: some View {
+    var howWorksPopUp: some View {
         Button(action: {
             showSubmissionInfoAlert = true
         }) {
@@ -400,7 +400,7 @@ struct QuotesView: View {
         
         
         VStack {
-            submitButtonNew
+            howWorksPopUp
             if #available(iOS 16.0, *) {
                 NavigationStack {
                     Form{
@@ -425,7 +425,6 @@ struct QuotesView: View {
                             }
                             
                         }
-                        .padding()
                         .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
                             Alert(
                                 title: Text("Submission Received"),
@@ -440,7 +439,37 @@ struct QuotesView: View {
                     .accentColor(.blue)
                 }
             } else {
-                
+                Form{
+                    Section(header: Text("Quote Submission")) { // without header
+                        TextField("Quote Text", text: $quoteText)
+                        TextField("Author", text: $author)
+                        submissionQuoteCategoryPicker
+                    }
+                    Button("Submit") {
+                        addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
+                            if success {
+                                submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
+                                // Set showSubmissionReceivedAlert to true after successful submission
+                            } else if let error = error {
+                                submissionMessage = error.localizedDescription
+                            } else {
+                                submissionMessage = "An unknown error occurred."
+                            }
+                            isAddingQuote = false
+                            showSubmissionReceivedAlert = true // <-- Set to true after successful submission
+                        }
+                        
+                    }
+                    .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
+                        Alert(
+                            title: Text("Submission Received"),
+                            message: Text(submissionMessage),
+                            dismissButton: .default(Text("OK")) {
+                                showSubmissionReceivedAlert = false // Dismisses the alert when OK is clicked
+                            }
+                        )
+                    }
+                }
             }
         }
             
