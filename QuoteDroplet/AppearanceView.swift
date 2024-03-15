@@ -24,7 +24,8 @@ struct AppearanceView: View {
     
     let availableFonts = [
         "Georgia", "Times New Roman", "Verdana",
-        "Palatino", "Baskerville", "Didot", "Optima"
+        "Palatino", "Baskerville", "Didot", "Optima",
+        "Arial"
     ]
     private var fontSelector: some View {
         HStack {
@@ -40,7 +41,7 @@ struct AppearanceView: View {
             .pickerStyle(MenuPickerStyle())
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             .onChange(of: selectedFontIndex) { _ in
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+//                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }
         }
     }
@@ -51,7 +52,7 @@ struct AppearanceView: View {
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
             HStack(spacing: 10) {
-                ForEach(0..<colorPalettes.count - 1, id: \.self) { paletteIndex in
+                ForEach(0..<3, id: \.self) { paletteIndex in
                     ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
                         .frame(width: 60, height: 60)
                         .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
@@ -59,7 +60,20 @@ struct AppearanceView: View {
                         .onTapGesture {
                             sharedVars.colorPaletteIndex = paletteIndex
                             widgetColorPaletteIndex = paletteIndex
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+//                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                        }
+                }
+            }
+            HStack(spacing: 10) {
+                ForEach(4..<colorPalettes.count, id: \.self) { paletteIndex in
+                    ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
+                        .frame(width: 60, height: 60)
+                        .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
+                        .cornerRadius(8)
+                        .onTapGesture {
+                            sharedVars.colorPaletteIndex = paletteIndex
+                            widgetColorPaletteIndex = paletteIndex
+//                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                         }
                 }
             }
@@ -83,7 +97,7 @@ struct AppearanceView: View {
         .frame(width: 60, height: 60)
         .cornerRadius(8)
         .onChange(of: colorPalettes) { _ in
-            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+//            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
         }
     }
     private var customColorSection: some View {
@@ -177,6 +191,31 @@ struct AppearanceView: View {
         }
     }
     
+    private var reloadButton: some View {
+        VStack{
+            Button(action: {
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            }) {
+                HStack {
+                    Text("Reload Widget")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.leading, 5)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
+                )
+                .buttonStyle(CustomButtonStyle())
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/6041992068") // Second (appearance) personal banner ad
@@ -193,6 +232,8 @@ struct AppearanceView: View {
             }
             Spacer()
             fontSelector
+            Spacer()
+            reloadButton
             Spacer()
             customColorNote
             Spacer()

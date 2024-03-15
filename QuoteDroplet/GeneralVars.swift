@@ -65,7 +65,12 @@ var colorPalettes = [
     [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "CC5803")],
     [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "83781B")],
     [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")],
-    [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")]
+    [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")],
+    // New ones added
+    [Color(hex: "ffffcc"), Color(hex: "00a968"), Color(hex: "0047ab")],
+    [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")],
+    [Color(hex: "795C5F"), Color(hex: "A69658"), Color(hex: "D9B26F")],
+    
 ]
 enum QuoteCategory: String, CaseIterable {
     case wisdom = "Wisdom"

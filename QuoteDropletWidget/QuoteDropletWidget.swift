@@ -14,7 +14,7 @@ import Foundation
 let availableFonts = [
     "Georgia", "Times New Roman",
     "Verdana", "Palatino", "Baskerville", "Didot",
-    "Optima"
+    "Optima", "Arial"
 ]
 
 // Extension to disable content margins
