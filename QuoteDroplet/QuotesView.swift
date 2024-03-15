@@ -303,11 +303,10 @@ struct QuotesView: View {
             }
         }
     }
-    
 
     private var timeIntervalPicker: some View {
         HStack {
-            Text("Refresh Widget:")
+            Text("Reload Widget:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.horizontal, 5)
@@ -485,6 +484,31 @@ struct QuotesView: View {
             }
         }
     }
+    
+    private var reloadButton: some View {
+        VStack{
+            Button(action: {
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            }) {
+                HStack {
+                    Text("Reload Widget")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.leading, 5)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
+                )
+                .buttonStyle(CustomButtonStyle())
+            }
+        }
+    }
 
     var body: some View {
         VStack {
@@ -494,6 +518,8 @@ struct QuotesView: View {
             quoteCategoryPicker
             Spacer()
             timeIntervalPicker
+            Spacer()
+            reloadButton
             Spacer()
             notificationSection
             Spacer()
