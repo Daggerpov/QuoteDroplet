@@ -76,7 +76,7 @@ var colorPalettes = [
     [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")], // Change second colour (quote text)
     [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], // Alright
     // New ones added
-    [Color(hex: "ffffcc"), Color(hex: "00a968"), Color(hex: "0047ab")], // Khang's, it's good
+    [Color(hex: "FCB43C"), Color(hex: "1B3B6C"), Color(hex: "861904")], // 4th (similar to Colombia flag colors), from playing around
     [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")], // Alright
     [Color(hex: "667DA6"), Color(hex: "E4E8F1"), Color(hex: "6D1A36")], // New one
     // Could also try: E2856E, 03312E, 070707, 564138, 931621, C1292E (lighter than prev red, 931621)

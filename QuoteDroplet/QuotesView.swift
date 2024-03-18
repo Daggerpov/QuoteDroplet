@@ -159,14 +159,21 @@ struct QuotesView: View {
                     Button(action: {
                         isTimePickerExpanded.toggle()
                     }) {
-                        Text("Schedule Daily")
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-//                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                            )
+                        HStack {
+                            Text("Schedule Daily")
+                                .font(.headline)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+                            Image(systemName: "calendar.badge.clock")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
                     }
                     .padding()
                 }
@@ -350,13 +357,13 @@ struct QuotesView: View {
             isAddingQuote = true
         }) {
             HStack {
-                Text("Submit a quote")
+                Text("Submit a Quote")
                     .font(.headline)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                Image(systemName: "square.and.pencil")
+                Image(systemName: "paperplane.circle")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
+                    .frame(width: 30, height: 30)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
             }
             .padding()
