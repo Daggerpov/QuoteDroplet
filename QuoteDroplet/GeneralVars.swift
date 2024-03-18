@@ -69,7 +69,8 @@ var colorPalettes = [
     // New ones added
     [Color(hex: "ffffcc"), Color(hex: "00a968"), Color(hex: "0047ab")], // Khang's, it's good
     [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")], // Alright
-    [Color(hex: "667DA6"), Color(hex: "E4E8F1"), Color(hex: "8E5397")], // Copied from custom
+    [Color(hex: "667DA6"), Color(hex: "E4E8F1"), Color(hex: "6D1A36")], // New one
+    // Could also try: E2856E, 03312E, 070707, 564138, 931621, C1292E (lighter than prev red, 931621)
     
 ]
 enum QuoteCategory: String, CaseIterable {
