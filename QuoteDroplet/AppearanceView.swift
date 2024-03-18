@@ -113,6 +113,7 @@ struct AppearanceView: View {
                     
                     sharedVars.colorPaletteIndex = 3
                     widgetColorPaletteIndex = 3
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 }
             ),
             supportsOpacity: false
