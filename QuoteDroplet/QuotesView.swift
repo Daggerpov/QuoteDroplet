@@ -128,7 +128,7 @@ struct QuotesView: View {
                 HStack {
                     Text("Notifications:")
                         .font(.headline)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         .padding(.horizontal, 5)
                     Toggle("", isOn: $notificationToggleEnabled)
                         .labelsHidden()
@@ -160,11 +160,12 @@ struct QuotesView: View {
                         isTimePickerExpanded.toggle()
                     }) {
                         Text("Schedule Daily")
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+//                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                             )
                     }
                     .padding()
