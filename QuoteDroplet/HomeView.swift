@@ -17,6 +17,17 @@ struct HomeView: View {
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
     
+    // actual colors of custom:
+    
+    @AppStorage("widgetCustomColorPaletteFirstIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteFirstIndex = "1C7C54"
+    
+    @AppStorage("widgetCustomColorPaletteSecondIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteSecondIndex = "E2B6CF"
+    
+    @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
+    
     @State private var recentQuotes: [Quote] = []
     
     private var quoteSection: some View {
@@ -142,6 +153,12 @@ struct HomeView: View {
                 }
             }
             sharedVars.colorPaletteIndex = widgetColorPaletteIndex
+            
+            colorPalettes[3][0] = Color(hex:widgetCustomColorPaletteFirstIndex)
+            colorPalettes[3][1] = Color(hex:widgetCustomColorPaletteSecondIndex)
+            colorPalettes[3][2] = Color(hex:widgetCustomColorPaletteThirdIndex)
+            
+            
         }
     }
 }
