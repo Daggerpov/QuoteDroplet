@@ -140,7 +140,7 @@ struct HomeView: View {
             .alert(isPresented: $showMacAlert) {
                 Alert(
                     title: Text("Note for Mac users"),
-                    message: Text("You can actually add this same iOS widget to your Mac's widgets. You can do this by going on your mac device and clicking the date in the top-right corner -> Edit Widgets).\n\nAlso, there's another version of the Quote Droplet app specifically made for Mac, available on the Mac App Store. It shows quotes conveniently from your menu bar, in the top of your screen."),
+                    message: Text("You can actually add this same iOS widget to your Mac's widgets. You can do this by going on your mac device and clicking the date in the top-right corner -> Edit Widgets.\n\nAlso, there's another version of the Quote Droplet app specifically made for Mac, available on the Mac App Store. It shows quotes conveniently from your menu bar, in the top of your screen."),
                     dismissButton: .default(Text("OK"))
                 )
             }
