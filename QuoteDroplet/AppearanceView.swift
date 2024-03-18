@@ -91,6 +91,7 @@ struct AppearanceView: View {
                 set: { newColor in
                     colorPalettes[3][index] = newColor
                     sharedVars.colorPaletteIndex = 3
+                    widgetColorPaletteIndex = 3
                 }
             ),
             supportsOpacity: false
