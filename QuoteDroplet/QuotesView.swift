@@ -265,7 +265,7 @@ struct QuotesView: View {
                 if getSelectedQuoteCategory() == QuoteCategory.all.rawValue {
                     content.title = "Quote Droplet"
                 } else {
-                    content.title = "Quote Droplet: \(getSelectedQuoteCategory()) Quote"
+                    content.title = "Quote Droplet - \(getSelectedQuoteCategory())"
                 }
                 if let author = quote.author, !author.isEmpty {
                     if author == "Unknown Author" {
