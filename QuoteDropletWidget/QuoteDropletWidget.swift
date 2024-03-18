@@ -33,12 +33,12 @@ struct Provider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> SimpleEntry {
         let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification")
-        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalettes(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
     }
 
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalettes(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
         completion(entry)
     }
 
@@ -65,7 +65,7 @@ struct Provider: IntentTimelineProvider {
                     }
                 }
                 
-                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalettes(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                 
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
@@ -195,8 +195,13 @@ struct QuoteDropletWidgetEntryView : View {
     
     var colors: [Color] {
         // just overwriting custom ones
-        colorPalettes[3] = data.getColorPalettes()
-        return colorPalettes[safe: data.getIndex()] ?? [Color.clear]
+//        colorPalettes[3] = data.getColorPalettes()
+        if (data.getIndex() == 3) {
+            return data.getColorPalette()
+        } else {
+            return colorPalettes[safe: data.getIndex()] ?? [Color.clear]
+        }
+        
     }
     
     var isLoading: Bool {

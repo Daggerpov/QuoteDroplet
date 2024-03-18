@@ -292,8 +292,8 @@ struct AppearanceView: View {
             fontSelector
 //            Spacer()
 //            reloadButton took out manual reload
-            Spacer()
-            customColorNote
+//            Spacer()
+//            customColorNote
             Spacer()
             macNoteSection
             Spacer()
