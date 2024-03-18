@@ -21,6 +21,7 @@ struct AppearanceView: View {
     var widgetColorPaletteIndex = 0
     
     @State private var showCustomColorAlert = false
+    @State private var showMacAlert = false
     
     let availableFonts = [
         "Georgia", "Times New Roman", "Verdana",
@@ -216,6 +217,41 @@ struct AppearanceView: View {
         }
     }
     
+    private var macNoteSection: some View {
+        VStack (spacing: 10){
+            Button(action: {
+                showMacAlert = true
+            }) {
+                HStack {
+                    Image(systemName: "info.circle")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                    Text("Note for Mac Owners")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.leading, 5)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
+                )
+                .buttonStyle(CustomButtonStyle())
+            }
+            .alert(isPresented: $showMacAlert) {
+                Alert(
+                    title: Text("Note for Mac Owners"),
+                    message: Text("You can actually add this same iOS widget to your Mac's widgets. You can do this by going on your mac device and clicking the date in the top-right corner -> Edit Widgets.\n\nAlso, there's another version of the Quote Droplet app specifically made for Mac, available on the Mac App Store. It shows quotes conveniently from your menu bar, in the top of your screen."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/6041992068") // Second (appearance) personal banner ad
@@ -236,6 +272,8 @@ struct AppearanceView: View {
 //            reloadButton took out manual reload
             Spacer()
             customColorNote
+            Spacer()
+            macNoteSection
             Spacer()
         }
         .frame(maxWidth: .infinity)
