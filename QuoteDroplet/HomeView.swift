@@ -14,9 +14,11 @@ import Foundation
 struct HomeView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
+    @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var widgetColorPaletteIndex = 0
+    
     @State private var recentQuotes: [Quote] = []
     
-
     private var quoteSection: some View {
         VStack(alignment: .leading) {
             Text("Recently Added Quotes:")
@@ -139,6 +141,7 @@ struct HomeView: View {
                     print("Error fetching recent quotes: \(error)")
                 }
             }
+            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
         }
     }
 }

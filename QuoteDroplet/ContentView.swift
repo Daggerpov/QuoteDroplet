@@ -26,6 +26,11 @@ struct ContentView: View {
         }
         .environmentObject(sharedVars)
         .accentColor(.blue)
+        
+        // Need to fix:
+        // - light mode first palette
+        // - 
+        
 //        .onAppear {
 //            if (sharedVars.colorPaletteIndex == 0) {
 //                // as if on dark mode
