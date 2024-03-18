@@ -41,7 +41,7 @@ struct AppearanceView: View {
             .pickerStyle(MenuPickerStyle())
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             .onChange(of: selectedFontIndex) { _ in
-//                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }
         }
     }
@@ -60,7 +60,7 @@ struct AppearanceView: View {
                         .onTapGesture {
                             sharedVars.colorPaletteIndex = paletteIndex
                             widgetColorPaletteIndex = paletteIndex
-//                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                         }
                 }
             }
@@ -73,7 +73,7 @@ struct AppearanceView: View {
                         .onTapGesture {
                             sharedVars.colorPaletteIndex = paletteIndex
                             widgetColorPaletteIndex = paletteIndex
-//                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                         }
                 }
             }
@@ -97,7 +97,7 @@ struct AppearanceView: View {
         .frame(width: 60, height: 60)
         .cornerRadius(8)
         .onChange(of: colorPalettes) { _ in
-//            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
         }
     }
     private var customColorSection: some View {
@@ -197,7 +197,7 @@ struct AppearanceView: View {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }) {
                 HStack {
-                    Text("Reload Widget")
+                    Text("Reload Widget Now")
                         .font(.title3)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         .padding(.leading, 5)
@@ -232,8 +232,8 @@ struct AppearanceView: View {
             }
             Spacer()
             fontSelector
-            Spacer()
-            reloadButton
+//            Spacer()
+//            reloadButton took out manual reload
             Spacer()
             customColorNote
             Spacer()
