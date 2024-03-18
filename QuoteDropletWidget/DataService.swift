@@ -9,6 +9,23 @@ import Foundation
 import SwiftUI
 
 struct DataService {
+    @AppStorage("widgetCustomColorPalette", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteFirstIndex = "1C7C54"
+    
+    @AppStorage("widgetCustomColorPalette", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteSecondIndex = "E2B6CF"
+    
+    @AppStorage("widgetCustomColorPalette", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
+
+    func getColorPalettes() -> [Color] {
+        return [
+            widgetCustomColorPaletteFirstIndex,
+            widgetCustomColorPaletteSecondIndex,
+            widgetCustomColorPaletteThirdIndex
+        ].map { Color(hex: $0) }
+    }
+    
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetColorPaletteIndex = 0
     

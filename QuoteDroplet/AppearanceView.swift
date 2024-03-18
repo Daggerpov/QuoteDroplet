@@ -20,6 +20,15 @@ struct AppearanceView: View {
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
     
+    @AppStorage("widgetCustomColorPaletteFirstIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteFirstIndex = "1C7C54"
+    
+    @AppStorage("widgetCustomColorPaletteSecondIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteSecondIndex = "E2B6CF"
+    
+    @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
+
     @State private var showCustomColorAlert = false
     @State private var showMacAlert = false
     
@@ -89,7 +98,19 @@ struct AppearanceView: View {
                     colorPalettes[3][index]
                 },
                 set: { newColor in
+                    
                     colorPalettes[3][index] = newColor
+                    
+                    if (index == 0) {
+                        widgetCustomColorPaletteFirstIndex = newColor.hex
+                    } else if (index == 1) {
+                        widgetCustomColorPaletteSecondIndex = newColor.hex
+                    } else if (index == 2) {
+                        widgetCustomColorPaletteThirdIndex = newColor.hex
+                    } else {
+                        // do nothing, idk
+                    }
+                    
                     sharedVars.colorPaletteIndex = 3
                     widgetColorPaletteIndex = 3
                 }
