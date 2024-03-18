@@ -160,11 +160,11 @@ struct QuotesView: View {
                         isTimePickerExpanded.toggle()
                     }) {
                         Text("Schedule Daily")
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                             )
                     }
                     .padding()
@@ -308,7 +308,7 @@ struct QuotesView: View {
         HStack {
             Text("Reload Widget:")
                 .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                 .padding(.horizontal, 5)
 
             HStack {
@@ -361,7 +361,7 @@ struct QuotesView: View {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue, lineWidth: 2)
+                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
             )
         }
     }
