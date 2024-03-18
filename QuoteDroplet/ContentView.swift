@@ -26,7 +26,19 @@ struct ContentView: View {
         }
         .environmentObject(sharedVars)
         .accentColor(.blue)
+        .onAppear {
+            if (sharedVars.colorPaletteIndex == 0) {
+                // as if on dark mode
+                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
+            } else {
+                //
+                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
+            }
+          
+            // replacing this right above, to the right     ^^: NUIColor.white
+        }
     }
+    
         
 }
 
