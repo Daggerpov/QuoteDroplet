@@ -23,7 +23,9 @@ struct ContentView: View {
                     Text("Quotes")
                     Image(systemName: "quote.bubble.fill")
                 }
-        }.environmentObject(sharedVars)
+        }
+        .environmentObject(sharedVars)
+        .accentColor(.blue)
     }
         
 }

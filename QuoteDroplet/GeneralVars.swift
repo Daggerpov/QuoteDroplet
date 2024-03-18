@@ -62,14 +62,14 @@ extension Collection {
     }
 }
 var colorPalettes = [
-    [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "7A9E9F")], // Change third colour (author text) maybe: 68B0AB
+    [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "FE5F55")], // Change third colour (author text) maybe: 68B0AB
     [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "83781B")], // Best one, keep as is
     [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")], // Change second colour (quote text)
     [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], // Alright
     // New ones added
     [Color(hex: "ffffcc"), Color(hex: "00a968"), Color(hex: "0047ab")], // Khang's, it's good
     [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")], // Alright
-    [Color(hex: "598381"), Color(hex: "177E89"), Color(hex: "08605F")], //
+    [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], // Copied from custom
     
 ]
 enum QuoteCategory: String, CaseIterable {

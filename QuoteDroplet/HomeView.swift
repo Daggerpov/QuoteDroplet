@@ -15,6 +15,7 @@ struct HomeView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @State private var recentQuotes: [Quote] = []
+    @State private var showMacAlert = false
 
     private var quoteSection: some View {
         VStack(alignment: .leading) {
@@ -111,6 +112,41 @@ struct HomeView: View {
         .padding(.horizontal)
     }
     
+    private var macNoteSection: some View {
+        VStack (spacing: 10){
+            Button(action: {
+                showMacAlert = true
+            }) {
+                HStack {
+                    Image(systemName: "info.circle")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                    Text("Note for Mac Users")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.leading, 5)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
+                )
+                .buttonStyle(CustomButtonStyle())
+            }
+            .alert(isPresented: $showMacAlert) {
+                Alert(
+                    title: Text("Note for Mac users"),
+                    message: Text("You can actually add this same iOS widget to your Mac's widgets. You can do this by going on your mac device and clicking the date in the top-right corner -> Edit Widgets).\n\nAlso, there's another version of the Quote Droplet app specifically made for Mac, available on the Mac App Store. It shows quotes conveniently from your menu bar, in the top of your screen."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID:
@@ -119,8 +155,14 @@ struct HomeView: View {
             Spacer()
             quoteSection
             Spacer()
-            aboutMeSection
+            Text("Be sure to add the Quote Droplet widget.")
+                .font(.body)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .padding(.leading, 10)
             Spacer()
+            macNoteSection
+            Spacer()
+            aboutMeSection
         }
         .frame(maxWidth: .infinity)
         .padding()
