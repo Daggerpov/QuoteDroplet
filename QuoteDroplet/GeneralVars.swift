@@ -71,12 +71,13 @@ extension Collection {
     }
 }
 var colorPalettes = [
-    [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "FE5F55")], // Change third colour (author text) maybe: 68B0AB
+    [Color(hex: "504136"), Color(hex: "EEC584"), Color(hex: "F8F3E1")], 
     [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "83781B")], // Best one, keep as is
     [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")], // Change second colour (quote text)
     [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], // Alright
+
     // New ones added
-    [Color(hex: "FCB43C"), Color(hex: "1B3B6C"), Color(hex: "861904")], // 4th (similar to Colombia flag colors), from playing around
+    [Color(hex: "242331"), Color(hex: "533E2D"), Color(hex: "A27035")], // 4th (similar to Colombia flag colors), from playing around
     [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")], // Alright
     [Color(hex: "667DA6"), Color(hex: "E4E8F1"), Color(hex: "6D1A36")], // New one
     // Could also try: E2856E, 03312E, 070707, 564138, 931621, C1292E (lighter than prev red, 931621)
@@ -131,3 +132,28 @@ struct AdBannerViewController: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
+
+func resizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage? {
+    let size = image.size
+    
+    // Calculate the scaling factor to fit the image to the target dimensions while maintaining the aspect ratio
+    let widthRatio = targetSize.width / size.width
+    let heightRatio = targetSize.height / size.height
+    let ratio = min(widthRatio, heightRatio)
+    
+    let newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
+    let yOffset = (targetSize.height - newSize.height) // Leave the top blank and align the bottom
+    
+    //Create a new image context
+    let renderer = UIGraphicsImageRenderer(size: targetSize)
+    let newImage = renderer.image { context in
+      // Fill the background with a transparent color
+      context.cgContext.setFillColor(UIColor.clear.cgColor)
+      context.cgContext.fill(CGRect(origin: .zero, size: targetSize))
+      
+      // draw new image
+      image.draw(in: CGRect(x: 0, y: yOffset, width: newSize.width, height: newSize.height))
+    }
+    
+    return newImage
+  }

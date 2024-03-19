@@ -10,15 +10,26 @@ struct ContentView: View {
         TabView {
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "house.fill")
+//                    Label("Home", systemImage: "house.fill")
+                    VStack {
+                        Spacer(minLength: 20)
+                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Home")
+                      }
                 }
             AppearanceView()
                 .tabItem {
-                    Label("Appearance", systemImage: "paintbrush.fill")
+//                    Label("Appearance", systemImage: "paintbrush.fill")
+                    Spacer(minLength: 20)
+                    Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                    Text("Appearance")
                 }
             QuotesView()
                 .tabItem {
-                    Label("Quotes", systemImage: "quote.bubble.fill")
+//                    Label("Quotes", systemImage: "quote.bubble.fill")
+                    Spacer(minLength: 20)
+                    Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                    Text("Quotes")
                 }
         }
         .environmentObject(sharedVars)
