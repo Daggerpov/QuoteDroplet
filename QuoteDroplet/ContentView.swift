@@ -21,7 +21,6 @@ struct ContentView: View {
                     Label("Quotes", systemImage: "quote.bubble.fill")
                 }
         }
-        .padding(.top, 20)
         .environmentObject(sharedVars)
         .accentColor(.blue)
         .onAppear {

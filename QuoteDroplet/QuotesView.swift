@@ -237,7 +237,7 @@ struct QuotesView: View {
         .cornerRadius(8)
         .shadow(radius: 5)
     }
-
+    
     private func scheduleNotifications() {
         // Cancel existing notifications to reschedule them with the new time
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
