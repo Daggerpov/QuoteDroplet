@@ -32,7 +32,7 @@ struct HomeView: View {
     
     private var quoteSection: some View {
         VStack(alignment: .leading) {
-            Text("Recently Added Quotes:")
+            Text("Newest Quotes:")
                 .font(.title)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.bottom, 5)

@@ -193,17 +193,24 @@ struct QuotesView: View {
     private var notificationTimePicker: some View {
         VStack {
             Spacer()
-            DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
-                .datePickerStyle(WheelDatePickerStyle())
-                .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                .padding()
             
             VStack {
-                Text("This is when your notification will be sent out to you daily.")
-                    .font(.title3)
+                Text("Daily Notification Scheduling")
+                    .font(.title)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
                     .multilineTextAlignment(.center)
+                Spacer()
+                
+                Group {
+                    DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
+                        .padding()
+                        .scaleEffect(1.5)
+                }
+                .colorInvert()
+                        .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 
                 Spacer()
                 
