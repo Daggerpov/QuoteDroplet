@@ -8,56 +8,27 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            HomeView().environmentObject(sharedVars)
+            HomeView()
                 .tabItem {
-                    Text("Home")
-                    Image(systemName: "house.fill")
+                    Label("Home", systemImage: "house.fill")
                 }
-            AppearanceView().environmentObject(sharedVars)
+            AppearanceView()
                 .tabItem {
-                    Text("Appearance")
-                    Image(systemName: "paintbrush.fill")
-                  }
-            QuotesView().environmentObject(sharedVars)
+                    Label("Appearance", systemImage: "paintbrush.fill")
+                }
+            QuotesView()
                 .tabItem {
-                    Text("Quotes")
-                    Image(systemName: "quote.bubble.fill")
+                    Label("Quotes", systemImage: "quote.bubble.fill")
                 }
         }
+        .padding(.top, 20)
         .environmentObject(sharedVars)
         .accentColor(.blue)
-        
-        // Need to fix:
-        // - light mode first palette
-        // - 
-        
-//        .onAppear {
-//            if (sharedVars.colorPaletteIndex == 0) {
-//                // as if on dark mode
-//                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
-//            } else if (sharedVars.colorPaletteIndex == 1) {
-//                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
-//            } else if (sharedVars.colorPaletteIndex == 2) {
-//                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
-//            // skipping custom one
-//            } else if (sharedVars.colorPaletteIndex == 4) {
-//                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
-//            } else if (sharedVars.colorPaletteIndex == 5) {
-//                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
-//            // skipping custom one
-//            } else if (sharedVars.colorPaletteIndex == 6) {
-//                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
-//            // skipping custom one
-//            } else {
-//                //
-//                UITabBar.appearance().unselectedItemTintColor = UIColor(Color(red: 133/255, green: 123/255, blue: 116/255))
-//            }
-//          
-//            // replacing this right above, to the right     ^^: NUIColor.white
-//        }
+        .onAppear {
+            UITabBar.appearance().backgroundColor = UIColor.black
+            UITabBar.appearance().unselectedItemTintColor = UIColor.white
+        }
     }
-    
-        
 }
 
 class SharedVarsBetweenTabs: ObservableObject {
