@@ -133,11 +133,6 @@ struct HomeView: View {
             Spacer()
             quoteSection
             Spacer()
-            Text("Be sure to add the Quote Droplet widget.")
-                .font(.body)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.leading, 10)
-            Spacer()
             aboutMeSection
         }
         .frame(maxWidth: .infinity)
