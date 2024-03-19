@@ -134,6 +134,7 @@ struct HomeView: View {
             quoteSection
             Spacer()
             aboutMeSection
+            Spacer()
         }
         .frame(maxWidth: .infinity)
         .padding()

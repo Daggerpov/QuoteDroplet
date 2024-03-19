@@ -207,7 +207,7 @@ struct QuotesView: View {
                         .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
                         .padding()
-                        .scaleEffect(1.5)
+                        .scaleEffect(1.25)
                 }
                 .colorInvert()
                         .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
@@ -437,7 +437,9 @@ struct QuotesView: View {
                                 isAddingQuote = false
                                 showSubmissionReceivedAlert = true // <-- Set to true after successful submission
                             }
-                            
+                            quoteText = ""
+                            author = ""
+                            selectedCategory = .wisdom
                         }
                         .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
                             Alert(
@@ -473,6 +475,9 @@ struct QuotesView: View {
                             isAddingQuote = false
                             showSubmissionReceivedAlert = true // <-- Set to true after successful submission
                         }
+                        quoteText = ""
+                        author = ""
+                        selectedCategory = .wisdom
                         
                     }
                     .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
