@@ -5,6 +5,7 @@ import UIKit
 
 struct ContentView: View {
     @StateObject var sharedVars = SharedVarsBetweenTabs()
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         TabView {
@@ -35,8 +36,13 @@ struct ContentView: View {
         .environmentObject(sharedVars)
         .accentColor(.blue)
         .onAppear {
-            UITabBar.appearance().backgroundColor = UIColor.black
-            UITabBar.appearance().unselectedItemTintColor = UIColor.white
+            if (colorScheme == .light) {
+                UITabBar.appearance().backgroundColor = UIColor.white
+                UITabBar.appearance().unselectedItemTintColor = UIColor.black
+            } else {
+                UITabBar.appearance().backgroundColor = UIColor.black
+                UITabBar.appearance().unselectedItemTintColor = UIColor.white
+            }
         }
     }
 }
