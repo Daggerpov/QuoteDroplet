@@ -77,7 +77,7 @@ var colorPalettes = [
     [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], // Alright
 
     // New ones added
-    [Color(hex: "242331"), Color(hex: "533E2D"), Color(hex: "A27035")], // 4th (similar to Colombia flag colors), from playing around
+    [Color(hex: "#242434"), Color(hex: "#F79256"), Color(hex: "#F0EFF4")], // 4th (similar to Colombia flag colors), from playing around
     [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")], // Alright
     [Color(hex: "667DA6"), Color(hex: "E4E8F1"), Color(hex: "6D1A36")], // New one
     // Could also try: E2856E, 03312E, 070707, 564138, 931621, C1292E (lighter than prev red, 931621)
