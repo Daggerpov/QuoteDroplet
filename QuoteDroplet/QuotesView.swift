@@ -14,6 +14,8 @@ import Foundation
 struct QuotesView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
     
@@ -189,6 +191,34 @@ struct QuotesView: View {
             )
         }
     }
+    
+    private var notiTimePickerColor: some View {
+        Group{
+            if (colorScheme == .light) {
+                Group {
+                    DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
+                        .padding()
+                        .scaleEffect(1.25)
+                }
+                .colorInvert()
+                .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            } else {
+                Group {
+                    DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
+                        .padding()
+                        .scaleEffect(1.25)
+                }
+                // here we didn't do .colorInvert(), since we're on dark mode already
+                .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            }
+        }
+    }
 
     private var notificationTimePicker: some View {
         VStack {
@@ -201,16 +231,7 @@ struct QuotesView: View {
                     .multilineTextAlignment(.center)
                 Spacer()
                 
-                Group {
-                    DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                        .padding()
-                        .scaleEffect(1.25)
-                }
-                .colorInvert()
-                        .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                notiTimePickerColor
                 
                 Spacer()
                 
