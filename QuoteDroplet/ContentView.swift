@@ -35,17 +35,24 @@ struct ContentView: View {
         }
         .environmentObject(sharedVars)
         .accentColor(.blue)
+        .onChange(of: colorScheme) { newColorScheme in
+            updateTabBarAppearance(for: newColorScheme)
+        }
         .onAppear {
-            if (colorScheme == .light) {
-                UITabBar.appearance().backgroundColor = UIColor.white
-                UITabBar.appearance().unselectedItemTintColor = UIColor.black
-            } else {
-                UITabBar.appearance().backgroundColor = UIColor.black
-                UITabBar.appearance().unselectedItemTintColor = UIColor.white
-            }
+            updateTabBarAppearance(for: colorScheme)
+        }
+    }
+    func updateTabBarAppearance(for colorScheme: ColorScheme) {
+        if (colorScheme == .light) {
+            UITabBar.appearance().backgroundColor = UIColor.white
+            UITabBar.appearance().unselectedItemTintColor = UIColor.black
+        } else {
+            UITabBar.appearance().backgroundColor = UIColor.black
+            UITabBar.appearance().unselectedItemTintColor = UIColor.white
         }
     }
 }
+
 
 class SharedVarsBetweenTabs: ObservableObject {
     @Published var colorPaletteIndex = 0
