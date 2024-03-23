@@ -42,16 +42,20 @@ class QuoteManager {
         // Create a calendar instance
         let calendar = Calendar.current
         
-        // Calculate the trigger date for the first notification
-        var triggerDate = calendar.dateComponents([.hour, .minute], from: notificationTime)
+        // Get the current date
+        var currentDate = calendar.startOfDay(for: Date())
         
-        // Iterate over 60 random quotes
+        // Iterate over 60 days
         for _ in 0..<60 {
-            var randomQuote: QuoteJSON // Declare randomQuote outside of conditionals
+            // Calculate the trigger date for the current notification
+            var triggerDate = calendar.dateComponents([.hour, .minute], from: notificationTime)
+            triggerDate.day = calendar.component(.day, from: currentDate)
             
             // Create notification content
             let content = UNMutableNotificationContent()
             
+            // Fetch a random quote for the specified classification
+            var randomQuote: QuoteJSON
             if classification.lowercased() == "all" {
                 guard let randomElement = quotes.randomElement() else {
                     print("Error: Unable to retrieve a random quote.")
@@ -69,7 +73,7 @@ class QuoteManager {
                 randomQuote = randomElement
                 content.title = "Quote Droplet - \(classification)"
             }
-        
+            
             content.body = "\(randomQuote.text)\n- \(randomQuote.author)"
             content.sound = UNNotificationSound.default
             
@@ -93,8 +97,10 @@ class QuoteManager {
                 }
             }
             
-            // Increment triggerDate for the next day
-            triggerDate.day = (triggerDate.day ?? 0) + 1
+            // Move to the next day
+            if let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) {
+                currentDate = calendar.startOfDay(for: nextDate)
+            }
         }
     }
 }
