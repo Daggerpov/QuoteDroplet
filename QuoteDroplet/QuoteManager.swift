@@ -71,7 +71,7 @@ class QuoteManager {
             let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
             
             // Create a trigger for the notification to repeat daily at the selected time
-            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
             
             // Generate a unique identifier for this notification
             let notificationID = UUID().uuidString
