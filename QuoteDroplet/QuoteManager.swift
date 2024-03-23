@@ -37,30 +37,33 @@ class QuoteManager {
         // Cancel existing notifications to reschedule them with the new time
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         
-        var classification = quoteCategory.displayName
+        let classification = quoteCategory.displayName
         
         // Iterate over 60 random quotes
         for _ in 0..<60 {
-            // Get a random quote
-            
-            if classification.lowercased() == "all" {
-                
-                guard let randomQuote = quotes.randomElement() else {
-                    print("Error: Unable to retrieve a random quote.")
-                    continue
-                }
-            } else {
-                // Fetch a random quote with the specified classification
-                let filteredQuotes = quotes.filter { $0.classification.lowercased() == classification.lowercased() }
-                guard let randomQuote = filteredQuotes.randomElement() else {
-                    print("Error: Unable to retrieve a random quote.")
-                    continue
-                }
-            }
+            var randomQuote: QuoteJSON // Declare randomQuote outside of conditionals
             
             // Create notification content
             let content = UNMutableNotificationContent()
-            content.title = "Random Quote"
+            
+            if classification.lowercased() == "all" {
+                guard let randomElement = quotes.randomElement() else {
+                    print("Error: Unable to retrieve a random quote.")
+                    continue
+                }
+                randomQuote = randomElement
+                content.title = "Quote Droplet"
+            } else {
+                // Fetch a random quote with the specified classification
+                let filteredQuotes = quotes.filter { $0.classification.lowercased() == classification.lowercased() }
+                guard let randomElement = filteredQuotes.randomElement() else {
+                    print("Error: Unable to retrieve a random quote.")
+                    continue
+                }
+                randomQuote = randomElement
+                content.title = "Quote Droplet - \(classification)"
+            }
+        
             content.body = "\(randomQuote.text)\n- \(randomQuote.author)"
             content.sound = UNNotificationSound.default
             
@@ -88,6 +91,7 @@ class QuoteManager {
             }
         }
     }
+
 }
 
 struct QuoteJSON: Codable {
