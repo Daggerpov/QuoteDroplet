@@ -150,7 +150,7 @@ struct QuotesView: View {
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                             )
                     }
                     .padding()
