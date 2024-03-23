@@ -153,8 +153,6 @@ struct HomeView: View {
             colorPalettes[3][0] = Color(hex:widgetCustomColorPaletteFirstIndex)
             colorPalettes[3][1] = Color(hex:widgetCustomColorPaletteSecondIndex)
             colorPalettes[3][2] = Color(hex:widgetCustomColorPaletteThirdIndex)
-            
-            
         }
     }
 }

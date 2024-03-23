@@ -16,6 +16,10 @@
 		DC5205B42B9CEF620007CB5B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* HomeView.swift */; };
 		DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
 		DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
+		DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
+		DC7010E22BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
+		DC7010E42BAE654F008678CB /* QuoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* QuoteManager.swift */; };
+		DC7010E52BAE654F008678CB /* QuoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* QuoteManager.swift */; };
 		DC8279442AA09134004E2BBF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8279432AA09134004E2BBF /* DataService.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */; };
@@ -74,6 +78,8 @@
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
+		DC7010E02BAE63DC008678CB /* QuotesBackup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuotesBackup.json; sourceTree = "<group>"; };
+		DC7010E32BAE654F008678CB /* QuoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteManager.swift; sourceTree = "<group>"; };
 		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
 		DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuoteDropletWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DC8279432AA09134004E2BBF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -168,6 +174,8 @@
 				DC5205B22B9CEF620007CB5B /* HomeView.swift */,
 				DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */,
 				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
+				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
+				DC7010E32BAE654F008678CB /* QuoteManager.swift */,
 			);
 			path = QuoteDroplet;
 			sourceTree = "<group>";
@@ -299,6 +307,7 @@
 			files = (
 				DCAB2DA62A9FA91900A822D7 /* Preview Assets.xcassets in Resources */,
 				DCAB2DA32A9FA91900A822D7 /* Assets.xcassets in Resources */,
+				DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +315,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC7010E22BAE63DC008678CB /* QuotesBackup.json in Resources */,
 				DCAB2DBF2A9FA96100A822D7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC7010E42BAE654F008678CB /* QuoteManager.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
@@ -380,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC7010E52BAE654F008678CB /* QuoteManager.swift in Sources */,
 				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
@@ -551,7 +563,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -590,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -622,7 +634,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet.QuoteDropletWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -652,7 +664,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet.QuoteDropletWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

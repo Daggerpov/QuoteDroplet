@@ -1,0 +1,2132 @@
+[
+    {
+        "id": 1,
+        "text": "Devote the rest of your life to making progress.",
+        "author": "Epictetus",
+        "classification": "motivation"
+    },
+    {
+        "id": 3,
+        "text": "A man who fears suffering is already suffering from what he fears.",
+        "author": "Montaigne",
+        "classification": "philosophy"
+    },
+    {
+        "id": 2,
+        "text": "Instead of fighting the world, kill your ego.",
+        "author": "Rumi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 5,
+        "text": "Concern should drive us into action and not into a depression. No man is free who can not control himself.",
+        "author": "Pythagoras",
+        "classification": "wisdom"
+    },
+    {
+        "id": 4,
+        "text": "Those who look for bad in people will surely find it.",
+        "author": "Abraham Lincoln",
+        "classification": "wisdom"
+    },
+    {
+        "id": 6,
+        "text": "When a person can't find a deep sense of meaning, they distract themselves with pleasure.",
+        "author": "Viktor Frankl",
+        "classification": "discipline"
+    },
+    {
+        "id": 7,
+        "text": "Think of yourself as dead. You have lived your life. Now, take what's left and live it properly. What doesn't transmit light creates its own darkness.",
+        "author": "Marcus Aurelius",
+        "classification": "philosophy"
+    },
+    {
+        "id": 8,
+        "text": "No man is more unhappy than he who never faces adversity, for he is not permitted to prove himself.",
+        "author": "Seneca",
+        "classification": "motivation"
+    },
+    {
+        "id": 9,
+        "text": "He who laughs at himself never runs out of things to laugh at.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 10,
+        "text": "Those who were seen dancing were thought to be insane by those who couldn't hear the music.",
+        "author": "Friedrich Nietzsche",
+        "classification": "inspiration"
+    },
+    {
+        "id": 11,
+        "text": "Life is not a problem to be solved, but a reality to be experienced.",
+        "author": "Soren Kierkegaard",
+        "classification": "wisdom"
+    },
+    {
+        "id": 12,
+        "text": "It does not matter how slow you go as long as you don't stop.",
+        "author": "Confucius",
+        "classification": "motivation"
+    },
+    {
+        "id": 14,
+        "text": "All people are the same, only their habits differ.",
+        "author": "Confucius",
+        "classification": "discipline"
+    },
+    {
+        "id": 15,
+        "text": "When we are tired, we are attacked by ideas we conquered long ago.",
+        "author": "Friedrich Nietzsche",
+        "classification": "wisdom"
+    },
+    {
+        "id": 16,
+        "text": "He who does not enjoy solitude will not enjoy freedom.",
+        "author": "Schopenhauer",
+        "classification": "wisdom"
+    },
+    {
+        "id": 17,
+        "text": "Everything you've ever wanted is on the other side of fear.",
+        "author": "George Adair",
+        "classification": "motivation"
+    },
+    {
+        "id": 18,
+        "text": "We have two ears and one mouth so that we can listen twice as much as we speak.",
+        "author": "Zeno",
+        "classification": "wisdom"
+    },
+    {
+        "id": 19,
+        "text": "Never wrestle with pigs. You both get dirty, and the pig likes it.",
+        "author": "George Bernard Shaw",
+        "classification": "wisdom"
+    },
+    {
+        "id": 22,
+        "text": "It is not so much what happens to you as how you think about what happens.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 23,
+        "text": "What you leave behind is not what is engraved in stone monuments but what is woven into the lives of others.",
+        "author": "Pericles",
+        "classification": "inspiration"
+    },
+    {
+        "id": 24,
+        "text": "The man who moves a mountain begins by carrying away small stones.",
+        "author": "Confucius",
+        "classification": "motivation"
+    },
+    {
+        "id": 25,
+        "text": "Everyone thinks of changing the world but no one thinks of changing himself.",
+        "author": "Leo Tolstoy",
+        "classification": "wisdom"
+    },
+    {
+        "id": 27,
+        "text": "The man who asks a question is a fool for a minute; the man who does not ask is a fool for life.",
+        "author": "Confucius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 28,
+        "text": "If the highest aim of a captain were to preserve his ship, he would keep it in port forever.",
+        "author": "Thomas Aquinas",
+        "classification": "inspiration"
+    },
+    {
+        "id": 29,
+        "text": "Courage is resistance to fear, mastery of fear, not absence of fear.",
+        "author": "Mark Twain",
+        "classification": "motivation"
+    },
+    {
+        "id": 30,
+        "text": "All that a man achieves and all that he fails to achieve is the direct result of his own thoughts.",
+        "author": "James Allen",
+        "classification": "philosophy"
+    },
+    {
+        "id": 31,
+        "text": "People do not seem to realize that their opinion of the world is a confession of their character.",
+        "author": "Ralph Waldo Emerson",
+        "classification": "philosophy"
+    },
+    {
+        "id": 32,
+        "text": "You cannot escape the responsibilities of tomorrow by evading them today.",
+        "author": "Abraham Lincoln",
+        "classification": "discipline"
+    },
+    {
+        "id": 33,
+        "text": "Circumstances don't make a man, they only reveal him to himself.",
+        "author": "Epictetus",
+        "classification": "philsophy"
+    },
+    {
+        "id": 34,
+        "text": "Anxiety is the dizziness of freedom",
+        "author": "Soren Kierkegaard",
+        "classification": "philosophy"
+    },
+    {
+        "id": 35,
+        "text": "Nobody is more inferior than those who insist on being equal.",
+        "author": "Friedrich Nietzsche",
+        "classification": "philosophy"
+    },
+    {
+        "id": 36,
+        "text": "Prejudices are what fools use for reason.",
+        "author": "Voltaire",
+        "classification": "wisdom"
+    },
+    {
+        "id": 37,
+        "text": "A man's worth is no greater than the worth of his ambitions.",
+        "author": "Marcus Aurelius",
+        "classification": "inspiration"
+    },
+    {
+        "id": 49,
+        "text": "More is lost by indecision than by wrong decision.",
+        "author": "Cicero",
+        "classification": "wisdom"
+    },
+    {
+        "id": 41,
+        "text": "Above all things, respect yourself.",
+        "author": "Pythagoras",
+        "classification": "wisdom"
+    },
+    {
+        "id": 42,
+        "text": "The greatest weapon against stress is our ability to choose one thought over another.",
+        "author": "William James",
+        "classification": "wisdom"
+    },
+    {
+        "id": 43,
+        "text": "The most important decision you make is to be in a good mood.",
+        "author": "Voltaire",
+        "classification": "wisdom"
+    },
+    {
+        "id": 44,
+        "text": "A wise man doesn't say every single thing he thinks, but thinks every single thing he says.",
+        "author": "Rumi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 46,
+        "text": "Pain is inevitable. Suffering is optional.",
+        "author": "Dalai Lama",
+        "classification": "wisdom"
+    },
+    {
+        "id": 47,
+        "text": "He who has a why to live can bear almost any how.",
+        "author": "Friedrich Nietzsche",
+        "classification": "motivation"
+    },
+    {
+        "id": 48,
+        "text": "Our anxiety does not come from thinking about the future, but from wanting to control it.",
+        "author": "Khalil Gibran",
+        "classification": "wisdom"
+    },
+    {
+        "id": 50,
+        "text": "You become what you give your attention to.",
+        "author": "Epictetus",
+        "classification": "philosophy"
+    },
+    {
+        "id": 51,
+        "text": "Pleasures, when they go beyond a certain limit, are but punishments.",
+        "author": "Marcus Aurelius",
+        "classification": "discipline"
+    },
+    {
+        "id": 52,
+        "text": "A man's character is his fate.",
+        "author": "Heraclitus",
+        "classification": "philosophy"
+    },
+    {
+        "id": 54,
+        "text": "Without training, they lacked knowledge, without knowledge, they lacked confidence. Without confidence, they lacked victory.",
+        "author": "Julius Caesar",
+        "classification": "motivation"
+    },
+    {
+        "id": 56,
+        "text": "To get what you love, you must first be patient with what you hate.",
+        "author": "Al-Ghazali",
+        "classification": "discipline"
+    },
+    {
+        "id": 57,
+        "text": "Above all, avoid falsehood. Every kind of falsehood, espeically falseness to yourself. Watch over your own deceitfulness and look into it every hour, every minute.",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "wisdom"
+    },
+    {
+        "id": 58,
+        "text": "Smart people learn from everything and everyone. Average people learn from their experiences. Stupid people already have the answers.",
+        "author": "Socrates",
+        "classification": "wisdom"
+    },
+    {
+        "id": 59,
+        "text": "You can easily judge the character of a man by how he treats those who can do nothing for him.",
+        "author": "Goethe",
+        "classification": "wisdom"
+    },
+    {
+        "id": 60,
+        "text": "Wise men speak because they have something to say; fools because they have to say something.",
+        "author": "Plato",
+        "classification": "wisdom"
+    },
+    {
+        "id": 61,
+        "text": "We suffer more often in imagination than in reality.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 55,
+        "text": "If you are not willing to learn, no one can help you. If you are determined to learn, no one can stop you.",
+        "author": "Zig Ziglar",
+        "classification": "inspiration"
+    },
+    {
+        "id": 53,
+        "text": "It's better to be a warrior in a garden than a gardener at war.",
+        "author": "Miyamoto Musashi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 38,
+        "text": "The world will ask you who you are, and if you don't know, the world will tell you.",
+        "author": "Carl Jung",
+        "classification": "wisdom"
+    },
+    {
+        "id": 39,
+        "text": "Life is quite simple, but we insist on making it complicated",
+        "author": "Confucius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 26,
+        "text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+        "author": "Aristotle",
+        "classification": "discipline"
+    },
+    {
+        "id": 62,
+        "text": "Courage isn't having the strength to go on—it is going on when you don't have strength.",
+        "author": "Napoleon",
+        "classification": "motivation"
+    },
+    {
+        "id": 63,
+        "text": "Knowledge without action is wastefulness and action without knowledge is foolishness.",
+        "author": "Al-Ghazali",
+        "classification": "wisdom"
+    },
+    {
+        "id": 64,
+        "text": "Think lightly of yourself and deeply of the world.",
+        "author": "Miyamoto Musashi",
+        "classification": "philosophy"
+    },
+    {
+        "id": 65,
+        "text": "Attack the evil that is within yourself, rather than attacking the evil that's in others.",
+        "author": "Confucius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 66,
+        "text": "No man is free who cannot control himself.",
+        "author": "Pythagoras",
+        "classification": "discipline"
+    },
+    {
+        "id": 67,
+        "text": "Never let the future disturb you. You will meet it, if you have to, with the same weapons of reason which today arm you against the present.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 69,
+        "text": "Study without desire spoils the memory, and it retains nothing that is takes in.",
+        "author": "Leonardo Da Vinci",
+        "classification": "inspiration"
+    },
+    {
+        "id": 70,
+        "text": "Your days are numbered. Use them to throw open the windows of your soul to the sun. If you do not, the sun will soon set, and you with it.",
+        "author": "Marcus Aurelius",
+        "classification": "inspiration"
+    },
+    {
+        "id": 71,
+        "text": "They lose the day in expectation of the night, and the night in fear of dawn.",
+        "author": "Seneca",
+        "classification": "philosophy"
+    },
+    {
+        "id": 72,
+        "text": "Cease to hope and you will cease to fear.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 73,
+        "text": "Everything that irritates us about others can lead us to an understanding of ourselves.",
+        "author": "Carl Jung",
+        "classification": "wisdom"
+    },
+    {
+        "id": 74,
+        "text": "It is the mark of an educated mind to be able to entertain a thought without accepting it.",
+        "author": "Aristotle",
+        "classification": "wisdom"
+    },
+    {
+        "id": 75,
+        "text": "I know that I am intelligent, because I know that I know nothing.",
+        "author": "Socrates",
+        "classification": "wisdom"
+    },
+    {
+        "id": 76,
+        "text": "I bear the wounds of all the battles I avoided.",
+        "author": "Fernando Pessoa",
+        "classification": "philosophy"
+    },
+    {
+        "id": 77,
+        "text": "Wonder is the beginning of wisdom.",
+        "author": "Socrates",
+        "classification": "inspiration"
+    },
+    {
+        "id": 78,
+        "text": "Life can only be understood backwards; but it must be lived forwards.",
+        "author": "Soren Kierkegaard",
+        "classification": "wisdom"
+    },
+    {
+        "id": 79,
+        "text": "An arrogant person considers himself perfect. This is the chief harm of arrogance. It interferes with a person's main task in life—becoming a better person.",
+        "author": "Leo Tolstoy",
+        "classification": "wisdom"
+    },
+    {
+        "id": 80,
+        "text": "Be kind, for everyone you meet is fighting a hard battle.",
+        "author": "Socrates",
+        "classification": "wisdom"
+    },
+    {
+        "id": 81,
+        "text": "The hypocrite looks for faults; the believer looks for excuses.",
+        "author": "Al-Ghazali",
+        "classification": "philosophy"
+    },
+    {
+        "id": 82,
+        "text": "The things you think about determine the quality of your mind. Your soul takes on the colour of your thoughts.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 83,
+        "text": "Our anxiety does not come from thinking about the future, but from wanting to control it.",
+        "author": "Khalil Gibran",
+        "classification": "wisdom"
+    },
+    {
+        "id": 84,
+        "text": "Putting things off is the biggest waste of life: it snatches away each day as it comes and denies us the present by promising the future.",
+        "author": "Seneca",
+        "classification": "discipline"
+    },
+    {
+        "id": 85,
+        "text": "Respect was invented to cover the empty place where love should be.",
+        "author": "Leo Tolstoy",
+        "classification": "philosophy"
+    },
+    {
+        "id": 86,
+        "text": "While we wait for life, life passes.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 87,
+        "text": "A fool thinks himself to be wise, but a wise man knows himself to be a fool.",
+        "author": "William Shakespeare",
+        "classification": "wisdom"
+    },
+    {
+        "id": 88,
+        "text": "It is impossible for a man to learn what he thinks he already knows.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 90,
+        "text": "They muddy the water, to make it seem deep.",
+        "author": "Friedrich Nietzsche",
+        "classification": "philosophy"
+    },
+    {
+        "id": 91,
+        "text": "You have power over your mind, not outside events. Realize this, and you will find strength.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 92,
+        "text": "The meaning of life is to find your gift. The purpose of life is to give it away.",
+        "author": "Pablo Picasso",
+        "classification": "inspiration"
+    },
+    {
+        "id": 93,
+        "text": "It is easier to find men who will volunteer to die than to find those who are willing to endure pain with patience.",
+        "author": "Julius Caesar",
+        "classification": "discipline"
+    },
+    {
+        "id": 96,
+        "text": "No one is useless in this world who lightens the burden of another.",
+        "author": "Charles Dickens",
+        "classification": "inspiration"
+    },
+    {
+        "id": 97,
+        "text": "True wisdom comes to each of us when we understand about life, ourselves, and the world around us.",
+        "author": "Socrates",
+        "classification": "wisdom"
+    },
+    {
+        "id": 98,
+        "text": "No man ever steps in the same river twice, for it's not the same river and he's not the same man.",
+        "author": "Heraclitus",
+        "classification": "philosophy"
+    },
+    {
+        "id": 99,
+        "text": "One always speaks badly when one has nothing to say.",
+        "author": "Voltaire",
+        "classification": "philosophy"
+    },
+    {
+        "id": 100,
+        "text": "Never discourage anyone who continually makes progress, no matter how slow.",
+        "author": "Plato",
+        "classification": "wisdom"
+    },
+    {
+        "id": 101,
+        "text": "Do not allow your heart to take pleasure with the praises of people, nor be saddened by their condemnation.",
+        "author": "Al-Ghazali",
+        "classification": "wisdom"
+    },
+    {
+        "id": 102,
+        "text": "Do it or do not do it—you will regret both.",
+        "author": "Soren Kierkegaard",
+        "classification": "wisdom"
+    },
+    {
+        "id": 103,
+        "text": "Your vision will become clear only when you can look into your own heart. Who looks outside, dreams; who looks inside, awakes.",
+        "author": "Carl Jung",
+        "classification": "wisdom"
+    },
+    {
+        "id": 104,
+        "text": "If you hear a voice within you saying, \"You're not a painter,\" then by all means paint, boy, and that voice will be silenced, but only by working.",
+        "author": "Vincent Van Gogh",
+        "classification": "motivation"
+    },
+    {
+        "id": 105,
+        "text": "Better a diamond with a flaw than a pebble without.",
+        "author": "Confucius",
+        "classification": "inspiration"
+    },
+    {
+        "id": 40,
+        "text": "May the flowers remind us of why the rain was so necessary.",
+        "author": "Xan Oku",
+        "classification": "motivation"
+    },
+    {
+        "id": 109,
+        "text": "Until you get comfortable with being alone, you'll never know if you're choosing someone out of love or loneliness.",
+        "author": "Mandy Hale",
+        "classification": "wisdom"
+    },
+    {
+        "id": 110,
+        "text": "When you are right, you have no need to be angry. When you are wrong, you have no right to be angry.",
+        "author": "Mahatma Gandhi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 113,
+        "text": "Worrying does not take away tomorrow's troubles. It takes away today's peace.",
+        "author": "Randy Armstrong",
+        "classification": "wisdom"
+    },
+    {
+        "id": 112,
+        "text": "Stay away from negative people. They have a problem for every solution.",
+        "author": "Albert Einstein",
+        "classification": "wisdom"
+    },
+    {
+        "id": 108,
+        "text": "Some rise by sin, and some by virtue fall.",
+        "author": "William Shakespeare",
+        "classification": "philosophy"
+    },
+    {
+        "id": 114,
+        "text": "You can never cross the ocean unless you have the courage to lose sight of the shore.",
+        "author": "Christopher Columbus",
+        "classification": "inspiration"
+    },
+    {
+        "id": 115,
+        "text": "Your past mistakes are there to guide you, not to define you.",
+        "author": "Les Brown",
+        "classification": "wisdom"
+    },
+    {
+        "id": 116,
+        "text": "Life isn't about waiting for the storm to pass, it's about learning how to dance in the rain.",
+        "author": "Vivian Greene",
+        "classification": "motivation"
+    },
+    {
+        "id": 117,
+        "text": "Suffering arises from trying to control what is uncontrollable, or from neglecting what is within our power.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 118,
+        "text": "Man is not worried by real problems so much as by his imagined anxieties about real problems.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 119,
+        "text": "Nothing strengthens authority so much as silence.",
+        "author": "Leonardo Da Vinci",
+        "classification": "philosophy"
+    },
+    {
+        "id": 120,
+        "text": "Stay close to anything that makes you glad you are alive.",
+        "author": "Hafez",
+        "classification": "wisdom"
+    },
+    {
+        "id": 111,
+        "text": "The ultimate measure of a man is not where he stands in the moment of comfort and convenience, but where he stands at the times of challenge.",
+        "author": "Martin Luther King Jr",
+        "classification": "wisdom"
+    },
+    {
+        "id": 121,
+        "text": "To dare is to lose one's footing momentarily. Not to dare is to lose oneself.",
+        "author": "Soren Kierkegaard",
+        "classification": "motivation"
+    },
+    {
+        "id": 122,
+        "text": "If there is a fear of failing, the only safety consists in deliberately jumping",
+        "author": "Carl Jung",
+        "classification": "motivation"
+    },
+    {
+        "id": 123,
+        "text": "A man is not finished when he is defeated. He is finished when he quits.",
+        "author": "Epictetus",
+        "classification": "discipline"
+    },
+    {
+        "id": 124,
+        "text": "Do not spoil what you have by desiring what you have not; remember that what you now have was once among the things you only hoped for.",
+        "author": "Epicurus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 125,
+        "text": "Thinking is difficult, that's why most people judge.",
+        "author": "Carl Jung",
+        "classification": "philosophy"
+    },
+    {
+        "id": 127,
+        "text": "He who sweats more in training will bleed less in war.",
+        "author": "George S. Patton Jr.",
+        "classification": "discipline"
+    },
+    {
+        "id": 95,
+        "text": "Better to trip with the feet than with the tongue.",
+        "author": "Zeno",
+        "classification": "wisdom"
+    },
+    {
+        "id": 126,
+        "text": "If it's out of your hands, it deserves freedom from your mind too.",
+        "author": "Ivan Nuru",
+        "classification": "wisdom"
+    },
+    {
+        "id": 128,
+        "text": "The foolish man seeks happiness in the distance. The wise grows it under his feet.",
+        "author": "James Oppenheim",
+        "classification": "wisdom"
+    },
+    {
+        "id": 131,
+        "text": "Know how to listen, and you will profit even from those who talk badly.",
+        "author": "Plutarch",
+        "classification": "wisdom"
+    },
+    {
+        "id": 132,
+        "text": "The best way to keep a prisoner from escaping is to make sure he never knows he's in prison",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "philosophy"
+    },
+    {
+        "id": 134,
+        "text": "A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing.",
+        "author": "George Bernard Shaw",
+        "classification": "wisdom"
+    },
+    {
+        "id": 135,
+        "text": "Every reminiscence is coloured by today's being what it is, and therefore by a deceptive point of view.",
+        "author": "Albert Einstein",
+        "classification": "philosophy"
+    },
+    {
+        "id": 136,
+        "text": "Never blame any day in your life. Good days give you happiness, bad days give you experience, and the worst days give you a lesson.",
+        "author": "Dr. Sukhraj Dhillon",
+        "classification": "wisdom"
+    },
+    {
+        "id": 138,
+        "text": "To sit on an idea or fail to act on a goal is not really goal-setting, but wishful thinking.",
+        "author": "Les Brown",
+        "classification": "motivation"
+    },
+    {
+        "id": 139,
+        "text": "Act the way you want to be and soon you’ll be the way you act.",
+        "author": "Les Brown",
+        "classification": "motivation"
+    },
+    {
+        "id": 140,
+        "text": "What we speak becomes the house we live in.",
+        "author": "Hafez",
+        "classification": "philosophy"
+    },
+    {
+        "id": 142,
+        "text": "If you evade conflict to keep the peace, you start a war inside yourself.",
+        "author": "Cheryl Richardson",
+        "classification": "wisdom"
+    },
+    {
+        "id": 146,
+        "text": "Would you believe in what you believe in if you were the only one who believed it?",
+        "author": "Kanye West",
+        "classification": "philosophy"
+    },
+    {
+        "id": 145,
+        "text": "We can only be sure that we exist, therefore everything outside of us is us.",
+        "author": "Unknown Author",
+        "classification": "philosophy"
+    },
+    {
+        "id": 147,
+        "text": "A real loser is someone who's so afraid of not winning he doesn't even try.",
+        "author": "Unknown Author",
+        "classification": "motivation"
+    },
+    {
+        "id": 143,
+        "text": "1 tree can make 1000 matches, but 1 match can burn 1000 trees. Don’t let a negative thought destroy you and your positive ones.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 144,
+        "text": "Never let the sadness of your past and the fear of your future ruin the happiness of your present.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 137,
+        "text": "Good or bad, it's temporary. So don't let your bad times make you lose hope, and don't let your good timers make you feel larger than life. ",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 130,
+        "text": "Man needs a little madness, or else he never dares cut the rope and be free.",
+        "author": "Nikos Kazantzakis",
+        "classification": "inspiration"
+    },
+    {
+        "id": 148,
+        "text": "There’s no reason to look at the ground when soaring through the air.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 150,
+        "text": "What comes easy won't last long; what lasts long won't come easy.",
+        "author": "Unknown Author",
+        "classification": "discipline"
+    },
+    {
+        "id": 151,
+        "text": "It’s not because things are difficult that we dare not venture. It’s because we dare not venture that they are difficult.",
+        "author": "Seneca",
+        "classification": "inspiration"
+    },
+    {
+        "id": 152,
+        "text": "Of this one thing make sure against your dying day - that your faults die before you do.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 153,
+        "text": "If you can't explain it simply, you don't understand it well enough.",
+        "author": "Albert Einstein",
+        "classification": "wisdom"
+    },
+    {
+        "id": 154,
+        "text": "Do what you feel in your heart to be right, for you’ll be criticized anyway. You’ll be damned if you do, damned if you don’t. ",
+        "author": "Eleanor Roosevelt",
+        "classification": "wisdom"
+    },
+    {
+        "id": 155,
+        "text": "Real generosity toward the future lies in giving all to the present.",
+        "author": "Albert Camus",
+        "classification": "motivation"
+    },
+    {
+        "id": 156,
+        "text": "The cleverest of all, in my opinion, is the man who calls himself a fool at least once a month.",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "wisdom"
+    },
+    {
+        "id": 157,
+        "text": "It is fruitless to wish you had started years ago. In the future you will wish you had started today.",
+        "author": "Unknown Author",
+        "classification": "motivation"
+    },
+    {
+        "id": 158,
+        "text": "Every man is guilty of all the good he did not do.",
+        "author": "Voltaire",
+        "classification": "inspiration"
+    },
+    {
+        "id": 159,
+        "text": "The good life is one inspired by love and guided by knowledge.",
+        "author": "Bertrand Russell",
+        "classification": "inspiration"
+    },
+    {
+        "id": 160,
+        "text": "Any person capable of angering you, becomes your master.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 161,
+        "text": "One day, you will understand that happiness was always about learning how to live with yourself, that your happiness was never in the hands of others.",
+        "author": "Bianca Sparacino",
+        "classification": "wisdom"
+    },
+    {
+        "id": 162,
+        "text": "He who seeks does not find; but he who does not seek, will be found.",
+        "author": "Franz Kafka",
+        "classification": "wisdom"
+    },
+    {
+        "id": 163,
+        "text": "I can see the sun, but even if I cannot see the sun, I know that it exists. And to know that the sun is there—that is living.",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "upliftment"
+    },
+    {
+        "id": 164,
+        "text": "To lead an orchestra, you must turn your back to the crowd.",
+        "author": "Unknown Author",
+        "classification": "inspiration"
+    },
+    {
+        "id": 165,
+        "text": "It's not things that upset us, it's our judgement about things.",
+        "author": "Epictetus",
+        "classification": "philosophy"
+    },
+    {
+        "id": 166,
+        "text": "If you keep re-reading the same chapter, you will never finish the book.",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "wisdom"
+    },
+    {
+        "id": 167,
+        "text": "The one who plants trees, knowing that he will never sit in their shade, has at least started to understand the meaning of life.",
+        "author": "Rabindranath Tagore",
+        "classification": "wisdom"
+    },
+    {
+        "id": 168,
+        "text": "Anything that annoys you is teaching you patience.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 169,
+        "text": "When the winds of change blow, some people build walls, other build windmills.",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "motivation"
+    },
+    {
+        "id": 170,
+        "text": "It is not death that a man should fear, but he should fear never beginning to live.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 172,
+        "text": "You wouldn't plant a seed and then dig it up every few minutes to see if it had grown.",
+        "author": "Unknown Author",
+        "classification": "discipline"
+    },
+    {
+        "id": 173,
+        "text": "Twenty years from now you will be more disappointed by the things you did not do than by the ones you did.",
+        "author": "Mark Twain",
+        "classification": "wisdom"
+    },
+    {
+        "id": 174,
+        "text": "Patience is bitter, but its fruit are sweet.",
+        "author": "Aristotle",
+        "classification": "discipline"
+    },
+    {
+        "id": 133,
+        "text": "Loss is nothing else but change, and change is nature's delight.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 176,
+        "text": "Love is light, let it grow. Hate is heavy, let it go.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 175,
+        "text": "You don't have to be great to start, but you have to start to be great.",
+        "author": "Unknown Author",
+        "classification": "inspiration"
+    },
+    {
+        "id": 141,
+        "text": "If you don't stand for something, you'll fall for anything.",
+        "author": "Alexander Hamilton",
+        "classification": "wisdom"
+    },
+    {
+        "id": 171,
+        "text": "Anything you can't control is teaching you how to let go.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 177,
+        "text": "When a dog barks at you, you never fall on your hands and knees to bark back.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 178,
+        "text": "A person that is able to anger you becomes your master.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 180,
+        "text": "A great man is hard on himself; a small man is hard on others.",
+        "author": "Confucius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 181,
+        "text": "Never wait for a perfect moment, take the moment and make it perfect.",
+        "author": "Unknown Author",
+        "classification": "inspiration"
+    },
+    {
+        "id": 182,
+        "text": "Discipline is choosing between what you want now, and what you want most.",
+        "author": "Abraham Lincoln",
+        "classification": "discipline"
+    },
+    {
+        "id": 183,
+        "text": "Not every day is good, but there is something good in every day.",
+        "author": "Unknown Author",
+        "classification": "upliftment"
+    },
+    {
+        "id": 184,
+        "text": "Everything will be ok in the end. If it's not ok, then it's not the end.",
+        "author": "Paulo Coelho",
+        "classification": "upliftment"
+    },
+    {
+        "id": 185,
+        "text": "Only those who will risk going too far can possibly find out how far one can go.",
+        "author": "T.S. Eliot",
+        "classification": "inspiration"
+    },
+    {
+        "id": 186,
+        "text": "Wake up with determination; go to sleep with satisfaction.",
+        "author": "George Lorimer",
+        "classification": "inspiration"
+    },
+    {
+        "id": 187,
+        "text": "Through discipline comes freedom.",
+        "author": "Aristotle",
+        "classification": "discipline"
+    },
+    {
+        "id": 188,
+        "text": "The wise man does at once what the fool does finally.",
+        "author": "Machiavelli",
+        "classification": "motivation"
+    },
+    {
+        "id": 189,
+        "text": "With the courage to begin and the discipline to endure, victory becomes a matter of time.",
+        "author": "Unknown Author",
+        "classification": "discipline"
+    },
+    {
+        "id": 190,
+        "text": "Don't bend; don't water it down; don't try to make it logical; don't edit your own soul according to the fashion. Rather, follow your most intense obsessions mercilessly.",
+        "author": "Franz Kafka",
+        "classification": "inspiration"
+    },
+    {
+        "id": 191,
+        "text": "When we are no longer able to change a situation, we are challenge to change ourselves.",
+        "author": "Viktor E. Frankl",
+        "classification": "philosophy"
+    },
+    {
+        "id": 192,
+        "text": "Life is very short and anxious for those who forget the past, neglect the present, and fear the future.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 193,
+        "text": "The true traveler never arrives.",
+        "author": "Edgar Degas",
+        "classification": "philosophy"
+    },
+    {
+        "id": 194,
+        "text": "The meaning of life is that it stops.",
+        "author": "Franz Kafka",
+        "classification": "philosophy"
+    },
+    {
+        "id": 195,
+        "text": "I was ashamed of myself when I realized life was a costume party and I attended with my real face.",
+        "author": "Franz Kafka",
+        "classification": "philosophy"
+    },
+    {
+        "id": 196,
+        "text": "Live as if it's your second life, and as if you had acted the first time as wrongly as you are about to now.",
+        "author": "Viktor E. Frankl",
+        "classification": "wisdom"
+    },
+    {
+        "id": 197,
+        "text": "He is terribly afraid of dying because he hasn't yet lived.",
+        "author": "Franz Kafka",
+        "classification": "wisdom"
+    },
+    {
+        "id": 198,
+        "text": "The greatest mistake a man can make is being afraid of making one.",
+        "author": "Elbert Hubbard",
+        "classification": "wisdom"
+    },
+    {
+        "id": 149,
+        "text": "You drown not by falling into a river, but by staying submerged in it.",
+        "author": "Paulo Coelho",
+        "classification": "motivation"
+    },
+    {
+        "id": 199,
+        "text": "If every time someone asks you a question, you try to say the right answer, your entire life is a test.",
+        "author": "Kanye West",
+        "classification": "philosophy"
+    },
+    {
+        "id": 179,
+        "text": "Never stop being a good person because of bad people.",
+        "author": "Unknown Author",
+        "classification": "upliftment"
+    },
+    {
+        "id": 200,
+        "text": "When everything seems to be going against you, remember that the airplane takes off against the wind, not with it.",
+        "author": "Henry Ford",
+        "classification": "motivation"
+    },
+    {
+        "id": 201,
+        "text": "The robbed that smiles steals something from the thief.",
+        "author": "Orthello",
+        "classification": "philosophy"
+    },
+    {
+        "id": 202,
+        "text": "If a man knows not which port he sails, no wind is favourable.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 203,
+        "text": "If it is not right, do not do it. If it is not true, do not say it.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 204,
+        "text": "You will never be able to experience everything. So, please, do poetical justice to your soul and simply experience yourself.",
+        "author": "Albert Camus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 205,
+        "text": "If you are depressed, you are living in the past. If you are anxious, you are living in the future. If you are at peace, you are in the present.",
+        "author": "Lao Tzu",
+        "classification": "wisdom"
+    },
+    {
+        "id": 206,
+        "text": "To be trusted is a greater compliment than being loved.",
+        "author": "Leo Tolstoy",
+        "classification": "philosophy"
+    },
+    {
+        "id": 207,
+        "text": "Expect nothing; appreciate everything.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 209,
+        "text": "Just because someone carries it well, doesn't mean it isn't heavy.",
+        "author": "Unknown Author",
+        "classification": "philosophy"
+    },
+    {
+        "id": 208,
+        "text": "Until it's my turn, I will keep clapping for others.",
+        "author": "Unknown Author",
+        "classification": "upliftment"
+    },
+    {
+        "id": 210,
+        "text": "If you go without something long enough, you'll realize one of two things: how much you really want it or how much you never needed it.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 211,
+        "text": "Be neither so arrogant as to presume to be liked by everyone, nor so humble as to give in to the discontent of a few.",
+        "author": "Niccolo Machiavelli",
+        "classification": "wisdom"
+    },
+    {
+        "id": 223,
+        "text": "The desire for a more positive experience is itself a negative experience. And, paradoxically, the acceptance of one's negative experience is itself a positive experience.",
+        "author": "Mark Manson",
+        "classification": "wisdom"
+    },
+    {
+        "id": 212,
+        "text": "If you think the price of winning is too high, wait until you get the bill from regret.",
+        "author": "Tim Grover",
+        "classification": "motivation"
+    },
+    {
+        "id": 213,
+        "text": "Ease is a greater threat to progress than hardship.",
+        "author": "Denzel Washington",
+        "classification": "motivation"
+    },
+    {
+        "id": 214,
+        "text": "The difference between who you are and who you want to be is what you do.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 215,
+        "text": "Since my house burned down I now own a better view of the rising moon.",
+        "author": "Mizuta Masahide",
+        "classification": "wisdom"
+    },
+    {
+        "id": 216,
+        "text": "You can't change the people around you, but you can change the people around you.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 217,
+        "text": "There are some things that you cannot be sure of. You must take a chance. If you wait for perfect weather, you will never plant your seeds. If you are afraid that every cloud will bring rain, you will never harvest your crops.",
+        "author": "The Bible (Ecclesiastes 11:3-5)",
+        "classification": "wisdom"
+    },
+    {
+        "id": 218,
+        "text": "Here I am, a bundle of past recollections and future dreams, knotted up in a reasonably attractive bundle of flesh. I remember what this flesh has gone through; I dream of what it may go through.",
+        "author": "Sylvia Plath",
+        "classification": "upliftment"
+    },
+    {
+        "id": 219,
+        "text": "You cannot find peace by avoiding life.",
+        "author": "Virginia Woolf",
+        "classification": "wisdom"
+    },
+    {
+        "id": 220,
+        "text": "Learn from yesterday, live for today, and hope for tomorrow.",
+        "author": "Albert Einstein",
+        "classification": "wisdom"
+    },
+    {
+        "id": 222,
+        "text": "It does not mean to be in a place where there is no noise, trouble or hard work. It means to be in the midst of these things and still be calm in your heart.",
+        "author": "Lori Gottlieb",
+        "classification": "wisdom"
+    },
+    {
+        "id": 224,
+        "text": "Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power.",
+        "author": "Lao Tzu",
+        "classification": "wisdom"
+    },
+    {
+        "id": 225,
+        "text": "Courage isn't having the strength to go on - it is going on when you don't have strength.",
+        "author": "Napoleon",
+        "classification": "motivation"
+    },
+    {
+        "id": 221,
+        "text": "I can't afford to hate anyone. I don't have that kind of time.",
+        "author": "Akira Kurosawa",
+        "classification": "upliftment"
+    },
+    {
+        "id": 226,
+        "text": "Man only like to count his troubles; he doesn't calculate his happiness.",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "philosophy"
+    },
+    {
+        "id": 227,
+        "text": "If you want the present to be different from the past, study the past.",
+        "author": "Spinoza",
+        "classification": "wisdom"
+    },
+    {
+        "id": 228,
+        "text": "Those who do not move do not notice their chains.",
+        "author": "Rosa Luxemburg",
+        "classification": "philosophy"
+    },
+    {
+        "id": 229,
+        "text": "When a person tells you you hurt them, you don't get to decide you didn't.",
+        "author": "Louis C. K.",
+        "classification": "philosophy"
+    },
+    {
+        "id": 230,
+        "text": "When nobody wakes you up in the morning, waits for you at night, and when you can do whatever you want, what do you call it, freedom or loneliness?",
+        "author": "Charles Bukowski",
+        "classification": "philosophy"
+    },
+    {
+        "id": 232,
+        "text": "Attract what you expect, reflect what you desire, become what you respect, and mirror what you admire.",
+        "author": "Deb Sofield",
+        "classification": "wisdom"
+    },
+    {
+        "id": 233,
+        "text": "If you focus on the hurt, you will continue to suffer. If you focus on the lesson, you will continue to grow.",
+        "author": "Unknown Author",
+        "classification": "upliftment"
+    },
+    {
+        "id": 234,
+        "text": "A mistake should be your teacher, not your attacker. A mistake is a lesson, not a loss. It is a temporary, necessary detour, not a dead end.",
+        "author": "Unknown Author",
+        "classification": "upliftment"
+    },
+    {
+        "id": 235,
+        "text": "All you can do is learn your lesson. There's no point in wishing you had done it differently. The past is the past; accept it and grow from it.",
+        "author": "Unknown Author",
+        "classification": "upliftment"
+    },
+    {
+        "id": 237,
+        "text": "The important thing is to hold on. Holding on is a victory in itself.",
+        "author": "Miyamoto Musashi",
+        "classification": "motivation"
+    },
+    {
+        "id": 238,
+        "text": "You shouldn't climb mountains for the world to see you, but for you to see the world.",
+        "author": "David McCullough Jr. ",
+        "classification": "wisdom"
+    },
+    {
+        "id": 239,
+        "text": "The grass is always greener where we water it.",
+        "author": "Wolfgang Puck",
+        "classification": "wisdom"
+    },
+    {
+        "id": 240,
+        "text": "If art is how we decorate space, then music is how we decorate time.",
+        "author": "Jean-Michel Basquiat",
+        "classification": "philosophy"
+    },
+    {
+        "id": 241,
+        "text": "Progress is impossible without change, and those who cannot change their minds cannot change anything.",
+        "author": "George Bernard Shaw",
+        "classification": "inspiration"
+    },
+    {
+        "id": 242,
+        "text": "It is better to conquer yourself than to win a thousand battles.",
+        "author": "Buddha",
+        "classification": "wisdom"
+    },
+    {
+        "id": 243,
+        "text": "The content of your character is your choice. Day by day, what you choose, what you think and what you do is who you become.",
+        "author": "Heraclitus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 244,
+        "text": "How long are you going to wait before you demand the best for yourself?",
+        "author": "Epictetus",
+        "classification": "motivation"
+    },
+    {
+        "id": 245,
+        "text": "Confidence isn't thinking you're better than anyone else, it's realizing that you have no reason to compare yourself to anyone else.",
+        "author": "Maryam Hasnaa",
+        "classification": "philosophy"
+    },
+    {
+        "id": 247,
+        "text": "Now that you don't have to be perfect, you can be good.",
+        "author": "John Steinbeck",
+        "classification": "inspiration"
+    },
+    {
+        "id": 248,
+        "text": "I'm not everything I want to be, but I'm more than I was, and I'm still learning.",
+        "author": "Charlotte Eriksson",
+        "classification": "inspiration"
+    },
+    {
+        "id": 251,
+        "text": "Only fear can defeat life. It is a clever, treacherous adversary, how well I know. It has no decency, respects no law or convention, shows no mercy. It goes for your weakest spot, which it finds with unnerving ease.",
+        "author": "Yann Martel",
+        "classification": "wisdom"
+    },
+    {
+        "id": 252,
+        "text": "Your living is determined not so much by what life brings to you as by the attitude you bring to life; not so much by what happens to you as by the way your mind looks at what happens.",
+        "author": "Khalil Gibran",
+        "classification": "wisdom"
+    },
+    {
+        "id": 253,
+        "text": "I have learned silence from the talkative, toleration from the intolerant, and kindness from the unkind; yet, strange, I am ungrateful to those teachers.",
+        "author": "Khalil Gibran",
+        "classification": "philosophy"
+    },
+    {
+        "id": 254,
+        "text": "We choose our joys and sorrows long before we experience them.",
+        "author": "Khalil Gibran",
+        "classification": "philosophy"
+    },
+    {
+        "id": 255,
+        "text": "Your pain is the breaking of the shell that encloses your understanding.",
+        "author": "Khalil Gibran",
+        "classification": "philosophy"
+    },
+    {
+        "id": 249,
+        "text": "Since my house burned down, I now own a better view of the rising moon.",
+        "author": "Mizuta Masahide",
+        "classification": "philosophy"
+    },
+    {
+        "id": 256,
+        "text": "Nothing truly stops you. Nothing truly holds you back. For your own will is always within your control.",
+        "author": "Epictetus",
+        "classification": "motivation"
+    },
+    {
+        "id": 257,
+        "text": "Make a habit of two things: to help, or at least, to do no harm.",
+        "author": "Hippocrates",
+        "classification": "wisdom"
+    },
+    {
+        "id": 258,
+        "text": "Consider at what price you sell your integrity; but please, for God's sake, don't sell it cheap.",
+        "author": "Epictetus",
+        "classification": "philosophy"
+    },
+    {
+        "id": 259,
+        "text": "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.",
+        "author": "Rumi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 260,
+        "text": "Whether you think you can or think you can't—you are right.",
+        "author": "Henry Ford",
+        "classification": "wisdom"
+    },
+    {
+        "id": 261,
+        "text": "Success consists of going from failure to failure without loss of enthusiasm.",
+        "author": "Winston Churchill",
+        "classification": "inspiration"
+    },
+    {
+        "id": 262,
+        "text": "Don't count the days, make the days count.",
+        "author": "Muhammad Ali",
+        "classification": "motivation"
+    },
+    {
+        "id": 263,
+        "text": "When you are not choosing to chase something, you are choosing distraction for yourself.",
+        "author": "Unknown Author",
+        "classification": "discipline"
+    },
+    {
+        "id": 264,
+        "text": "I no longer know if I wish to drown myself in love, vodka, or the sea.",
+        "author": "Franz Kafka",
+        "classification": "philosophy"
+    },
+    {
+        "id": 265,
+        "text": "Failure is not the opposite of success; it is a part of success.",
+        "author": "Arianna Huffington",
+        "classification": "inspiration"
+    },
+    {
+        "id": 266,
+        "text": "Nothing, everything, anything, something: if you have nothing, then you have everything, because you have the freedom to do anything, without the fear of losing something.",
+        "author": "Aristotle",
+        "classification": "philosophy"
+    },
+    {
+        "id": 267,
+        "text": "Freedom is not procured by a full enjoyment of what is desired, but by controlling the desire.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 268,
+        "text": "Don't trust your tongue when your heart is hurt, hush and take time to heal.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 269,
+        "text": "We can easily forgive a child who is afraid of the dark; the real tragedy of life is when men are afraid of the light.",
+        "author": "Plato",
+        "classification": "philosophy"
+    },
+    {
+        "id": 270,
+        "text": "Once you realize the power of your words, you won't just say anything. When you realize the power of your thoughts, you won't entertain just anything. Once you figure out the power of your presence, you won't just be anywhere.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 271,
+        "text": "To bear trials with a calm mind robs misfortune of its strength and burden.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 272,
+        "text": "Grant to us the serenity of mind to accept that which cannot be changed, courage to change that which can be changed, and wisdom to know the one from the other.",
+        "author": "Reinhold Niebuhr",
+        "classification": "wisdom"
+    },
+    {
+        "id": 273,
+        "text": "Educating the mind without educating the heart is no education at all.",
+        "author": "Aristotle",
+        "classification": "philosophy"
+    },
+    {
+        "id": 274,
+        "text": "Your task is not to seek for love, but merely to seek and find all the barriers within yourself that you have built against it.",
+        "author": "Rumi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 276,
+        "text": "People will forget what you said, people will forget what you did, but people will never forget how you made them feel.",
+        "author": "Maya Angelou",
+        "classification": "wisdom"
+    },
+    {
+        "id": 277,
+        "text": "I am a mosaic of everything I've ever loved, even for a heartbeat.",
+        "author": "Unknown Author",
+        "classification": "love"
+    },
+    {
+        "id": 275,
+        "text": "What is hell? I maintain that it is the suffering of being unable to love.",
+        "author": "Fyodor Dostoyevsky",
+        "classification": "love"
+    },
+    {
+        "id": 278,
+        "text": "Don't fear sadness, as it tends to sit right next to love.",
+        "author": "Sahil Bloom",
+        "classification": "love"
+    },
+    {
+        "id": 280,
+        "text": "To be angry is to let others' mistakes control you. To forgive is to control yourself.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 281,
+        "text": "Don't criticize when you're envious.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 282,
+        "text": "Don't judge when you're misinformed.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 283,
+        "text": "Don't decide when you're sad.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 284,
+        "text": "Don't reply when you're angry.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 285,
+        "text": "Don't promise when you're happy.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 286,
+        "text": "You wish to be kind, so you are tested with negativity. You wish to be strong, so you are tested with weakness. You wish to love, so you are tested by being alone.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 287,
+        "text": "He's not the brightest candle in the room, but he burns longer than anyone else.",
+        "author": "Ronnie O'Sullivan",
+        "classification": "motivation"
+    },
+    {
+        "id": 288,
+        "text": "Knowing is not enough, we must apply. Willing is not enough, we must do.",
+        "author": "Johann Von Goethe",
+        "classification": "wisdom"
+    },
+    {
+        "id": 289,
+        "text": "Criticism, like rain, may dampen the spirit; yet, from such showers, the soul's garden blooms ever brighter.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 290,
+        "text": "Criticism, like rain, should be gentle enough to nourish a man's growth without destroying his roots.",
+        "author": "Frank A. Clark",
+        "classification": "wisdom"
+    },
+    {
+        "id": 291,
+        "text": "If you want to improve, be content to be thought foolish and stupid with regard to external things. Don't wish to be thought to know anything.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 246,
+        "text": "To love someone is to confess: I'm prepared to be devastated by you.",
+        "author": "Billy-Ray Belcourt",
+        "classification": "love"
+    },
+    {
+        "id": 250,
+        "text": "God said “Love your enemy,” so I obeyed him and loved myself.",
+        "author": "Khalil Gibran",
+        "classification": "wisdom"
+    },
+    {
+        "id": 279,
+        "text": "Always remind yourself that your track record for making it through your bad days is perfect.",
+        "author": "Sahil Bloom",
+        "classification": "upliftment"
+    },
+    {
+        "id": 292,
+        "text": "Out of suffering have emerged the strongest souls; the most massive characters are seared with scars.",
+        "author": "Khalil Gibran",
+        "classification": "motivation"
+    },
+    {
+        "id": 293,
+        "text": "The man who chases two rabbits catches neither.",
+        "author": "Confucius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 294,
+        "text": "Honesty without compassion is cruelty, and kindness without honesety is manipulation.",
+        "author": "Bryan Reeves",
+        "classification": "wisdom"
+    },
+    {
+        "id": 295,
+        "text": "The gem cannot be polished without friction, nor man perfected without trials.",
+        "author": "Seneca",
+        "classification": "motivation"
+    },
+    {
+        "id": 296,
+        "text": "Nothing changes if nothing changes.",
+        "author": "Courtney C. Stevens",
+        "classification": "motivation"
+    },
+    {
+        "id": 297,
+        "text": "Everybody is a genius. But if you judge a fish by its ability to climb a tree, it will live its whole life believing that it is stupid.",
+        "author": "Albert Einstein",
+        "classification": "philosophy"
+    },
+    {
+        "id": 298,
+        "text": "A smooth sea never made a skilled sailor.",
+        "author": "Franklin D. Roosevelt",
+        "classification": "motivation"
+    },
+    {
+        "id": 299,
+        "text": "He who sweats more in training, will bleed less in war.",
+        "author": "Unknown Author",
+        "classification": "discipline"
+    },
+    {
+        "id": 300,
+        "text": "Raise your words, not your voice. It is rain that allows growth, not thunder.",
+        "author": "Rumi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 301,
+        "text": "Who then is invincible? The one who cannot be upset by anything outside their reasoned choice.",
+        "author": "Epictetus",
+        "classification": "philosophy"
+    },
+    {
+        "id": 302,
+        "text": "Hardship often prepares an ordinary person for an extraordinary destiny.",
+        "author": "C.S. Lewis",
+        "classification": "motivation"
+    },
+    {
+        "id": 303,
+        "text": "We can complain because rose bushes have thorns, or rejoice because thorns have roses.",
+        "author": "Alphonse Karr",
+        "classification": "upliftment"
+    },
+    {
+        "id": 304,
+        "text": "Do today what others won't, so tomorrow you can do what others can't.",
+        "author": "Jerry Rice",
+        "classification": "motivation"
+    },
+    {
+        "id": 305,
+        "text": "Embrace the present moment, for it is the only moment where you have control.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 306,
+        "text": "We judge others by their actions but we judge ourselves by our intentions.",
+        "author": "Stephen Covey",
+        "classification": "philosophy"
+    },
+    {
+        "id": 307,
+        "text": "Without a ruler to do it against, you can't make crooked straight.",
+        "author": "Seneca",
+        "classification": "philosophy"
+    },
+    {
+        "id": 308,
+        "text": "It does not matter what you bear, but how you bear it.",
+        "author": "Seneca",
+        "classification": "upliftment"
+    },
+    {
+        "id": 309,
+        "text": "It is not because things are difficult that we do not dare; it is because we do not dare that things are difficult.",
+        "author": "Seneca",
+        "classification": "motivation"
+    },
+    {
+        "id": 337,
+        "text": "He who is everywhere is nowhere.",
+        "author": "Seneca",
+        "classification": "philosophy"
+    },
+    {
+        "id": 310,
+        "text": "How lucky I am to have something that makes saying goodbye so hard.",
+        "author": "A.A. Milne",
+        "classification": "love"
+    },
+    {
+        "id": 311,
+        "text": "Judge a man by his questions rather than by his answers.",
+        "author": "Voltaire",
+        "classification": "philosophy"
+    },
+    {
+        "id": 312,
+        "text": "You are not a drop in the ocean; you are the entire ocean, in a drop.",
+        "author": "Rumi",
+        "classification": "upliftment"
+    },
+    {
+        "id": 313,
+        "text": "The fool's life is empty of gratitude and full of fears.",
+        "author": "Seneca",
+        "classification": "philosophy"
+    },
+    {
+        "id": 314,
+        "text": "Discipline is the bridge between who you are and who you want to become. Cross it daily.",
+        "author": "Georges St-Pierre",
+        "classification": "discipline"
+    },
+    {
+        "id": 315,
+        "text": "True happiness is to enjoy the present, without anxiosu dependence upon the future.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 316,
+        "text": "Go after what creates meaning and trust yourself with the stress you may encounter.",
+        "author": "Kelly McGonigal",
+        "classification": "motivation"
+    },
+    {
+        "id": 317,
+        "text": "It is not the strongest of the species that survive, nor the most intelligent, but the one that is most responsive to change.",
+        "author": "Charles Darwin",
+        "classification": "motivation"
+    },
+    {
+        "id": 318,
+        "text": "168, that’s a special number, no matter how rich or poor, we are all given the same number, which is the number of hours in a week.",
+        "author": "Unknown Author",
+        "classification": "motivation"
+    },
+    {
+        "id": 319,
+        "text": "People often think we need to save time. Instead, we need to save our energy, time will be spent inefficiently if we don’t have energy. ",
+        "author": "Riko Otsuka (friend)",
+        "classification": "philosophy"
+    },
+    {
+        "id": 321,
+        "text": "Death smiles at us all, but all a man can do is smile back.",
+        "author": "Marcus Aurelius",
+        "classification": "philosophy"
+    },
+    {
+        "id": 322,
+        "text": "Every new beginning comes from some other beginning's end.",
+        "author": "Seneca",
+        "classification": "philosophy"
+    },
+    {
+        "id": 89,
+        "text": "All suffering originates from craving, from attachment, from desire.",
+        "author": "Edgar Allan Poe",
+        "classification": "philosophy"
+    },
+    {
+        "id": 323,
+        "text": "The trials you face will introduce you to your strengths.",
+        "author": "Epictetus",
+        "classification": "motivation"
+    },
+    {
+        "id": 324,
+        "text": "Remind yourself what you've been through and what you've had the strength to endure.",
+        "author": "Marcus Aurelius",
+        "classification": "motivation"
+    },
+    {
+        "id": 325,
+        "text": "True happiness is to enjoy the present, without anxious dependence on the future.",
+        "author": "Seneca",
+        "classification": "philosophy"
+    },
+    {
+        "id": 326,
+        "text": "Trust confident scepticism over arrogant conviction.",
+        "author": "Cole Hastings",
+        "classification": "philosophy"
+    },
+    {
+        "id": 20,
+        "text": "Anyone can find the switch after the lights are on.",
+        "author": "Unknown Author",
+        "classification": "inspiration"
+    },
+    {
+        "id": 320,
+        "text": "Whenever you are angry, be assured that it is not only a present evil, but that you have increased a habit.",
+        "author": "Epictetus",
+        "classification": "philosophy"
+    },
+    {
+        "id": 129,
+        "text": "Pain is neither unbearable nor unending, as long as you keep in mind its limits and don't magnify them in your imagination.",
+        "author": "Marcus Aurelius",
+        "classification": "discipline"
+    },
+    {
+        "id": 327,
+        "text": "Courage is what it takes to stand up and speak; courage is also what it take sto sit down and listen.",
+        "author": "Winston Churchil",
+        "classification": "wisdom"
+    },
+    {
+        "id": 328,
+        "text": "It's no wonder that truth is stranger than fiction. Fiction has to make sense.",
+        "author": "Mark Twain",
+        "classification": "philosophy"
+    },
+    {
+        "id": 329,
+        "text": "A person who never made a mistake never tried anything new.",
+        "author": "Albert Einstein",
+        "classification": "inspiration"
+    },
+    {
+        "id": 330,
+        "text": "What man actually needs is not a tensionless state but rather the striving and struggling for some goal worthy of him.",
+        "author": "Viktor Frankl",
+        "classification": "inspiration"
+    },
+    {
+        "id": 331,
+        "text": "If I love myself despite my infinite faults, how can I hate anyone at the glimpse of a few faults?",
+        "author": "Swami Vivekananda",
+        "classification": "wisdom"
+    },
+    {
+        "id": 332,
+        "text": "We are distrubed not by things, but by the view which we take of them.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 333,
+        "text": "The mind that is anxious about future events is miserable.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 334,
+        "text": "Wealth consists not in having great possessions, but in having few wants.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 335,
+        "text": "Do not wait for life. Do not long for it. Be aware, always and at every moment, that the miracle is in the here and now.",
+        "author": "Marcel Proust",
+        "classification": "upliftment"
+    },
+    {
+        "id": 336,
+        "text": "We won't see things as they are, we see them as we are.",
+        "author": "Anais Nin",
+        "classification": "philosophy"
+    },
+    {
+        "id": 338,
+        "text": "Show me a person who has never made a mistake and I'll show you someone who hasn't achieved much.",
+        "author": "Joan Collins",
+        "classification": "inspiration"
+    },
+    {
+        "id": 339,
+        "text": "Raise your words, not your voice. It is rain that grows flowers, not thunder.",
+        "author": "Rumi",
+        "classification": "wisdom"
+    },
+    {
+        "id": 340,
+        "text": "Home is not where you were born; home is where all your attempts to escape cease.",
+        "author": "Naguib Mahfouz",
+        "classification": "philosophy"
+    },
+    {
+        "id": 341,
+        "text": "Patience is also a form of action.",
+        "author": "Auguste Rodin",
+        "classification": "wisdom"
+    },
+    {
+        "id": 342,
+        "text": "The whole future lives in uncertainty: live immediately.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 343,
+        "text": "It's amazing how a little tomorrow can make up for a whole lot of yesterday.",
+        "author": "John Guare",
+        "classification": "upliftment"
+    },
+    {
+        "id": 344,
+        "text": "A new world is only a new mind.",
+        "author": "William Carlos Williams",
+        "classification": "upliftment"
+    },
+    {
+        "id": 345,
+        "text": "You could leave life right now; let that determine what you do, say, and think.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 346,
+        "text": "Don't hope that events will turn out the way you want, welcome events in whichever way they happen: this is the path to peace.",
+        "author": "Epictetus",
+        "classification": "wisdom"
+    },
+    {
+        "id": 347,
+        "text": "What progress have I made? I have begun to be a friend to myself.",
+        "author": "Seneca",
+        "classification": "upliftment"
+    },
+    {
+        "id": 348,
+        "text": "Be at war with your vices, at peace with your neighbours, and let every new year find you a better man.",
+        "author": "Benjamin Franklin",
+        "classification": "wisdom"
+    },
+    {
+        "id": 349,
+        "text": "When I take care of the land, I am taken care of by the land.",
+        "author": "Shennong",
+        "classification": "wisdom"
+    },
+    {
+        "id": 350,
+        "text": "Opportunity dances with those already on the dance floor.",
+        "author": "H Jackson Brown Jr.",
+        "classification": "inspiration"
+    },
+    {
+        "id": 351,
+        "text": "Progress is not achieved by luck or accident, but by working on yourself daily.",
+        "author": "Epictetus",
+        "classification": "motivation"
+    },
+    {
+        "id": 352,
+        "text": "Once you find out the power of your presence, you won't just be anywhere. Once you realize the power of your thoughts, you won't just entertain anything. Once you realize the power of the tongue, you won't just say anything.",
+        "author": "Unknown Author",
+        "classification": "wisdom"
+    },
+    {
+        "id": 236,
+        "text": "Look at you comforting others with the words you wish to hear.",
+        "author": "William Wordsworth",
+        "classification": "philosophy"
+    },
+    {
+        "id": 353,
+        "text": "Be at war with your vices, at peace with your neighbours, and let every new year find you a better man.",
+        "author": "Benjamin Franklin",
+        "classification": "wisdom"
+    },
+    {
+        "id": 354,
+        "text": "What progress have I made? I have begun to be a friend to myself.",
+        "author": "Seneca",
+        "classification": "upliftment"
+    },
+    {
+        "id": 355,
+        "text": "I have learned to seek happiness by limiting my desires, rather than by trying to satisfy them.",
+        "author": "John Stuart Hill",
+        "classification": "wisdom"
+    },
+    {
+        "id": 356,
+        "text": "Don't be overheard complaining, not even to yourself.",
+        "author": "Marcus Aurelius",
+        "classification": "wisdom"
+    },
+    {
+        "id": 357,
+        "text": "The axe forgets what the tree remembers. Be kind with your words and be careful with your temper; people will remember your throw away comments.",
+        "author": "African Proverb",
+        "classification": "wisdom"
+    },
+    {
+        "id": 358,
+        "text": "If you wish to be loved, love.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 359,
+        "text": "What you are is what you have been. What you'll be is what you do now.",
+        "author": "Buddha",
+        "classification": "wisdom"
+    },
+    {
+        "id": 360,
+        "text": "Don't compare yourself with other people; compare yourself with who you were yesterday.",
+        "author": "Jordan Peterson",
+        "classification": "wisdom"
+    },
+    {
+        "id": 361,
+        "text": "The mind should be allowed some relaxation, that it may return to its work all the better for the rest.",
+        "author": "Seneca",
+        "classification": "wisdom"
+    },
+    {
+        "id": 362,
+        "text": "Life is like riding a bicycle; to keep your balance, you must keep moving.",
+        "author": "Albert Einstein",
+        "classification": "motivation"
+    },
+    {
+        "id": 363,
+        "text": "When you want to help people, tell them the truth. When you want to help yourself, tell them what they want to hear.",
+        "author": "Thomas Sowell",
+        "classification": "philosophy"
+    }
+]
