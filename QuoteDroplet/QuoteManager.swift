@@ -43,13 +43,13 @@ class QuoteManager {
         let calendar = Calendar.current
         
         // Get the current date
-        var currentDate = calendar.startOfDay(for: Date())
+        let currentDate = calendar.startOfDay(for: Date())
         
         // Iterate over 60 days
-        for _ in 0..<60 {
+        for i in 0..<60 {
             // Calculate the trigger date for the current notification
             var triggerDate = calendar.dateComponents([.hour, .minute], from: notificationTime)
-            triggerDate.day = calendar.component(.day, from: currentDate)
+            triggerDate.day = calendar.component(.day, from: currentDate) + i
             
             // Create notification content
             let content = UNMutableNotificationContent()
@@ -96,13 +96,10 @@ class QuoteManager {
                     print("Scheduled for this time: \(triggerDate)")
                 }
             }
-            
-            // Move to the next day
-            if let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) {
-                currentDate = calendar.startOfDay(for: nextDate)
-            }
         }
     }
+
+
 }
 
 struct QuoteJSON: Codable {
