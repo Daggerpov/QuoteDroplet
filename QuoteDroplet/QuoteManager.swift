@@ -39,11 +39,14 @@ class QuoteManager {
         
         let classification = quoteCategory.displayName
         
+        // Create a calendar instance
+        let calendar = Calendar.current
+        
         // Calculate the trigger date for the first notification
-        var triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+        var triggerDate = calendar.dateComponents([.hour, .minute], from: notificationTime)
         
         // Iterate over 60 random quotes
-        for i in 0..<60 {
+        for _ in 0..<60 {
             var randomQuote: QuoteJSON // Declare randomQuote outside of conditionals
             
             // Create notification content
@@ -91,10 +94,9 @@ class QuoteManager {
             }
             
             // Increment triggerDate for the next day
-            triggerDate.day = triggerDate.day! + 1
+            triggerDate.day = (triggerDate.day ?? 0) + 1
         }
     }
-
 }
 
 struct QuoteJSON: Codable {
