@@ -39,8 +39,11 @@ class QuoteManager {
         
         let classification = quoteCategory.displayName
         
+        // Calculate the trigger date for the first notification
+        var triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
+        
         // Iterate over 60 random quotes
-        for _ in 0..<60 {
+        for i in 0..<60 {
             var randomQuote: QuoteJSON // Declare randomQuote outside of conditionals
             
             // Create notification content
@@ -67,10 +70,7 @@ class QuoteManager {
             content.body = "\(randomQuote.text)\n- \(randomQuote.author)"
             content.sound = UNNotificationSound.default
             
-            // Calculate the trigger date for the selected time
-            let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-            
-            // Create a trigger for the notification to repeat daily at the selected time
+            // Calculate the trigger date for the current notification
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
             
             // Generate a unique identifier for this notification
@@ -86,9 +86,12 @@ class QuoteManager {
                 } else {
                     print("Notification scheduled successfully.")
                     print("Body of notification scheduled: \(content.body)")
-                    print("Scheduled for this time: \(notificationTime)")
+                    print("Scheduled for this time: \(triggerDate)")
                 }
             }
+            
+            // Increment triggerDate for the next day
+            triggerDate.day = triggerDate.day! + 1
         }
     }
 
