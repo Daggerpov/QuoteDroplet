@@ -33,16 +33,29 @@ class QuoteManager {
         }
     }
     
-    func scheduleNotifications(notificationTime: Date) {
+    func scheduleNotifications(notificationTime: Date, quoteCategory: QuoteCategory) {
         // Cancel existing notifications to reschedule them with the new time
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        
+        var classification = quoteCategory.displayName
         
         // Iterate over 60 random quotes
         for _ in 0..<60 {
             // Get a random quote
-            guard let randomQuote = quotes.randomElement() else {
-                print("Error: Unable to retrieve a random quote.")
-                continue
+            
+            if classification.lowercased() == "all" {
+                
+                guard let randomQuote = quotes.randomElement() else {
+                    print("Error: Unable to retrieve a random quote.")
+                    continue
+                }
+            } else {
+                // Fetch a random quote with the specified classification
+                let filteredQuotes = quotes.filter { $0.classification.lowercased() == classification.lowercased() }
+                guard let randomQuote = filteredQuotes.randomElement() else {
+                    print("Error: Unable to retrieve a random quote.")
+                    continue
+                }
             }
             
             // Create notification content

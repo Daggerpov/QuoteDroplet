@@ -267,7 +267,7 @@ struct QuotesView: View {
     }
     
     private func scheduleNotifications() {
-        QuoteManager.shared.scheduleNotifications(notificationTime: notificationTime)
+        QuoteManager.shared.scheduleNotifications(notificationTime: notificationTime, quoteCategory: QuoteCategory)
     }
 
     func requestNotificationPermission() {
