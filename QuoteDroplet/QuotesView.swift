@@ -234,11 +234,6 @@ struct QuotesView: View {
                 notiTimePickerColor
                 
                 Spacer()
-                
-                Text("Note that I'm currently working on a bug where the notification sends out the same quote every time. If you're facing this, you can work around it by scheduling it again.")
-                    .font(.title3)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                    .multilineTextAlignment(.center)
             }
             .padding()
             
