@@ -150,7 +150,7 @@ struct QuotesView: View {
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                             )
                     }
                     .padding()
@@ -234,11 +234,6 @@ struct QuotesView: View {
                 notiTimePickerColor
                 
                 Spacer()
-                
-                Text("Note that I'm currently working on a bug where the notification sends out the same quote every time. If you're facing this, you can work around it by scheduling it again.")
-                    .font(.title3)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                    .multilineTextAlignment(.center)
             }
             .padding()
             
@@ -254,7 +249,7 @@ struct QuotesView: View {
                     .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                     )
             }
             .padding(.horizontal)
@@ -267,67 +262,8 @@ struct QuotesView: View {
     }
     
     private func scheduleNotifications() {
-        // Cancel existing notifications to reschedule them with the new time
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-
-        // Get the selected time from notificationTime
-        let selectedTime = Calendar.current.dateComponents([.hour, .minute], from: notificationTime)
-
-        // Create a trigger date for the selected time
-        guard let triggerDate = Calendar.current.date(from: selectedTime) else {
-            print("Error: Couldn't create trigger date.")
-            return
-        }
-
-        // Create a date components for the trigger time
-        let triggerComponents = Calendar.current.dateComponents([.hour, .minute], from: triggerDate)
-
-        // Create a trigger for the notification to repeat daily at the selected time
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: true)
-
-        // Retrieve a new quote
-        getRandomQuoteByClassification(classification: getSelectedQuoteCategory().lowercased()) { quote, error in
-            if let quote = quote {
-                // Create notification content
-                let content = UNMutableNotificationContent()
-                if getSelectedQuoteCategory() == QuoteCategory.all.rawValue {
-                    content.title = "Quote Droplet"
-                } else {
-                    content.title = "Quote Droplet - \(getSelectedQuoteCategory())"
-                }
-                if let author = quote.author, !author.isEmpty {
-                    if author == "Unknown Author" {
-                        content.body = quote.text
-                    } else {
-                        content.body = "\(quote.text)\n- \(author)"
-                    }
-                } else {
-                    content.body = quote.text
-                }
-                content.sound = UNNotificationSound.default
-
-                // Generate a unique identifier for this notification
-                let notificationID = UUID().uuidString
-
-                // Create notification request
-                let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
-
-                // Schedule the notification
-                UNUserNotificationCenter.current().add(request) { error in
-                    if let error = error {
-                        print("Error scheduling notification: \(error.localizedDescription)")
-                    } else {
-                        print("Notification scheduled successfully.")
-                        print("Body of notification scheduled: \(content.body)")
-                        print("Scheduled for this time: \(selectedTime)")
-                    }
-                }
-            } else if let error = error {
-                print("Error retrieving quote: \(error.localizedDescription)")
-            } else {
-                print("Unknown error retrieving quote.")
-            }
-        }
+        QuoteManager.shared.scheduleNotifications(notificationTime: notificationTime,
+                                                  quoteCategory: quoteCategory)
     }
 
     func requestNotificationPermission() {
@@ -557,7 +493,7 @@ struct QuotesView: View {
                             .frame(height: 50)
             Spacer()
             quoteCategoryPicker
-            Spacer()
+            Spacer()    
             timeIntervalPicker
 //            Spacer()
 //            reloadButton
