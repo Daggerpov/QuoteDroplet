@@ -11,9 +11,12 @@ import SwiftUI
 
 import GoogleMobileAds
 
+import FirebaseCore
+
 @main
 struct QuoteDropletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+//    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate might not need for firebase, since I have the above one from GoogleMobileAds
     
     var body: some Scene {
         WindowGroup {
@@ -27,6 +30,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         UNUserNotificationCenter.current().delegate = self
         registerForNotifications()
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        FirebaseApp.configure()
         return true
     }
 

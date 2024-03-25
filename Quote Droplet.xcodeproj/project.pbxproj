@@ -21,6 +21,8 @@
 		DC7010E42BAE654F008678CB /* QuoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* QuoteManager.swift */; };
 		DC7010E52BAE654F008678CB /* QuoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* QuoteManager.swift */; };
 		DC8279442AA09134004E2BBF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8279432AA09134004E2BBF /* DataService.swift */; };
+		DC8C1B042BB2337400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */; };
+		DC8C1B062BB2343400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B052BB2343400B073B7 /* FirebaseAnalytics */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */; };
 		DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
@@ -110,6 +112,7 @@
 			files = (
 				DC3C86922BA005DE009F581D /* GoogleMobileAds in Frameworks */,
 				E7A00833EB7F4A57F27D2AE0 /* Pods_Quote_Droplet.framework in Frameworks */,
+				DC8C1B042BB2337400B073B7 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +123,7 @@
 				DC3C86942BA00824009F581D /* GoogleMobileAds in Frameworks */,
 				DCAB2DB52A9FA95A00A822D7 /* SwiftUI.framework in Frameworks */,
 				DCAB2DB32A9FA95A00A822D7 /* WidgetKit.framework in Frameworks */,
+				DC8C1B062BB2343400B073B7 /* FirebaseAnalytics in Frameworks */,
 				58C409FAC2AEF9737D7FBC0C /* Pods_QuoteDropletWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,6 +238,7 @@
 			name = "Quote Droplet";
 			packageProductDependencies = (
 				DC3C86912BA005DE009F581D /* GoogleMobileAds */,
+				DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */,
 			);
 			productName = QuoteDroplet;
 			productReference = DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */;
@@ -255,6 +260,7 @@
 			name = QuoteDropletWidgetExtension;
 			packageProductDependencies = (
 				DC3C86932BA00824009F581D /* GoogleMobileAds */,
+				DC8C1B052BB2343400B073B7 /* FirebaseAnalytics */,
 			);
 			productName = QuoteDropletWidgetExtension;
 			productReference = DCAB2DB02A9FA95900A822D7 /* QuoteDropletWidgetExtension.appex */;
@@ -289,6 +295,7 @@
 			mainGroup = DCAB2D922A9FA91300A822D7;
 			packageReferences = (
 				DC3C86902BA0056A009F581D /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				DC8C1B022BB2337400B073B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = DCAB2D9C2A9FA91300A822D7 /* Products */;
 			projectDirPath = "";
@@ -715,6 +722,14 @@
 				minimumVersion = 11.1.0;
 			};
 		};
+		DC8C1B022BB2337400B073B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.23.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -727,6 +742,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC3C86902BA0056A009F581D /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
+		};
+		DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC8C1B022BB2337400B073B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		DC8C1B052BB2343400B073B7 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC8C1B022BB2337400B073B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
