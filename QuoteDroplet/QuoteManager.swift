@@ -54,10 +54,12 @@ class QuoteManager {
             // Create notification content
             let content = UNMutableNotificationContent()
             
+            let shortQuotes = quotes.filter{ $0.text.count <= 110 }
+            
             // Fetch a random quote for the specified classification
             var randomQuote: QuoteJSON
             if classification.lowercased() == "all" {
-                guard let randomElement = quotes.randomElement() else {
+                guard let randomElement = shortQuotes.randomElement() else {
                     print("Error: Unable to retrieve a random quote.")
                     continue
                 }
@@ -65,13 +67,13 @@ class QuoteManager {
                 content.title = "Quote Droplet"
             } else {
                 // Fetch a random quote with the specified classification
-                let filteredQuotes = quotes.filter { $0.classification.lowercased() == classification.lowercased() }
+                let filteredQuotes = shortQuotes.filter { $0.classification.lowercased() == classification.lowercased() }
                 guard let randomElement = filteredQuotes.randomElement() else {
                     print("Error: Unable to retrieve a random quote.")
                     continue
                 }
                 randomQuote = randomElement
-                content.title = "Quote Droplet - \(classification)"
+                content.title = "Quote Droplet: \(classification)"
             }
             
             content.body = "\(randomQuote.text)\n- \(randomQuote.author)"
