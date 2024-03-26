@@ -32,10 +32,24 @@ struct HomeView: View {
     
     private var quoteSection: some View {
         VStack(alignment: .leading) {
-            Text("Newest Quotes:")
-                .font(.title)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                .padding(.bottom, 5)
+            HStack{
+                Spacer()
+                if #available(iOS 16.0, *) {
+                    Text("Newest Quotes:")
+                        .font(.title)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .padding(.bottom, 5)
+                        .underline()
+                } else {
+                    Text("Newest Quotes:")
+                        .font(.title)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .padding(.bottom, 5)
+                    // Fallback on earlier versions
+                }
+                Spacer()
+            }
+            
             
             if recentQuotes.isEmpty {
                 Text("Loading Quotes ...")
@@ -43,32 +57,42 @@ struct HomeView: View {
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     .padding(.bottom, 2)
                 ForEach(1..<4) { index in
-                    VStack(alignment: .leading) {
+                    VStack() {
                         Text("Quote Loading")
                             .font(.title3)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                             .padding(.bottom, 2)
+                            .frame(alignment: .leading)
                         
-                        Text("- Author Loading")
-                            .font(.body)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            .padding(.bottom, 5)
-                        
+                        HStack{
+                            Spacer()
+                            Text("- Author Loading")
+                                .font(.body)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                                .padding(.bottom, 5)
+                                .frame(alignment: .trailing)
+                        }
                     }
                 }
             } else {
                 ForEach(recentQuotes, id: \.id) { quote in
-                    VStack(alignment: .leading) {
+                    VStack() {
                         Text("\"\(quote.text)\"")
                             .font(.title3)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                             .padding(.bottom, 2)
+                            .frame(alignment: .leading)
                         
                         if let author = quote.author {
-                            Text("- \(author)")
-                                .font(.body)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.bottom, 5)
+                            HStack{
+                                Spacer()
+                                Text("- \(author)")
+                                    .font(.body)
+                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                                    .padding(.bottom, 5)
+                                    .frame(alignment: .trailing)
+                            }
+                            
                         }
                     }
                 }
@@ -127,9 +151,12 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
+//            AdBannerViewController(adUnitID:
+//                                    "ca-app-pub-5189478572039689/4071075476")
+//                            .frame(height: 50)
             AdBannerViewController(adUnitID:
-                                    "ca-app-pub-5189478572039689/4071075476")
-                            .frame(height: 50)
+                                                "ca-app-pub-5189478572039689/4810355771") // new one: Home New (Mar 25)
+                                        .frame(height: 50)
             Spacer()
             quoteSection
             Spacer()

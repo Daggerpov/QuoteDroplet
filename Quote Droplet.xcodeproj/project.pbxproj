@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		58C409FAC2AEF9737D7FBC0C /* Pods_QuoteDropletWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */; };
+		DC14DCC02BB25B9400F87C12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */; };
+		DC14DCC12BB25B9400F87C12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */; };
 		DC3C86922BA005DE009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86912BA005DE009F581D /* GoogleMobileAds */; };
 		DC3C86942BA00824009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86932BA00824009F581D /* GoogleMobileAds */; };
 		DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
@@ -77,6 +79,7 @@
 		92EE9E79963F79E0C5F7FF15 /* Pods-QuoteDropletWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuoteDropletWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-QuoteDropletWidgetExtension/Pods-QuoteDropletWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		95461FB5248B4845B525336A /* Pods_Quote_Droplet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quote_Droplet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quote Droplet.debug.xcconfig"; path = "Target Support Files/Pods-Quote Droplet/Pods-Quote Droplet.debug.xcconfig"; sourceTree = "<group>"; };
+		DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 		DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */ = {
 			isa = PBXGroup;
 			children = (
+				DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */,
 				DCAB2DD02A9FBAB800A822D7 /* Info.plist */,
 				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
 				DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */,
@@ -313,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCAB2DA62A9FA91900A822D7 /* Preview Assets.xcassets in Resources */,
+				DC14DCC02BB25B9400F87C12 /* GoogleService-Info.plist in Resources */,
 				DCAB2DA32A9FA91900A822D7 /* Assets.xcassets in Resources */,
 				DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */,
 			);
@@ -324,6 +329,7 @@
 			files = (
 				DC7010E22BAE63DC008678CB /* QuotesBackup.json in Resources */,
 				DCAB2DBF2A9FA96100A822D7 /* Assets.xcassets in Resources */,
+				DC14DCC12BB25B9400F87C12 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

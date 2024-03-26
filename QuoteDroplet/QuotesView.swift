@@ -448,7 +448,10 @@ struct QuotesView: View {
                     }
                 }
             }
-            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/1371107555")                    .frame(height: 50)    // Fourth person banner ad, for submission inside Quotes View
+            AdBannerViewController(adUnitID: 
+//                                    "ca-app-pub-5189478572039689/1371107555"
+                                   "ca-app-pub-5189478572039689/1609477369" // new one from Mar 25
+            )                    .frame(height: 50)    // Fourth person banner ad, for submission inside Quotes View
         }
             
     }
@@ -489,7 +492,10 @@ struct QuotesView: View {
 
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/5561634002") // Third personal banner ad, for Quotes View
+            AdBannerViewController(adUnitID: 
+//                                    "ca-app-pub-5189478572039689/5561634002"
+                                   "ca-app-pub-5189478572039689/3114130725" // new one from Mar 25
+            ) // Third personal banner ad, for Quotes View
                             .frame(height: 50)
             Spacer()
             quoteCategoryPicker
