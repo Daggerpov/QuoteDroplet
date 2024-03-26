@@ -34,19 +34,10 @@ struct HomeView: View {
         VStack(alignment: .leading) {
             HStack{
                 Spacer()
-                if #available(iOS 16.0, *) {
-                    Text("Newest Quotes:")
-                        .font(.title)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .padding(.bottom, 5)
-                        .underline()
-                } else {
-                    Text("Newest Quotes:")
-                        .font(.title)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .padding(.bottom, 5)
-                    // Fallback on earlier versions
-                }
+                Text("Newest Quotes")
+                    .font(.title)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                    .padding(.bottom, 5)
                 Spacer()
             }
             
@@ -66,7 +57,7 @@ struct HomeView: View {
                         
                         HStack{
                             Spacer()
-                            Text("- Author Loading")
+                            Text("— Author Loading")
                                 .font(.body)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                                 .padding(.bottom, 5)
@@ -86,7 +77,7 @@ struct HomeView: View {
                         if let author = quote.author {
                             HStack{
                                 Spacer()
-                                Text("- \(author)")
+                                Text("— \(author)")
                                     .font(.body)
                                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                                     .padding(.bottom, 5)

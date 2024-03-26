@@ -54,7 +54,7 @@ class QuoteManager {
             // Create notification content
             let content = UNMutableNotificationContent()
             
-            let shortQuotes = quotes.filter{ $0.text.count <= 110 }
+            let shortQuotes = quotes.filter{ $0.text.count <= 100 }
             
             // Fetch a random quote for the specified classification
             var randomQuote: QuoteJSON
@@ -76,7 +76,10 @@ class QuoteManager {
                 content.title = "Quote Droplet: \(classification)"
             }
             
-            content.body = "\(randomQuote.text)\n- \(randomQuote.author)"
+            let quoteAuthorAfterUnknownCheck = randomQuote.author == "Unknown Author" ? nil : randomQuote.author
+            
+            content.body = "\(randomQuote.text)\n— \(quoteAuthorAfterUnknownCheck ?? "")"
+            
             content.sound = UNNotificationSound.default
             
             // Calculate the trigger date for the current notification

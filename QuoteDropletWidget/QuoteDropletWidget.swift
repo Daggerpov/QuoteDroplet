@@ -220,7 +220,7 @@ struct QuoteDropletWidgetEntryView : View {
                         .padding(.horizontal, 5)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                     if quote.author != "Unknown Author" {
-                        Text("- \(quote.author ?? "")")
+                        Text("— \(quote.author ?? "")")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2]) // Use the third color for author text color
                             .padding(.horizontal, 5)
@@ -237,7 +237,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .padding(.vertical, 10)
                             .frame(maxHeight: .infinity)
                         Spacer() // Add a spacer to push the author text to the center
-                        Text("- Khalil Gibran")
+                        Text("— Khalil Gibran")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2])
                             .padding(.horizontal, 20)
@@ -255,7 +255,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .padding(.vertical, 10)
                             .frame(maxHeight: .infinity)
                         Spacer() // Add a spacer to push the author text to the center
-                        Text("- Cicero")
+                        Text("— Cicero")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2])
                             .padding(.horizontal, 20)
