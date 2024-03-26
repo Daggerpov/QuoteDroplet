@@ -174,7 +174,7 @@ struct AppearanceView: View {
                         }
                     )
                     .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 0)
+                    .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: 0) // increased from black opacity of 0.2 and radius of 5
                     .padding(.trailing, 0)
             }
             .frame(width: 150, height: 150)
@@ -268,7 +268,7 @@ struct AppearanceView: View {
             .alert(isPresented: $showMacAlert) {
                 Alert(
                     title: Text("Note for Mac Owners"),
-                    message: Text("You can actually add this same iOS widget to your Mac's widgets. You can do this by going on your mac device and clicking the date in the top-right corner -> Edit Widgets.\n\nAlso, there's another version of the Quote Droplet app specifically made for Mac, available on the Mac App Store. It shows quotes conveniently from your menu bar, in the top of your screen."),
+                    message: Text("You can actually add this same iOS widget to your Mac's widgets by clicking the date in the top-right corner of your Mac -> Edit Widgets.\n\nAlso, Quote Droplet has a Mac version available on the App Store. It conveniently shows quotes from a small icon in your menu bar, even offline."),
                     dismissButton: .default(Text("OK"))
                 )
             }
@@ -279,7 +279,7 @@ struct AppearanceView: View {
         VStack {
             AdBannerViewController(adUnitID: 
 //                                    "ca-app-pub-5189478572039689/6041992068"
-                                   "ca-app-pub-5189478572039689/3169986957" // new Appeara"
+                                   "ca-app-pub-5189478572039689/3169986957" // new Appearance
             ) // Second (appearance) personal banner ad
                             .frame(height: 50)
             Spacer()
