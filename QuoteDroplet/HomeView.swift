@@ -49,11 +49,14 @@ struct HomeView: View {
                     .padding(.bottom, 2)
                 ForEach(1..<4) { index in
                     VStack() {
-                        Text("Quote Loading")
-                            .font(.title3)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                            .padding(.bottom, 2)
-                            .frame(alignment: .leading)
+                        HStack {
+                            Text("Quote Loading")
+                                .font(.title3)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                                .padding(.bottom, 2)
+                                .frame(alignment: .leading)
+                            Spacer()
+                        }
                         
                         HStack{
                             Spacer()
@@ -68,11 +71,14 @@ struct HomeView: View {
             } else {
                 ForEach(recentQuotes, id: \.id) { quote in
                     VStack() {
-                        Text("\"\(quote.text)\"")
-                            .font(.title3)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                            .padding(.bottom, 2)
-                            .frame(alignment: .leading)
+                        HStack{
+                            Text("\"\(quote.text)\"")
+                                .font(.title3)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                                .padding(.bottom, 2)
+                                .frame(alignment: .leading)
+                            Spacer()
+                        }
                         
                         if let author = quote.author {
                             HStack{

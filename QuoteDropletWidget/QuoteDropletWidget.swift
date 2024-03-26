@@ -217,13 +217,13 @@ struct QuoteDropletWidgetEntryView : View {
                     Text(quote.text)
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
-                        .padding(.horizontal, 5)
+                        .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                     if quote.author != "Unknown Author" {
                         Text("— \(quote.author ?? "")")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2]) // Use the third color for author text color
-                            .padding(.horizontal, 5)
+                            .padding(.horizontal, 10)
                     }
                 } else {
                     if family == .systemMedium {
@@ -233,14 +233,14 @@ struct QuoteDropletWidgetEntryView : View {
                             .multilineTextAlignment(.center)
                             .lineSpacing(4)
                             .minimumScaleFactor(0.5)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 40)
                             .padding(.vertical, 10)
                             .frame(maxHeight: .infinity)
                         Spacer() // Add a spacer to push the author text to the center
                         Text("— Khalil Gibran")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2])
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 40)
                             .padding(.bottom, 10)
                             .lineLimit(1) // Ensure the author text is limited to one line
                             .minimumScaleFactor(0.5) // Allow author text to scale down if needed
@@ -251,14 +251,14 @@ struct QuoteDropletWidgetEntryView : View {
                             .multilineTextAlignment(.center)
                             .lineSpacing(4)
                             .minimumScaleFactor(0.5)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 40)
                             .padding(.vertical, 10)
                             .frame(maxHeight: .infinity)
                         Spacer() // Add a spacer to push the author text to the center
                         Text("— Cicero")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2])
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 40)
                             .padding(.bottom, 10)
                             .lineLimit(1) // Ensure the author text is limited to one line
                             .minimumScaleFactor(0.5) // Allow author text to scale down if needed
