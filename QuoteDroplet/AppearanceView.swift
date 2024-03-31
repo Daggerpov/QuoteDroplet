@@ -164,7 +164,7 @@ struct AppearanceView: View {
                                 .minimumScaleFactor(0.5)
                                 .frame(maxHeight: .infinity)
 
-                            Text("—Cicero")
+                            Text("— Cicero")
                                 .font(Font.custom(availableFonts[selectedFontIndex], size: 14))
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                                 .padding(.horizontal, 20)
