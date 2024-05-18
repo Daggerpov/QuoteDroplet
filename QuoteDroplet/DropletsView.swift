@@ -1,5 +1,5 @@
 //
-//  FeedView.swift
+//  DropletsView.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-05-18.
@@ -11,7 +11,7 @@ import UserNotifications
 import UIKit
 import Foundation
 
-struct FeedView: View {
+struct DropletsView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -149,7 +149,7 @@ struct FeedView: View {
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID:
-                                                "ca-app-pub-5189478572039689/7801914805") // new, for Feed
+                                                "ca-app-pub-5189478572039689/7801914805") // new, for Droplets
                                         .frame(height: 50)
             Spacer()
             quoteSection
@@ -177,9 +177,9 @@ struct FeedView: View {
         }
     }
 }
-struct FeedView_Previews: PreviewProvider {
+struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        DropletsView()
     }
 }
 
