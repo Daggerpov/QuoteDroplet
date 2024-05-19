@@ -9,9 +9,16 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
+            DropletsView()
+                .tabItem {
+                    VStack {
+                        Spacer(minLength: 20)
+                        Image(uiImage: resizeImage(UIImage(systemName: "drop.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Home")
+                      }
+                }
             HomeView()
                 .tabItem {
-//                    Label("Home", systemImage: "house.fill")
                     VStack {
                         Spacer(minLength: 20)
                         Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
@@ -20,14 +27,12 @@ struct ContentView: View {
                 }
             AppearanceView()
                 .tabItem {
-//                    Label("Appearance", systemImage: "paintbrush.fill")
                     Spacer(minLength: 20)
                     Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Appearance")
                 }
             QuotesView()
                 .tabItem {
-//                    Label("Quotes", systemImage: "quote.bubble.fill")
                     Spacer(minLength: 20)
                     Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Quotes")
