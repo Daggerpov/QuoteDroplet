@@ -76,7 +76,7 @@ class QuoteManager {
                 content.title = "Quote Droplet: \(classification)"
             }
             
-            if (randomQuote.author != "Unknown Author" && randomQuote.author != nil && randomQuote.author != "") {
+            if (randomQuote.author != "Unknown Author" && randomQuote.author != "") {
                 content.body = "\(randomQuote.text)\n— \(randomQuote.author)"
             } else {
                 content.body = "\(randomQuote.text)"

@@ -118,7 +118,7 @@ struct Provider: IntentTimelineProvider {
         }()
         
         // Check if the author is going to take up 2 lines and adjust the maxHeight accordingly
-        if let author = author, (!author.isEmpty && author != "Unknown Author" && author != nil && author != "") {
+        if let author = author, (!author.isEmpty && author != "Unknown Author" && author != "") {
             let authorFont = UIFont.systemFont(ofSize: 14) // Use an appropriate font size for the author
             let authorBoundingBox = author.boundingRect(
                 with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
