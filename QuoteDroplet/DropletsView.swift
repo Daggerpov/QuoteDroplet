@@ -58,7 +58,7 @@ struct DropletsView: View {
                         Spacer()
                     }
                     
-                    if let author = quote.author {
+                    if let author = (quote.author && quote.author != "Unknown Author" && quote.author != nil && quote.author != "") {
                         HStack {
                             Spacer()
                             Text("— \(author)")
@@ -106,7 +106,7 @@ struct DropletsView: View {
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .onAppear {
             // Fetch recent quotes when the view appears
-            getRecentQuotes(limit: 10) { quotes, error in
+            getRecentQuotes(limit: 3) { quotes, error in
                 if let quotes = quotes {
                     recentQuotes = quotes
                 } else if let error = error {
