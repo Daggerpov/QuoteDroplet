@@ -58,7 +58,7 @@ struct DropletsView: View {
                         Spacer()
                     }
                     
-                    if let author = (quote.author && quote.author != "Unknown Author" && quote.author != nil && quote.author != "") {
+                    if (let author = quote.author != "Unknown Author" && quote.author != nil && quote.author != "") {
                         HStack {
                             Spacer()
                             Text("— \(author)")
