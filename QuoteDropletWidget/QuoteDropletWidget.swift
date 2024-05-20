@@ -141,7 +141,7 @@ struct Provider: IntentTimelineProvider {
         )
 
         // Check if the quote has an author
-        if let author = author, (!author.isEmpty && author != "Unknown Author" && author != nil && author != "") {
+        if let author = author, (!author.isEmpty && author != "Unknown Author" && author != "") {
             return boundingBox.height > maxHeight
         } else {
             // Allow the quote to be 5% longer when there is no author
