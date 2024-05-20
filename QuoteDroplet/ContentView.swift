@@ -14,7 +14,7 @@ struct ContentView: View {
                     VStack {
                         Spacer(minLength: 20)
                         Image(uiImage: resizeImage(UIImage(systemName: "drop.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Home")
+                        Text("Droplets")
                       }
                 }
             HomeView()
