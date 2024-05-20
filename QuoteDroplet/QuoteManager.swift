@@ -76,9 +76,13 @@ class QuoteManager {
                 content.title = "Quote Droplet: \(classification)"
             }
             
-            let quoteAuthorAfterUnknownCheck = randomQuote.author == "Unknown Author" ? nil : randomQuote.author
+            if (randomQuote.author != "Unknown Author" && randomQuote.author != nil && randomQuote.author != "") {
+                content.body = "\(randomQuote.text)\n— \(randomQuote.author)"
+            } else {
+                content.body = "\(randomQuote.text)"
+            }
             
-            content.body = "\(randomQuote.text)\n— \(quoteAuthorAfterUnknownCheck ?? "")"
+            
             
             content.sound = UNNotificationSound.default
             
