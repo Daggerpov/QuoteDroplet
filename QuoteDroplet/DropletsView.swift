@@ -84,20 +84,36 @@ struct DropletsView: View {
                                                 "ca-app-pub-5189478572039689/7801914805") // new, for Droplets
                                         .frame(height: 50)
             Spacer()
-            ScrollView {
-                GeometryReader { geometry in
+            ScrollViewReader { scrollView in
+                ScrollView {
                     VStack {
-                        singleQuote
-                            .onAppear {
-                                // Detect scrolling and load next quote if necessary
-                                let offset = geometry.frame(in: .global).minY
-                                if offset < 200 && currentQuoteIndex < recentQuotes.count - 1 {
+                        ForEach(recentQuotes.indices, id: \.self) { index in
+                            if index == currentQuoteIndex {
+                                singleQuote
+                                    .id(index)
+                                    .onAppear {
+                                        if index == recentQuotes.count - 1 {
+                                            loadMoreQuotes()
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                    .background(GeometryReader {
+                        Color.clear.preference(key: ViewOffsetKey.self, value: $0.frame(in: .global).minY)
+                    })
+                    .onPreferenceChange(ViewOffsetKey.self) { offset in
+                        if offset < 200 {
+                            if currentQuoteIndex < recentQuotes.count - 1 {
+                                withAnimation {
                                     currentQuoteIndex += 1
+                                    scrollView.scrollTo(currentQuoteIndex, anchor: .top)
                                 }
                             }
+                        }
                     }
                 }
-                .frame(height: UIScreen.main.bounds.height) // To make the scroll work properly
+                .frame(height: UIScreen.main.bounds.height)
             }
             Spacer()
         }
@@ -120,7 +136,21 @@ struct DropletsView: View {
             colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
         }
     }
+    
+    private func loadMoreQuotes() {
+        // Placeholder for actual implementation of loading more quotes
+        // Call getRecentQuotes or similar to load more quotes and append to recentQuotes
+    }
 }
+
+struct ViewOffsetKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+}
+
 struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {
         DropletsView()

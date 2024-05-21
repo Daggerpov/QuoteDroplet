@@ -13,7 +13,7 @@ struct ContentView: View {
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "drop.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                         Text("Droplets")
                       }
                 }
