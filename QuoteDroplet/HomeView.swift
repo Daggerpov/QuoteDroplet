@@ -89,9 +89,12 @@ struct HomeView: View {
                                     .padding(.bottom, 5)
                                     .frame(alignment: .trailing)
                             }
-                            
                         } else {
-                            Spacer()
+                            Text("")
+                                .font(.body)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                                .padding(.bottom, 5)
+                                .frame(alignment: .trailing)
                         }
                     }
                 }

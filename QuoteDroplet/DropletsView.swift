@@ -31,20 +31,21 @@ struct DropletsView: View {
     
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                .frame(height: 50)
-            Spacer()
-            HStack {
-                Spacer()
-                Text("Droplets")
-                    .font(.title)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
-                Spacer()
-            }
-            Spacer()
             ScrollView {
+                Spacer()
                 VStack {
+                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                        .frame(height: 50)
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Text("Droplets")
+                            .font(.title)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding(.bottom, 5)
+                        Spacer()
+                    }
+                    Spacer()
                     ForEach(quotes.indices, id: \.self) { index in
                         if let quote = quotes[safe: index] {
                             SingleQuoteView(quote: quote)
@@ -99,14 +100,15 @@ struct DropletsView: View {
 }
 
 struct SingleQuoteView: View {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(){
             HStack {
                 Text("\"\(quote.text)\"")
                     .font(.title3)
-                    .foregroundColor(.white)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     .padding(.bottom, 2)
                     .frame(alignment: .leading)
                 Spacer()
@@ -117,14 +119,15 @@ struct SingleQuoteView: View {
                     Spacer()
                     Text("— \(author)")
                         .font(.body)
-                        .foregroundColor(.white)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                         .padding(.bottom, 5)
                         .frame(alignment: .trailing)
                 }
             }
         }
+        
         .padding()
-        .background(ColorPaletteView(colors: [Color.clear])) // Assuming no specific color needed
+        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)
         .shadow(radius: 5)
         .padding(.horizontal)
