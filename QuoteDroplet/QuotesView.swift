@@ -501,8 +501,6 @@ struct QuotesView: View {
             quoteCategoryPicker
             Spacer()    
             timeIntervalPicker
-//            Spacer()
-//            reloadButton
             Spacer()
             notificationSection
             Spacer()

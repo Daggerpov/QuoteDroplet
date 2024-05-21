@@ -121,14 +121,8 @@ struct DropletsView: View {
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .onAppear {
-            // Fetch recent quotes when the view appears
-            getRecentQuotes(limit: 3) { quotes, error in
-                if let quotes = quotes {
-                    recentQuotes = quotes
-                } else if let error = error {
-                    print("Error fetching recent quotes: \(error)")
-                }
-            }
+            // Fetch initial quotes when the view appears
+            loadInitialQuotes()
             sharedVars.colorPaletteIndex = widgetColorPaletteIndex
             
             colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
@@ -137,15 +131,33 @@ struct DropletsView: View {
         }
     }
     
+    private func loadInitialQuotes() {
+        // Fetch a few initial quotes
+        for _ in 0..<3 {
+            getRandomQuoteByClassification(classification: "all") { quote, error in
+                if let quote = quote {
+                    DispatchQueue.main.async {
+                        recentQuotes.append(quote)
+                    }
+                } else if let error = error {
+                    print("Error fetching initial quotes: \(error)")
+                }
+            }
+        }
+    }
+    
     private func loadMoreQuotes() {
         isLoadingMore = true
-        getRecentQuotes(limit: 3) { newQuotes, error in
-            if let newQuotes = newQuotes {
-                recentQuotes.append(contentsOf: newQuotes)
+        getRandomQuoteByClassification(classification: "all") { quote, error in
+            if let quote = quote {
+                DispatchQueue.main.async {
+                    recentQuotes.append(quote)
+                    isLoadingMore = false
+                }
             } else if let error = error {
                 print("Error fetching more quotes: \(error)")
+                isLoadingMore = false
             }
-            isLoadingMore = false
         }
     }
 }
@@ -163,5 +175,3 @@ struct DropletsView_Previews: PreviewProvider {
         DropletsView()
     }
 }
-
-
