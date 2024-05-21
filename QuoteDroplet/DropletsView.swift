@@ -4,7 +4,6 @@
 //
 //  Created by Daniel Agapov on 2024-05-18.
 //
-
 import SwiftUI
 import WidgetKit
 import UserNotifications
@@ -29,10 +28,12 @@ struct DropletsView: View {
     
     @State private var quotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
-    @State private var lastLoadedIndex: Int = 0
     
-    private var singleQuote: some View {
-        VStack(alignment: .leading) {
+    var body: some View {
+        VStack {
+            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                .frame(height: 50)
+            Spacer()
             HStack {
                 Spacer()
                 Text("Droplets")
@@ -41,58 +42,18 @@ struct DropletsView: View {
                     .padding(.bottom, 5)
                 Spacer()
             }
-            
-            if let quote = quotes[safe: lastLoadedIndex] {
-                VStack {
-                    HStack {
-                        Text("\"\(quote.text)\"")
-                            .font(.title3)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                            .padding(.bottom, 2)
-                            .frame(alignment: .leading)
-                        Spacer()
-                    }
-                    
-                    if let author = quote.author, author != "Unknown Author", !author.isEmpty {
-                        HStack {
-                            Spacer()
-                            Text("— \(author)")
-                                .font(.body)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .trailing)
-                        }
-                    }
-                }
-            } else {
-                Text("Loading Quotes ...")
-                    .font(.title3)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    .padding(.bottom, 2)
-            }
-        }
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .cornerRadius(20)
-        .shadow(radius: 5)
-        .padding(.horizontal)
-    }
-
-    var body: some View {
-        VStack {
-            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                .frame(height: 50)
             Spacer()
             ScrollView {
                 VStack {
                     ForEach(quotes.indices, id: \.self) { index in
-                        singleQuote
-                            .id(index)
-                            .onAppear {
-                                if index == quotes.count - 1 && !isLoadingMore {
-                                    loadMoreQuotes()
+                        if let quote = quotes[safe: index] {
+                            SingleQuoteView(quote: quote)
+                                .onAppear {
+                                    if index == quotes.count - 1 && !isLoadingMore && quotes.count < 4 {
+                                        loadMoreQuotes()
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
             }
@@ -103,7 +64,7 @@ struct DropletsView: View {
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .onAppear {
-            // Fetch initial quote when the view appears
+            // Fetch initial quotes when the view appears
             loadInitialQuotes()
             sharedVars.colorPaletteIndex = widgetColorPaletteIndex
             
@@ -118,26 +79,55 @@ struct DropletsView: View {
     }
     
     private func loadMoreQuotes() {
+        guard !isLoadingMore && quotes.count < 4 else { return }
+        
         isLoadingMore = true
         getRandomQuoteByClassification(classification: "all") { quote, error in
-            if let quote = quote {
+            if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
                 DispatchQueue.main.async {
-                    quotes.append(quote)
-                    isLoadingMore = false
+                    self.quotes.append(quote)
+                    self.isLoadingMore = false
                 }
             } else if let error = error {
                 print("Error fetching more quotes: \(error)")
-                isLoadingMore = false
+                self.isLoadingMore = false
+            } else {
+                self.isLoadingMore = false
             }
         }
     }
 }
 
-struct ViewOffsetKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
+struct SingleQuoteView: View {
+    let quote: Quote
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("\"\(quote.text)\"")
+                    .font(.title3)
+                    .foregroundColor(.white)
+                    .padding(.bottom, 2)
+                    .frame(alignment: .leading)
+                Spacer()
+            }
+            
+            if let author = quote.author, author != "Unknown Author", !author.isEmpty {
+                HStack {
+                    Spacer()
+                    Text("— \(author)")
+                        .font(.body)
+                        .foregroundColor(.white)
+                        .padding(.bottom, 5)
+                        .frame(alignment: .trailing)
+                }
+            }
+        }
+        .padding()
+        .background(ColorPaletteView(colors: [Color.clear])) // Assuming no specific color needed
+        .cornerRadius(20)
+        .shadow(radius: 5)
+        .padding(.horizontal)
     }
 }
 

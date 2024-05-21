@@ -90,6 +90,8 @@ struct HomeView: View {
                                     .frame(alignment: .trailing)
                             }
                             
+                        } else {
+                            Spacer()
                         }
                     }
                 }
