@@ -27,9 +27,9 @@ struct DropletsView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    @State private var recentQuotes: [Quote] = []
-    @State private var currentQuoteIndex: Int = 0
+    @State private var quotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
+    @State private var lastLoadedIndex: Int = 0
     
     private var singleQuote: some View {
         VStack(alignment: .leading) {
@@ -42,13 +42,7 @@ struct DropletsView: View {
                 Spacer()
             }
             
-            if recentQuotes.isEmpty {
-                Text("Loading Quotes ...")
-                    .font(.title3)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    .padding(.bottom, 2)
-            } else {
-                let quote = recentQuotes[currentQuoteIndex]
+            if let quote = quotes[safe: lastLoadedIndex] {
                 VStack {
                     HStack {
                         Text("\"\(quote.text)\"")
@@ -70,6 +64,11 @@ struct DropletsView: View {
                         }
                     }
                 }
+            } else {
+                Text("Loading Quotes ...")
+                    .font(.title3)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                    .padding(.bottom, 2)
             }
         }
         .padding()
@@ -84,44 +83,27 @@ struct DropletsView: View {
             AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                 .frame(height: 50)
             Spacer()
-            ScrollViewReader { scrollView in
-                ScrollView {
-                    VStack {
-                        ForEach(recentQuotes.indices, id: \.self) { index in
-                            if index == currentQuoteIndex {
-                                singleQuote
-                                    .id(index)
-                                    .onAppear {
-                                        if index == recentQuotes.count - 1 && !isLoadingMore {
-                                            loadMoreQuotes()
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                    .background(GeometryReader {
-                        Color.clear.preference(key: ViewOffsetKey.self, value: $0.frame(in: .global).minY)
-                    })
-                    .onPreferenceChange(ViewOffsetKey.self) { offset in
-                        if offset < 200 {
-                            if currentQuoteIndex < recentQuotes.count - 1 {
-                                withAnimation {
-                                    currentQuoteIndex += 1
-                                    scrollView.scrollTo(currentQuoteIndex, anchor: .top)
+            ScrollView {
+                VStack {
+                    ForEach(quotes.indices, id: \.self) { index in
+                        singleQuote
+                            .id(index)
+                            .onAppear {
+                                if index == quotes.count - 1 && !isLoadingMore {
+                                    loadMoreQuotes()
                                 }
                             }
-                        }
                     }
                 }
-                .frame(height: UIScreen.main.bounds.height)
             }
+            .frame(height: UIScreen.main.bounds.height)
             Spacer()
         }
         .frame(maxWidth: .infinity)
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .onAppear {
-            // Fetch initial quotes when the view appears
+            // Fetch initial quote when the view appears
             loadInitialQuotes()
             sharedVars.colorPaletteIndex = widgetColorPaletteIndex
             
@@ -132,18 +114,7 @@ struct DropletsView: View {
     }
     
     private func loadInitialQuotes() {
-        // Fetch a few initial quotes
-        for _ in 0..<3 {
-            getRandomQuoteByClassification(classification: "all") { quote, error in
-                if let quote = quote {
-                    DispatchQueue.main.async {
-                        recentQuotes.append(quote)
-                    }
-                } else if let error = error {
-                    print("Error fetching initial quotes: \(error)")
-                }
-            }
-        }
+        loadMoreQuotes() // Initial load
     }
     
     private func loadMoreQuotes() {
@@ -151,7 +122,7 @@ struct DropletsView: View {
         getRandomQuoteByClassification(classification: "all") { quote, error in
             if let quote = quote {
                 DispatchQueue.main.async {
-                    recentQuotes.append(quote)
+                    quotes.append(quote)
                     isLoadingMore = false
                 }
             } else if let error = error {
