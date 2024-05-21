@@ -29,6 +29,7 @@ struct DropletsView: View {
     
     @State private var recentQuotes: [Quote] = []
     @State private var currentQuoteIndex: Int = 0
+    @State private var isLoadingMore: Bool = false
     
     private var singleQuote: some View {
         VStack(alignment: .leading) {
@@ -80,9 +81,8 @@ struct DropletsView: View {
 
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID:
-                                                "ca-app-pub-5189478572039689/7801914805") // new, for Droplets
-                                        .frame(height: 50)
+            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                .frame(height: 50)
             Spacer()
             ScrollViewReader { scrollView in
                 ScrollView {
@@ -92,7 +92,7 @@ struct DropletsView: View {
                                 singleQuote
                                     .id(index)
                                     .onAppear {
-                                        if index == recentQuotes.count - 1 {
+                                        if index == recentQuotes.count - 1 && !isLoadingMore {
                                             loadMoreQuotes()
                                         }
                                     }
@@ -138,8 +138,15 @@ struct DropletsView: View {
     }
     
     private func loadMoreQuotes() {
-        // Placeholder for actual implementation of loading more quotes
-        // Call getRecentQuotes or similar to load more quotes and append to recentQuotes
+        isLoadingMore = true
+        getRecentQuotes(limit: 3) { newQuotes, error in
+            if let newQuotes = newQuotes {
+                recentQuotes.append(contentsOf: newQuotes)
+            } else if let error = error {
+                print("Error fetching more quotes: \(error)")
+            }
+            isLoadingMore = false
+        }
     }
 }
 
