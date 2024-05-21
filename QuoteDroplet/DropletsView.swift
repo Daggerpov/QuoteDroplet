@@ -31,6 +31,7 @@ struct DropletsView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             ScrollView {
                 Spacer()
                 VStack {
