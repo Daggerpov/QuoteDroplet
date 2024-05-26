@@ -153,9 +153,6 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-//            AdBannerViewController(adUnitID:
-//                                    "ca-app-pub-5189478572039689/4071075476")
-//                            .frame(height: 50)
             AdBannerViewController(adUnitID:
                                                 "ca-app-pub-5189478572039689/4810355771") // new one: Home New (Mar 25)
                                         .frame(height: 50)

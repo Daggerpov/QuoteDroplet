@@ -31,13 +31,13 @@ struct DropletsView: View {
     
     var body: some View {
         VStack {
+            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                .frame(height: 50)
+
             Spacer()
             ScrollView {
                 Spacer()
                 VStack {
-                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                        .frame(height: 50)
-                    Spacer()
                     HStack {
                         Spacer()
                         Text("Droplets")
@@ -59,7 +59,8 @@ struct DropletsView: View {
                     }
                 }
             }
-            .frame(height: UIScreen.main.bounds.height)
+            .padding()
+            .frame(maxWidth: .infinity)
             Spacer()
         }
         .frame(maxWidth: .infinity)
@@ -104,8 +105,10 @@ struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
     
+    @State private var isBookmarked: Bool = false
+    
     var body: some View {
-        VStack(){
+        VStack {
             HStack {
                 Text("\"\(quote.text)\"")
                     .font(.title3)
@@ -125,8 +128,16 @@ struct SingleQuoteView: View {
                         .frame(alignment: .trailing)
                 }
             }
+            
+            Button(action: {
+                isBookmarked.toggle()
+            }) {
+                Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "bookmark.fill" : "bookmark")!, targetSize: CGSize(width: 45, height: 27))!)
+                    .foregroundColor(isBookmarked ? .yellow : .gray)
+                    .padding(.top, 5)
+                    .frame(alignment: .leading)
+            }
         }
-        
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)

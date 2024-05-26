@@ -219,7 +219,7 @@ struct QuoteDropletWidgetEntryView : View {
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    if (quote.author != "Unknown Author" && quote.author != nil && quote.author != "") {
+                    if (quote.author != "Unknown Author" && quote.author != nil && quote.author != "" && quote.author != "NULL") {
                         Text("— \(quote.author ?? "")")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                             .foregroundColor(colors[2]) // Use the third color for author text color
