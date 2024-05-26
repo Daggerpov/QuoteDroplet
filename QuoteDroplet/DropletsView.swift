@@ -46,6 +46,14 @@ struct DropletsView: View {
                             .padding(.bottom, 5)
                         Spacer()
                     }
+                    HStack {
+                        Spacer()
+                        Text("Try favoriting quotes, so you can select the \"Favorites\" category for your widget and notifications (do this from the Quotes tab).")
+                            .font(.body)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding(.bottom, 5)
+                        Spacer()
+                    }
                     Spacer()
                     ForEach(quotes.indices, id: \.self) { index in
                         if let quote = quotes[safe: index] {
