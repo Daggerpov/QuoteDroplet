@@ -73,24 +73,25 @@ class QuoteManager {
                 randomQuote = randomElement
                 content.title = "Quote Droplet"
             } else if classification.lowercased() == "favorites" {
-                let bookmarkedQuotes = getBookmarkedQuotes()
-                
+                let bookmarkedQuotes = getBookmarkedQuotes().map { $0.toQuoteJSON() }
+                    
                 if !bookmarkedQuotes.isEmpty {
                     let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
                     
-                    guard let randomElement = bookmarkedQuotes[randomIndex]
-                    else {
-                        print("Error: Unable to retrieve a random quote.")
-                        continue
-                    }
+                    let randomElement = bookmarkedQuotes[randomIndex]
                     randomQuote = randomElement
-                    content.title = "Quote Droplet: Favorites"
-                } else {
-                    randomQuote.text = "Please add a quote to favorites by clicking the favorites button under a quote in the app's \"Droplets\" tab"
-                    randomQuote.author = ""
-                    content.title = "Quote Droplet: No Favorites Added"
                     
+                    content.title = "Quote Droplet: Favorites"
+                    
+                    // Now randomQuote is of type Quote
+                    // Proceed with using randomQuote as needed
+                } else {
+                    // Handle case where bookmarkedQuotes is empty
+                    randomQuote = QuoteJSON(id: 9999999, text: "Please add a quote to favorites by clicking the favorites button under a quote in the app's \"Droplets\" tab", author: "", classification: "Favorites")
+                    content.title = "Quote Droplet: No Favorites Added"
+
                 }
+
             } else {
                 // Fetch a random quote with the specified classification
                 let filteredQuotes = shortQuotes.filter { $0.classification.lowercased() == classification.lowercased() }

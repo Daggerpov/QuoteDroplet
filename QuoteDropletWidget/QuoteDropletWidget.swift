@@ -61,7 +61,6 @@ struct Provider: IntentTimelineProvider {
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } else {
-                let error = NSError(domain: "No favorite quotes found", code: 404, userInfo: nil)
                 completion(Timeline(entries: [], policy: .after(nextUpdate)))
             }
         } else {
