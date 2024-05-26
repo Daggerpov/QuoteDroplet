@@ -9,20 +9,20 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            HomeView()
-                .tabItem {
-                    VStack {
-                        Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Home")
-                      }
-                }
             DropletsView()
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)
                         Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                         Text("Droplets")
+                      }
+                }
+            HomeView()
+                .tabItem {
+                    VStack {
+                        Spacer(minLength: 20)
+                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Home")
                       }
                 }
             AppearanceView()

@@ -277,8 +277,7 @@ struct AppearanceView: View {
     
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID: 
-//                                    "ca-app-pub-5189478572039689/6041992068"
+            AdBannerViewController(adUnitID:
                                    "ca-app-pub-5189478572039689/3169986957" // new Appearance
             ) // Second (appearance) personal banner ad
                             .frame(height: 50)
@@ -294,10 +293,6 @@ struct AppearanceView: View {
             }
             Spacer()
             fontSelector
-//            Spacer()
-//            reloadButton took out manual reload
-//            Spacer()
-//            customColorNote
             Spacer()
             macNoteSection
             Spacer()

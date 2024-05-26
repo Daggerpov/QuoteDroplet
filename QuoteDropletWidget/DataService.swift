@@ -50,4 +50,41 @@ struct DataService {
     // Add @AppStorage property for selectedFontIndex
     @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var selectedFontIndex = 0
+    
+    // bookmark:
+    
+    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var bookmarkedQuotesData: Data = Data()
+    
+    var bookmarkedQuotes: [Quote] {
+        get {
+            if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
+                return quotes
+            }
+            return []
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                bookmarkedQuotesData = data
+            }
+        }
+    }
+    
+    func addBookmark(_ quote: Quote) {
+        var quotes = bookmarkedQuotes
+        if !quotes.contains(where: { $0.id == quote.id }) {
+            quotes.append(quote)
+            bookmarkedQuotes = quotes
+        }
+    }
+    
+    func removeBookmark(_ quote: Quote) {
+        var quotes = bookmarkedQuotes
+        quotes.removeAll { $0.id == quote.id }
+        bookmarkedQuotes = quotes
+    }
+    
+    func isBookmarked(_ quote: Quote) -> Bool {
+        return bookmarkedQuotes.contains(where: { $0.id == quote.id })
+    }
 }

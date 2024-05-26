@@ -159,6 +159,7 @@ struct QuotesView: View {
                     }
                 } else {
                     Button(action: {
+                        notificationTime = Date() // Update the notificationTime to the current date and time
                         isTimePickerExpanded.toggle()
                     }) {
                         HStack {
