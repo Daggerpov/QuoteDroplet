@@ -52,23 +52,37 @@ struct Provider: IntentTimelineProvider {
         // Schedule the next update based on the calculated frequency
         let nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
         
-        // Fetch the initial quote
-        getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
-            if var quote = quote {
-                // Check if the quote is too long
-                while isQuoteTooLong(text: quote.text, context: context, author: quote.author) {
-                    // Fetch a new quote
-                    getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { newQuote, _ in
-                        if let newQuote = newQuote {
-                            quote = newQuote
-                        }
-                    }
-                }
-                
-                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
-                
+        if data.getQuoteCategory().lowercased() == "favorites" {
+            let bookmarkedQuotes = data.getBookmarkedQuotes()
+            
+            if !bookmarkedQuotes.isEmpty {
+                let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
+                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: bookmarkedQuotes[randomIndex], widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
+            } else {
+                let error = NSError(domain: "No bookmarked quotes found", code: 404, userInfo: nil)
+                completion(Timeline(entries: [], policy: .after(nextUpdate)))
+            }
+        } else {
+            // Fetch the initial quote
+            getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
+                if var quote = quote {
+                    // Check if the quote is too long
+                    while isQuoteTooLong(text: quote.text, context: context, author: quote.author) {
+                        // Fetch a new quote
+                        getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { newQuote, _ in
+                            if let newQuote = newQuote {
+                                quote = newQuote
+                            }
+                        }
+                    }
+                    
+                    let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
+                    
+                    let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                    completion(timeline)
+                }
             }
         }
     }

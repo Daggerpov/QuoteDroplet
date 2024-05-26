@@ -80,7 +80,7 @@ struct QuotesView: View {
     }
 
     private func getBookmarkedQuotesCount(completion: @escaping (Int) -> Void) {
-        var bookmarkedQuotes = getBookmarkedQuotes()
+        let bookmarkedQuotes = getBookmarkedQuotes()
         completion(bookmarkedQuotes.count)
     }
     
