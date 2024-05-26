@@ -7,9 +7,16 @@
 
 import Foundation
 import UserNotifications
+import SwiftUI
+import WidgetKit
+import UIKit
+import Foundation
 
 class QuoteManager {
     static let shared = QuoteManager()
+    
+    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var bookmarkedQuotesData: Data = Data()
     
     private var quotes = [QuoteJSON]()
     
@@ -65,6 +72,25 @@ class QuoteManager {
                 }
                 randomQuote = randomElement
                 content.title = "Quote Droplet"
+            } else if classification.lowercased() == "favorites" {
+                let bookmarkedQuotes = getBookmarkedQuotes()
+                
+                if !bookmarkedQuotes.isEmpty {
+                    let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
+                    
+                    guard let randomElement = bookmarkedQuotes[randomIndex]
+                    else {
+                        print("Error: Unable to retrieve a random quote.")
+                        continue
+                    }
+                    randomQuote = randomElement
+                    content.title = "Quote Droplet: Favorites"
+                } else {
+                    randomQuote.text = "Please add a quote to favorites by clicking the favorites button under a quote in the app's \"Droplets\" tab"
+                    randomQuote.author = ""
+                    content.title = "Quote Droplet: No Favorites Added"
+                    
+                }
             } else {
                 // Fetch a random quote with the specified classification
                 let filteredQuotes = shortQuotes.filter { $0.classification.lowercased() == classification.lowercased() }
@@ -107,13 +133,33 @@ class QuoteManager {
             }
         }
     }
+    
+    private func getBookmarkedQuotes() -> [Quote] {
+        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
+            return quotes
+        }
+        return []
+    }
 
 
 }
 
 struct QuoteJSON: Codable {
     let id: Int
-    let text: String
-    let author: String
+    var text: String
+    var author: String
     let classification: String
+}
+
+
+extension Quote {
+    func toQuoteJSON() -> QuoteJSON {
+        return QuoteJSON(id: self.id, text: self.text, author: self.author ?? "", classification: self.classification ?? "")
+    }
+}
+
+extension QuoteJSON {
+    func toQuote() -> Quote {
+        return Quote(id: self.id, text: self.text, author: self.author, classification: self.classification)
+    }
 }
