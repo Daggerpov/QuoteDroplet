@@ -105,7 +105,15 @@ struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
     
+    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var bookmarkedQuotesData: Data = Data()
+    
     @State private var isBookmarked: Bool = false
+    
+    init(quote: Quote) {
+        self.quote = quote
+        self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
+    }
     
     var body: some View {
         VStack {
@@ -130,7 +138,7 @@ struct SingleQuoteView: View {
             }
             
             Button(action: {
-                isBookmarked.toggle()
+                toggleBookmark()
             }) {
                 Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "bookmark.fill" : "bookmark")!, targetSize: CGSize(width: 45, height: 27))!)
                     .foregroundColor(isBookmarked ? .yellow : .gray)
@@ -143,6 +151,35 @@ struct SingleQuoteView: View {
         .cornerRadius(20)
         .shadow(radius: 5)
         .padding(.horizontal)
+    }
+    
+    private func toggleBookmark() {
+        isBookmarked.toggle()
+        
+        var bookmarkedQuotes = getBookmarkedQuotes()
+        if isBookmarked {
+            bookmarkedQuotes.append(quote)
+        } else {
+            bookmarkedQuotes.removeAll { $0.id == quote.id }
+        }
+        saveBookmarkedQuotes(bookmarkedQuotes)
+    }
+    
+    private func isQuoteBookmarked(_ quote: Quote) -> Bool {
+        return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
+    }
+    
+    private func getBookmarkedQuotes() -> [Quote] {
+        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
+            return quotes
+        }
+        return []
+    }
+    
+    private func saveBookmarkedQuotes(_ quotes: [Quote]) {
+        if let data = try? JSONEncoder().encode(quotes) {
+            bookmarkedQuotesData = data
+        }
     }
 }
 

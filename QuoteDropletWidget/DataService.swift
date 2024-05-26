@@ -56,35 +56,16 @@ struct DataService {
     @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var bookmarkedQuotesData: Data = Data()
     
-    var bookmarkedQuotes: [Quote] {
-        get {
-            if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
-                return quotes
-            }
-            return []
+    func getBookmarkedQuotes() -> [Quote] {
+        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
+            return quotes
         }
-        set {
-            if let data = try? JSONEncoder().encode(newValue) {
-                bookmarkedQuotesData = data
-            }
-        }
+        return []
     }
     
-    func addBookmark(_ quote: Quote) {
-        var quotes = bookmarkedQuotes
-        if !quotes.contains(where: { $0.id == quote.id }) {
-            quotes.append(quote)
-            bookmarkedQuotes = quotes
+    func saveBookmarkedQuotes(_ quotes: [Quote]) {
+        if let data = try? JSONEncoder().encode(quotes) {
+            bookmarkedQuotesData = data
         }
-    }
-    
-    func removeBookmark(_ quote: Quote) {
-        var quotes = bookmarkedQuotes
-        quotes.removeAll { $0.id == quote.id }
-        bookmarkedQuotes = quotes
-    }
-    
-    func isBookmarked(_ quote: Quote) -> Bool {
-        return bookmarkedQuotes.contains(where: { $0.id == quote.id })
     }
 }
