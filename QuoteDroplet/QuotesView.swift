@@ -14,6 +14,9 @@ import Foundation
 struct QuotesView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
+    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var bookmarkedQuotesData: Data = Data()
+    
     @Environment(\.colorScheme) var colorScheme
     
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -59,15 +62,35 @@ struct QuotesView: View {
         var counts: [String: Int] = [:]
         for category in QuoteCategory.allCases {
             group.enter()
-            getCountForCategory(category: category) { categoryCount in
-                counts[category.rawValue] = categoryCount
-                group.leave()
+            if category == .bookmarkedQuotes {
+                getBookmarkedQuotesCount { bookmarkedCount in
+                    counts[category.rawValue] = bookmarkedCount
+                    group.leave()
+                }
+            } else {
+                getCountForCategory(category: category) { categoryCount in
+                    counts[category.rawValue] = categoryCount
+                    group.leave()
+                }
             }
         }
         group.notify(queue: .main) {
             completion(counts)
         }
     }
+
+    private func getBookmarkedQuotesCount(completion: @escaping (Int) -> Void) {
+        var bookmarkedQuotes = getBookmarkedQuotes()
+        completion(bookmarkedQuotes.count)
+    }
+    
+    private func getBookmarkedQuotes() -> [Quote] {
+        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
+            return quotes
+        }
+        return []
+    }
+    
     private func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
         guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteCount?category=\(category.rawValue.lowercased())") else {
             completion(0)
