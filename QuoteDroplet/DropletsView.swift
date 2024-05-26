@@ -140,10 +140,13 @@ struct SingleQuoteView: View {
             Button(action: {
                 toggleBookmark()
             }) {
-                Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "bookmark.fill" : "bookmark")!, targetSize: CGSize(width: 45, height: 27))!)
-                    .foregroundColor(isBookmarked ? .yellow : .gray)
-                    .padding(.top, 5)
-                    .frame(alignment: .leading)
+                HStack{
+                    Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "bookmark.fill" : "bookmark")!, targetSize: CGSize(width: 75, height: 27))!)
+                        .foregroundColor(isBookmarked ? .yellow : .gray)
+                        .frame(alignment: .leading)
+                    Spacer()
+                }
+                
             }
         }
         .padding()
