@@ -148,7 +148,7 @@ struct SingleQuoteView: View {
                     
                     let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
                     
-                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\(quote.text)\(wholeAuthorText)")) {
+                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
                         Image(uiImage: resizeImage(UIImage(systemName: "square.and.arrow.up")!, targetSize: CGSize(width: 75, height: 27))!)
                     }
                 } else {

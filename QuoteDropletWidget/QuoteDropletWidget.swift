@@ -231,7 +231,7 @@ struct QuoteDropletWidgetEntryView : View {
             
             VStack {
                 if let quote = entry.quote {
-                    Text(quote.text)
+                    Text("\"\(quote.text)\"")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 10)
@@ -246,7 +246,7 @@ struct QuoteDropletWidgetEntryView : View {
                     }
                 } else {
                     if family == .systemMedium {
-                        Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
+                        Text("\"Our anxiety does not come from thinking about the future, but from wanting to control it.\"")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                             .foregroundColor(colors[1])
                             .multilineTextAlignment(.center)
@@ -264,7 +264,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .lineLimit(1) // Ensure the author text is limited to one line
                             .minimumScaleFactor(0.5) // Allow author text to scale down if needed
                     } else {
-                        Text("More is lost by indecision than by wrong decision.")
+                        Text("\"More is lost by indecision than by wrong decision.\"")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                             .foregroundColor(colors[1])
                             .multilineTextAlignment(.center)
