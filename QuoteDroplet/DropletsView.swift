@@ -144,7 +144,7 @@ struct SingleQuoteView: View {
                 if #available(iOS 16.0, *) {
                     
                     // adjusted
-                    let authorForSharing = (((quote.author?.isEmpty) == nil) && quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil) ? quote.author : ""
+                    let authorForSharing = (quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil) ? quote.author : ""
                     
                     let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
                     
