@@ -59,9 +59,6 @@ struct DropletsView: View {
                     }
                 }
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            Spacer()
         }
         .frame(maxWidth: .infinity)
         .padding()
@@ -137,16 +134,31 @@ struct SingleQuoteView: View {
                 }
             }
             
-            Button(action: {
-                toggleBookmark()
-            }) {
-                HStack{
+            HStack {
+                Button(action: {
+                    toggleBookmark()
+                }) {
                     Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "bookmark.fill" : "bookmark")!, targetSize: CGSize(width: 75, height: 27))!)
                         .foregroundColor(isBookmarked ? .yellow : .gray)
-                        .frame(alignment: .leading)
-                    Spacer()
                 }
-                
+                if #available(iOS 16.0, *) {
+                    
+//                    var authorForSharing = ""
+                    
+                    if ((quote.author?.isEmpty) == nil), quote.author != "Unknown Author", quote.author != "NULL", quote.author != "", quote.author != nil {
+                        var authorForSharing = quote.author
+                    } else {
+                        var authorForSharing = ""
+                    }
+                    
+                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\(quote.text)\n— \(quote.author ?? "")")) {
+                        Image(uiImage: resizeImage(UIImage(systemName: "square.and.arrow.up")!, targetSize: CGSize(width: 75, height: 27))!)
+                    }
+                } else {
+                    // Fallback on earlier versions
+                    // just no share button
+                }
+                Spacer()
             }
         }
         .padding()
@@ -191,3 +203,4 @@ struct DropletsView_Previews: PreviewProvider {
         DropletsView()
     }
 }
+ 
