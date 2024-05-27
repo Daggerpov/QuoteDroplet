@@ -80,7 +80,8 @@ struct HomeView: View {
                             Spacer()
                         }
                         
-                        if let author = quote.author, author != "Unknown Author", !author.isEmpty {
+                        // adjusted
+                        if let author = quote.author, author != "Unknown Author", !author.isEmpty, author != "NULL", author != "", ((quote.author?.isEmpty) == nil) {
                             HStack{
                                 Spacer()
                                 Text("— \(author)")

@@ -61,7 +61,6 @@ struct DropletsView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .onAppear {
             // Fetch initial quotes when the view appears
@@ -123,7 +122,8 @@ struct SingleQuoteView: View {
                 Spacer()
             }
             
-            if let author = quote.author, author != "Unknown Author", !author.isEmpty {
+            // adjusted
+            if let author = quote.author, author != "Unknown Author", !author.isEmpty, author != "NULL", author != ""{
                 HStack {
                     Spacer()
                     Text("— \(author)")
@@ -143,15 +143,12 @@ struct SingleQuoteView: View {
                 }
                 if #available(iOS 16.0, *) {
                     
-//                    var authorForSharing = ""
+                    // adjusted
+                    let authorForSharing = (((quote.author?.isEmpty) == nil) && quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil) ? quote.author : ""
                     
-                    if ((quote.author?.isEmpty) == nil), quote.author != "Unknown Author", quote.author != "NULL", quote.author != "", quote.author != nil {
-                        var authorForSharing = quote.author
-                    } else {
-                        var authorForSharing = ""
-                    }
+                    let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
                     
-                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\(quote.text)\n— \(quote.author ?? "")")) {
+                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\(quote.text)\(wholeAuthorText)")) {
                         Image(uiImage: resizeImage(UIImage(systemName: "square.and.arrow.up")!, targetSize: CGSize(width: 75, height: 27))!)
                     }
                 } else {

@@ -103,7 +103,8 @@ class QuoteManager {
                 content.title = "Quote Droplet: \(classification)"
             }
             
-            if (randomQuote.author != "Unknown Author" && randomQuote.author != "" && randomQuote.author != "NULL") {
+            //adjusted
+            if (randomQuote.author != "Unknown Author" && randomQuote.author != "" && randomQuote.author != "NULL" && ((randomQuote.author.isEmpty))) {
                 content.body = "\(randomQuote.text)\n— \(randomQuote.author)"
             } else {
                 content.body = "\(randomQuote.text)"
