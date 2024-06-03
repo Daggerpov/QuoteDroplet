@@ -333,38 +333,12 @@ struct QuotesView: View {
                 )
         )
     }
-    
-//    private var reloadButton: some View {
-//        VStack{
-//            Button(action: {
-//                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-//            }) {
-//                HStack {
-//                    Text("Reload Widget")
-//                        .font(.title3)
-//                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-//                        .padding(.leading, 5)
-//                }
-//                .padding()
-//                .background(
-//                    RoundedRectangle(cornerRadius: 8)
-//                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-//                        .overlay(
-//                            RoundedRectangle(cornerRadius: 8)
-//                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-//                        )
-//                )
-//                .buttonStyle(CustomButtonStyle())
-//            }
-//        }
-//    }
 
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID: 
-//                                    "ca-app-pub-5189478572039689/5561634002"
-                                   "ca-app-pub-5189478572039689/3114130725" // new one from Mar 25
-            ) // Third personal banner ad, for Quotes View
+            AdBannerViewController(adUnitID:
+                                   "ca-app-pub-5189478572039689/3114130725"
+            )
                             .frame(height: 50)
             Spacer()
             quoteCategoryPicker
