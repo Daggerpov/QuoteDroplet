@@ -105,14 +105,14 @@ struct SingleQuoteView: View {
     private var bookmarkedQuotesData: Data = Data()
     
     @State private var isBookmarked: Bool = false
-    @State private var likes: Int? // Add state for likes
+    @State private var likes: Int = 0 // Change likes to non-optional
     
     @State private var isLiking: Bool = false // Add state for liking status
     
     init(quote: Quote) {
         self.quote = quote
         self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
-        self._likes = State(initialValue: nil) // Initialize likes as nil
+        self._likes = State(initialValue: quote.likes ?? 0) // Initialize likes with initial value
     }
     
     var body: some View {
@@ -147,13 +147,8 @@ struct SingleQuoteView: View {
                     }
                     
                     // Display the like count next to the heart button
-                    if let likes = likes {
-                        Text("\(likes)")
-                    } else {
-                        ProgressView() // Show a loading indicator while likes is nil
-                    }
+                    Text("\(likes)")
                 }
-                
                 
                 Button(action: {
                     toggleBookmark()
@@ -199,12 +194,29 @@ struct SingleQuoteView: View {
         guard !isLiking else { return }
         isLiking = true
         
-        likeQuote(quoteID: quote.id) { updatedQuote, error in
-            DispatchQueue.main.async {
-                if let updatedQuote = updatedQuote {
-                    self.likes = updatedQuote.likes ?? 0
+        // Check if the quote is already liked
+        let isAlreadyLiked = isQuoteLiked(quote)
+        
+        // Call the like/unlike API based on the current like status
+        if isAlreadyLiked {
+            unlikeQuote(quoteID: quote.id) { updatedQuote, error in
+                DispatchQueue.main.async {
+                    if let updatedQuote = updatedQuote {
+                        // Update likes count
+                        self.likes = updatedQuote.likes ?? 0
+                    }
+                    self.isLiking = false
                 }
-                self.isLiking = false
+            }
+        } else {
+            likeQuote(quoteID: quote.id) { updatedQuote, error in
+                DispatchQueue.main.async {
+                    if let updatedQuote = updatedQuote {
+                        // Update likes count
+                        self.likes = updatedQuote.likes ?? 0
+                    }
+                    self.isLiking = false
+                }
             }
         }
     }
@@ -224,6 +236,18 @@ struct SingleQuoteView: View {
         if let data = try? JSONEncoder().encode(quotes) {
             bookmarkedQuotesData = data
         }
+    }
+    
+    // Check if the quote is already liked by the user
+    private func isQuoteLiked(_ quote: Quote) -> Bool {
+        // Assuming you have a list of liked quotes stored somewhere,
+        // you can check if the current quote is present in that list
+        
+        // For example, let's say you have a list of likedQuoteIDs
+        let likedQuoteIDs = sharedVars.likedQuoteIDs // Assuming you have a property to store liked quote IDs
+        
+        // Check if the ID of the current quote is in the list of liked quote IDs
+        return likedQuoteIDs.contains(quote.id)
     }
 }
 
