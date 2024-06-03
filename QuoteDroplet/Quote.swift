@@ -12,4 +12,5 @@ struct Quote: Codable {
     let text: String
     let author: String?
     let classification: String?
+    let likes: Int?
 }

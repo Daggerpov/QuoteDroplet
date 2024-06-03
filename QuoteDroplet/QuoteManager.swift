@@ -162,6 +162,6 @@ extension Quote {
 
 extension QuoteJSON {
     func toQuote() -> Quote {
-        return Quote(id: self.id, text: self.text, author: self.author, classification: self.classification)
+        return Quote(id: self.id, text: self.text, author: self.author, classification: self.classification, likes: 0)
     }
 }

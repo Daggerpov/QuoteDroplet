@@ -44,7 +44,7 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
             let quotes = try decoder.decode([Quote].self, from: data)
             
             if quotes.isEmpty {
-                completion(Quote(id: -1, text: "No Quote Found.", author: nil, classification: nil), nil)
+                completion(Quote(id: -1, text: "No Quote Found.", author: nil, classification: nil, likes: 0), nil)
             } else {
                 let randomIndex = Int.random(in: 0..<quotes.count)
                 completion(quotes[randomIndex], nil)
@@ -150,5 +150,43 @@ func addQuote(text: String, author: String?, classification: String, completion:
         
         // The quote was successfully added
         completion(true, nil)
+    }.resume()
+}
+
+func likeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
+    let urlString = "http://quote-dropper-production.up.railway.app/quotes/like/\(quoteID)"
+    guard let url = URL(string: urlString) else {
+        completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            completion(nil, error)
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode),
+              let data = data else {
+            if let httpResponse = response as? HTTPURLResponse {
+                completion(nil, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
+            } else {
+                completion(nil, NSError(domain: "HTTPError", code: -1, userInfo: nil))
+            }
+            return
+        }
+        
+        // Parse the JSON response to get the updated quote
+        do {
+            let updatedQuote = try JSONDecoder().decode(Quote.self, from: data)
+            completion(updatedQuote, nil)
+        } catch {
+            completion(nil, error)
+        }
     }.resume()
 }

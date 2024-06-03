@@ -105,10 +105,13 @@ struct SingleQuoteView: View {
     private var bookmarkedQuotesData: Data = Data()
     
     @State private var isBookmarked: Bool = false
+    @State private var likes: Int = 0 // Add state for likes
+    @State private var isLiking: Bool = false // Add state for liking status
     
     init(quote: Quote) {
         self.quote = quote
         self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
+        self._likes = State(initialValue: quote.likes ?? 0) // Initialize likes
     }
     
     var body: some View {
@@ -122,8 +125,7 @@ struct SingleQuoteView: View {
                 Spacer()
             }
             
-            // adjusted
-            if let author = quote.author, author != "Unknown Author", !author.isEmpty, author != "NULL", author != ""{
+            if let author = quote.author, author != "Unknown Author", !author.isEmpty, author != "NULL", author != "" {
                 HStack {
                     Spacer()
                     Text("— \(author)")
@@ -136,16 +138,21 @@ struct SingleQuoteView: View {
             
             HStack {
                 Button(action: {
+                    likeQuoteAction()
+                }) {
+                    Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "hand.thumbsup.fill" : "hand.thumbsup")!, targetSize: CGSize(width: 75, height: 27))!)
+                        .foregroundColor(isBookmarked ? .yellow : .gray)
+                }
+                
+                Button(action: {
                     toggleBookmark()
                 }) {
                     Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "bookmark.fill" : "bookmark")!, targetSize: CGSize(width: 75, height: 27))!)
                         .foregroundColor(isBookmarked ? .yellow : .gray)
                 }
+                
                 if #available(iOS 16.0, *) {
-                    
-                    // adjusted
                     let authorForSharing = (quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil) ? quote.author : ""
-                    
                     let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
                     
                     ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
@@ -153,8 +160,8 @@ struct SingleQuoteView: View {
                     }
                 } else {
                     // Fallback on earlier versions
-                    // just no share button
                 }
+                
                 Spacer()
             }
         }
@@ -177,6 +184,20 @@ struct SingleQuoteView: View {
         saveBookmarkedQuotes(bookmarkedQuotes)
     }
     
+    private func likeQuoteAction() {
+        guard !isLiking else { return }
+        isLiking = true
+        
+        likeQuote(quoteID: quote.id) { updatedQuote, error in
+            DispatchQueue.main.async {
+                if let updatedQuote = updatedQuote {
+                    self.likes = updatedQuote.likes ?? 0
+                }
+                self.isLiking = false
+            }
+        }
+    }
+    
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
     }
@@ -194,6 +215,7 @@ struct SingleQuoteView: View {
         }
     }
 }
+
 
 struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {
