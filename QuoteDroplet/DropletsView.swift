@@ -105,13 +105,14 @@ struct SingleQuoteView: View {
     private var bookmarkedQuotesData: Data = Data()
     
     @State private var isBookmarked: Bool = false
-    @State private var likes: Int = 0 // Add state for likes
+    @State private var likes: Int? // Add state for likes
+    
     @State private var isLiking: Bool = false // Add state for liking status
     
     init(quote: Quote) {
         self.quote = quote
         self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
-        self._likes = State(initialValue: quote.likes ?? 0) // Initialize likes
+        self._likes = State(initialValue: nil) // Initialize likes as nil
     }
     
     var body: some View {
@@ -146,7 +147,11 @@ struct SingleQuoteView: View {
                     }
                     
                     // Display the like count next to the heart button
-                    Text("\(likes)") // <-- Add this line
+                    if let likes = likes {
+                        Text("\(likes)")
+                    } else {
+                        ProgressView() // Show a loading indicator while likes is nil
+                    }
                 }
                 
                 
