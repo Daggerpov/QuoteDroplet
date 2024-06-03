@@ -137,12 +137,18 @@ struct SingleQuoteView: View {
             }
             
             HStack {
-                Button(action: {
-                    likeQuoteAction()
-                }) {
-                    Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "hand.thumbsup.fill" : "hand.thumbsup")!, targetSize: CGSize(width: 75, height: 27))!)
-                        .foregroundColor(isBookmarked ? .yellow : .gray)
+                HStack{
+                    Button(action: {
+                        likeQuoteAction()
+                    }) {
+                        Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "heart.fill" : "heart")!, targetSize: CGSize(width: 75, height: 27))!)
+                            .foregroundColor(isBookmarked ? .yellow : .gray)
+                    }
+                    
+                    // Display the like count next to the heart button
+                    Text("\(likes)") // <-- Add this line
                 }
+                
                 
                 Button(action: {
                     toggleBookmark()
