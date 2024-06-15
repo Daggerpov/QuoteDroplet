@@ -106,7 +106,6 @@ struct SingleQuoteView: View {
     @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var bookmarkedQuotesData: Data = Data()
     
-    
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
     @State private var likes: Int = 0 // Change likes to non-optional
@@ -116,18 +115,10 @@ struct SingleQuoteView: View {
         self.quote = quote
         self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
         self._isLiked = State(initialValue: isQuoteLiked(quote))
-        self._likes = State(initialValue: quote.likes ?? 0) // Initialize likes with initial value
     }
     private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
-        let group = DispatchGroup()
-        var theCompletionCount: Int = 0
-        group.enter()
-        getLikeCountForQuote(quoteGiven: quote) {likeCount in
-            theCompletionCount = likeCount
-            group.leave()
-        }
-        group.notify(queue: .main) {
-            completion(theCompletionCount)
+        getLikeCountForQuote(quoteGiven: quote) { likeCount in
+            completion(likeCount)
         }
     }
     
@@ -136,6 +127,7 @@ struct SingleQuoteView: View {
             completion(0)
             return
         }
+        
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data,
                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
@@ -146,6 +138,7 @@ struct SingleQuoteView: View {
             }
         }.resume()
     }
+
     
     var body: some View {
         VStack {
