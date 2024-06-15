@@ -115,50 +115,6 @@ struct CommunityView: View {
         .shadow(radius: 5)
         .padding(.horizontal)
     }
-
-    private var aboutMeSection: some View {
-        HStack {
-            Text("Contact:")
-                .font(.title2)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.leading, 10)
-            
-            Spacer()
-            
-            Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
-                Image("linkedinlogo")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            }
-            
-            Spacer()
-            
-            Link(destination: URL(string: "https://github.com/Daggerpov")!) {
-                Image("githublogo")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            }
-            
-            Spacer()
-            
-            Link(destination: URL(string: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact")!) {
-                Image("gmaillogo")
-                    .resizable()
-                    .frame(width: 60, height: 50)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            }
-            
-            Spacer()
-        }
-        
-        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .cornerRadius(20)
-        .shadow(radius: 5)
-        .padding(.horizontal)
-    }
     
     // ----------------------------------------------------- SUBMIT QUOTE
     
@@ -324,8 +280,6 @@ struct CommunityView: View {
             
             composeButton
             Spacer()
-//            aboutMeSection
-//            Spacer()
         }
         .frame(maxWidth: .infinity)
         .sheet(isPresented: $isAddingQuote) {

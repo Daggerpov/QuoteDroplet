@@ -101,9 +101,13 @@ struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
     
+    @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var likedQuotesData: Data = Data()
+    
     @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var bookmarkedQuotesData: Data = Data()
     
+    @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
     @State private var likes: Int = 0 // Change likes to non-optional
     
@@ -112,6 +116,7 @@ struct SingleQuoteView: View {
     init(quote: Quote) {
         self.quote = quote
         self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
+        self._isLiked = State(initialValue: isQuoteLiked(quote))
         self._likes = State(initialValue: quote.likes ?? 0) // Initialize likes with initial value
     }
     
@@ -141,9 +146,10 @@ struct SingleQuoteView: View {
                 HStack{
                     Button(action: {
                         likeQuoteAction()
+                        toggleLike()
                     }) {
-                        Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "heart.fill" : "heart")!, targetSize: CGSize(width: 75, height: 27))!)
-                            .foregroundColor(isBookmarked ? .yellow : .gray)
+                        Image(uiImage: resizeImage(UIImage(systemName: isLiked ? "heart.fill" : "heart")!, targetSize: CGSize(width: 75, height: 27))!)
+                            .foregroundColor(isLiked ? .yellow : .gray)
                     }
                     
                     // Display the like count next to the heart button
@@ -190,6 +196,18 @@ struct SingleQuoteView: View {
         saveBookmarkedQuotes(bookmarkedQuotes)
     }
     
+    private func toggleLike() {
+        isLiked.toggle()
+        
+        var likedQuotes = getLikedQuotes()
+        if isLiked {
+            likedQuotes.append(quote)
+        } else {
+            likedQuotes.removeAll { $0.id == quote.id }
+        }
+        saveLikedQuotes(likedQuotes)
+    }
+    
     private func likeQuoteAction() {
         guard !isLiking else { return }
         isLiking = true
@@ -221,6 +239,23 @@ struct SingleQuoteView: View {
         }
     }
     
+    private func isQuoteLiked(_ quote: Quote) -> Bool {
+        return getLikedQuotes().contains(where: { $0.id == quote.id })
+    }
+    
+    private func getLikedQuotes() -> [Quote] {
+        if let quotes = try? JSONDecoder().decode([Quote].self, from: likedQuotesData) {
+            return quotes
+        }
+        return []
+    }
+    
+    private func saveLikedQuotes(_ quotes: [Quote]) {
+        if let data = try? JSONEncoder().encode(quotes) {
+            likedQuotesData = data
+        }
+    }
+    
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
     }
@@ -238,17 +273,7 @@ struct SingleQuoteView: View {
         }
     }
     
-    // Check if the quote is already liked by the user
-    private func isQuoteLiked(_ quote: Quote) -> Bool {
-        // Assuming you have a list of liked quotes stored somewhere,
-        // you can check if the current quote is present in that list
-        
-        // For example, let's say you have a list of likedQuoteIDs
-        let likedQuoteIDs = sharedVars.likedQuoteIDs // Assuming you have a property to store liked quote IDs
-        
-        // Check if the ID of the current quote is in the list of liked quote IDs
-        return likedQuoteIDs.contains(quote.id)
-    }
+    
 }
 
 
