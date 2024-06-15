@@ -100,17 +100,16 @@ struct DropletsView: View {
 struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
-    
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
     
     @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var bookmarkedQuotesData: Data = Data()
     
+    
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
     @State private var likes: Int = 0 // Change likes to non-optional
-    
     @State private var isLiking: Bool = false // Add state for liking status
     
     init(quote: Quote) {
@@ -118,6 +117,34 @@ struct SingleQuoteView: View {
         self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
         self._isLiked = State(initialValue: isQuoteLiked(quote))
         self._likes = State(initialValue: quote.likes ?? 0) // Initialize likes with initial value
+    }
+    private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
+        let group = DispatchGroup()
+        var theCompletionCount: Int = 0
+        group.enter()
+        getLikeCountForQuote(quoteGiven: quote) {likeCount in
+            theCompletionCount = likeCount
+            group.leave()
+        }
+        group.notify(queue: .main) {
+            completion(theCompletionCount)
+        }
+    }
+    
+    private func getLikeCountForQuote(quoteGiven: Quote, completion: @escaping (Int) -> Void) {
+        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteLikes/\(quoteGiven.id)") else {
+            completion(0)
+            return
+        }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+               let likeCount = json["likeCount"] as? Int {
+                completion(likeCount)
+            } else {
+                completion(0)
+            }
+        }.resume()
     }
     
     var body: some View {
@@ -143,7 +170,7 @@ struct SingleQuoteView: View {
             }
             
             HStack {
-                HStack{
+                HStack {
                     Button(action: {
                         likeQuoteAction()
                         toggleLike()
@@ -182,6 +209,14 @@ struct SingleQuoteView: View {
         .cornerRadius(20)
         .shadow(radius: 5)
         .padding(.horizontal)
+        .onAppear {
+            isBookmarked = isQuoteBookmarked(quote)
+
+            getQuoteLikeCountMethod { fetchedLikeCount in
+                likes = fetchedLikeCount
+            }
+            isLiked = isQuoteLiked(quote)
+        }
     }
     
     private func toggleBookmark() {
@@ -272,8 +307,6 @@ struct SingleQuoteView: View {
             bookmarkedQuotesData = data
         }
     }
-    
-    
 }
 
 
