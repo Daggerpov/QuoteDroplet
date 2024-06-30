@@ -34,7 +34,7 @@ struct CommunityView: View {
     @State private var showSubmissionInfoAlert = false
     @State private var quoteText = ""
     @State private var author = ""
-    @State private var selectedCategory: QuoteCategory = .wisdom
+    @State private var selectedCategory: QuoteCategory = .all
     @State private var submissionMessage = ""
     @State private var showSubmissionReceivedAlert = false
     
@@ -260,8 +260,9 @@ struct CommunityView: View {
     private var submissionQuoteCategoryPicker: some View {
         HStack {
             Picker("Quote Category", selection: $selectedCategory) {
-                ForEach(QuoteCategory.allCases, id: \.self) { category in
-                    Text(category.displayName)
+                // Create a custom array that places .all at the beginning and filters out .bookmarkedQuotes
+                ForEach([.all] + QuoteCategory.allCases.filter { $0 != .bookmarkedQuotes && $0 != .all }, id: \.self) { category in
+                    Text(category == .all ? "Unsure" : category.rawValue)
                 }
             }
         }

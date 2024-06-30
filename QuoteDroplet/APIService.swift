@@ -114,7 +114,8 @@ func addQuote(text: String, author: String?, classification: String, completion:
         "text": text,
         "author": author ?? "", // If author is nil, send an empty string
         "classification": classification.lowercased(), // Convert classification to lowercase
-        "approved": false // Set approved status to false for new quotes
+        "approved": false, // Set approved status to false for new quotes
+        "likes": 0
     ]
     
     // Convert the quote object to JSON data

@@ -38,6 +38,10 @@ struct DropletsView: View {
             ScrollView {
                 Spacer()
                 VStack {
+                    Text("Currently, the like count only shows after you click the like button. I'm actively working to fix this issue.")
+                        .font(.headline)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.horizontal, 5)
                     HStack {
                         Spacer()
                         Text("Droplets")
@@ -129,6 +133,15 @@ struct SingleQuoteView: View {
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
+//            print("[Likes testing] Got for: \(url.absoluteString)")
+//            print("): \(response)")
+//            var stringified_data = (String(data: data ?? Date(), encoding: .utf8)
+//            print("and stringified data: \(stringified_data))")
+            
+//            print("Got for: \(url.absoluteString): \(String(describing: response)) and stringified data: \(String(data: data ?? Data(), encoding: .utf8) ?? "nil")")
+
+
+
             if let data = data,
                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                let likeCount = json["likeCount"] as? Int {
@@ -203,10 +216,12 @@ struct SingleQuoteView: View {
         .shadow(radius: 5)
         .padding(.horizontal)
         .onAppear {
+//            print("likes in .onAppear() \(likes)")
             isBookmarked = isQuoteBookmarked(quote)
 
             getQuoteLikeCountMethod { fetchedLikeCount in
                 likes = fetchedLikeCount
+//                print("----> likes (in getQuoteLikeCountMethod): \(likes)")
             }
             isLiked = isQuoteLiked(quote)
         }
