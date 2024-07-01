@@ -61,6 +61,8 @@ class QuoteManager {
             // Create notification content
             let content = UNMutableNotificationContent()
             
+            content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "sound-for-noti-water-drip-pixabay.mp3"))
+            
             let shortQuotes = quotes.filter{ $0.text.count <= 100 }
             
             // Fetch a random quote for the specified classification
@@ -110,10 +112,6 @@ class QuoteManager {
                 content.body = "\(randomQuote.text)"
             }
             
-            
-            
-            content.sound = UNNotificationSound.default
-            
             // Calculate the trigger date for the current notification
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
             
@@ -127,11 +125,11 @@ class QuoteManager {
             UNUserNotificationCenter.current().add(request) { error in
                 if let error = error {
                     print("Error scheduling notification: \(error.localizedDescription)")
-                } else {
-                    print("Notification scheduled successfully.")
-                    print("Body of notification scheduled: \(content.body)")
-                    print("Scheduled for this time: \(triggerDate)")
-                }
+                } //else {
+//                    print("Notification scheduled successfully.")
+//                    print("Body of notification scheduled: \(content.body)")
+//                    print("Scheduled for this time: \(triggerDate)")
+                //}
             }
         }
     }

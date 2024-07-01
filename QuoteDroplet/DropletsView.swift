@@ -9,6 +9,7 @@ import WidgetKit
 import UserNotifications
 import UIKit
 import Foundation
+import StoreKit
 
 struct DropletsView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
@@ -38,7 +39,7 @@ struct DropletsView: View {
             ScrollView {
                 Spacer()
                 VStack {
-                    Text("Currently, the like count only shows after you click the like button. I'm actively working to fix this issue.")
+                    Text("Current bug I'm fixing: like count shows 0 until you click the like (heart) button.")
                         .font(.headline)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         .padding(.horizontal, 5)
@@ -53,12 +54,16 @@ struct DropletsView: View {
                     Spacer()
                     ForEach(quotes.indices, id: \.self) { index in
                         if let quote = quotes[safe: index] {
-                            SingleQuoteView(quote: quote)
-                                .onAppear {
-                                    if index == quotes.count - 1 && !isLoadingMore && quotes.count < 4 {
-                                        loadMoreQuotes()
+                            if #available(iOS 16.0, *) {
+                                SingleQuoteView(quote: quote)
+                                    .onAppear {
+                                        if index == quotes.count - 1 && !isLoadingMore && quotes.count < 4 {
+                                            loadMoreQuotes()
+                                        }
                                     }
-                                }
+                            } else {
+                                // Fallback on earlier versions
+                            }
                         }
                     }
                 }
@@ -101,6 +106,7 @@ struct DropletsView: View {
     }
 }
 
+@available(iOS 16.0, *)
 struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
@@ -109,6 +115,11 @@ struct SingleQuoteView: View {
     
     @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var bookmarkedQuotesData: Data = Data()
+    
+    @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var interactions = 0
+    
+    @Environment(\.requestReview) var requestReview
     
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
@@ -182,8 +193,12 @@ struct SingleQuoteView: View {
                         likeQuoteAction()
                         toggleLike()
                     }) {
-                        Image(uiImage: resizeImage(UIImage(systemName: isLiked ? "heart.fill" : "heart")!, targetSize: CGSize(width: 75, height: 27))!)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        if #available(iOS 15.0, *) {
+                            Image(uiImage: resizeImage(UIImage(systemName: isLiked ? "heart.fill" : "heart")!, targetSize: CGSize(width: 75, height: 27))!)
+                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        } else {
+                            // Fallback on earlier versions
+                        }
                     }
                     
                     // Display the like count next to the heart button
@@ -240,6 +255,8 @@ struct SingleQuoteView: View {
             bookmarkedQuotes.removeAll { $0.id == quote.id }
         }
         saveBookmarkedQuotes(bookmarkedQuotes)
+        
+        interactionsIncrease()
     }
     
     private func toggleLike() {
@@ -252,6 +269,15 @@ struct SingleQuoteView: View {
             likedQuotes.removeAll { $0.id == quote.id }
         }
         saveLikedQuotes(likedQuotes)
+        
+        interactionsIncrease()
+    }
+    
+    private func interactionsIncrease() {
+        interactions += 1
+        if (interactions == 21) {
+            requestReview()
+        }
     }
     
     private func likeQuoteAction() {
