@@ -154,7 +154,7 @@ struct AppearanceView: View {
                     .overlay(
                         VStack {
                             Spacer()
-                            Text("\"More is lost by indecision than by wrong decision.\"")
+                            Text("More is lost by indecision than by wrong decision.")
                                 .font(Font.custom(availableFonts[selectedFontIndex], size: 16))
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                                 .padding(.horizontal, 20)

@@ -80,7 +80,7 @@ struct CommunityView: View {
                 ForEach(recentQuotes, id: \.id) { quote in
                     VStack() {
                         HStack{
-                            Text("\"\(quote.text)\"")
+                            Text("\(quote.text)")
                                 .font(.title3)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                                 .padding(.bottom, 2)

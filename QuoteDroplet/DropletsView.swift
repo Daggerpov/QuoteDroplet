@@ -115,6 +115,7 @@ struct SingleQuoteView: View {
     @State private var likes: Int = 0 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
     
+    
     init(quote: Quote) {
         self.quote = quote
         self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
@@ -156,7 +157,7 @@ struct SingleQuoteView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("\"\(quote.text)\"")
+                Text("\(quote.text)")
                     .font(.title3)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     .padding(.bottom, 2)
@@ -182,12 +183,14 @@ struct SingleQuoteView: View {
                         toggleLike()
                     }) {
                         Image(uiImage: resizeImage(UIImage(systemName: isLiked ? "heart.fill" : "heart")!, targetSize: CGSize(width: 75, height: 27))!)
-                            .foregroundColor(isLiked ? .yellow : .gray)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                     }
                     
                     // Display the like count next to the heart button
                     Text("\(likes)")
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                 }
+                Spacer()
                 
                 Button(action: {
                     toggleBookmark()
