@@ -39,10 +39,6 @@ struct DropletsView: View {
             ScrollView {
                 Spacer()
                 VStack {
-                    Text("Current bug I'm fixing: like count shows 0 until you click the like (heart) button.")
-                        .font(.headline)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.horizontal, 5)
                     HStack {
                         Spacer()
                         Text("Droplets")
@@ -145,18 +141,9 @@ struct SingleQuoteView: View {
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-//            print("[Likes testing] Got for: \(url.absoluteString)")
-//            print("): \(response)")
-//            var stringified_data = (String(data: data ?? Date(), encoding: .utf8)
-//            print("and stringified data: \(stringified_data))")
-            
-//            print("Got for: \(url.absoluteString): \(String(describing: response)) and stringified data: \(String(data: data ?? Data(), encoding: .utf8) ?? "nil")")
-
-
-
             if let data = data,
                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let likeCount = json["likeCount"] as? Int {
+               let likeCount = json["likes"] as? Int {
                 completion(likeCount)
             } else {
                 completion(0)
@@ -194,7 +181,9 @@ struct SingleQuoteView: View {
                         toggleLike()
                     }) {
                         if #available(iOS 15.0, *) {
-                            Image(uiImage: resizeImage(UIImage(systemName: isLiked ? "heart.fill" : "heart")!, targetSize: CGSize(width: 75, height: 27))!)
+                            Image(systemName: isLiked ? "heart.fill" : "heart")
+                                .font(.title)
+                                .scaleEffect(1)
                                 .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                         } else {
                             // Fallback on earlier versions
@@ -205,22 +194,28 @@ struct SingleQuoteView: View {
                     Text("\(likes)")
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                 }
-                Spacer()
+//                Spacer()
                 
                 Button(action: {
                     toggleBookmark()
                 }) {
-                    Image(uiImage: resizeImage(UIImage(systemName: isBookmarked ? "bookmark.fill" : "bookmark")!, targetSize: CGSize(width: 75, height: 27))!)
-                        .foregroundColor(isBookmarked ? .yellow : .gray)
-                }
+                    Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                        .font(.title)
+                        .scaleEffect(1)
+                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                }.padding(.leading, 5)
                 
                 if #available(iOS 16.0, *) {
                     let authorForSharing = (quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil) ? quote.author : ""
                     let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
                     
                     ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
-                        Image(uiImage: resizeImage(UIImage(systemName: "square.and.arrow.up")!, targetSize: CGSize(width: 75, height: 27))!)
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                     }
+                    .padding(.leading, 5)
                 } else {
                     // Fallback on earlier versions
                 }
@@ -234,12 +229,10 @@ struct SingleQuoteView: View {
         .shadow(radius: 5)
         .padding(.horizontal)
         .onAppear {
-//            print("likes in .onAppear() \(likes)")
             isBookmarked = isQuoteBookmarked(quote)
 
             getQuoteLikeCountMethod { fetchedLikeCount in
                 likes = fetchedLikeCount
-//                print("----> likes (in getQuoteLikeCountMethod): \(likes)")
             }
             isLiked = isQuoteLiked(quote)
         }
