@@ -114,9 +114,9 @@ struct Provider: IntentTimelineProvider {
             case .systemSmall:
                 return 20
             case .systemMedium:
-                return 50
+                return 40
             case .systemLarge:
-                return 150
+                return 100
             case .systemExtraLarge:
                 return 200
             case .accessoryCircular:
