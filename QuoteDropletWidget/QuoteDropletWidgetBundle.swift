@@ -12,8 +12,13 @@ import SwiftUI
 @main
 struct QuoteDropletWidgetBundle: WidgetBundle {
     var body: some Widget {
-        QuoteDropletWidget()
-        QuoteDropletWidgetWithIntents()
+        QuoteDropletWidgetSmall()
+        QuoteDropletWidgetWithIntentsMedium()
+        QuoteDropletWidgetWithIntentsLarge()
+        QuoteDropletWidgetMedium()
+        QuoteDropletWidgetWithIntentsExtraLarge()
+        QuoteDropletWidgetLarge()
+        QuoteDropletWidgetExtraLarge()
 //        QuoteDropletWidgetLiveActivity()
     }
 }

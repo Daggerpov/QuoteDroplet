@@ -486,7 +486,7 @@ struct QuoteDropletWidgetEntryView : View {
 
 
 @available(iOSApplicationExtension 15.0, *)
-struct QuoteDropletWidget: Widget {
+struct QuoteDropletWidgetSmall: Widget {
     let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
@@ -500,12 +500,69 @@ struct QuoteDropletWidget: Widget {
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette and font are customizable.")
-        .supportedFamilies([.systemMedium, .systemSmall, .systemLarge, .systemExtraLarge])
+        .supportedFamilies([.systemSmall])
     }
 }
 
 @available(iOSApplicationExtension 15.0, *)
-struct QuoteDropletWidgetWithIntents: Widget {
+struct QuoteDropletWidgetMedium: Widget {
+    let kind: String = "QuoteDropletWidget"
+    
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+            if #available(iOSApplicationExtension 16.0, *) {
+                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        .disableContentMarginsIfNeeded() // Use the extension here
+        .configurationDisplayName("Example Widget")
+        .description("Note that the color palette and font are customizable.")
+        .supportedFamilies([.systemMedium])
+    }
+}
+
+@available(iOSApplicationExtension 15.0, *)
+struct QuoteDropletWidgetLarge: Widget {
+    let kind: String = "QuoteDropletWidget"
+    
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+            if #available(iOSApplicationExtension 16.0, *) {
+                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        .disableContentMarginsIfNeeded() // Use the extension here
+        .configurationDisplayName("Example Widget")
+        .description("Note that the color palette and font are customizable.")
+        .supportedFamilies([.systemLarge])
+    }
+}
+
+@available(iOSApplicationExtension 15.0, *)
+struct QuoteDropletWidgetExtraLarge: Widget {
+    let kind: String = "QuoteDropletWidget"
+    
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+            if #available(iOSApplicationExtension 16.0, *) {
+                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        .disableContentMarginsIfNeeded() // Use the extension here
+        .configurationDisplayName("Example Widget")
+        .description("Note that the color palette and font are customizable.")
+        .supportedFamilies([.systemExtraLarge])
+    }
+}
+
+@available(iOSApplicationExtension 15.0, *)
+struct QuoteDropletWidgetWithIntentsMedium: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
     
     var body: some WidgetConfiguration {
@@ -519,7 +576,45 @@ struct QuoteDropletWidgetWithIntents: Widget {
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette and font are customizable.")
-        .supportedFamilies([.systemMedium, .systemLarge, .systemExtraLarge])
+        .supportedFamilies([.systemMedium])
+    }
+}
+
+@available(iOSApplicationExtension 15.0, *)
+struct QuoteDropletWidgetWithIntentsLarge: Widget {
+    let kind: String = "QuoteDropletWidgetWithIntents"
+    
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+            if #available(iOSApplicationExtension 16.0, *) {
+                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        .disableContentMarginsIfNeeded() // Use the extension here
+        .configurationDisplayName("Example Widget")
+        .description("Note that the color palette and font are customizable.")
+        .supportedFamilies([.systemLarge])
+    }
+}
+
+@available(iOSApplicationExtension 15.0, *)
+struct QuoteDropletWidgetWithIntentsExtraLarge: Widget {
+    let kind: String = "QuoteDropletWidgetWithIntents"
+    
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+            if #available(iOSApplicationExtension 16.0, *) {
+                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        .disableContentMarginsIfNeeded() // Use the extension here
+        .configurationDisplayName("Example Widget")
+        .description("Note that the color palette and font are customizable.")
+        .supportedFamilies([.systemExtraLarge])
     }
 }
 
