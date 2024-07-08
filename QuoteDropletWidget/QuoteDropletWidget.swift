@@ -310,14 +310,8 @@ struct QuoteDropletWidgetEntryView : View {
         }.resume()
     }
     
-    private var authorWithLikes: some View {
+    private var likesSectionWithAuthor: some View {
         HStack {
-            if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
-                Text("— \(widgetQuote.author ?? "")")
-                    .foregroundColor(colors[2]) // Use the third color for author text color
-                    .padding(.horizontal, 10)
-            }
-            
             if #available(iOSApplicationExtension 17.0, *) {
                 Button(intent: LikeQuoteIntent()) {
                     Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -331,7 +325,8 @@ struct QuoteDropletWidgetEntryView : View {
             Text("\(widgetQuote.likes ?? 69)")
                 .foregroundColor(colors[2])
         }
-        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14))
+        
+        
     }
     
     var body: some View {
@@ -346,16 +341,18 @@ struct QuoteDropletWidgetEntryView : View {
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                         .minimumScaleFactor(0.01)
-                    if family == .systemSmall || !isIntentsActive {
+                    HStack {
                         if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
                             Text("— \(widgetQuote.author ?? "")")
-                                .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
                                 .foregroundColor(colors[2]) // Use the third color for author text color
                                 .padding(.horizontal, 5)
                         }
-                    } else {
-                        authorWithLikes
+                        if isIntentsActive {
+                            likesSectionWithAuthor
+                        }
                     }
+                    .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
+                    
                 } else {
                     Text("\(getTextForWidgetPreview(familia: family)[0])")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
@@ -363,13 +360,17 @@ struct QuoteDropletWidgetEntryView : View {
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                         .minimumScaleFactor(0.01)
-                    Spacer() // Add a spacer to push the author text to the center
-                    
-                    Text("— \(getTextForWidgetPreview(familia: family)[1])")
-                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
-                        .foregroundColor(colors[2]) // Use the third color for author text color
-                        .padding(.horizontal, 10)
-                    
+                    //                    Spacer() // Add a spacer to push the author text to the center
+                    HStack {
+                        Text("— \(getTextForWidgetPreview(familia: family)[1])")
+                        
+                            .foregroundColor(colors[2]) // Use the third color for author text color
+                            .padding(.horizontal, 10)
+                        if isIntentsActive {
+                            likesSectionWithAuthor
+                        }
+                    }
+                    .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
                 }
             }
             .padding()
@@ -574,7 +575,7 @@ struct QuoteDropletWidgetWithIntentsMedium: Widget {
             }
         }
         .disableContentMarginsIfNeeded() // Use the extension here
-        .configurationDisplayName("Example Widget")
+        .configurationDisplayName("Example Widget With Buttons")
         .description("Note that the color palette and font are customizable.")
         .supportedFamilies([.systemMedium])
     }
@@ -593,7 +594,7 @@ struct QuoteDropletWidgetWithIntentsLarge: Widget {
             }
         }
         .disableContentMarginsIfNeeded() // Use the extension here
-        .configurationDisplayName("Example Widget")
+        .configurationDisplayName("Example Widget With Buttons")
         .description("Note that the color palette and font are customizable.")
         .supportedFamilies([.systemLarge])
     }
@@ -612,7 +613,7 @@ struct QuoteDropletWidgetWithIntentsExtraLarge: Widget {
             }
         }
         .disableContentMarginsIfNeeded() // Use the extension here
-        .configurationDisplayName("Example Widget")
+        .configurationDisplayName("Example Widget With Buttons")
         .description("Note that the color palette and font are customizable.")
         .supportedFamilies([.systemExtraLarge])
     }
@@ -640,14 +641,14 @@ struct LikeQuoteIntent: AppIntent {
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
     
-//    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-//    private var bookmarkedQuotesData: Data = Data()
+    //    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    //    private var bookmarkedQuotesData: Data = Data()
     
     @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
     var interactions = 0
     
     @State private var isLiked: Bool = false
-//    @State private var isBookmarked: Bool = false
+    //    @State private var isBookmarked: Bool = false
     @State private var likes: Int = 69 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
     
@@ -658,7 +659,7 @@ struct LikeQuoteIntent: AppIntent {
     
     init(quote: Quote) {
         self.widgetQuote = quote
-//        self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
+        //        self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
     }
     
