@@ -187,7 +187,9 @@ public func getFrequencyInSeconds(for index: Int) -> Int {
 public func getFontSizeForText(familia: WidgetFamily, whichText: String) -> CGFloat {
     if (whichText == "text") {
         // widgetAppropriateTextFontSize
-        if familia == .systemLarge {
+        if familia == .systemExtraLarge {
+            return 32
+        } else if familia == .systemLarge {
             return 24
         } else {
             // .systemSmall & .systemMedium
@@ -196,7 +198,9 @@ public func getFontSizeForText(familia: WidgetFamily, whichText: String) -> CGFl
         }
     } else {
         // author
-        if familia == .systemLarge {
+        if familia == .systemExtraLarge {
+            return 22
+        } else if familia == .systemLarge {
             return 18
         } else {
             // .systemSmall & .systemMedium
@@ -319,7 +323,7 @@ struct QuoteDropletWidgetEntryView : View {
                             Text("— \(widgetQuote.author ?? "")")
                                 .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
                                 .foregroundColor(colors[2]) // Use the third color for author text color
-                                .padding(.horizontal, 10)
+                                .padding(.horizontal, 5)
                         }
                     } else {
                         HStack {
@@ -333,7 +337,7 @@ struct QuoteDropletWidgetEntryView : View {
                                 Button(intent: LikeQuoteIntent()) {
                                     Image(systemName: isLiked ? "heart.fill" : "heart")
                                         .foregroundStyle(colors[2])
-                                }
+                                }.backgroundStyle(colors[2])
                             } else {
                                 Image(systemName: isLiked ? "heart.fill" : "heart")
                                     .foregroundStyle(colors[2])
@@ -342,7 +346,6 @@ struct QuoteDropletWidgetEntryView : View {
                             Text("\(widgetQuote.likes ?? 69)")
                                 .foregroundColor(colors[2])
                         }
-                        .padding(.horizontal, 5)
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14))
                     }
                 } else {
@@ -494,7 +497,7 @@ struct QuoteDropletWidget: Widget {
 
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 15), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "all")
+        let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 15), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "All")
         
         
         if #available(iOSApplicationExtension 16.0, *) {
