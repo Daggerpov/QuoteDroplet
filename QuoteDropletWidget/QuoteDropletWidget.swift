@@ -35,13 +35,13 @@ struct Provider: IntentTimelineProvider {
         let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification", likes: 0)
         return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory(), likes: 12)
     }
-
-
+    
+    
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory(), likes: 12)
         completion(entry)
     }
-
+    
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
@@ -85,7 +85,7 @@ struct Provider: IntentTimelineProvider {
             }
         }
     }
-
+    
     // Helper function to check if a quote is too long
     private func isQuoteTooLong(text: String, context: Context, author: String?) -> Bool {
         let maxWidth: CGFloat = {
@@ -108,7 +108,7 @@ struct Provider: IntentTimelineProvider {
                 return 100
             }
         }()
-
+        
         var maxHeight: CGFloat = {
             switch context.family {
             case .systemSmall:
@@ -146,7 +146,7 @@ struct Provider: IntentTimelineProvider {
                 maxHeight = maxHeight * 0.85 // Adjust the factor as needed
             }
         }
-
+        
         let font = UIFont.systemFont(ofSize: 16) // Use an appropriate font size
         let boundingBox = text.boundingRect(
             with: CGSize(width: maxWidth, height: maxHeight),
@@ -154,7 +154,7 @@ struct Provider: IntentTimelineProvider {
             attributes: [NSAttributedString.Key.font: font],
             context: nil
         )
-
+        
         // Check if the quote has an author
         
         // adjusted
@@ -166,7 +166,7 @@ struct Provider: IntentTimelineProvider {
             return boundingBox.height > maxAllowedHeight
         }
     }
-
+    
 }
 
 // Helper function to convert selected frequency index to seconds
@@ -198,7 +198,7 @@ struct MinimumFontModifier: ViewModifier {
     let weight: Font.Weight
     let design: Font.Design
     let minimumSize: CGFloat
-
+    
     func body(content: Content) -> some View {
         content
             .font(Font.system(size: max(size, minimumSize), weight: weight, design: design))
@@ -277,35 +277,35 @@ struct QuoteDropletWidgetEntryView : View {
             
             VStack {
                 if widgetQuote != nil{
-                Text("\(widgetQuote.text)")
-                    .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
-                    .foregroundColor(colors[1]) // Use the second color for text color
-                    .padding(.horizontal, 10)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                
-                // adjusted
-                if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
-                    Text("— \(widgetQuote.author ?? "")")
-                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
-                        .foregroundColor(colors[2]) // Use the third color for author text color
+                    Text("\(widgetQuote.text)")
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
+                        .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 10)
-                }
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                    
+                    // adjusted
+                    if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
+                        Text("— \(widgetQuote.author ?? "")")
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
+                            .foregroundColor(colors[2]) // Use the third color for author text color
+                            .padding(.horizontal, 10)
+                    }
                     HStack {
-                                            Button(action: {
-                                                likeQuoteAction()
-                                                toggleLike()
-                                            }) {
-                                                Image(systemName: isLiked ? "heart.fill" : "heart")
-                                                    .font(.title)
-                                                    .foregroundColor(colors[2])
-                                            }
-                                            .padding(.trailing, 8)
-                                            
-                                            Text("\(likes)")
-                                                .font(.caption)
-                                                .foregroundColor(colors[2])
-                                        }
-                                        .padding(.top, 5)
+                        Button(action: {
+                            likeQuoteAction()
+                            toggleLike()
+                        }) {
+                            Image(systemName: isLiked ? "heart.fill" : "heart")
+                                .font(.title)
+                                .foregroundColor(colors[2])
+                        }
+                        .padding(.trailing, 8)
+                        
+                        Text("\(likes)")
+                            .font(.caption)
+                            .foregroundColor(colors[2])
+                    }
+                    .padding(.top, 5)
                 } else {
                     if family == .systemMedium {
                         Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
@@ -351,7 +351,7 @@ struct QuoteDropletWidgetEntryView : View {
         }
         .onAppear {
             isBookmarked = isQuoteBookmarked(widgetQuote)
-
+            
             getQuoteLikeCountMethod { fetchedLikeCount in
                 likes = fetchedLikeCount
             }
@@ -455,18 +455,18 @@ struct QuoteDropletWidgetEntryView : View {
             bookmarkedQuotesData = data
         }
     }
-//    
-//    private func updateWidgetContent() {
-//        // Update widget content here using WidgetCenter
-//        let widgetInfo = WidgetInfo(entry: entry)
-//        WidgetCenter.shared.reloadTimelines(ofKind: widgetInfo.kind)
-//    }
+    //
+    //    private func updateWidgetContent() {
+    //        // Update widget content here using WidgetCenter
+    //        let widgetInfo = WidgetInfo(entry: entry)
+    //        WidgetCenter.shared.reloadTimelines(ofKind: widgetInfo.kind)
+    //    }
 }
 
 
 struct QuoteDropletWidget: Widget {
     let kind: String = "QuoteDropletWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             if #available(iOSApplicationExtension 16.0, *) {
