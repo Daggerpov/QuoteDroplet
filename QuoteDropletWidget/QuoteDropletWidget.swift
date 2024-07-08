@@ -62,6 +62,7 @@ struct Provider: IntentTimelineProvider {
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } else {
+                // TODO: add an error or maybe a quote with the message "No Favourites Added" Please go into the Droplets section of the app to favourite some quotes, so they can show up here"
                 completion(Timeline(entries: [], policy: .after(nextUpdate)))
             }
         } else {
@@ -183,6 +184,40 @@ public func getFrequencyInSeconds(for index: Int) -> Int {
     }
 }
 
+public func getFontSizeForText(familia: WidgetFamily, whichText: String) -> CGFloat {
+    if (whichText == "text") {
+        // widgetAppropriateTextFontSize
+        if familia == .systemLarge {
+            return 24
+        } else {
+            // .systemSmall & .systemMedium
+            // stays as it was earlier
+            return 16
+        }
+    } else {
+        // author
+        if familia == .systemLarge {
+            return 18
+        } else {
+            // .systemSmall & .systemMedium
+            // stays as it was earlier
+            return 14
+        }
+    }
+}
+
+public func getTextForWidgetPreview(familia: WidgetFamily) -> [String] {
+    if familia == .systemSmall {
+        return ["More is lost by indecision than by wrong decision.", "Cicero"];
+    } else if familia == .systemMedium {
+        return ["Our anxiety does not come from thinking about the future, but from wanting to control it.", "Khalil Gibran"];
+    } else {
+        // .systemLarge
+        return ["Show me a person who has never made a mistake and I'll show you someone who hasn't achieved much.", "Joan Collins"];
+    }
+    
+}
+
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
@@ -274,14 +309,14 @@ struct QuoteDropletWidgetEntryView : View {
             VStack {
                 if widgetQuote.text != "" {
                     Text("\(widgetQuote.text)")
-                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "text"))) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                     if family == .systemSmall {
                         if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
                             Text("— \(widgetQuote.author ?? "")")
-                                .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
+                                .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
                                 .foregroundColor(colors[2]) // Use the third color for author text color
                                 .padding(.horizontal, 10)
                         }
@@ -310,44 +345,22 @@ struct QuoteDropletWidgetEntryView : View {
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14))
                     }
                 } else {
-                    if family == .systemSmall {
-                        Text("More is lost by indecision than by wrong decision.")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
-                            .foregroundColor(colors[1])
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(4)
-                            .minimumScaleFactor(0.5)
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 10)
-                            .frame(maxHeight: .infinity)
-                        Spacer() // Add a spacer to push the author text to the center
-                        Text("— Cicero")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
-                            .foregroundColor(colors[2])
-                            .padding(.horizontal, 40)
-                            .padding(.bottom, 10)
-                            .lineLimit(1) // Ensure the author text is limited to one line
-                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
-                    } else {
-                        
-                        Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
-                            .foregroundColor(colors[1])
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(4)
-                            .minimumScaleFactor(0.5)
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 10)
-                            .frame(maxHeight: .infinity)
-                        Spacer() // Add a spacer to push the author text to the center
-                        Text("— Khalil Gibran")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
-                            .foregroundColor(colors[2])
-                            .padding(.horizontal, 40)
-                            .padding(.bottom, 10)
-                            .lineLimit(1) // Ensure the author text is limited to one line
-                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
-                    }
+                    Text("\(getTextForWidgetPreview(familia: family)[0])")
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "text"))) // Use the selected font
+                        .foregroundColor(colors[1])
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                        .minimumScaleFactor(0.5)
+                        .padding(.horizontal, 40)
+                        .padding(.vertical, 10)
+                        .frame(maxHeight: .infinity)
+                    Spacer() // Add a spacer to push the author text to the center
+                    Text("— \(getTextForWidgetPreview(familia: family)[1])")
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
+                        .foregroundColor(colors[2])
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 10)
+                        .lineLimit(1) // Ensure the author text is limited to one line
                 }
                 
             }
