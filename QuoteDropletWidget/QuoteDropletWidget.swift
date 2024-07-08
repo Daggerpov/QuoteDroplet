@@ -33,12 +33,12 @@ struct Provider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> SimpleEntry {
         let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification", likes: 0)
-        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory(), likes: 12)
+        return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
     }
     
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory(), likes: 12)
+        let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
         completion(entry)
     }
     
@@ -57,7 +57,7 @@ struct Provider: IntentTimelineProvider {
             
             if !bookmarkedQuotes.isEmpty {
                 let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
-                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: bookmarkedQuotes[randomIndex], widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory(), likes: 15)
+                let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: bookmarkedQuotes[randomIndex], widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } else {
@@ -77,7 +77,7 @@ struct Provider: IntentTimelineProvider {
                         }
                     }
                     
-                    let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory(), likes: 15)
+                    let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                     
                     let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                     completion(timeline)
@@ -190,7 +190,6 @@ struct SimpleEntry: TimelineEntry {
     let widgetCustomColorPalette: [Color]
     let quoteFrequencyIndex: Int
     let quoteCategory: String
-    var likes: Int  // Add likes here
 }
 
 struct MinimumFontModifier: ViewModifier {
@@ -226,12 +225,15 @@ struct QuoteDropletWidgetEntryView : View {
     
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
-    @State private var likes: Int = 0 // Change likes to non-optional
+    @State private var likes: Int = 69 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
     
     init(entry: SimpleEntry, quoteGiven: Quote) {
+        print("test print")
         self.entry = entry
         self.widgetQuote = quoteGiven
+        print("Quote Given:")
+        print(quoteGiven)
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
     }
@@ -279,6 +281,8 @@ struct QuoteDropletWidgetEntryView : View {
             
             VStack {
                 if widgetQuote != nil{
+                    Text("\(likes ?? 107)")
+                    Text("\(widgetQuote.likes ?? 107)")
                     Text("\(widgetQuote.text)")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
@@ -303,7 +307,7 @@ struct QuoteDropletWidgetEntryView : View {
                         }
                         .padding(.trailing, 8)
                         
-                        Text("\(likes)")
+                        Text("\(widgetQuote.likes ?? 69)") // widgetQuote.likes
                             .font(.caption)
                             .foregroundColor(colors[2])
                     }
@@ -350,14 +354,17 @@ struct QuoteDropletWidgetEntryView : View {
                 
             }
             .padding()
-            .onAppear {
-                isBookmarked = isQuoteBookmarked(widgetQuote)
-                
-                getQuoteLikeCountMethod { fetchedLikeCount in
-                    likes = fetchedLikeCount
-                }
-                isLiked = isQuoteLiked(widgetQuote)
+            
+        }
+        .onAppear {
+            print("widget quote:")
+            print(widgetQuote)
+            isBookmarked = isQuoteBookmarked(widgetQuote)
+            
+            getQuoteLikeCountMethod { fetchedLikeCount in
+                likes = fetchedLikeCount
             }
+            isLiked = isQuoteLiked(widgetQuote)
         }
         
     }
@@ -487,7 +494,7 @@ struct QuoteDropletWidget: Widget {
 
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 0), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "all", likes: 12)
+        let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 0), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "all")
         
         
         if #available(iOSApplicationExtension 16.0, *) {
