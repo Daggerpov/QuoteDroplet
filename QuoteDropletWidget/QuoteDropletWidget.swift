@@ -309,10 +309,11 @@ struct QuoteDropletWidgetEntryView : View {
             VStack {
                 if widgetQuote.text != "" {
                     Text("\(widgetQuote.text)")
-                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "text"))) // Use the selected font
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                        .minimumScaleFactor(0.01)
                     if family == .systemSmall {
                         if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
                             Text("— \(widgetQuote.author ?? "")")
@@ -346,22 +347,18 @@ struct QuoteDropletWidgetEntryView : View {
                     }
                 } else {
                     Text("\(getTextForWidgetPreview(familia: family)[0])")
-                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "text"))) // Use the selected font
-                        .foregroundColor(colors[1])
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(4)
-                        .minimumScaleFactor(0.5)
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 10)
-                        .frame(maxHeight: .infinity)
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
+                        .foregroundColor(colors[1]) // Use the second color for text color
+                        .padding(.horizontal, 10)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                        .minimumScaleFactor(0.01)
                     Spacer() // Add a spacer to push the author text to the center
+                    
                     Text("— \(getTextForWidgetPreview(familia: family)[1])")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
-                        .foregroundColor(colors[2])
-                        .padding(.horizontal, 40)
-                        .padding(.bottom, 10)
-                        .lineLimit(1) // Ensure the author text is limited to one line
-                        .minimumScaleFactor(0.5) // Allow author text to scale down if needed
+                        .foregroundColor(colors[2]) // Use the third color for author text color
+                        .padding(.horizontal, 10)
+                    
                 }
             }
             .padding()
