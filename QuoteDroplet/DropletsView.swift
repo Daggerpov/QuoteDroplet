@@ -119,8 +119,8 @@ struct SingleQuoteView: View {
     
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
-    @State private var likes: Int = 0 // Change likes to non-optional
-    @State private var isLiking: Bool = false // Add state for liking status
+    @State private var likes: Int = 0
+    @State private var isLiking: Bool = false
     
     
     init(quote: Quote) {

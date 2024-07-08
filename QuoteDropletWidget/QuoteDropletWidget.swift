@@ -229,9 +229,9 @@ struct QuoteDropletWidgetEntryView : View {
     @State private var likes: Int = 0 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
     
-    init(entry: SimpleEntry) {
+    init(entry: SimpleEntry, quoteGiven: Quote) {
         self.entry = entry
-        self.widgetQuote = entry.quote!
+        self.widgetQuote = quoteGiven
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
     }
@@ -250,6 +250,8 @@ struct QuoteDropletWidgetEntryView : View {
     
     private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
         getLikeCountForQuote(quoteGiven: widgetQuote) { likeCount in
+            print("like count")
+            print(likeCount)
             completion(likeCount)
         }
     }
@@ -348,15 +350,16 @@ struct QuoteDropletWidgetEntryView : View {
                 
             }
             .padding()
-        }
-        .onAppear {
-            isBookmarked = isQuoteBookmarked(widgetQuote)
-            
-            getQuoteLikeCountMethod { fetchedLikeCount in
-                likes = fetchedLikeCount
+            .onAppear {
+                isBookmarked = isQuoteBookmarked(widgetQuote)
+                
+                getQuoteLikeCountMethod { fetchedLikeCount in
+                    likes = fetchedLikeCount
+                }
+                isLiked = isQuoteLiked(widgetQuote)
             }
-            isLiked = isQuoteLiked(widgetQuote)
         }
+        
     }
     
     private func toggleBookmark() {
@@ -470,7 +473,7 @@ struct QuoteDropletWidget: Widget {
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry)
+                QuoteDropletWidgetEntryView(entry: entry, quoteGiven: entry.quote!)
             } else {
                 // Fallback on earlier versions
             }
@@ -484,8 +487,11 @@ struct QuoteDropletWidget: Widget {
 
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
+        let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 0), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "all", likes: 12)
+        
+        
         if #available(iOSApplicationExtension 16.0, *) {
-            QuoteDropletWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 0), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "all", likes: 12))
+            QuoteDropletWidgetEntryView(entry: widgetEntry, quoteGiven: widgetEntry.quote!)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
         } else {
             // Fallback on earlier versions
