@@ -32,7 +32,7 @@ struct Provider: IntentTimelineProvider {
     var data = DataService()
     
     func placeholder(in context: Context) -> SimpleEntry {
-        let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification", likes: 0)
+        let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification", likes: 15)
         return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
     }
     
@@ -229,10 +229,8 @@ struct QuoteDropletWidgetEntryView : View {
     @State private var isLiking: Bool = false // Add state for liking status
     
     init(entry: SimpleEntry, quoteGiven: Quote) {
-        print("test print")
         self.entry = entry
         self.widgetQuote = quoteGiven
-        print("Quote Given:")
         print(quoteGiven)
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
@@ -244,10 +242,6 @@ struct QuoteDropletWidgetEntryView : View {
         } else {
             return colorPalettes[safe: data.getIndex()] ?? [Color.clear]
         }
-    }
-    
-    var isLoading: Bool {
-        return widgetQuote == nil
     }
     
     private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
@@ -281,22 +275,19 @@ struct QuoteDropletWidgetEntryView : View {
             
             VStack {
                 if widgetQuote != nil{
-                    Text("\(likes ?? 107)")
-                    Text("\(widgetQuote.likes ?? 107)")
                     Text("\(widgetQuote.text)")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    
-                    // adjusted
-                    if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
-                        Text("— \(widgetQuote.author ?? "")")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
-                            .foregroundColor(colors[2]) // Use the third color for author text color
-                            .padding(.horizontal, 10)
-                    }
                     HStack {
+                        // adjusted
+                        if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
+                            Text("— \(widgetQuote.author ?? "")")
+                                .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
+                                .foregroundColor(colors[2]) // Use the third color for author text color
+                                .padding(.horizontal, 10)
+                        }
                         Button(action: {
                             likeQuoteAction()
                             toggleLike()
@@ -414,7 +405,7 @@ struct QuoteDropletWidgetEntryView : View {
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
-                        self.likes = updatedQuote.likes ?? 0
+                        self.likes = updatedQuote.likes ?? 15
                     }
                     self.isLiking = false
                 }
@@ -424,7 +415,7 @@ struct QuoteDropletWidgetEntryView : View {
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
-                        self.likes = updatedQuote.likes ?? 0
+                        self.likes = updatedQuote.likes ?? 15
                     }
                     self.isLiking = false
                 }
@@ -494,7 +485,7 @@ struct QuoteDropletWidget: Widget {
 
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
-        let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 0), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "all")
+        let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 15), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "all")
         
         
         if #available(iOSApplicationExtension 16.0, *) {

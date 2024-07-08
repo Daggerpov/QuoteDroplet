@@ -194,7 +194,6 @@ struct SingleQuoteView: View {
                     Text("\(likes)")
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                 }
-//                Spacer()
                 
                 Button(action: {
                     toggleBookmark()
