@@ -6,10 +6,10 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
     var urlString: String;
     if classification == "all" {
         // Modify the URL to include a filter for approved quotes
-        urlString = "http://quote-dropper-production.up.railway.app/quotes/?approved=true"
+        urlString = "http://quote-dropper-production.up.railway.app/quotes/"
     } else {
         // Modify the URL to include a filter for approved quotes and classification
-        urlString = "http://quote-dropper-production.up.railway.app/quotes/classification=\(classification)?approved=true"
+        urlString = "http://quote-dropper-production.up.railway.app/quotes/classification=\(classification)"
     }
     
     let url = URL(string: urlString)!

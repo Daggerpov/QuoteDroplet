@@ -228,10 +228,9 @@ struct QuoteDropletWidgetEntryView : View {
     @State private var likes: Int = 69 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
     
-    init(entry: SimpleEntry, quoteGiven: Quote) {
+    init(entry: SimpleEntry) {
         self.entry = entry
-        self.widgetQuote = quoteGiven
-        print(quoteGiven)
+        self.widgetQuote = entry.quote ?? Quote(id: 1, text: "", author: "", classification: "", likes: 15)
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
     }
@@ -246,8 +245,6 @@ struct QuoteDropletWidgetEntryView : View {
     
     private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
         getLikeCountForQuote(quoteGiven: widgetQuote) { likeCount in
-            print("like count")
-            print(likeCount)
             completion(likeCount)
         }
     }
@@ -274,55 +271,42 @@ struct QuoteDropletWidgetEntryView : View {
             colors[0] // Use the first color as the background color
             
             VStack {
-                if widgetQuote != nil{
+                if widgetQuote.text != "" {
                     Text("\(widgetQuote.text)")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    HStack {
-                        // adjusted
+                    if family == .systemSmall {
                         if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
                             Text("— \(widgetQuote.author ?? "")")
                                 .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
                                 .foregroundColor(colors[2]) // Use the third color for author text color
                                 .padding(.horizontal, 10)
                         }
-                        Button(action: {
-                            likeQuoteAction()
-                            toggleLike()
-                        }) {
-                            Image(systemName: isLiked ? "heart.fill" : "heart")
-                                .font(.title)
+                    } else {
+                        HStack {
+                            if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
+                                Text("— \(widgetQuote.author ?? "")")
+                                    .foregroundColor(colors[2]) // Use the third color for author text color
+                                    .padding(.horizontal, 10)
+                            }
+                            Button(action: {
+                                likeQuoteAction()
+                                toggleLike()
+                            }) {
+                                Image(systemName: isLiked ? "heart.fill" : "heart")
+                                    .foregroundStyle(colors[2])
+                            }
+                            
+                            Text("\(widgetQuote.likes ?? 69)")
                                 .foregroundColor(colors[2])
                         }
-                        .padding(.trailing, 8)
-                        
-                        Text("\(widgetQuote.likes ?? 69)") // widgetQuote.likes
-                            .font(.caption)
-                            .foregroundColor(colors[2])
+                        .padding(.horizontal, 5)
+                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14))
                     }
-                    .padding(.top, 5)
                 } else {
-                    if family == .systemMedium {
-                        Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
-                            .foregroundColor(colors[1])
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(4)
-                            .minimumScaleFactor(0.5)
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 10)
-                            .frame(maxHeight: .infinity)
-                        Spacer() // Add a spacer to push the author text to the center
-                        Text("— Khalil Gibran")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
-                            .foregroundColor(colors[2])
-                            .padding(.horizontal, 40)
-                            .padding(.bottom, 10)
-                            .lineLimit(1) // Ensure the author text is limited to one line
-                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
-                    } else {
+                    if family == .systemSmall {
                         Text("More is lost by indecision than by wrong decision.")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
                             .foregroundColor(colors[1])
@@ -340,6 +324,25 @@ struct QuoteDropletWidgetEntryView : View {
                             .padding(.bottom, 10)
                             .lineLimit(1) // Ensure the author text is limited to one line
                             .minimumScaleFactor(0.5) // Allow author text to scale down if needed
+                    } else {
+                        
+                        Text("Our anxiety does not come from thinking about the future, but from wanting to control it.")
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
+                            .foregroundColor(colors[1])
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(4)
+                            .minimumScaleFactor(0.5)
+                            .padding(.horizontal, 40)
+                            .padding(.vertical, 10)
+                            .frame(maxHeight: .infinity)
+                        Spacer() // Add a spacer to push the author text to the center
+                        Text("— Khalil Gibran")
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14)) // Use the selected font for author text
+                            .foregroundColor(colors[2])
+                            .padding(.horizontal, 40)
+                            .padding(.bottom, 10)
+                            .lineLimit(1) // Ensure the author text is limited to one line
+                            .minimumScaleFactor(0.5) // Allow author text to scale down if needed
                     }
                 }
                 
@@ -348,8 +351,6 @@ struct QuoteDropletWidgetEntryView : View {
             
         }
         .onAppear {
-            print("widget quote:")
-            print(widgetQuote)
             isBookmarked = isQuoteBookmarked(widgetQuote)
             
             getQuoteLikeCountMethod { fetchedLikeCount in
@@ -456,12 +457,6 @@ struct QuoteDropletWidgetEntryView : View {
             bookmarkedQuotesData = data
         }
     }
-    //
-    //    private func updateWidgetContent() {
-    //        // Update widget content here using WidgetCenter
-    //        let widgetInfo = WidgetInfo(entry: entry)
-    //        WidgetCenter.shared.reloadTimelines(ofKind: widgetInfo.kind)
-    //    }
 }
 
 
@@ -471,7 +466,7 @@ struct QuoteDropletWidget: Widget {
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, quoteGiven: entry.quote!)
+                QuoteDropletWidgetEntryView(entry: entry)
             } else {
                 // Fallback on earlier versions
             }
@@ -489,7 +484,7 @@ struct QuoteDropletWidget_Previews: PreviewProvider {
         
         
         if #available(iOSApplicationExtension 16.0, *) {
-            QuoteDropletWidgetEntryView(entry: widgetEntry, quoteGiven: widgetEntry.quote!)
+            QuoteDropletWidgetEntryView(entry: widgetEntry)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
         } else {
             // Fallback on earlier versions
