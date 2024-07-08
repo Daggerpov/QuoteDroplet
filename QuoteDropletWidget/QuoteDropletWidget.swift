@@ -184,6 +184,7 @@ public func getFrequencyInSeconds(for index: Int) -> Int {
     }
 }
 
+@available(iOS 16.0, *)
 public func getFontSizeForText(familia: WidgetFamily, whichText: String) -> CGFloat {
     if (whichText == "text") {
         // widgetAppropriateTextFontSize
