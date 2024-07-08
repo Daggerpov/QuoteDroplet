@@ -361,8 +361,8 @@ struct QuoteDropletWidgetEntryView : View {
                         .padding(.horizontal, 40)
                         .padding(.bottom, 10)
                         .lineLimit(1) // Ensure the author text is limited to one line
+                        .minimumScaleFactor(0.5) // Allow author text to scale down if needed
                 }
-                
             }
             .padding()
             
@@ -491,7 +491,7 @@ struct QuoteDropletWidget: Widget {
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette and font are customizable.")
-        .supportedFamilies([.systemMedium, .systemSmall])
+        .supportedFamilies([.systemMedium, .systemSmall, .systemLarge])
     }
 }
 
