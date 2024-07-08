@@ -269,11 +269,14 @@ struct QuoteDropletWidgetEntryView : View {
     @State private var likes: Int = 69 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
     
-    init(entry: SimpleEntry) {
+    @State private var isIntentsActive: Bool = false
+    
+    init(entry: SimpleEntry, isIntentsActive: Bool) {
         self.entry = entry
         self.widgetQuote = entry.quote ?? Quote(id: 1, text: "", author: "", classification: "", likes: 15)
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
+        self._isIntentsActive = State(initialValue: isIntentsActive)
     }
     
     var colors: [Color] {
@@ -307,6 +310,30 @@ struct QuoteDropletWidgetEntryView : View {
         }.resume()
     }
     
+    private var authorWithLikes: some View {
+        HStack {
+            if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
+                Text("— \(widgetQuote.author ?? "")")
+                    .foregroundColor(colors[2]) // Use the third color for author text color
+                    .padding(.horizontal, 10)
+            }
+            
+            if #available(iOSApplicationExtension 17.0, *) {
+                Button(intent: LikeQuoteIntent()) {
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                        .foregroundStyle(colors[2])
+                }.backgroundStyle(colors[2])
+            } else {
+                Image(systemName: isLiked ? "heart.fill" : "heart")
+                    .foregroundStyle(colors[2])
+            }
+            
+            Text("\(widgetQuote.likes ?? 69)")
+                .foregroundColor(colors[2])
+        }
+        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14))
+    }
+    
     var body: some View {
         ZStack {
             colors[0] // Use the first color as the background color
@@ -319,7 +346,7 @@ struct QuoteDropletWidgetEntryView : View {
                         .padding(.horizontal, 10)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                         .minimumScaleFactor(0.01)
-                    if family == .systemSmall {
+                    if family == .systemSmall || !isIntentsActive {
                         if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
                             Text("— \(widgetQuote.author ?? "")")
                                 .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
@@ -327,27 +354,7 @@ struct QuoteDropletWidgetEntryView : View {
                                 .padding(.horizontal, 5)
                         }
                     } else {
-                        HStack {
-                            if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
-                                Text("— \(widgetQuote.author ?? "")")
-                                    .foregroundColor(colors[2]) // Use the third color for author text color
-                                    .padding(.horizontal, 10)
-                            }
-                            
-                            if #available(iOSApplicationExtension 17.0, *) {
-                                Button(intent: LikeQuoteIntent()) {
-                                    Image(systemName: isLiked ? "heart.fill" : "heart")
-                                        .foregroundStyle(colors[2])
-                                }.backgroundStyle(colors[2])
-                            } else {
-                                Image(systemName: isLiked ? "heart.fill" : "heart")
-                                    .foregroundStyle(colors[2])
-                            }
-                            
-                            Text("\(widgetQuote.likes ?? 69)")
-                                .foregroundColor(colors[2])
-                        }
-                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 14))
+                        authorWithLikes
                     }
                 } else {
                     Text("\(getTextForWidgetPreview(familia: family)[0])")
@@ -478,13 +485,14 @@ struct QuoteDropletWidgetEntryView : View {
 }
 
 
+@available(iOSApplicationExtension 15.0, *)
 struct QuoteDropletWidget: Widget {
     let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry)
+                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
             } else {
                 // Fallback on earlier versions
             }
@@ -492,7 +500,26 @@ struct QuoteDropletWidget: Widget {
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
         .description("Note that the color palette and font are customizable.")
-        .supportedFamilies([.systemMedium, .systemSmall, .systemLarge])
+        .supportedFamilies([.systemMedium, .systemSmall, .systemLarge, .systemExtraLarge])
+    }
+}
+
+@available(iOSApplicationExtension 15.0, *)
+struct QuoteDropletWidgetWithIntents: Widget {
+    let kind: String = "QuoteDropletWidgetWithIntents"
+    
+    var body: some WidgetConfiguration {
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+            if #available(iOSApplicationExtension 16.0, *) {
+                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        .disableContentMarginsIfNeeded() // Use the extension here
+        .configurationDisplayName("Example Widget")
+        .description("Note that the color palette and font are customizable.")
+        .supportedFamilies([.systemMedium, .systemLarge, .systemExtraLarge])
     }
 }
 
@@ -502,7 +529,7 @@ struct QuoteDropletWidget_Previews: PreviewProvider {
         
         
         if #available(iOSApplicationExtension 16.0, *) {
-            QuoteDropletWidgetEntryView(entry: widgetEntry)
+            QuoteDropletWidgetEntryView(entry: widgetEntry, isIntentsActive: false)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
         } else {
             // Fallback on earlier versions

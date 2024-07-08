@@ -8,10 +8,12 @@
 import WidgetKit
 import SwiftUI
 
+@available(iOSApplicationExtension 15.0, *)
 @main
 struct QuoteDropletWidgetBundle: WidgetBundle {
     var body: some Widget {
         QuoteDropletWidget()
+        QuoteDropletWidgetWithIntents()
 //        QuoteDropletWidgetLiveActivity()
     }
 }
