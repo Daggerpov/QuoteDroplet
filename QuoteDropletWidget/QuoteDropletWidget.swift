@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import Intents
 import Foundation
+import AppIntents
 
 // Fonts for widget and widget preview
 let availableFonts = [
@@ -291,10 +292,13 @@ struct QuoteDropletWidgetEntryView : View {
                                     .foregroundColor(colors[2]) // Use the third color for author text color
                                     .padding(.horizontal, 10)
                             }
-                            Button(action: {
-                                likeQuoteAction()
-                                toggleLike()
-                            }) {
+                            
+                            if #available(iOSApplicationExtension 17.0, *) {
+                                Button(intent: LikeQuoteIntent()) {
+                                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                                        .foregroundStyle(colors[2])
+                                }
+                            } else {
                                 Image(systemName: isLiked ? "heart.fill" : "heart")
                                     .foregroundStyle(colors[2])
                             }
@@ -488,6 +492,114 @@ struct QuoteDropletWidget_Previews: PreviewProvider {
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
         } else {
             // Fallback on earlier versions
+        }
+    }
+}
+
+@available(iOS 16.0, *)
+struct LikeQuoteIntent: AppIntent {
+    let widgetQuote: Quote
+    
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var likedQuotesData: Data = Data()
+    
+//    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+//    private var bookmarkedQuotesData: Data = Data()
+    
+    @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var interactions = 0
+    
+    @State private var isLiked: Bool = false
+//    @State private var isBookmarked: Bool = false
+    @State private var likes: Int = 69 // Change likes to non-optional
+    @State private var isLiking: Bool = false // Add state for liking status
+    
+    init() {
+        self.widgetQuote = Quote(id: 1, text: "", author: "", classification: "", likes: 15)
+        self._isLiked = State(initialValue: false)
+    }
+    
+    init(quote: Quote) {
+        self.widgetQuote = quote
+//        self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
+        self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
+    }
+    
+    static var title: LocalizedStringResource = "Like Quote Button"
+    
+    static var description = IntentDescription("Like/Unlike Quote")
+    
+    func perform() async throws -> some IntentResult {
+        likeQuoteAction()
+        toggleLike()
+        
+        return .result()
+    }
+    
+    private func toggleLike() {
+        isLiked.toggle()
+        
+        var likedQuotes = getLikedQuotes()
+        if isLiked {
+            likedQuotes.append(widgetQuote)
+        } else {
+            likedQuotes.removeAll { $0.id == widgetQuote.id }
+        }
+        saveLikedQuotes(likedQuotes)
+        
+        interactionsIncrease()
+    }
+    
+    private func interactionsIncrease() {
+        interactions += 1
+    }
+    
+    private func likeQuoteAction() {
+        guard !isLiking else { return }
+        isLiking = true
+        
+        // Check if the quote is already liked
+        let isAlreadyLiked = isQuoteLiked(widgetQuote)
+        
+        // Call the like/unlike API based on the current like status
+        if isAlreadyLiked {
+            unlikeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
+                DispatchQueue.main.async {
+                    if let updatedQuote = updatedQuote {
+                        // Update likes count
+                        self.likes = updatedQuote.likes ?? 15
+                    }
+                    self.isLiking = false
+                }
+            }
+        } else {
+            likeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
+                DispatchQueue.main.async {
+                    if let updatedQuote = updatedQuote {
+                        // Update likes count
+                        self.likes = updatedQuote.likes ?? 15
+                    }
+                    self.isLiking = false
+                }
+            }
+        }
+    }
+    
+    private func isQuoteLiked(_ quote: Quote) -> Bool {
+        return getLikedQuotes().contains(where: { $0.id == quote.id })
+    }
+    
+    private func getLikedQuotes() -> [Quote] {
+        if let quotes = try? JSONDecoder().decode([Quote].self, from: likedQuotesData) {
+            return quotes
+        }
+        return []
+    }
+    
+    private func saveLikedQuotes(_ quotes: [Quote]) {
+        if let data = try? JSONEncoder().encode(quotes) {
+            likedQuotesData = data
         }
     }
 }
