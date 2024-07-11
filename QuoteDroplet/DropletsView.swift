@@ -27,9 +27,12 @@ struct DropletsView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
+    @State private var currentPage = 0
     @State private var quotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
+    private let quotesPerPage = 4
     
+     
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
@@ -53,7 +56,7 @@ struct DropletsView: View {
                             if #available(iOS 16.0, *) {
                                 SingleQuoteView(quote: quote)
                                     .onAppear {
-                                        if index == quotes.count - 1 && !isLoadingMore && quotes.count < 4 {
+                                        if index == quotes.count - 1 && !isLoadingMore {
                                             loadMoreQuotes()
                                         }
                                     }
@@ -62,6 +65,7 @@ struct DropletsView: View {
                             }
                         }
                     }
+
                 }
             }
         }
@@ -83,21 +87,25 @@ struct DropletsView: View {
     }
     
     private func loadMoreQuotes() {
-        guard !isLoadingMore && quotes.count < 4 else { return }
-        
+        guard !isLoadingMore else { return }
+            
         isLoadingMore = true
-        getRandomQuoteByClassification(classification: "all") { quote, error in
-            if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
-                DispatchQueue.main.async {
-                    self.quotes.append(quote)
-                    self.isLoadingMore = false
+        let group = DispatchGroup()
+        
+        for _ in 0..<4 {
+            group.enter()
+            getRandomQuoteByClassification(classification: "all") { quote, error in
+                if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
+                    DispatchQueue.main.async {
+                        self.quotes.append(quote)
+                    }
                 }
-            } else if let error = error {
-                print("Error fetching more quotes: \(error)")
-                self.isLoadingMore = false
-            } else {
-                self.isLoadingMore = false
+                group.leave()
             }
+        }
+        
+        group.notify(queue: .main) {
+            self.isLoadingMore = false
         }
     }
 }
