@@ -27,11 +27,11 @@ struct DropletsView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    @State private var currentPage = 0
+    private var currentPage = 0
     @State private var quotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
     private let quotesPerPage = 4
-    
+    private var totalQuotesLoaded = 0
      
     var body: some View {
         VStack {
@@ -83,6 +83,8 @@ struct DropletsView: View {
     }
     
     private func loadInitialQuotes() {
+        currentPage = 0
+        totalQuotesLoaded = 0
         loadMoreQuotes() // Initial load
     }
     
@@ -92,7 +94,7 @@ struct DropletsView: View {
         isLoadingMore = true
         let group = DispatchGroup()
         
-        for _ in 0..<4 {
+        for _ in 0..<quotesPerPage {
             group.enter()
             getRandomQuoteByClassification(classification: "all") { quote, error in
                 if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
@@ -106,6 +108,8 @@ struct DropletsView: View {
         
         group.notify(queue: .main) {
             self.isLoadingMore = false
+            self.currentPage += 1
+            self.totalQuotesLoaded += self.quotesPerPage
         }
     }
 }
