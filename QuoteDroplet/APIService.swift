@@ -229,3 +229,29 @@ func unlikeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
         }
     }.resume()
 }
+
+func getBookmarkedQuoteByID(id: Int, completion: @escaping (Quote?, Error?) -> Void) {
+    guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quotes/\(id)") else {
+        completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
+    
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        if let error = error {
+            completion(nil, error)
+            return
+        }
+        
+        guard let data = data else {
+            completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"]))
+            return
+        }
+        
+        do {
+            let quote = try JSONDecoder().decode(Quote.self, from: data)
+            completion(quote, nil)
+        } catch {
+            completion(nil, error)
+        }
+    }.resume()
+}
