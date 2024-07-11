@@ -27,10 +27,6 @@
 		DC8279442AA09134004E2BBF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8279432AA09134004E2BBF /* DataService.swift */; };
 		DC8C1B042BB2337400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */; };
 		DC8C1B062BB2343400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B052BB2343400B073B7 /* FirebaseAnalytics */; };
-		DC9123692C3F97540067F12E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9123682C3F97540067F12E /* FeedView.swift */; };
-		DC91236A2C3F97540067F12E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9123682C3F97540067F12E /* FeedView.swift */; };
-		DC91236C2C3F97D80067F12E /* SavedQuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91236B2C3F97D80067F12E /* SavedQuotesView.swift */; };
-		DC91236D2C3F97D80067F12E /* SavedQuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91236B2C3F97D80067F12E /* SavedQuotesView.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCA1E2A52C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
 		DCA1E2A62C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
@@ -97,8 +93,6 @@
 		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
 		DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuoteDropletWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DC8279432AA09134004E2BBF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
-		DC9123682C3F97540067F12E /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
-		DC91236B2C3F97D80067F12E /* SavedQuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedQuotesView.swift; sourceTree = "<group>"; };
 		DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-for-noti-water-drip-pixabay.mp3"; path = "../../../../Downloads/sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quote Droplet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletApp.swift; sourceTree = "<group>"; };
@@ -198,8 +192,6 @@
 				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
 				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
 				DC7010E32BAE654F008678CB /* QuoteManager.swift */,
-				DC9123682C3F97540067F12E /* FeedView.swift */,
-				DC91236B2C3F97D80067F12E /* SavedQuotesView.swift */,
 			);
 			path = QuoteDroplet;
 			sourceTree = "<group>";
@@ -406,11 +398,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC7010E42BAE654F008678CB /* QuoteManager.swift in Sources */,
-				DC91236C2C3F97D80067F12E /* SavedQuotesView.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
-				DC9123692C3F97540067F12E /* FeedView.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DCAB2DCB2A9FAACA00A822D7 /* APIService.swift in Sources */,
 				DC26EB942BF96FD4004CA84F /* DropletsView.swift in Sources */,
@@ -435,12 +425,10 @@
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCAB2DB82A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift in Sources */,
-				DC91236A2C3F97540067F12E /* FeedView.swift in Sources */,
 				DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 				DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */,
 				DCAB2DBC2A9FA95A00A822D7 /* QuoteDropletWidget.swift in Sources */,
 				DC8279442AA09134004E2BBF /* DataService.swift in Sources */,
-				DC91236D2C3F97D80067F12E /* SavedQuotesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
