@@ -31,7 +31,7 @@ struct DropletsView: View {
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
     @State private var quotes: [Quote] = []
-    @State private var savedQuotes: [Quote] = []
+    @State var savedQuotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
     private let quotesPerPage = 4
     @State private var totalQuotesLoaded = 0
@@ -83,7 +83,7 @@ struct DropletsView: View {
                             ForEach(quotes.indices, id: \.self) { index in
                                 if let quote = quotes[safe: index] {
                                     if #available(iOS 16.0, *) {
-                                        SingleQuoteView(quote: quote)
+                                        SingleQuoteView(quote: quote, savedQuotes: $savedQuotes)
                                     } else {
                                         // Fallback on earlier versions
                                     }
@@ -93,16 +93,25 @@ struct DropletsView: View {
                         
                     } else {
                         if savedQuotes.isEmpty {
-                            Text("Loading Saved Quotes...")
+                            Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
                                 .font(.title2)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                 .padding(.bottom, 5)
                                 .frame(alignment: .center)
+                            if #available(iOS 15.0, *) {
+                                Image(systemName: "bookmark")
+                                    .font(.title)
+                                    .scaleEffect(1)
+                                    .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                            } else {
+                                // Fallback on earlier versions
+                            }
+                            
                         } else {
                             ForEach(savedQuotes.indices, id: \.self) { index in
                                 if let quote = savedQuotes[safe: index] {
                                     if #available(iOS 16.0, *) {
-                                        SingleQuoteView(quote: quote)
+                                        SingleQuoteView(quote: quote, savedQuotes: $savedQuotes)
                                     } else {
                                         // Fallback on earlier versions
                                     }
@@ -233,12 +242,9 @@ struct SingleQuoteView: View {
     @State private var likes: Int = 0
     @State private var isLiking: Bool = false
     
+    @Binding var savedQuotes: [Quote]
+
     
-    init(quote: Quote) {
-        self.quote = quote
-        self._isBookmarked = State(initialValue: isQuoteBookmarked(quote))
-        self._isLiked = State(initialValue: isQuoteLiked(quote))
-    }
     private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
         getLikeCountForQuote(quoteGiven: quote) { likeCount in
             completion(likeCount)
@@ -356,6 +362,7 @@ struct SingleQuoteView: View {
             bookmarkedQuotes.append(quote)
         } else {
             bookmarkedQuotes.removeAll { $0.id == quote.id }
+            savedQuotes.removeAll { $0.id == quote.id }
         }
         saveBookmarkedQuotes(bookmarkedQuotes)
         
