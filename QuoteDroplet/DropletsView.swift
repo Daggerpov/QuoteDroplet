@@ -41,52 +41,43 @@ struct DropletsView: View {
             Spacer()
             ScrollView {
                 Spacer()
-                ScrollViewReader { scrollViewProxy in
-                    VStack {
-                        HStack {
-                            Spacer()
-                            Text("Droplets")
-                                .font(.title)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                            Spacer()
-                        }
+                LazyVStack{
+                    HStack {
                         Spacer()
-                        ForEach(quotes.indices, id: \.self) { index in
-                            if let quote = quotes[safe: index] {
-                                if #available(iOS 16.0, *) {
-                                    SingleQuoteView(quote: quote)
-                                        .onAppear {
-                                            if index == quotes.count - 1 && !isLoadingMore {
-                                                loadMoreQuotes()
-                                            }
-                                        }
-                                } else {
-                                    // Fallback on earlier versions
-                                }
+                        Text("Droplets")
+                            .font(.title)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding(.bottom, 5)
+                        Spacer()
+                    }
+                    Spacer()
+                    ForEach(quotes.indices, id: \.self) { index in
+                        if let quote = quotes[safe: index] {
+                            if #available(iOS 16.0, *) {
+                                SingleQuoteView(quote: quote)
+//                                    .onAppear {
+//                                        if index == quotes.count - 1 && !isLoadingMore {
+//                                            loadMoreQuotes()
+//                                        }
+//                                    }
+                            } else {
+                                // Fallback on earlier versions
                             }
                         }
-                        Color.clear.frame(height: 1)
-                            .onAppear {
-                                if !isLoadingMore {
-                                    loadMoreQuotes()
-                                }
-                            }
-                        
                     }
-                    // .background(GeometryReader { geometry -> Color in
-                    //     let maxY = geometry.frame(in: .global).maxY
-                    //     let scrollViewHeight = scrollViewProxy.size.height
-                    //     if maxY < scrollViewHeight + 100, !isLoadingMore { // 100 is a threshold to start loading before actually hitting the bottom
-                    //         DispatchQueue.main.async {
-                    //             loadMoreQuotes()
-                    //         }
-                    //     }
-                    //     Color.clear // Implicit return
-                    // })
+                    Color.clear.frame(height: 1)
+                        .onAppear {
+                            if !isLoadingMore && quotes.count < 20{
+                                loadMoreQuotes()
+                            }
+                        }
+//                    if !isLoadingMore && quotes.count >= 20 {
+//                        Text("You've reached the quote limit of 20. Maybe take a break?")
+//                    }
+                        
                 }
-                
             }
+            
         }
         .frame(maxWidth: .infinity)
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
