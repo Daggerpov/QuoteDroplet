@@ -27,46 +27,65 @@ struct DropletsView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    private var currentPage = 0
+    @State private var currentPage = 0
     @State private var quotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
     private let quotesPerPage = 4
-    private var totalQuotesLoaded = 0
-     
+    @State private var totalQuotesLoaded = 0
+    
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                 .frame(height: 50)
-
+            
             Spacer()
             ScrollView {
                 Spacer()
-                VStack {
-                    HStack {
+                ScrollViewReader { scrollViewProxy in
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Text("Droplets")
+                                .font(.title)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                            Spacer()
+                        }
                         Spacer()
-                        Text("Droplets")
-                            .font(.title)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding(.bottom, 5)
-                        Spacer()
-                    }
-                    Spacer()
-                    ForEach(quotes.indices, id: \.self) { index in
-                        if let quote = quotes[safe: index] {
-                            if #available(iOS 16.0, *) {
-                                SingleQuoteView(quote: quote)
-                                    .onAppear {
-                                        if index == quotes.count - 1 && !isLoadingMore {
-                                            loadMoreQuotes()
+                        ForEach(quotes.indices, id: \.self) { index in
+                            if let quote = quotes[safe: index] {
+                                if #available(iOS 16.0, *) {
+                                    SingleQuoteView(quote: quote)
+                                        .onAppear {
+                                            if index == quotes.count - 1 && !isLoadingMore {
+                                                loadMoreQuotes()
+                                            }
                                         }
-                                    }
-                            } else {
-                                // Fallback on earlier versions
+                                } else {
+                                    // Fallback on earlier versions
+                                }
                             }
                         }
+                        Color.clear.frame(height: 1)
+                            .onAppear {
+                                if !isLoadingMore {
+                                    loadMoreQuotes()
+                                }
+                            }
+                        
                     }
-
+                    // .background(GeometryReader { geometry -> Color in
+                    //     let maxY = geometry.frame(in: .global).maxY
+                    //     let scrollViewHeight = scrollViewProxy.size.height
+                    //     if maxY < scrollViewHeight + 100, !isLoadingMore { // 100 is a threshold to start loading before actually hitting the bottom
+                    //         DispatchQueue.main.async {
+                    //             loadMoreQuotes()
+                    //         }
+                    //     }
+                    //     Color.clear // Implicit return
+                    // })
                 }
+                
             }
         }
         .frame(maxWidth: .infinity)
@@ -90,7 +109,7 @@ struct DropletsView: View {
     
     private func loadMoreQuotes() {
         guard !isLoadingMore else { return }
-            
+        
         isLoadingMore = true
         let group = DispatchGroup()
         
@@ -162,7 +181,7 @@ struct SingleQuoteView: View {
             }
         }.resume()
     }
-
+    
     
     var body: some View {
         VStack {
@@ -241,7 +260,7 @@ struct SingleQuoteView: View {
         .padding(.horizontal)
         .onAppear {
             isBookmarked = isQuoteBookmarked(quote)
-
+            
             getQuoteLikeCountMethod { fetchedLikeCount in
                 likes = fetchedLikeCount
             }
@@ -356,4 +375,4 @@ struct DropletsView_Previews: PreviewProvider {
         DropletsView()
     }
 }
- 
+
