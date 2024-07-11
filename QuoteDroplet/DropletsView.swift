@@ -45,11 +45,11 @@ struct DropletsView: View {
                 .frame(height: 60)
             
             Picker(selection: $selected, label: Text("Picker"), content: {
-                Text("Feed").tag(1)
-                Text("Saved").tag(2)
+                Text("Quotes Feed").tag(1)
+                Text("Saved Quotes").tag(2)
             })
             .pickerStyle(SegmentedPickerStyle())
-
+            
             
             Spacer()
             ScrollView {
@@ -111,20 +111,30 @@ struct DropletsView: View {
                         }
                     }
                     
-                    Color.clear.frame(height: 1)
-                        .onAppear {
-                            if !isLoadingMore && quotes.count < 20{
-                                loadMoreQuotes()
+                    if selected == 1{
+                        Color.clear.frame(height: 1)
+                            .onAppear {
+                                if !isLoadingMore && quotes.count < 20 {
+                                    loadMoreQuotes()
+                                }
                             }
-                        }
-                    if !isLoadingMore && quotes.count >= 20 {
-                        Text("You've reached the quote limit of 20. Maybe take a break?")
-                            .font(.title2)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding(.bottom, 5)
-                            .frame(maxWidth: .infinity, alignment: .center)
+                    } else {
+                        Color.clear.frame(height: 1)
+                            .onAppear {
+                                if !isLoadingMore && savedQuotes.count < 20{
+                                    loadMoreQuotes()
+                                }
+                            }
                     }
-                        
+                    if !isLoadingMore {
+                        if (selected == 1 && quotes.count >= 20) || (selected == 2 && savedQuotes.count >= 20) {
+                            Text("You've reached the quote limit of 20. Maybe take a break?")
+                                .font(.title2)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                    }
                 }
             }
             
