@@ -14,6 +14,9 @@ import StoreKit
 struct DropletsView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
+    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var bookmarkedQuotesData: Data = Data()
+    
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
     
@@ -28,42 +31,113 @@ struct DropletsView: View {
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
     @State private var quotes: [Quote] = []
+    @State private var savedQuotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
+    private let quotesPerPage = 4
+    @State private var totalQuotesLoaded = 0
+    @State private var totalSavedQuotesLoaded = 0
+    
+    @State private var selected = 1
     
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                .frame(height: 50)
-
+                .frame(height: 60)
+            
+            Picker(selection: $selected, label: Text("Picker"), content: {
+                Text("Quotes Feed").tag(1)
+                Text("Saved Quotes").tag(2)
+            })
+            .pickerStyle(SegmentedPickerStyle())
+            
+            
             Spacer()
             ScrollView {
                 Spacer()
-                VStack {
+                LazyVStack{
                     HStack {
                         Spacer()
-                        Text("Droplets")
-                            .font(.title)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding(.bottom, 5)
+                        if selected == 1 {
+                            Text("Quotes Feed")
+                                .font(.title)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                        } else {
+                            Text("Saved Quotes")
+                                .font(.title)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                        }
+                        
                         Spacer()
                     }
                     Spacer()
-                    ForEach(quotes.indices, id: \.self) { index in
-                        if let quote = quotes[safe: index] {
-                            if #available(iOS 16.0, *) {
-                                SingleQuoteView(quote: quote)
-                                    .onAppear {
-                                        if index == quotes.count - 1 && !isLoadingMore && quotes.count < 4 {
-                                            loadMoreQuotes()
-                                        }
+                    if selected == 1{
+                        if quotes.isEmpty {
+                            Text("Loading Quotes Feed...")
+                                .font(.title2)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                                .frame(alignment: .center)
+                        } else {
+                            ForEach(quotes.indices, id: \.self) { index in
+                                if let quote = quotes[safe: index] {
+                                    if #available(iOS 16.0, *) {
+                                        SingleQuoteView(quote: quote)
+                                    } else {
+                                        // Fallback on earlier versions
                                     }
-                            } else {
-                                // Fallback on earlier versions
+                                }
                             }
+                        }
+                        
+                    } else {
+                        if savedQuotes.isEmpty {
+                            Text("Loading Saved Quotes...")
+                                .font(.title2)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                                .frame(alignment: .center)
+                        } else {
+                            ForEach(savedQuotes.indices, id: \.self) { index in
+                                if let quote = savedQuotes[safe: index] {
+                                    if #available(iOS 16.0, *) {
+                                        SingleQuoteView(quote: quote)
+                                    } else {
+                                        // Fallback on earlier versions
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if selected == 1{
+                        Color.clear.frame(height: 1)
+                            .onAppear {
+                                if !isLoadingMore && quotes.count < 20 {
+                                    loadMoreQuotes()
+                                }
+                            }
+                    } else {
+                        Color.clear.frame(height: 1)
+                            .onAppear {
+                                if !isLoadingMore && savedQuotes.count < 20{
+                                    loadMoreQuotes()
+                                }
+                            }
+                    }
+                    if !isLoadingMore {
+                        if (selected == 1 && quotes.count >= 20) || (selected == 2 && savedQuotes.count >= 20) {
+                            Text("You've reached the quote limit of 20. Maybe take a break?")
+                                .font(.title2)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                                .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
                 }
             }
+            
         }
         .frame(maxWidth: .infinity)
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
@@ -79,26 +153,63 @@ struct DropletsView: View {
     }
     
     private func loadInitialQuotes() {
+        totalQuotesLoaded = 0
+        totalSavedQuotesLoaded = 0
         loadMoreQuotes() // Initial load
     }
     
     private func loadMoreQuotes() {
-        guard !isLoadingMore && quotes.count < 4 else { return }
+        guard !isLoadingMore else { return }
         
         isLoadingMore = true
-        getRandomQuoteByClassification(classification: "all") { quote, error in
-            if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
-                DispatchQueue.main.async {
-                    self.quotes.append(quote)
-                    self.isLoadingMore = false
+        let group = DispatchGroup()
+        
+        if selected == 1 {
+            for _ in 0..<quotesPerPage {
+                group.enter()
+                getRandomQuoteByClassification(classification: "all") { quote, error in
+                    if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
+                        DispatchQueue.main.async {
+                            self.quotes.append(quote)
+                        }
+                    }
+                    group.leave()
                 }
-            } else if let error = error {
-                print("Error fetching more quotes: \(error)")
-                self.isLoadingMore = false
-            } else {
-                self.isLoadingMore = false
+            }
+        } else if selected == 2 {
+            let bookmarkedQuotes = getBookmarkedQuotes()
+            var bookmarkedQuoteIDs: [Int] = []
+            for bookmarkedQuote in bookmarkedQuotes {
+                bookmarkedQuoteIDs.append(bookmarkedQuote.id)
+            }
+            for id in bookmarkedQuoteIDs {
+                group.enter()
+                getBookmarkedQuoteByID(id: id) { quote, error in
+                    if let quote = quote, !self.savedQuotes.contains(where: { $0.id == quote.id }) {
+                        DispatchQueue.main.async {
+                            self.savedQuotes.append(quote)
+                        }
+                    }
+                    group.leave()
+                }
             }
         }
+        
+        group.notify(queue: .main) {
+            self.isLoadingMore = false
+            if selected == 1{
+                self.totalQuotesLoaded += self.quotesPerPage
+            } else {
+                self.totalSavedQuotesLoaded += self.quotesPerPage
+            }
+            
+        }
+    }
+    private func getBookmarkedQuotes() -> [Quote] {
+        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
+            return quotes
+        }
+        return []
     }
 }
 
@@ -150,7 +261,7 @@ struct SingleQuoteView: View {
             }
         }.resume()
     }
-
+    
     
     var body: some View {
         VStack {
@@ -229,7 +340,7 @@ struct SingleQuoteView: View {
         .padding(.horizontal)
         .onAppear {
             isBookmarked = isQuoteBookmarked(quote)
-
+            
             getQuoteLikeCountMethod { fetchedLikeCount in
                 likes = fetchedLikeCount
             }
@@ -344,4 +455,4 @@ struct DropletsView_Previews: PreviewProvider {
         DropletsView()
     }
 }
- 
+
