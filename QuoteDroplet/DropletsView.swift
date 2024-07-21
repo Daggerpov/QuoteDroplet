@@ -31,7 +31,7 @@ struct DropletsView: View {
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
     @State private var quotes: [Quote] = []
-    @State var savedQuotes: [Quote] = []
+    @State private var savedQuotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
     private let quotesPerPage = 4
     @State private var totalQuotesLoaded = 0
