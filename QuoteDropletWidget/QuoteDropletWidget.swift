@@ -290,23 +290,6 @@ struct QuoteDropletWidgetEntryView : View {
         }
     }
     
-    private func getLikeCountForQuote(quoteGiven: Quote, completion: @escaping (Int) -> Void) {
-        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteLikes/\(quoteGiven.id)") else {
-            completion(0)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let likeCount = json["likes"] as? Int {
-                completion(likeCount)
-            } else {
-                completion(0)
-            }
-        }.resume()
-    }
-    
     private var likesSectionWithAuthor: some View {
         HStack {
             if #available(iOSApplicationExtension 17.0, *) {

@@ -255,3 +255,20 @@ func getBookmarkedQuoteByID(id: Int, completion: @escaping (Quote?, Error?) -> V
         }
     }.resume()
 }
+
+func getLikeCountForQuote(quoteGiven: Quote, completion: @escaping (Int) -> Void) {
+    guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteLikes/\(quoteGiven.id)") else {
+        completion(0)
+        return
+    }
+    
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        if let data = data,
+           let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+           let likeCount = json["likes"] as? Int {
+            completion(likeCount)
+        } else {
+            completion(0)
+        }
+    }.resume()
+}

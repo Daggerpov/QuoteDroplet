@@ -30,7 +30,7 @@ struct DropletsView: View {
     @State private var quotes: [Quote] = []
     @State private var savedQuotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
-    private let quotesPerPage = 3
+    private let quotesPerPage = 5
     @State private var totalQuotesLoaded = 0
     @State private var totalSavedQuotesLoaded = 0
     
@@ -239,23 +239,6 @@ struct SingleQuoteView: View {
         getLikeCountForQuote(quoteGiven: quote) { likeCount in
             completion(likeCount)
         }
-    }
-    
-    private func getLikeCountForQuote(quoteGiven: Quote, completion: @escaping (Int) -> Void) {
-        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteLikes/\(quoteGiven.id)") else {
-            completion(0)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let likeCount = json["likes"] as? Int {
-                completion(likeCount)
-            } else {
-                completion(0)
-            }
-        }.resume()
     }
     
     
