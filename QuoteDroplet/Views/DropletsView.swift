@@ -235,11 +235,11 @@ struct DropletsView: View {
 struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
+    
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
     
     
-    @Environment(\.requestReview) var requestReview
     
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
