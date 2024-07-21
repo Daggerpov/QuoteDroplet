@@ -238,8 +238,6 @@ struct SingleQuoteView: View {
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
     
-    @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var interactions = 0
     
     @Environment(\.requestReview) var requestReview
     
@@ -372,12 +370,6 @@ struct SingleQuoteView: View {
         interactionsIncrease()
     }
     
-    private func interactionsIncrease() {
-        interactions += 1
-        if (interactions == 21) {
-            requestReview()
-        }
-    }
     
     private func likeQuoteAction() {
         guard !isLiking else { return }

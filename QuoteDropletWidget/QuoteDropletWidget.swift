@@ -258,9 +258,6 @@ struct QuoteDropletWidgetEntryView : View {
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
     
-    @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var interactions = 0
-    
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
     @State private var likes: Int = 69 // Change likes to non-optional
@@ -387,7 +384,7 @@ struct QuoteDropletWidgetEntryView : View {
         }
         saveBookmarkedQuotes(bookmarkedQuotes)
         
-        interactionsIncrease()
+        interactionsIncrease(from: "widget")
     }
     
     private func toggleLike() {
@@ -401,11 +398,7 @@ struct QuoteDropletWidgetEntryView : View {
         }
         saveLikedQuotes(likedQuotes)
         
-        interactionsIncrease()
-    }
-    
-    private func interactionsIncrease() {
-        interactions += 1
+        interactionsIncrease(from: "widget")
     }
     
     private func likeQuoteAction() {
@@ -620,9 +613,6 @@ struct LikeQuoteIntent: AppIntent {
     //    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     //    private var bookmarkedQuotesData: Data = Data()
     
-    @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var interactions = 0
-    
     @State private var isLiked: Bool = false
     //    @State private var isBookmarked: Bool = false
     @State private var likes: Int = 69 // Change likes to non-optional
@@ -661,11 +651,7 @@ struct LikeQuoteIntent: AppIntent {
         }
         saveLikedQuotes(likedQuotes)
         
-        interactionsIncrease()
-    }
-    
-    private func interactionsIncrease() {
-        interactions += 1
+        interactionsIncrease(from: "widget")
     }
     
     private func likeQuoteAction() {
