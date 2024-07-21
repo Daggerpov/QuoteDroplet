@@ -12,52 +12,60 @@ import UIKit
 import Foundation
 import StoreKit
 
-@available(iOS 16.0, *)
+@MainActor @available(iOS 16.0, *)
 class QuoteBox: ObservableObject {
     @Published var isLiked: Bool = false
     @Published var isBookmarked: Bool = false
     @Published var likes: Int = 0
     @Published var isLiking: Bool = false
     
-    
-    
-    @MainActor func toggleBookmark(for quote: Quote) {
-        isBookmarked.toggle()
-        
-        var bookmarkedQuotes = getBookmarkedQuotes()
-        if isBookmarked {
-            bookmarkedQuotes.append(quote)
-        } else {
-            bookmarkedQuotes.removeAll { $0.id == quote.id }
+    func toggleBookmark(for quote: Quote) {
+        DispatchQueue.main.async {
+            self.isBookmarked.toggle()
+            
+            var bookmarkedQuotes = getBookmarkedQuotes()
+            if self.isBookmarked {
+                bookmarkedQuotes.append(quote)
+            } else {
+                bookmarkedQuotes.removeAll { $0.id == quote.id }
+            }
+            saveBookmarkedQuotes(bookmarkedQuotes)
+            
+            interactionsIncrease()
         }
-        saveBookmarkedQuotes(bookmarkedQuotes)
-        
-        interactionsIncrease()
     }
     
-    @MainActor func toggleLike(for quote: Quote) {
-        isLiked.toggle()
-        
-        var likedQuotes = getLikedQuotes()
-        if isLiked {
-            likedQuotes.append(quote)
-        } else {
-            likedQuotes.removeAll { $0.id == quote.id }
+    func toggleLike(for quote: Quote) {
+        DispatchQueue.main.async {
+            
+            self.isLiked.toggle()
+            
+            var likedQuotes = getLikedQuotes()
+            if self.isLiked {
+                likedQuotes.append(quote)
+            } else {
+                likedQuotes.removeAll { $0.id == quote.id }
+            }
+            saveLikedQuotes(likedQuotes)
+            
+            interactionsIncrease()
         }
-        saveLikedQuotes(likedQuotes)
-        
-        interactionsIncrease()
     }
     
     func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) {
         getLikeCountForQuote(quoteGiven: quote) { likeCount in
-            completion(likeCount)
+            DispatchQueue.main.async {
+                completion(likeCount)
+            }
         }
     }
     
     func likeQuoteAction(for quote: Quote) {
         guard !isLiking else { return }
-        isLiking = true
+        
+        DispatchQueue.main.async {
+            self.isLiking = true
+        }
         
         // Check if the quote is already liked
         let isAlreadyLiked = isQuoteLiked(quote)
