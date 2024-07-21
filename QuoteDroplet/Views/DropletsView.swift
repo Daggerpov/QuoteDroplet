@@ -264,8 +264,8 @@ struct SingleQuoteView: View {
             HStack {
                 HStack {
                     Button(action: {
-                        quoteBox.likeQuoteAction()
-                        quoteBox.toggleLike()
+                        quoteBox.likeQuoteAction(for: quote)
+                        quoteBox.toggleLike(for: quote)
                     }) {
                         if #available(iOS 15.0, *) {
                             Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
@@ -283,7 +283,7 @@ struct SingleQuoteView: View {
                 }
                 
                 Button(action: {
-                    quoteBox.toggleBookmark()
+                    quoteBox.toggleBookmark(for: quote)
                 }) {
                     Image(systemName: quoteBox.isBookmarked ? "bookmark.fill" : "bookmark")
                         .font(.title)
@@ -317,24 +317,12 @@ struct SingleQuoteView: View {
         .onAppear {
             quoteBox.isBookmarked = isQuoteBookmarked(quote)
             
-            quoteBox.getQuoteLikeCountMethod { fetchedLikeCount in
+            quoteBox.getQuoteLikeCountMethod(for: quote) { fetchedLikeCount in
                 quoteBox.likes = fetchedLikeCount
             }
             quoteBox.isLiked = isQuoteLiked(quote)
         }
     }
-    
-    func isQuoteLiked(_ quote: Quote) -> Bool {
-        // TODO: put something like super.isQuoteLiked, which can then see getLikedQuotes
-        return getLikedQuotes().contains(where: { $0.id == quote.id })
-    }
-    
-    func isQuoteBookmarked(_ quote: Quote) -> Bool {
-        // TODO: put something like super.isQuoteBookmarked, which can then see getBookmarkedquotes
-        return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
-    }
-    
-    
 }
 
 

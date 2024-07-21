@@ -19,11 +19,7 @@ class QuoteBox: ObservableObject {
     @Published var likes: Int = 0
     @Published var isLiking: Bool = false
     
-    func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) {
-        getLikeCountForQuote(quoteGiven: quote) { likeCount in
-            completion(likeCount)
-        }
-    }
+    
     
     @MainActor func toggleBookmark(for quote: Quote) {
         isBookmarked.toggle()
@@ -51,6 +47,12 @@ class QuoteBox: ObservableObject {
         saveLikedQuotes(likedQuotes)
         
         interactionsIncrease()
+    }
+    
+    func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) {
+        getLikeCountForQuote(quoteGiven: quote) { likeCount in
+            completion(likeCount)
+        }
     }
     
     func likeQuoteAction(for quote: Quote) {

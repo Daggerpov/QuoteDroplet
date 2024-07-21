@@ -64,3 +64,11 @@ func saveLikedQuotes(_ quotes: [Quote]) {
         likedQuotesData = data
     }
 }
+
+func isQuoteLiked(_ quote: Quote) -> Bool {
+    return getLikedQuotes().contains(where: { $0.id == quote.id })
+}
+
+func isQuoteBookmarked(_ quote: Quote) -> Bool {
+    return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
+}
