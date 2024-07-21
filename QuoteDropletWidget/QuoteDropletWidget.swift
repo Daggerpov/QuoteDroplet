@@ -54,7 +54,7 @@ struct Provider: IntentTimelineProvider {
         let nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
         
         if data.getQuoteCategory().lowercased() == "favorites" {
-            let bookmarkedQuotes = data.getBookmarkedQuotes()
+            let bookmarkedQuotes = getBookmarkedQuotes()
             
             if !bookmarkedQuotes.isEmpty {
                 let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
@@ -466,12 +466,6 @@ struct QuoteDropletWidgetEntryView : View {
     
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
-    }
-    
-    private func saveBookmarkedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            bookmarkedQuotesData = data
-        }
     }
 }
 

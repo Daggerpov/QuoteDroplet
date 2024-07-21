@@ -167,3 +167,11 @@ func getBookmarkedQuotes() -> [Quote] {
     }
     return []
 }
+
+func saveBookmarkedQuotes(_ quotes: [Quote]) {
+    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var bookmarkedQuotesData: Data = Data()
+    if let data = try? JSONEncoder().encode(quotes) {
+        bookmarkedQuotesData = data
+    }
+}

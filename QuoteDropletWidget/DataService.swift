@@ -50,10 +50,4 @@ struct DataService {
     // Add @AppStorage property for selectedFontIndex
     @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var selectedFontIndex = 0
-    
-    func saveBookmarkedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            bookmarkedQuotesData = data
-        }
-    }
 }

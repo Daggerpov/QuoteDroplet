@@ -30,11 +30,13 @@ struct DropletsView: View {
     @State private var quotes: [Quote] = []
     @State private var savedQuotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
-    private let quotesPerPage = 4
+    private let quotesPerPage = 3
     @State private var totalQuotesLoaded = 0
     @State private var totalSavedQuotesLoaded = 0
     
     @State private var selected = 1
+    
+    private let maxQuotes = 15
     
     var body: some View {
         VStack {
@@ -120,21 +122,21 @@ struct DropletsView: View {
                     if selected == 1{
                         Color.clear.frame(height: 1)
                             .onAppear {
-                                if !isLoadingMore && quotes.count < 20 {
+                                if !isLoadingMore && quotes.count < maxQuotes {
                                     loadMoreQuotes()
                                 }
                             }
                     } else {
                         Color.clear.frame(height: 1)
                             .onAppear {
-                                if !isLoadingMore && savedQuotes.count < 20{
+                                if !isLoadingMore && savedQuotes.count < maxQuotes {
                                     loadMoreQuotes()
                                 }
                             }
                     }
                     if !isLoadingMore {
-                        if (selected == 1 && quotes.count >= 20) || (selected == 2 && savedQuotes.count >= 20) {
-                            Text("You've reached the quote limit of 20. Maybe take a break?")
+                        if (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) {
+                            Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
                                 .font(.title2)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                 .padding(.bottom, 5)
@@ -428,12 +430,6 @@ struct SingleQuoteView: View {
     
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
-    }
-    
-    private func saveBookmarkedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            bookmarkedQuotesData = data
-        }
     }
 }
 
