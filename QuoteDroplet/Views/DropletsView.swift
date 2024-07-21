@@ -307,6 +307,13 @@ struct SingleQuoteView: View {
                 }
                 
                 Spacer()
+                
+                if (quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil){
+                    Image(systemName: "arrow.up.right.square")
+                        .font(.title)
+                        .scaleEffect(1)
+                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                }
             }
         }
         .padding()
