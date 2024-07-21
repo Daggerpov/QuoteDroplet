@@ -161,7 +161,7 @@ struct DropletsView: View {
             }
             .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
                 .onEnded { value in
-                    print(value.translation)
+//                    print(value.translation)
                     switch(value.translation.width, value.translation.height) {
                     case (...0, -30...30):
                         //                    print("left swipe")
@@ -171,7 +171,7 @@ struct DropletsView: View {
                         selected = 1
                         //                    case (-100...100, ...0):  /*print("up swipe")*/
                         //                    case (-100...100, 0...):  /*print("down swipe")*/
-                    default:  print("no clue")
+                    default: break
                     }
                 }
             )

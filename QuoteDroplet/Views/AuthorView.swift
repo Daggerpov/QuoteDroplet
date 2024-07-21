@@ -30,10 +30,10 @@ struct AuthorView: View {
     
     @State private var quotes: [Quote] = []
     @State private var isLoadingMore: Bool = false
-    private let quotesPerPage = 5
+    private let quotesPerPage = 100
     @State private var totalQuotesLoaded = 0
     
-    private let maxQuotes = 100
+    private let maxQuotes = 200
     
     let quote: Quote // given when made
     
@@ -121,18 +121,27 @@ struct AuthorView: View {
         isLoadingMore = true
         let group = DispatchGroup()
         
-        for index in 0..<quotesPerPage {
-            group.enter()
-            getQuoteByAuthorAndIndex(author: quote.author!, index: index) { quote, error in
-                if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
-                    DispatchQueue.main.async {
+        getQuotesByAuthor(author: quote.author!) {quotes, error in
+            if let error = error {
+                print("Error fetching quotes: \(error)")
+                return
+            }
+            
+            guard let quotes = quotes else {
+                print("No quotes found.")
+                return
+            }
+
+            let quotesToAppend = quotes.prefix(quotesPerPage)
+            
+            for quote in quotesToAppend {
+                DispatchQueue.main.async {
+                    if !self.quotes.contains(where: { $0.id == quote.id }) {
                         self.quotes.append(quote)
                     }
                 }
-                group.leave()
             }
         }
-        
         
         group.notify(queue: .main) {
             self.isLoadingMore = false
