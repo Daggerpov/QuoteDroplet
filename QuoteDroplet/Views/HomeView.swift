@@ -89,7 +89,7 @@ struct CommunityView: View {
                         }
                         
                         // adjusted
-                        if let author = quote.author, author != "Unknown Author", !author.isEmpty, author != "NULL", author != "" {
+                        if let author = quote.author, isAuthorValid(authorGiven: quote.author) {
                             HStack{
                                 Spacer()
                                 Text("— \(author)")

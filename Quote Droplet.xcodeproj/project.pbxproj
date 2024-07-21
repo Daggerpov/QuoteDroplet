@@ -24,6 +24,8 @@
 		DC2998FB2C4D9C5C0025D32E /* QuoteBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */; };
 		DC2999042C4D9E950025D32E /* InteractionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2999032C4D9E950025D32E /* InteractionsHelper.swift */; };
 		DC2999052C4D9E950025D32E /* InteractionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2999032C4D9E950025D32E /* InteractionsHelper.swift */; };
+		DC2999072C4DBED40025D32E /* AuthorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2999062C4DBED40025D32E /* AuthorHelper.swift */; };
+		DC2999082C4DBED40025D32E /* AuthorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2999062C4DBED40025D32E /* AuthorHelper.swift */; };
 		DC3C86922BA005DE009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86912BA005DE009F581D /* GoogleMobileAds */; };
 		DC3C86942BA00824009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86932BA00824009F581D /* GoogleMobileAds */; };
 		DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
@@ -105,6 +107,7 @@
 		DC2998FE2C4D9C820025D32E /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DC2998FF2C4D9C910025D32E /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-for-noti-water-drip-pixabay.mp3"; path = "../../../../../Downloads/sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DC2999032C4D9E950025D32E /* InteractionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionsHelper.swift; sourceTree = "<group>"; };
+		DC2999062C4DBED40025D32E /* AuthorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorHelper.swift; sourceTree = "<group>"; };
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
@@ -179,6 +182,7 @@
 				DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */,
 				DC0EFB892C4CB29400B4D46A /* JSONHelper.swift */,
 				DC2999032C4D9E950025D32E /* InteractionsHelper.swift */,
+				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -469,6 +473,7 @@
 				DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */,
+				DC2999072C4DBED40025D32E /* AuthorHelper.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DC2999042C4D9E950025D32E /* InteractionsHelper.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
@@ -508,6 +513,7 @@
 				DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */,
 				DCAB2DBC2A9FA95A00A822D7 /* QuoteDropletWidget.swift in Sources */,
 				DC0EFB852C4CB18100B4D46A /* AdHelper.swift in Sources */,
+				DC2999082C4DBED40025D32E /* AuthorHelper.swift in Sources */,
 				DC8279442AA09134004E2BBF /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

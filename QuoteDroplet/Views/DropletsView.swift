@@ -250,7 +250,7 @@ struct SingleQuoteView: View {
                 Spacer()
             }
             
-            if let author = quote.author, author != "Unknown Author", !author.isEmpty, author != "NULL", author != "" {
+            if let author = quote.author, isAuthorValid(authorGiven: quote.author) {
                 HStack {
                     Spacer()
                     Text("— \(author)")
@@ -292,7 +292,7 @@ struct SingleQuoteView: View {
                 }.padding(.leading, 5)
                 
                 if #available(iOS 16.0, *) {
-                    let authorForSharing = (quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil) ? quote.author : ""
+                    let authorForSharing = (isAuthorValid(authorGiven: quote.author)) ? quote.author : ""
                     let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
                     
                     ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
@@ -308,7 +308,7 @@ struct SingleQuoteView: View {
                 
                 Spacer()
                 
-                if (quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil){
+                if (isAuthorValid(authorGiven: quote.author)){
                     Image(systemName: "arrow.up.right.square")
                         .font(.title)
                         .scaleEffect(1)
