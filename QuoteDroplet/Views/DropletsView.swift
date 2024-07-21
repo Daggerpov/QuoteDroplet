@@ -335,7 +335,7 @@ struct SingleQuoteView: View {
             bookmarkedQuotes.append(quote)
         } else {
             bookmarkedQuotes.removeAll { $0.id == quote.id }
-            savedQuotes.removeAll { $0.id == quote.id }
+//            savedQuotes.removeAll { $0.id == quote.id }
         }
         saveBookmarkedQuotes(bookmarkedQuotes)
         
