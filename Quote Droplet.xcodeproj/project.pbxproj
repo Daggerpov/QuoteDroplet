@@ -20,6 +20,8 @@
 		DC14DCC12BB25B9400F87C12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */; };
 		DC26EB942BF96FD4004CA84F /* DropletsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC26EB932BF96FD4004CA84F /* DropletsView.swift */; };
 		DC26EB952BF96FD4004CA84F /* DropletsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC26EB932BF96FD4004CA84F /* DropletsView.swift */; };
+		DC2998FA2C4D9C5C0025D32E /* QuoteBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */; };
+		DC2998FB2C4D9C5C0025D32E /* QuoteBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */; };
 		DC3C86922BA005DE009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86912BA005DE009F581D /* GoogleMobileAds */; };
 		DC3C86942BA00824009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86932BA00824009F581D /* GoogleMobileAds */; };
 		DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
@@ -97,6 +99,9 @@
 		DC0EFB892C4CB29400B4D46A /* JSONHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 		DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC26EB932BF96FD4004CA84F /* DropletsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropletsView.swift; sourceTree = "<group>"; };
+		DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteBox.swift; sourceTree = "<group>"; };
+		DC2998FE2C4D9C820025D32E /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
+		DC2998FF2C4D9C910025D32E /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-for-noti-water-drip-pixabay.mp3"; path = "../../../../../Downloads/sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
@@ -195,6 +200,27 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		DC2998FC2C4D9C670025D32E /* Definitions */ = {
+			isa = PBXGroup;
+			children = (
+				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
+				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
+				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
+				DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */,
+			);
+			path = Definitions;
+			sourceTree = "<group>";
+		};
+		DC2998FD2C4D9C7B0025D32E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DC2998FE2C4D9C820025D32E /* sound-for-noti-water-drip-pixabay.mp3 */,
+				DC2998FF2C4D9C910025D32E /* sound-for-noti-water-drip-pixabay.mp3 */,
+				DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		DCAB2D922A9FA91300A822D7 = {
 			isa = PBXGroup;
 			children = (
@@ -220,18 +246,16 @@
 		DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */ = {
 			isa = PBXGroup;
 			children = (
+				DC2998FD2C4D9C7B0025D32E /* Utils */,
+				DC2998FC2C4D9C670025D32E /* Definitions */,
 				DC0EFB8D2C4CB79100B4D46A /* Services */,
 				DC0EFB8C2C4CB74D00B4D46A /* Views */,
 				DC0EFB7F2C4CB11900B4D46A /* Helpers */,
 				DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */,
 				DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */,
 				DCAB2DD02A9FBAB800A822D7 /* Info.plist */,
-				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
 				DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */,
-				DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */,
 				DCAB2DA42A9FA91900A822D7 /* Preview Content */,
-				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
-				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
 			);
 			path = QuoteDroplet;
 			sourceTree = "<group>";
@@ -437,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC2998FA2C4D9C5C0025D32E /* QuoteBox.swift in Sources */,
 				DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */,
@@ -471,6 +496,7 @@
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
+				DC2998FB2C4D9C5C0025D32E /* QuoteBox.swift in Sources */,
 				DCAB2DB82A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift in Sources */,
 				DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 				DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */,
@@ -636,7 +662,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5;
+				MARKETING_VERSION = 4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -675,7 +701,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5;
+				MARKETING_VERSION = 4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -707,7 +733,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.5;
+				MARKETING_VERSION = 4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet.QuoteDropletWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -737,7 +763,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.5;
+				MARKETING_VERSION = 4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-Droplet.QuoteDropletWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
