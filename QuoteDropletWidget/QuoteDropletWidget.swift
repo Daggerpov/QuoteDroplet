@@ -338,7 +338,7 @@ struct QuoteDropletWidgetEntryView : View {
                     Text("\(widgetQuote.text)")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
                         .foregroundColor(colors[1]) // Use the second color for text color
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal, 5)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                         .minimumScaleFactor(0.01)
                     HStack {
