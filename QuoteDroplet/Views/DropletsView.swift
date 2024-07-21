@@ -226,7 +226,6 @@ struct DropletsView: View {
             } else {
                 self.totalSavedQuotesLoaded += self.quotesPerPage
             }
-            
         }
     }
 }
@@ -236,25 +235,9 @@ struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
     
-    @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var likedQuotesData: Data = Data()
-    
-    
-    
-    @State private var isLiked: Bool = false
-    @State private var isBookmarked: Bool = false
-    @State private var likes: Int = 0
-    @State private var isLiking: Bool = false
+    @StateObject private var quoteBox = QuoteBox()
     
     @Binding var savedQuotes: [Quote]
-
-    
-    private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
-        getLikeCountForQuote(quoteGiven: quote) { likeCount in
-            completion(likeCount)
-        }
-    }
-    
     
     var body: some View {
         VStack {
@@ -281,11 +264,11 @@ struct SingleQuoteView: View {
             HStack {
                 HStack {
                     Button(action: {
-                        likeQuoteAction()
-                        toggleLike()
+                        quoteBox.likeQuoteAction(for: quote)
+                        quoteBox.toggleLike(for: quote)
                     }) {
                         if #available(iOS 15.0, *) {
-                            Image(systemName: isLiked ? "heart.fill" : "heart")
+                            Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
                                 .font(.title)
                                 .scaleEffect(1)
                                 .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
@@ -295,14 +278,14 @@ struct SingleQuoteView: View {
                     }
                     
                     // Display the like count next to the heart button
-                    Text("\(likes)")
+                    Text("\(quoteBox.likes)")
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                 }
                 
                 Button(action: {
-                    toggleBookmark()
+                    quoteBox.toggleBookmark(for: quote)
                 }) {
-                    Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                    Image(systemName: quoteBox.isBookmarked ? "bookmark.fill" : "bookmark")
                         .font(.title)
                         .scaleEffect(1)
                         .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
@@ -332,95 +315,13 @@ struct SingleQuoteView: View {
         .shadow(radius: 5)
         .padding(.horizontal)
         .onAppear {
-            isBookmarked = isQuoteBookmarked(quote)
+            quoteBox.isBookmarked = isQuoteBookmarked(quote)
             
-            getQuoteLikeCountMethod { fetchedLikeCount in
-                likes = fetchedLikeCount
+            quoteBox.getQuoteLikeCountMethod(for: quote) { fetchedLikeCount in
+                quoteBox.likes = fetchedLikeCount
             }
-            isLiked = isQuoteLiked(quote)
+            quoteBox.isLiked = isQuoteLiked(quote)
         }
-    }
-    
-    private func toggleBookmark() {
-        isBookmarked.toggle()
-        
-        var bookmarkedQuotes = getBookmarkedQuotes()
-        if isBookmarked {
-            bookmarkedQuotes.append(quote)
-        } else {
-            bookmarkedQuotes.removeAll { $0.id == quote.id }
-//            savedQuotes.removeAll { $0.id == quote.id }
-        }
-        saveBookmarkedQuotes(bookmarkedQuotes)
-        
-        interactionsIncrease()
-    }
-    
-    private func toggleLike() {
-        isLiked.toggle()
-        
-        var likedQuotes = getLikedQuotes()
-        if isLiked {
-            likedQuotes.append(quote)
-        } else {
-            likedQuotes.removeAll { $0.id == quote.id }
-        }
-        saveLikedQuotes(likedQuotes)
-        
-        interactionsIncrease()
-    }
-    
-    
-    private func likeQuoteAction() {
-        guard !isLiking else { return }
-        isLiking = true
-        
-        // Check if the quote is already liked
-        let isAlreadyLiked = isQuoteLiked(quote)
-        
-        // Call the like/unlike API based on the current like status
-        if isAlreadyLiked {
-            unlikeQuote(quoteID: quote.id) { updatedQuote, error in
-                DispatchQueue.main.async {
-                    if let updatedQuote = updatedQuote {
-                        // Update likes count
-                        self.likes = updatedQuote.likes ?? 0
-                    }
-                    self.isLiking = false
-                }
-            }
-        } else {
-            likeQuote(quoteID: quote.id) { updatedQuote, error in
-                DispatchQueue.main.async {
-                    if let updatedQuote = updatedQuote {
-                        // Update likes count
-                        self.likes = updatedQuote.likes ?? 0
-                    }
-                    self.isLiking = false
-                }
-            }
-        }
-    }
-    
-    private func isQuoteLiked(_ quote: Quote) -> Bool {
-        return getLikedQuotes().contains(where: { $0.id == quote.id })
-    }
-    
-    private func getLikedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: likedQuotesData) {
-            return quotes
-        }
-        return []
-    }
-    
-    private func saveLikedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            likedQuotesData = data
-        }
-    }
-    
-    private func isQuoteBookmarked(_ quote: Quote) -> Bool {
-        return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
     }
 }
 
