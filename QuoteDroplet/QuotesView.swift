@@ -75,21 +75,6 @@ struct QuotesView: View {
         completion(bookmarkedQuotes.count)
     }
     
-    private func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
-        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteCount?category=\(category.rawValue.lowercased())") else {
-            completion(0)
-            return
-        }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let count = json["count"] as? Int {
-                completion(count)
-            } else {
-                completion(0)
-            }
-        }.resume()
-    }
     private func getSelectedQuoteCategory() -> String {
         return quoteCategory.rawValue
     }
