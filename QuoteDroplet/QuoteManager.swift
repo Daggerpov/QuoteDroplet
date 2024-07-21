@@ -15,9 +15,6 @@ import Foundation
 class QuoteManager {
     static let shared = QuoteManager()
     
-    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var bookmarkedQuotesData: Data = Data()
-    
     private var quotes = [QuoteJSON]()
     
     private init() {
@@ -133,15 +130,6 @@ class QuoteManager {
             }
         }
     }
-    
-    private func getBookmarkedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
-            return quotes
-        }
-        return []
-    }
-
-
 }
 
 struct QuoteJSON: Codable {

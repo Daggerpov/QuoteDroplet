@@ -51,18 +51,6 @@ struct DataService {
     @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var selectedFontIndex = 0
     
-    // bookmark:
-    
-    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var bookmarkedQuotesData: Data = Data()
-    
-    func getBookmarkedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
-            return quotes
-        }
-        return []
-    }
-    
     func saveBookmarkedQuotes(_ quotes: [Quote]) {
         if let data = try? JSONEncoder().encode(quotes) {
             bookmarkedQuotesData = data

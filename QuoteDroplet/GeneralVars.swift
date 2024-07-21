@@ -158,3 +158,12 @@ func resizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage? {
     
     return newImage
   }
+
+func getBookmarkedQuotes() -> [Quote] {
+    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var bookmarkedQuotesData: Data = Data()
+    if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
+        return quotes
+    }
+    return []
+}

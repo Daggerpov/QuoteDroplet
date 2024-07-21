@@ -258,9 +258,6 @@ struct QuoteDropletWidgetEntryView : View {
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
     
-    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var bookmarkedQuotesData: Data = Data()
-    
     @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
     var interactions = 0
     
@@ -469,13 +466,6 @@ struct QuoteDropletWidgetEntryView : View {
     
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
-    }
-    
-    private func getBookmarkedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
-            return quotes
-        }
-        return []
     }
     
     private func saveBookmarkedQuotes(_ quotes: [Quote]) {

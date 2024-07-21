@@ -14,9 +14,6 @@ import Foundation
 struct QuotesView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
-    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var bookmarkedQuotesData: Data = Data()
-    
     @Environment(\.colorScheme) var colorScheme
     
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -76,13 +73,6 @@ struct QuotesView: View {
     private func getBookmarkedQuotesCount(completion: @escaping (Int) -> Void) {
         let bookmarkedQuotes = getBookmarkedQuotes()
         completion(bookmarkedQuotes.count)
-    }
-    
-    private func getBookmarkedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
-            return quotes
-        }
-        return []
     }
     
     private func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
