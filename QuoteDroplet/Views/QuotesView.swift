@@ -14,13 +14,10 @@ import Foundation
 struct QuotesView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
-    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var bookmarkedQuotesData: Data = Data()
-    
     @Environment(\.colorScheme) var colorScheme
     
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var quoteCategory: QuoteCategory = .all
+    var quoteCategory: QuoteCategory = .
     
     
     @State private var notificationTime = Date()
@@ -78,28 +75,6 @@ struct QuotesView: View {
         completion(bookmarkedQuotes.count)
     }
     
-    private func getBookmarkedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
-            return quotes
-        }
-        return []
-    }
-    
-    private func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
-        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteCount?category=\(category.rawValue.lowercased())") else {
-            completion(0)
-            return
-        }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let count = json["count"] as? Int {
-                completion(count)
-            } else {
-                completion(0)
-            }
-        }.resume()
-    }
     private func getSelectedQuoteCategory() -> String {
         return quoteCategory.rawValue
     }
@@ -280,7 +255,7 @@ struct QuotesView: View {
     }
     
     private func scheduleNotifications() {
-        QuoteManager.shared.scheduleNotifications(notificationTime: notificationTime,
+        NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
                                                   quoteCategory: quoteCategory)
     }
 

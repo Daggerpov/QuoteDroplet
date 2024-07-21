@@ -62,3 +62,9 @@ struct ContentView: View {
 class SharedVarsBetweenTabs: ObservableObject {
     @Published var colorPaletteIndex = 0
 }
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}

@@ -54,7 +54,7 @@ struct Provider: IntentTimelineProvider {
         let nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
         
         if data.getQuoteCategory().lowercased() == "favorites" {
-            let bookmarkedQuotes = data.getBookmarkedQuotes()
+            let bookmarkedQuotes = getBookmarkedQuotes()
             
             if !bookmarkedQuotes.isEmpty {
                 let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
@@ -258,9 +258,6 @@ struct QuoteDropletWidgetEntryView : View {
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
     
-    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var bookmarkedQuotesData: Data = Data()
-    
     @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
     var interactions = 0
     
@@ -291,23 +288,6 @@ struct QuoteDropletWidgetEntryView : View {
         getLikeCountForQuote(quoteGiven: widgetQuote) { likeCount in
             completion(likeCount)
         }
-    }
-    
-    private func getLikeCountForQuote(quoteGiven: Quote, completion: @escaping (Int) -> Void) {
-        guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quoteLikes/\(quoteGiven.id)") else {
-            completion(0)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let likeCount = json["likes"] as? Int {
-                completion(likeCount)
-            } else {
-                completion(0)
-            }
-        }.resume()
     }
     
     private var likesSectionWithAuthor: some View {
@@ -469,19 +449,6 @@ struct QuoteDropletWidgetEntryView : View {
     
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
-    }
-    
-    private func getBookmarkedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: bookmarkedQuotesData) {
-            return quotes
-        }
-        return []
-    }
-    
-    private func saveBookmarkedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            bookmarkedQuotesData = data
-        }
     }
 }
 

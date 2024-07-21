@@ -2,14 +2,16 @@
 
 import Foundation
 
+let baseUrl = "http://quote-dropper-production.up.railway.app"
+
 func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void) {
     var urlString: String;
     if classification == "all" {
         // Modify the URL to include a filter for approved quotes
-        urlString = "http://quote-dropper-production.up.railway.app/quotes/"
+        urlString = "\(baseUrl)/quotes/"
     } else {
         // Modify the URL to include a filter for approved quotes and classification
-        urlString = "http://quote-dropper-production.up.railway.app/quotes/classification=\(classification)"
+        urlString = "\(baseUrl)/quotes/classification=\(classification)"
     }
     
     let url = URL(string: urlString)!
@@ -56,7 +58,7 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
 }
 
 func getRecentQuotes(limit: Int, completion: @escaping ([Quote]?, Error?) -> Void) {
-    let urlString = "http://quote-dropper-production.up.railway.app/quotes/recent/\(limit)"
+    let urlString = "\(baseUrl)/quotes/recent/\(limit)"
     guard let url = URL(string: urlString) else {
         completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return
@@ -99,7 +101,7 @@ func getRecentQuotes(limit: Int, completion: @escaping ([Quote]?, Error?) -> Voi
 
 
 func addQuote(text: String, author: String?, classification: String, completion: @escaping (Bool, Error?) -> Void) {
-    let urlString = "http://quote-dropper-production.up.railway.app/quotes"
+    let urlString = "\(baseUrl)/quotes"
     guard let url = URL(string: urlString) else {
         completion(false, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return
@@ -155,7 +157,7 @@ func addQuote(text: String, author: String?, classification: String, completion:
 }
 
 func likeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
-    let urlString = "http://quote-dropper-production.up.railway.app/quotes/like/\(quoteID)"
+    let urlString = "\(baseUrl)/quotes/like/\(quoteID)"
     guard let url = URL(string: urlString) else {
         completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return
@@ -193,7 +195,7 @@ func likeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
 }
 
 func unlikeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
-    let urlString = "http://quote-dropper-production.up.railway.app/quotes/unlike/\(quoteID)"
+    let urlString = "\(baseUrl)/quotes/unlike/\(quoteID)"
     guard let url = URL(string: urlString) else {
         completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return
@@ -231,7 +233,7 @@ func unlikeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
 }
 
 func getBookmarkedQuoteByID(id: Int, completion: @escaping (Quote?, Error?) -> Void) {
-    guard let url = URL(string: "http://quote-dropper-production.up.railway.app/quotes/\(id)") else {
+    guard let url = URL(string: "\(baseUrl)/quotes/\(id)") else {
         completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return
     }
@@ -252,6 +254,39 @@ func getBookmarkedQuoteByID(id: Int, completion: @escaping (Quote?, Error?) -> V
             completion(quote, nil)
         } catch {
             completion(nil, error)
+        }
+    }.resume()
+}
+
+func getLikeCountForQuote(quoteGiven: Quote, completion: @escaping (Int) -> Void) {
+    guard let url = URL(string: "\(baseUrl)/quoteLikes/\(quoteGiven.id)") else {
+        completion(0)
+        return
+    }
+    
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        if let data = data,
+           let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+           let likeCount = json["likes"] as? Int {
+            completion(likeCount)
+        } else {
+            completion(0)
+        }
+    }.resume()
+}
+
+func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
+    guard let url = URL(string: "\(baseUrl)/quoteCount?category=\(category.rawValue.lowercased())") else {
+        completion(0)
+        return
+    }
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        if let data = data,
+           let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+           let count = json["count"] as? Int {
+            completion(count)
+        } else {
+            completion(0)
         }
     }.resume()
 }
