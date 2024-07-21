@@ -12,11 +12,6 @@ import UIKit
 import Foundation
 import GoogleMobileAds
 
-let notificationPermissionKey = "notificationPermissionGranted"
-let notificationToggleKey = "notificationToggleEnabled"
-private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
-
-
 struct GridStack<Content: View>: View {
     let rows: Int
     let columns: Int

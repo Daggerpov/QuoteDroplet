@@ -17,7 +17,7 @@ struct QuotesView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var quoteCategory: QuoteCategory = .all
+    var quoteCategory: QuoteCategory = .
     
     
     @State private var notificationTime = Date()
@@ -255,7 +255,7 @@ struct QuotesView: View {
     }
     
     private func scheduleNotifications() {
-        QuoteManager.shared.scheduleNotifications(notificationTime: notificationTime,
+        NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
                                                   quoteCategory: quoteCategory)
     }
 

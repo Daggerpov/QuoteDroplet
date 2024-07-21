@@ -1,5 +1,5 @@
 //
-//  QuoteScheduler.swift
+//  NotificationScheduler.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-03-22.
@@ -12,8 +12,12 @@ import WidgetKit
 import UIKit
 import Foundation
 
-class QuoteScheduler {
-    static let shared = QuoteScheduler()
+let notificationPermissionKey = "notificationPermissionGranted"
+let notificationToggleKey = "notificationToggleEnabled"
+private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
+
+class NotificationScheduler {
+    static let shared = NotificationScheduler()
     
     private var quotes = [QuoteJSON]()
     

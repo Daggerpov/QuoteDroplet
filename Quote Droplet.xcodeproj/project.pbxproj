@@ -30,8 +30,8 @@
 		DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
 		DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
 		DC7010E22BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
-		DC7010E42BAE654F008678CB /* QuoteScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* QuoteScheduler.swift */; };
-		DC7010E52BAE654F008678CB /* QuoteScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* QuoteScheduler.swift */; };
+		DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* NotificationScheduler.swift */; };
+		DC7010E52BAE654F008678CB /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* NotificationScheduler.swift */; };
 		DC8279442AA09134004E2BBF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8279432AA09134004E2BBF /* DataService.swift */; };
 		DC8C1B042BB2337400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */; };
 		DC8C1B062BB2343400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B052BB2343400B073B7 /* FirebaseAnalytics */; };
@@ -101,7 +101,7 @@
 		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
 		DC7010E02BAE63DC008678CB /* QuotesBackup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuotesBackup.json; sourceTree = "<group>"; };
-		DC7010E32BAE654F008678CB /* QuoteScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteScheduler.swift; sourceTree = "<group>"; };
+		DC7010E32BAE654F008678CB /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
 		DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuoteDropletWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DC8279432AA09134004E2BBF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -174,6 +174,27 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		DC0EFB8C2C4CB74D00B4D46A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DCAB2DA02A9FA91300A822D7 /* ContentView.swift */,
+				DC26EB932BF96FD4004CA84F /* DropletsView.swift */,
+				DC5205B22B9CEF620007CB5B /* HomeView.swift */,
+				DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */,
+				DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DC0EFB8D2C4CB79100B4D46A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DC7010E32BAE654F008678CB /* NotificationScheduler.swift */,
+				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		DCAB2D922A9FA91300A822D7 = {
 			isa = PBXGroup;
 			children = (
@@ -199,23 +220,18 @@
 		DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */ = {
 			isa = PBXGroup;
 			children = (
+				DC0EFB8D2C4CB79100B4D46A /* Services */,
+				DC0EFB8C2C4CB74D00B4D46A /* Views */,
 				DC0EFB7F2C4CB11900B4D46A /* Helpers */,
 				DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */,
 				DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */,
 				DCAB2DD02A9FBAB800A822D7 /* Info.plist */,
 				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
 				DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */,
-				DCAB2DA02A9FA91300A822D7 /* ContentView.swift */,
 				DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */,
-				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
 				DCAB2DA42A9FA91900A822D7 /* Preview Content */,
-				DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */,
-				DC5205B22B9CEF620007CB5B /* HomeView.swift */,
-				DC26EB932BF96FD4004CA84F /* DropletsView.swift */,
-				DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */,
 				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
 				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
-				DC7010E32BAE654F008678CB /* QuoteScheduler.swift */,
 			);
 			path = QuoteDroplet;
 			sourceTree = "<group>";
@@ -421,7 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC7010E42BAE654F008678CB /* QuoteScheduler.swift in Sources */,
+				DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
@@ -444,7 +460,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC26EB952BF96FD4004CA84F /* DropletsView.swift in Sources */,
-				DC7010E52BAE654F008678CB /* QuoteScheduler.swift in Sources */,
+				DC7010E52BAE654F008678CB /* NotificationScheduler.swift in Sources */,
 				DC0EFB822C4CB13500B4D46A /* BookmarkHelper.swift in Sources */,
 				DC0EFB8B2C4CB29400B4D46A /* JSONHelper.swift in Sources */,
 				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
