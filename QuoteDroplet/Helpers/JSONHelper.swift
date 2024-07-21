@@ -47,3 +47,20 @@ func loadQuotesFromJSON() -> [QuoteJSON] {
     }
     return []
 }
+
+func getLikedQuotes() -> [Quote] {
+    @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var likedQuotesData: Data = Data()
+    if let quotes = try? JSONDecoder().decode([Quote].self, from: likedQuotesData) {
+        return quotes
+    }
+    return []
+}
+
+func saveLikedQuotes(_ quotes: [Quote]) {
+    @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var likedQuotesData: Data = Data()
+    if let data = try? JSONEncoder().encode(quotes) {
+        likedQuotesData = data
+    }
+}

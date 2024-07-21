@@ -226,7 +226,6 @@ struct DropletsView: View {
             } else {
                 self.totalSavedQuotesLoaded += self.quotesPerPage
             }
-            
         }
     }
 }
@@ -235,9 +234,6 @@ struct DropletsView: View {
 struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
-    
-    @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var likedQuotesData: Data = Data()
     
     @StateObject private var quoteBox = QuoteBox()
     
@@ -338,18 +334,7 @@ struct SingleQuoteView: View {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
     }
     
-    private func getLikedQuotes() -> [Quote] {
-        if let quotes = try? JSONDecoder().decode([Quote].self, from: likedQuotesData) {
-            return quotes
-        }
-        return []
-    }
     
-    private func saveLikedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            likedQuotesData = data
-        }
-    }
 }
 
 
