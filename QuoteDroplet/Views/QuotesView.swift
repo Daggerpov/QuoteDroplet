@@ -17,7 +17,7 @@ struct QuotesView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var quoteCategory: QuoteCategory = .
+    var quoteCategory: QuoteCategory = .all
     
     
     @State private var notificationTime = Date()

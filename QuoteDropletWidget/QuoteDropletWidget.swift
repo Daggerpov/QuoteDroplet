@@ -315,12 +315,21 @@ struct QuoteDropletWidgetEntryView : View {
             
             VStack {
                 if widgetQuote.text != "" {
-                    Text("\(widgetQuote.text)")
-                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
-                        .foregroundColor(colors[1]) // Use the second color for text color
-                        .padding(.horizontal, 5)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                        .minimumScaleFactor(0.01)
+                    if family == .systemSmall {
+                        Text("\(widgetQuote.text)")
+                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
+                            .foregroundColor(colors[1]) // Use the second color for text color
+                            .padding(.horizontal, 5)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                                  } else {
+                                Text("\(widgetQuote.text)")
+                                    .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
+                                    .foregroundColor(colors[1]) // Use the second color for text color
+                                    .padding(.horizontal, 5)
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                                    .minimumScaleFactor(0.01)
+                    }
+                    
                     HStack {
                         if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
                             Text("— \(widgetQuote.author ?? "")")
