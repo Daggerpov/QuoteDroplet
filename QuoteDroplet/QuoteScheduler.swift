@@ -1,5 +1,5 @@
 //
-//  QuoteManager.swift
+//  QuoteScheduler.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-03-22.
@@ -12,8 +12,8 @@ import WidgetKit
 import UIKit
 import Foundation
 
-class QuoteManager {
-    static let shared = QuoteManager()
+class QuoteScheduler {
+    static let shared = QuoteScheduler()
     
     private var quotes = [QuoteJSON]()
     
