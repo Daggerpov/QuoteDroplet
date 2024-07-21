@@ -158,6 +158,22 @@ struct DropletsView: View {
             colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
             colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
         }
+        .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
+            .onEnded { value in
+                print(value.translation)
+                switch(value.translation.width, value.translation.height) {
+                    case (...0, -30...30):  
+//                    print("left swipe")
+                    selected = 2
+                    case (0..., -30...30):
+//                    print("right swipe")
+                    selected = 1
+//                    case (-100...100, ...0):  /*print("up swipe")*/
+//                    case (-100...100, 0...):  /*print("down swipe")*/
+                    default:  print("no clue")
+                }
+            }
+        )
     }
     
     private func loadInitialQuotes() {
