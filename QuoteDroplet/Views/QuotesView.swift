@@ -107,7 +107,17 @@ struct QuotesView: View {
             .onTapGesture {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }
+            
         }
+        .padding(10)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                )
+        )
     }
     
     let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
@@ -151,7 +161,8 @@ struct QuotesView: View {
                     }
                 } else {
                     Button(action: {
-                        notificationTime = Date() // Update the notificationTime to the current date and time
+                        // one minute from current time:
+                        notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
                         isTimePickerExpanded.toggle()
                     }) {
                         HStack {

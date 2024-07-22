@@ -31,6 +31,7 @@ extension WidgetConfiguration {
 
 struct Provider: IntentTimelineProvider {
     var data = DataService()
+    @Environment(\.widgetFamily) var family
     
     func placeholder(in context: Context) -> SimpleEntry {
         let defaultQuote = Quote(id: 1, text: "More is lost by indecision than by wrong decision.", author: "Cicero", classification: "Sample Classification", likes: 15)
@@ -70,7 +71,8 @@ struct Provider: IntentTimelineProvider {
             getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
                 if var quote = quote {
                     // Check if the quote is too long
-                    while isQuoteTooLong(text: quote.text, context: context, author: quote.author) {
+                    // quote.text.count > 50 ensures the quote isn't longer than 50 char, if family == .systemSmall (widget size)
+                    while isQuoteTooLong(text: quote.text, context: context, author: quote.author) || (family == .systemSmall && quote.text.count > 50) {
                         // Fetch a new quote
                         getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { newQuote, _ in
                             if let newQuote = newQuote {
