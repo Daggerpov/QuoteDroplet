@@ -139,17 +139,6 @@ struct CommunityView: View {
             )
         }
     }
-    private var addQuoteButton: some View {
-        Button(action: {
-            isAddingQuote = true
-        }) {
-            Image("compose")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.blue)
-        }
-        .padding()
-    }
     var howWorksPopUp: some View {
         Button(action: {
             showSubmissionInfoAlert = true
@@ -170,8 +159,6 @@ struct CommunityView: View {
         }
     }
     private var quoteAddition: some View {
-        
-        
         VStack {
             howWorksPopUp
             if #available(iOS 16.0, *) {
@@ -251,11 +238,11 @@ struct CommunityView: View {
                 }
             }
             AdBannerViewController(adUnitID:
-//                                    "ca-app-pub-5189478572039689/1371107555"
+                                    //                                    "ca-app-pub-5189478572039689/1371107555"
                                    "ca-app-pub-5189478572039689/1609477369" // new one from Mar 25
             )                    .frame(height: 50)    // Fourth person banner ad, for submission inside Quotes View
         }
-            
+        
     }
     private var submissionQuoteCategoryPicker: some View {
         HStack {
@@ -273,8 +260,8 @@ struct CommunityView: View {
     var body: some View {
         VStack {
             AdBannerViewController(adUnitID:
-                                                "ca-app-pub-5189478572039689/4810355771") // new one: Home New (Mar 25)
-                                        .frame(height: 50)
+                                    "ca-app-pub-5189478572039689/4810355771") // new one: Home New (Mar 25)
+            .frame(height: 50)
             Spacer()
             quoteSection
             Spacer()

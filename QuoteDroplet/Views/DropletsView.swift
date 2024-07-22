@@ -83,7 +83,7 @@ struct DropletsView: View {
                                 ForEach(quotes.indices, id: \.self) { index in
                                     if let quote = quotes[safe: index] {
                                         if #available(iOS 16.0, *) {
-                                            SingleQuoteView(quote: quote)
+                                            SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
                                         } else {
                                             // Fallback on earlier versions
                                         }
@@ -111,7 +111,7 @@ struct DropletsView: View {
                                 ForEach(savedQuotes.indices, id: \.self) { index in
                                     if let quote = savedQuotes[safe: index] {
                                         if #available(iOS 16.0, *) {
-                                            SingleQuoteView(quote: quote)
+                                            SingleQuoteView(quote: quote, from: "not from author view")
                                         } else {
                                             // Fallback on earlier versions
                                         }
@@ -142,6 +142,7 @@ struct DropletsView: View {
                                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                     .padding(.bottom, 5)
                                     .frame(maxWidth: .infinity, alignment: .center)
+                                    .multilineTextAlignment(.center)
                             }
                         }
                     }
@@ -236,6 +237,7 @@ struct DropletsView: View {
 struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
+    let from: String?
     
     @StateObject private var quoteBox = QuoteBox()
     
@@ -308,7 +310,7 @@ struct SingleQuoteView: View {
                 
                 Spacer()
                 
-                if (isAuthorValid(authorGiven: quote.author)){
+                if (isAuthorValid(authorGiven: quote.author) && from != "AuthorView"){
                     NavigationLink(destination: AuthorView(quote: quote)) {
                         Image(systemName: "arrow.up.right.square")
                             .font(.title)
