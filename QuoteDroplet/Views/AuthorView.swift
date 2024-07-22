@@ -202,6 +202,7 @@ struct AuthorView: View {
                 }
                 
                 ScrollView {
+                    Spacer()
                     LazyVStack{
                         if quotes.isEmpty {
                             Text("Loading Quotes...")

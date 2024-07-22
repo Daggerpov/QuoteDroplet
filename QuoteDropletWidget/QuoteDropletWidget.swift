@@ -91,7 +91,7 @@ struct Provider: IntentTimelineProvider {
     // Helper function to check if a quote is too long
     private func isQuoteTooLong(text: String, context: Context, author: String?) -> Bool {
         let maxWidth: CGFloat = {
-            switch context.family {
+            switch family {
             case .systemSmall:
                 return 20
             case .systemMedium:
@@ -112,7 +112,7 @@ struct Provider: IntentTimelineProvider {
         }()
         
         var maxHeight: CGFloat = {
-            switch context.family {
+            switch family {
             case .systemSmall:
                 return 20
             case .systemMedium:
