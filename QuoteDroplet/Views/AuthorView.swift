@@ -191,21 +191,18 @@ struct AuthorView: View {
             VStack {
                 AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/9761642936")
                     .frame(height: 60)
-                
-                Spacer()
-                ScrollView {
+                HStack {
                     Spacer()
+                    Text("Quotes by \(quote.author ?? "Author"):")
+                        .font(.title)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .padding(.bottom, 5)
+                    
+                    Spacer()
+                }
+                
+                ScrollView {
                     LazyVStack{
-                        HStack {
-                            Spacer()
-                            Text("Quotes by \(quote.author ?? "Author"):")
-                                .font(.title)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                            
-                            Spacer()
-                        }
-                        Spacer()
                         if quotes.isEmpty {
                             Text("Loading Quotes...")
                                 .font(.title2)
