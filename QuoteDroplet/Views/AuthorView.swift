@@ -232,7 +232,7 @@ struct AuthorView: View {
                         Spacer()
                         
                         VStack{
-                            Text("Don't see a quote you know from this author? I'd greatly appreciate if you submitted it below:")
+                            Text("Missing a quote from this author? I'd greatly appreciate if you could submit it:")
                                 .font(.title2)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                 .padding(.bottom, 5)
@@ -252,6 +252,7 @@ struct AuthorView: View {
                                     .multilineTextAlignment(.center)
                             }
                         }
+                        Spacer()
                     }
                 }
                 

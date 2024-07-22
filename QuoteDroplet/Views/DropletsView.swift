@@ -145,6 +145,7 @@ struct DropletsView: View {
                                     .multilineTextAlignment(.center)
                             }
                         }
+                        Spacer()
                     }
                 }
                 
