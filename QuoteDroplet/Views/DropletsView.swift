@@ -39,141 +39,145 @@ struct DropletsView: View {
     private let maxQuotes = 15
     
     var body: some View {
-        VStack {
-            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                .frame(height: 60)
-            
-            Picker(selection: $selected, label: Text("Picker"), content: {
-                Text("Quotes Feed").tag(1)
-                Text("Saved Quotes").tag(2)
-            })
-            .pickerStyle(SegmentedPickerStyle())
-            
-            
-            Spacer()
-            ScrollView {
+        NavigationView {
+            VStack {
+                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                    .frame(height: 60)
+                
+                Picker(selection: $selected, label: Text("Picker"), content: {
+                    Text("Quotes Feed").tag(1)
+                    Text("Saved Quotes").tag(2)
+                })
+                .pickerStyle(SegmentedPickerStyle())
+                
+                
                 Spacer()
-                LazyVStack{
-                    HStack {
-                        Spacer()
-                        if selected == 1 {
-                            Text("Quotes Feed")
-                                .font(.title)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                        } else {
-                            Text("Saved Quotes")
-                                .font(.title)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                        }
-                        
-                        Spacer()
-                    }
+                ScrollView {
                     Spacer()
-                    if selected == 1{
-                        if quotes.isEmpty {
-                            Text("Loading Quotes Feed...")
-                                .font(.title2)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .center)
-                        } else {
-                            ForEach(quotes.indices, id: \.self) { index in
-                                if let quote = quotes[safe: index] {
-                                    if #available(iOS 16.0, *) {
-                                        SingleQuoteView(quote: quote, savedQuotes: $savedQuotes)
-                                    } else {
-                                        // Fallback on earlier versions
+                    LazyVStack{
+                        HStack {
+                            Spacer()
+                            if selected == 1 {
+                                Text("Quotes Feed")
+                                    .font(.title)
+                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .padding(.bottom, 5)
+                            } else {
+                                Text("Saved Quotes")
+                                    .font(.title)
+                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .padding(.bottom, 5)
+                            }
+                            
+                            Spacer()
+                        }
+                        Spacer()
+                        if selected == 1{
+                            if quotes.isEmpty {
+                                Text("Loading Quotes Feed...")
+                                    .font(.title2)
+                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .padding(.bottom, 5)
+                                    .frame(alignment: .center)
+                            } else {
+                                ForEach(quotes.indices, id: \.self) { index in
+                                    if let quote = quotes[safe: index] {
+                                        if #available(iOS 16.0, *) {
+                                            SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
+                                        } else {
+                                            // Fallback on earlier versions
+                                        }
                                     }
                                 }
-                            }
-                        }
-                        
-                    } else {
-                        if savedQuotes.isEmpty {
-                            Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
-                                .font(.title2)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .center)
-                            if #available(iOS 15.0, *) {
-                                Image(systemName: "bookmark")
-                                    .font(.title)
-                                    .scaleEffect(1)
-                                    .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            } else {
-                                // Fallback on earlier versions
                             }
                             
                         } else {
-                            ForEach(savedQuotes.indices, id: \.self) { index in
-                                if let quote = savedQuotes[safe: index] {
-                                    if #available(iOS 16.0, *) {
-                                        SingleQuoteView(quote: quote, savedQuotes: $savedQuotes)
-                                    } else {
-                                        // Fallback on earlier versions
+                            if savedQuotes.isEmpty {
+                                Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
+                                    .font(.title2)
+                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .padding(.bottom, 5)
+                                    .frame(alignment: .center)
+                                if #available(iOS 15.0, *) {
+                                    Image(systemName: "bookmark")
+                                        .font(.title)
+                                        .scaleEffect(1)
+                                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                                } else {
+                                    // Fallback on earlier versions
+                                }
+                                
+                            } else {
+                                ForEach(savedQuotes.indices, id: \.self) { index in
+                                    if let quote = savedQuotes[safe: index] {
+                                        if #available(iOS 16.0, *) {
+                                            SingleQuoteView(quote: quote, from: "not from author view")
+                                        } else {
+                                            // Fallback on earlier versions
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    
-                    if selected == 1{
-                        Color.clear.frame(height: 1)
-                            .onAppear {
-                                if !isLoadingMore && quotes.count < maxQuotes {
-                                    loadMoreQuotes()
+                        
+                        if selected == 1{
+                            Color.clear.frame(height: 1)
+                                .onAppear {
+                                    if !isLoadingMore && quotes.count < maxQuotes {
+                                        loadMoreQuotes()
+                                    }
                                 }
-                            }
-                    } else {
-                        Color.clear.frame(height: 1)
-                            .onAppear {
-                                if !isLoadingMore && savedQuotes.count < maxQuotes {
-                                    loadMoreQuotes()
+                        } else {
+                            Color.clear.frame(height: 1)
+                                .onAppear {
+                                    if !isLoadingMore && savedQuotes.count < maxQuotes {
+                                        loadMoreQuotes()
+                                    }
                                 }
-                            }
-                    }
-                    if !isLoadingMore {
-                        if (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) {
-                            Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
-                                .font(.title2)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                                .frame(maxWidth: .infinity, alignment: .center)
                         }
+                        if !isLoadingMore {
+                            if (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) {
+                                Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
+                                    .font(.title2)
+                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .padding(.bottom, 5)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        Spacer()
                     }
                 }
+                
             }
-            
-        }
-        .frame(maxWidth: .infinity)
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .onAppear {
-            // Fetch initial quotes when the view appears
-            loadInitialQuotes()
-            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
-            
-            colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
-            colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
-            colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
-        }
-        .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
-            .onEnded { value in
-                print(value.translation)
-                switch(value.translation.width, value.translation.height) {
-                    case (...0, -30...30):  
-//                    print("left swipe")
-                    selected = 2
+            .frame(maxWidth: .infinity)
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .onAppear {
+                // Fetch initial quotes when the view appears
+                loadInitialQuotes()
+                sharedVars.colorPaletteIndex = widgetColorPaletteIndex
+                
+                colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
+                colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
+                colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
+            }
+            .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
+                .onEnded { value in
+//                    print(value.translation)
+                    switch(value.translation.width, value.translation.height) {
+                    case (...0, -30...30):
+                        //                    print("left swipe")
+                        selected = 2
                     case (0..., -30...30):
-//                    print("right swipe")
-                    selected = 1
-//                    case (-100...100, ...0):  /*print("up swipe")*/
-//                    case (-100...100, 0...):  /*print("down swipe")*/
-                    default:  print("no clue")
+                        //                    print("right swipe")
+                        selected = 1
+                        //                    case (-100...100, ...0):  /*print("up swipe")*/
+                        //                    case (-100...100, 0...):  /*print("down swipe")*/
+                    default: break
+                    }
                 }
-            }
-        )
+            )
+        }
     }
     
     private func loadInitialQuotes() {
@@ -234,10 +238,9 @@ struct DropletsView: View {
 struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     let quote: Quote
+    let from: String?
     
     @StateObject private var quoteBox = QuoteBox()
-    
-    @Binding var savedQuotes: [Quote]
     
     var body: some View {
         VStack {
@@ -250,7 +253,7 @@ struct SingleQuoteView: View {
                 Spacer()
             }
             
-            if let author = quote.author, author != "Unknown Author", !author.isEmpty, author != "NULL", author != "" {
+            if let author = quote.author, isAuthorValid(authorGiven: quote.author) {
                 HStack {
                     Spacer()
                     Text("— \(author)")
@@ -292,7 +295,7 @@ struct SingleQuoteView: View {
                 }.padding(.leading, 5)
                 
                 if #available(iOS 16.0, *) {
-                    let authorForSharing = (quote.author != "Unknown Author" && quote.author != "NULL" && quote.author != "" && quote.author != nil) ? quote.author : ""
+                    let authorForSharing = (isAuthorValid(authorGiven: quote.author)) ? quote.author : ""
                     let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
                     
                     ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
@@ -307,6 +310,15 @@ struct SingleQuoteView: View {
                 }
                 
                 Spacer()
+                
+                if (isAuthorValid(authorGiven: quote.author) && from != "AuthorView"){
+                    NavigationLink(destination: AuthorView(quote: quote)) {
+                        Image(systemName: "arrow.up.right.square")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                    }
+                }
             }
         }
         .padding()
@@ -324,7 +336,6 @@ struct SingleQuoteView: View {
         }
     }
 }
-
 
 struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {

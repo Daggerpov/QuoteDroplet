@@ -91,7 +91,7 @@ class NotificationScheduler {
             }
             
             //adjusted
-            if (randomQuote.author != "Unknown Author" && randomQuote.author != "" && randomQuote.author != "NULL" && ((randomQuote.author.isEmpty))) {
+            if (isAuthorValid(authorGiven: randomQuote.author)) {
                 content.body = "\(randomQuote.text)\n— \(randomQuote.author)"
             } else {
                 content.body = "\(randomQuote.text)"

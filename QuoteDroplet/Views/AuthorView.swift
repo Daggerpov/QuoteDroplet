@@ -1,8 +1,8 @@
 //
-//  HomeView.swift
+//  AuthorView.swift
 //  Quote Droplet
 //
-//  Created by Daniel Agapov on 2024-03-09.
+//  Created by Daniel Agapov on 2024-07-21.
 //
 
 import SwiftUI
@@ -10,15 +10,15 @@ import WidgetKit
 import UserNotifications
 import UIKit
 import Foundation
+import StoreKit
 
-struct CommunityView: View {
+struct AuthorView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
     
     // actual colors of custom:
-    
     @AppStorage("widgetCustomColorPaletteFirstIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteFirstIndex = "1C7C54"
     
@@ -28,7 +28,16 @@ struct CommunityView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    @State private var recentQuotes: [Quote] = []
+    @State private var quotes: [Quote] = []
+    @State private var isLoadingMore: Bool = false
+    private let quotesPerPage = 100
+    @State private var totalQuotesLoaded = 0
+    
+    private let maxQuotes = 200
+    
+    let quote: Quote // given when made
+    
+    // ---------------------------QUOTE SUBMISSION ---------------------------
     
     @State private var isAddingQuote = false
     @State private var showSubmissionInfoAlert = false
@@ -38,85 +47,7 @@ struct CommunityView: View {
     @State private var submissionMessage = ""
     @State private var showSubmissionReceivedAlert = false
     
-    private var quoteSection: some View {
-        VStack(alignment: .leading) {
-            HStack{
-                Spacer()
-                Text("Newest Quotes")
-                    .font(.title)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
-                Spacer()
-            }
-            
-            
-            if recentQuotes.isEmpty {
-                Text("Loading Quotes ...")
-                    .font(.title3)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    .padding(.bottom, 2)
-                ForEach(1..<4) { index in
-                    VStack() {
-                        HStack {
-                            Text("Quote Loading")
-                                .font(.title3)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.bottom, 2)
-                                .frame(alignment: .leading)
-                            Spacer()
-                        }
-                        
-                        HStack{
-                            Spacer()
-                            Text("— Author Loading")
-                                .font(.body)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .trailing)
-                        }
-                    }
-                }
-            } else {
-                ForEach(recentQuotes, id: \.id) { quote in
-                    VStack() {
-                        HStack{
-                            Text("\(quote.text)")
-                                .font(.title3)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.bottom, 2)
-                                .frame(alignment: .leading)
-                            Spacer()
-                        }
-                        
-                        // adjusted
-                        if let author = quote.author, isAuthorValid(authorGiven: quote.author) {
-                            HStack{
-                                Spacer()
-                                Text("— \(author)")
-                                    .font(.body)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                    .padding(.bottom, 5)
-                                    .frame(alignment: .trailing)
-                            }
-                        } else {
-                            Text("")
-                                .font(.body)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .trailing)
-                        }
-                    }
-                }
-            }
-        }
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .cornerRadius(20)
-        .shadow(radius: 5)
-        .padding(.horizontal)
-    }
-    
-    // ----------------------------------------------------- SUBMIT QUOTE
+    // ---------------------------QUOTE SUBMISSION ---------------------------
     
     private var composeButton: some View {
         Button(action: {
@@ -255,46 +186,130 @@ struct CommunityView: View {
         }
     }
     
-    // ----------------------------------------------------- SUBMIT QUOTE
-    
     var body: some View {
-        VStack {
-            AdBannerViewController(adUnitID:
-                                    "ca-app-pub-5189478572039689/4810355771") // new one: Home New (Mar 25)
-            .frame(height: 50)
-            Spacer()
-            quoteSection
-            Spacer()
+        NavigationView {
+            VStack {
+                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/9761642936")
+                    .frame(height: 60)
+                
+                Spacer()
+                ScrollView {
+                    Spacer()
+                    LazyVStack{
+                        HStack {
+                            Spacer()
+                            Text("Quotes by \(quote.author ?? "Author"):")
+                                .font(.title)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                            
+                            Spacer()
+                        }
+                        Spacer()
+                        if quotes.isEmpty {
+                            Text("Loading Quotes...")
+                                .font(.title2)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                                .frame(alignment: .center)
+                        } else {
+                            ForEach(quotes.indices, id: \.self) { index in
+                                if let quote = quotes[safe: index] {
+                                    if #available(iOS 16.0, *) {
+                                        SingleQuoteView(quote: quote, from: "AuthorView")
+                                    } else {
+                                        // Fallback on earlier versions
+                                    }
+                                }
+                            }
+                        }
+                        Color.clear.frame(height: 1)
+                            .onAppear {
+                                if !isLoadingMore && quotes.count < maxQuotes {
+                                    loadMoreQuotes()
+                                }
+                            }
+                        Spacer()
+                        
+                        VStack{
+                            Text("Missing a quote from this author? I'd greatly appreciate if you could submit it:")
+                                .font(.title2)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                .padding(.bottom, 5)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .multilineTextAlignment(.center)
+
+                            composeButton
+                        }
+                        
+                        if !isLoadingMore {
+                            if (quotes.count >= maxQuotes) {
+                                Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
+                                    .font(.title2)
+                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    .padding(.bottom, 5)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        Spacer()
+                    }
+                }
+                
+            }
+            .frame(maxWidth: .infinity)
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .onAppear {
+                // Fetch initial quotes when the view appears
+                loadInitialQuotes()
+                sharedVars.colorPaletteIndex = widgetColorPaletteIndex
+                
+                colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
+                colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
+                colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
+            }
+            .sheet(isPresented: $isAddingQuote) {
+                quoteAddition
+            }
+        }
+    }
+    
+    private func loadInitialQuotes() {
+        totalQuotesLoaded = 0
+        loadMoreQuotes() // Initial load
+    }
+    
+    private func loadMoreQuotes() {
+        guard !isLoadingMore else { return }
+        
+        isLoadingMore = true
+        let group = DispatchGroup()
+        
+        getQuotesByAuthor(author: quote.author!) {quotes, error in
+            if let error = error {
+                print("Error fetching quotes: \(error)")
+                return
+            }
             
-            composeButton
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .sheet(isPresented: $isAddingQuote) {
-            quoteAddition
-        }
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .onAppear {
-            // Fetch recent quotes when the view appears
-            getRecentQuotes(limit: 3) { quotes, error in
-                if let quotes = quotes {
-                    recentQuotes = quotes
-                } else if let error = error {
-                    print("Error fetching recent quotes: \(error)")
+            guard let quotes = quotes else {
+                print("No quotes found.")
+                return
+            }
+
+            let quotesToAppend = quotes.prefix(quotesPerPage)
+            
+            for quote in quotesToAppend {
+                DispatchQueue.main.async {
+                    if !self.quotes.contains(where: { $0.id == quote.id }) {
+                        self.quotes.append(quote)
+                    }
                 }
             }
-            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
-            
-            colorPalettes[3][0] = Color(hex:widgetCustomColorPaletteFirstIndex)
-            colorPalettes[3][1] = Color(hex:widgetCustomColorPaletteSecondIndex)
-            colorPalettes[3][2] = Color(hex:widgetCustomColorPaletteThirdIndex)
+        }
+        
+        group.notify(queue: .main) {
+            self.isLoadingMore = false
+            self.totalQuotesLoaded += self.quotesPerPage
         }
     }
 }
-struct CommunityView_Previews: PreviewProvider {
-    static var previews: some View {
-        CommunityView()
-    }
-}
-

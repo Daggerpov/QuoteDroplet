@@ -135,7 +135,7 @@ struct Provider: IntentTimelineProvider {
         // Check if the author is going to take up 2 lines and adjust the maxHeight accordingly
         
         // adjusted
-        if let author = author, (!author.isEmpty && author != "Unknown Author" && author != "" && author != "NULL") {
+        if let author = author, (isAuthorValid(authorGiven: author)) {
             let authorFont = UIFont.systemFont(ofSize: 14) // Use an appropriate font size for the author
             let authorBoundingBox = author.boundingRect(
                 with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
@@ -156,17 +156,8 @@ struct Provider: IntentTimelineProvider {
             attributes: [NSAttributedString.Key.font: font],
             context: nil
         )
-        
-        // Check if the quote has an author
-        
-        // adjusted
-        if let author = author, (!author.isEmpty && author != "Unknown Author" && author != "" && author != "NULL") {
-            return boundingBox.height > maxHeight
-        } else {
-            // Allow the quote to be 5% longer when there is no author
-            let maxAllowedHeight = maxHeight * 1.05
-            return boundingBox.height > maxAllowedHeight
-        }
+                                 
+         return boundingBox.height > maxHeight
     }
     
 }
@@ -326,7 +317,7 @@ struct QuoteDropletWidgetEntryView : View {
                     }
                     
                     HStack {
-                        if (widgetQuote.author != "Unknown Author" && widgetQuote.author != nil && widgetQuote.author != "" && widgetQuote.author != "NULL") {
+                        if (isAuthorValid(authorGiven: widgetQuote.author)) {
                             Text("— \(widgetQuote.author ?? "")")
                                 .foregroundColor(colors[2]) // Use the third color for author text color
                                 .padding(.horizontal, 5)
