@@ -109,6 +109,7 @@ struct QuotesView: View {
             }
             
         }
+        .padding(10)
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
@@ -160,7 +161,8 @@ struct QuotesView: View {
                     }
                 } else {
                     Button(action: {
-                        notificationTime = Date() // Update the notificationTime to the current date and time
+                        // one minute from current time:
+                        notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
                         isTimePickerExpanded.toggle()
                     }) {
                         HStack {

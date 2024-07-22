@@ -229,7 +229,7 @@ struct AuthorView: View {
                         Spacer()
                         
                         VStack{
-                            Text("Missing a quote from this author? I'd greatly appreciate if you could submit it:")
+                            Text("Missing a quote from this author?\nI'd greatly appreciate submissions:")
                                 .font(.title2)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                 .padding(.bottom, 5)
