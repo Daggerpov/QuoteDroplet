@@ -30,6 +30,8 @@
 		DC29990B2C4DCE0B0025D32E /* AuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2999092C4DCE0B0025D32E /* AuthorView.swift */; };
 		DC29990D2C4DF2350025D32E /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29990C2C4DF2350025D32E /* InfoView.swift */; };
 		DC29990E2C4DF2350025D32E /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29990C2C4DF2350025D32E /* InfoView.swift */; };
+		DC2999102C4DF8050025D32E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29990F2C4DF8050025D32E /* HeaderView.swift */; };
+		DC2999112C4DF8050025D32E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29990F2C4DF8050025D32E /* HeaderView.swift */; };
 		DC3C86922BA005DE009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86912BA005DE009F581D /* GoogleMobileAds */; };
 		DC3C86942BA00824009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86932BA00824009F581D /* GoogleMobileAds */; };
 		DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
@@ -114,6 +116,7 @@
 		DC2999062C4DBED40025D32E /* AuthorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorHelper.swift; sourceTree = "<group>"; };
 		DC2999092C4DCE0B0025D32E /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC29990C2C4DF2350025D32E /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		DC29990F2C4DF8050025D32E /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
@@ -203,6 +206,7 @@
 				DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */,
 				DC2999092C4DCE0B0025D32E /* AuthorView.swift */,
 				DC29990C2C4DF2350025D32E /* InfoView.swift */,
+				DC29990F2C4DF8050025D32E /* HeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -490,6 +494,7 @@
 				DC0EFB812C4CB13500B4D46A /* BookmarkHelper.swift in Sources */,
 				DCAB2DCB2A9FAACA00A822D7 /* APIService.swift in Sources */,
 				DC26EB942BF96FD4004CA84F /* DropletsView.swift in Sources */,
+				DC2999102C4DF8050025D32E /* HeaderView.swift in Sources */,
 				DC0EFB8A2C4CB29400B4D46A /* JSONHelper.swift in Sources */,
 				DCAB2DCD2A9FACC300A822D7 /* Quote.swift in Sources */,
 				DC0EFB842C4CB18100B4D46A /* AdHelper.swift in Sources */,
@@ -511,6 +516,7 @@
 				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DC29990B2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
+				DC2999112C4DF8050025D32E /* HeaderView.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */,
 				DC2999052C4D9E950025D32E /* InteractionsHelper.swift in Sources */,

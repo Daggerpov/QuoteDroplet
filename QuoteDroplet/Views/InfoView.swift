@@ -102,8 +102,7 @@ struct InfoView: View {
     var body: some View {
         NavigationView {
             VStack {
-                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/9761642936") // TODO: change adUnitID to new one, maybe
-                    .frame(height: 60)
+                HeaderView()
                 HStack {
                     Spacer()
                     Text("App Info")

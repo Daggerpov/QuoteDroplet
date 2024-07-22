@@ -259,9 +259,7 @@ struct CommunityView: View {
     
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID:
-                                    "ca-app-pub-5189478572039689/4810355771") // new one: Home New (Mar 25)
-            .frame(height: 50)
+            HeaderView()
             Spacer()
             quoteSection
             Spacer()

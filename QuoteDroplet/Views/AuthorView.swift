@@ -189,8 +189,7 @@ struct AuthorView: View {
     var body: some View {
         NavigationView {
             VStack {
-                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/9761642936")
-                    .frame(height: 60)
+                HeaderView()
                 HStack {
                     Spacer()
                     Text("Quotes by \(quote.author ?? "Author"):")

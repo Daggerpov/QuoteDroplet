@@ -41,8 +41,7 @@ struct DropletsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                    .frame(height: 60)
+                HeaderView()
                 
                 Picker(selection: $selected, label: Text("Picker"), content: {
                     Text("Quotes Feed").tag(1)

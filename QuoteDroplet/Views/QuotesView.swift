@@ -322,10 +322,7 @@ struct QuotesView: View {
 
     var body: some View {
         VStack {
-            AdBannerViewController(adUnitID:
-                                   "ca-app-pub-5189478572039689/3114130725"
-            )
-                            .frame(height: 50)
+            HeaderView()
             Spacer()
             quoteCategoryPicker
             Spacer()    
