@@ -107,7 +107,16 @@ struct QuotesView: View {
             .onTapGesture {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }
+            
         }
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                )
+        )
     }
     
     let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
