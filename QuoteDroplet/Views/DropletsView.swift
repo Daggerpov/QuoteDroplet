@@ -100,6 +100,9 @@ struct DropletsView: View {
                                 ForEach(quotes.indices, id: \.self) { index in
                                     if let quote = quotes[safe: index] {
                                         if #available(iOS 16.0, *) {
+                                            // likely an issue with using the indices ->
+                                            // that's what's causing the
+                                            /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
                                             SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
                                         } else {
                                             // Fallback on earlier versions

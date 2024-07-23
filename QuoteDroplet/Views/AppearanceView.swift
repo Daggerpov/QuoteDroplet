@@ -204,45 +204,45 @@ struct AppearanceView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack{
-                if #available(iOS 16.0, *) {
-                    NavigationLink(destination: InfoView()) {
+        NavigationView{
+            VStack {
+                HStack{
+                    if #available(iOS 16.0, *) {
+                        NavigationLink(destination: InfoView()) {
+                            
+                            Image(systemName: "line.3.horizontal")
+                                .font(.title)
+                                .scaleEffect(1)
+                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                            
+                        }
+                    } else {
                         
-                        Image(systemName: "line.3.horizontal")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        
+                        // Fallback on earlier versions
                     }
-                } else {
+                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                     
-                    // Fallback on earlier versions
                 }
-                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                
-            }
-            .padding()
-            .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
-            // TODO: test between height = 60 vs. height = 50
-            Spacer()
-            Group {
-                HStack(spacing: 20) {
-                    VStack(spacing: 10) {
-                        sampleColorSection
-                        customColorSection
+                .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
+                // TODO: test between height = 60 vs. height = 50
+                Spacer()
+                Group {
+                    HStack(spacing: 20) {
+                        VStack(spacing: 10) {
+                            sampleColorSection
+                            customColorSection
+                        }
+                        widgetPreviewSection
                     }
-                    widgetPreviewSection
                 }
+                Spacer()
+                fontSelector
+                Spacer()
             }
-            Spacer()
-            fontSelector
-            Spacer()
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
-        .frame(maxWidth: .infinity)
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        
     }
 }
 struct AppearanceView_Previews: PreviewProvider {

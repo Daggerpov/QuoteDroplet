@@ -44,11 +44,11 @@ struct InfoView: View {
     
     private var aboutMeSection: some View {
         HStack {
-            Text("Contact:")
-                .font(.title2)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.leading, 10)
-            
+//            Text("Contact:")
+//                .font(.title2)
+//                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+//                .padding(.leading, 10)
+//            
             Spacer()
             
             Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
@@ -194,12 +194,12 @@ struct InfoView: View {
                     // Fallback on earlier versions
                 }
                 Spacer()
+                macNoteSection
+                Spacer()
                 Text("App Version \(Bundle.main.releaseVersionNumber ?? "Unknown")")
                     .font(.title2)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                     .padding(.bottom, 5)
-                Spacer()
-                macNoteSection
                 Spacer()
                 aboutMeSection
                 Spacer()

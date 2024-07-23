@@ -31,12 +31,16 @@ struct ContentView: View {
                     Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Appearance")
                 }
-            QuotesView()
-                .tabItem {
-                    Spacer(minLength: 20)
-                    Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                    Text("Quotes")
-                }
+            if #available(iOS 16.0, *) {
+                QuotesView()
+                    .tabItem {
+                        Spacer(minLength: 20)
+                        Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Quotes")
+                    }
+            } else {
+                // Fallback on earlier versions
+            }
         }
         .environmentObject(sharedVars)
         .accentColor(.blue)

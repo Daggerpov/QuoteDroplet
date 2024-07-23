@@ -258,52 +258,54 @@ struct CommunityView: View {
     // ----------------------------------------------------- SUBMIT QUOTE
     
     var body: some View {
-        VStack {
-            HStack{
-                if #available(iOS 16.0, *) {
-                    NavigationLink(destination: InfoView()) {
-                        
-                        Image(systemName: "line.3.horizontal")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        
+        NavigationView{
+            VStack {
+                HStack{
+                    if #available(iOS 16.0, *) {
+                        NavigationLink(destination: InfoView()) {
+                            
+                            Image(systemName: "line.3.horizontal")
+                                .font(.title)
+                                .scaleEffect(1)
+                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                            
+                        }
+                    } else {
+                        // Fallback on earlier versions
                     }
-                } else {
-                    // Fallback on earlier versions
+                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                    
                 }
-                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
+                // TODO: test between height = 60 vs. height = 50
+                Spacer()
+                quoteSection
+                Spacer()
                 
+                composeButton
+                Spacer()
             }
-            .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
-            // TODO: test between height = 60 vs. height = 50
-            Spacer()
-            quoteSection
-            Spacer()
-            
-            composeButton
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .sheet(isPresented: $isAddingQuote) {
-            quoteAddition
-        }
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .onAppear {
-            // Fetch recent quotes when the view appears
-            getRecentQuotes(limit: 3) { quotes, error in
-                if let quotes = quotes {
-                    recentQuotes = quotes
-                } else if let error = error {
-                    print("Error fetching recent quotes: \(error)")
+            .frame(maxWidth: .infinity)
+            .sheet(isPresented: $isAddingQuote) {
+                quoteAddition
+            }
+            .padding()
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .onAppear {
+                // Fetch recent quotes when the view appears
+                getRecentQuotes(limit: 3) { quotes, error in
+                    if let quotes = quotes {
+                        recentQuotes = quotes
+                    } else if let error = error {
+                        print("Error fetching recent quotes: \(error)")
+                    }
                 }
+                sharedVars.colorPaletteIndex = widgetColorPaletteIndex
+                
+                colorPalettes[3][0] = Color(hex:widgetCustomColorPaletteFirstIndex)
+                colorPalettes[3][1] = Color(hex:widgetCustomColorPaletteSecondIndex)
+                colorPalettes[3][2] = Color(hex:widgetCustomColorPaletteThirdIndex)
             }
-            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
-            
-            colorPalettes[3][0] = Color(hex:widgetCustomColorPaletteFirstIndex)
-            colorPalettes[3][1] = Color(hex:widgetCustomColorPaletteSecondIndex)
-            colorPalettes[3][2] = Color(hex:widgetCustomColorPaletteThirdIndex)
         }
     }
 }

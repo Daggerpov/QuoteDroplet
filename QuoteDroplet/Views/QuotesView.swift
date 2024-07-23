@@ -11,6 +11,7 @@ import UserNotifications
 import UIKit
 import Foundation
 
+@available(iOS 16.0, *)
 struct QuotesView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
@@ -321,44 +322,47 @@ struct QuotesView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack{
-                if #available(iOS 16.0, *) {
-                    NavigationLink(destination: InfoView()) {
-                        
-                        Image(systemName: "line.3.horizontal")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        
+        NavigationStack{
+            
+            VStack {
+                HStack{
+                    if #available(iOS 16.0, *) {
+                        NavigationLink(destination: InfoView()) {
+                            
+                            Image(systemName: "line.3.horizontal")
+                                .font(.title)
+                                .scaleEffect(1)
+                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                            
+                        }
+                    } else {
+                        // Fallback on earlier versions
                     }
-                } else {
-                    // Fallback on earlier versions
+                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                    
                 }
-                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
+                .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
+                // TODO: test between height = 60 vs. height = 50
+                Spacer()
+                quoteCategoryPicker
+                Spacer()
+                timeIntervalPicker
+                Spacer()
+                notificationSection
+                Spacer()
                 
             }
-            .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
-            // TODO: test between height = 60 vs. height = 50
-            Spacer()
-            quoteCategoryPicker
-            Spacer()    
-            timeIntervalPicker
-            Spacer()
-            notificationSection
-            Spacer()
+            .frame(maxWidth: .infinity)
             
-        }
-        .frame(maxWidth: .infinity)
-        
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        
-        .onAppear {
-            notificationToggleEnabled = UserDefaults.standard.bool(forKey: notificationToggleKey)
-            UNUserNotificationCenter.current().getNotificationSettings { settings in
-                DispatchQueue.main.async {
-                    notificationPermissionGranted = settings.authorizationStatus == .authorized
+            .padding()
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            
+            .onAppear {
+                notificationToggleEnabled = UserDefaults.standard.bool(forKey: notificationToggleKey)
+                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                    DispatchQueue.main.async {
+                        notificationPermissionGranted = settings.authorizationStatus == .authorized
+                    }
                 }
             }
         }
@@ -367,6 +371,10 @@ struct QuotesView: View {
 }
 struct QuotesView_Previews: PreviewProvider {
     static var previews: some View {
-        QuotesView()
+        if #available(iOS 16.0, *) {
+            QuotesView()
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }
