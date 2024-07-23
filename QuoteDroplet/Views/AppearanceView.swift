@@ -37,8 +37,9 @@ struct AppearanceView: View {
     private var fontSelector: some View {
         HStack {
             Text("Widget Font:")
-                .font(.title2)
+                .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .padding(.horizontal, 5)
             Picker("", selection: $selectedFontIndex) {
                 ForEach(0..<availableFonts.count, id: \.self) { index in
                     Text(availableFonts[index])
@@ -51,6 +52,15 @@ struct AppearanceView: View {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             }
         }
+        .padding(10)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                )
+        )
     }
     private var sampleColorSection: some View {
         VStack {
