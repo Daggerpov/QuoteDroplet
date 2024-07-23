@@ -61,7 +61,7 @@ class NotificationScheduler {
                 content.title = "Quote Droplet"
             } else if classification.lowercased() == "favorites" {
                 let bookmarkedQuotes = getBookmarkedQuotes().map { $0.toQuoteJSON() }
-                    
+                
                 if !bookmarkedQuotes.isEmpty {
                     let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
                     
@@ -76,9 +76,9 @@ class NotificationScheduler {
                     // Handle case where bookmarkedQuotes is empty
                     randomQuote = QuoteJSON(id: 9999999, text: "Please add a quote to favorites by clicking the favorites button under a quote in the app's \"Droplets\" tab", author: "", classification: "Favorites")
                     content.title = "Quote Droplet: No Favorites Added"
-
+                    
                 }
-
+                
             } else {
                 // Fetch a random quote with the specified classification
                 let filteredQuotes = shortQuotes.filter { $0.classification.lowercased() == classification.lowercased() }
@@ -111,9 +111,9 @@ class NotificationScheduler {
                 if let error = error {
                     print("Error scheduling notification: \(error.localizedDescription)")
                 } //else {
-//                    print("Notification scheduled successfully.")
-//                    print("Body of notification scheduled: \(content.body)")
-//                    print("Scheduled for this time: \(triggerDate)")
+                //                    print("Notification scheduled successfully.")
+                //                    print("Body of notification scheduled: \(content.body)")
+                //                    print("Scheduled for this time: \(triggerDate)")
                 //}
             }
         }

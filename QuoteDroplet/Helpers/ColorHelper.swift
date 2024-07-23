@@ -39,7 +39,7 @@ var colorPalettes = [
     [Color(hex: "85C7F2"), Color(hex: "0C1618"), Color(hex: "83781B")], // Best one, keep as is
     [Color(hex: "EFF8E2"), Color(hex: "DC9E82"), Color(hex: "423E37")], // Change second colour (quote text)
     [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], // Alright
-
+    
     // New ones added
     [Color(hex: "#242434"), Color(hex: "#F79256"), Color(hex: "#F0EFF4")], // 4th (similar to Colombia flag colors), from playing around
     [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")], // Alright

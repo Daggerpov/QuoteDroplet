@@ -45,17 +45,17 @@ struct DropletsView: View {
                     if #available(iOS 16.0, *) {
                         NavigationLink(destination: InfoView()) {
                             
-                                Image(systemName: "line.3.horizontal")
-                                    .font(.title)
-                                    .scaleEffect(1)
-                                    .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                            Image(systemName: "line.3.horizontal")
+                                .font(.title)
+                                .scaleEffect(1)
+                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                             
                         }
                     } else {
                         // Fallback on earlier versions
                     }
                     AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                        
+                    
                 }
                 .padding()
                 .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
@@ -180,7 +180,7 @@ struct DropletsView: View {
             }
             .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
                 .onEnded { value in
-//                    print(value.translation)
+                    //                    print(value.translation)
                     switch(value.translation.width, value.translation.height) {
                     case (...0, -30...30):
                         //                    print("left swipe")

@@ -28,7 +28,7 @@ struct AppearanceView: View {
     
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-
+    
     @State private var showCustomColorAlert = false
     @State private var showMacAlert = false
     
@@ -163,7 +163,7 @@ struct AppearanceView: View {
                                 .lineSpacing(4)
                                 .minimumScaleFactor(0.5)
                                 .frame(maxHeight: .infinity)
-
+                            
                             Text("— Cicero")
                                 .font(Font.custom(availableFonts[selectedFontIndex], size: 14))
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
@@ -281,17 +281,17 @@ struct AppearanceView: View {
                 if #available(iOS 16.0, *) {
                     NavigationLink(destination: InfoView()) {
                         
-                            Image(systemName: "line.3.horizontal")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        Image(systemName: "line.3.horizontal")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                         
                     }
                 } else {
                     // Fallback on earlier versions
                 }
                 AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                    
+                
             }
             .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
             // TODO: test between height = 60 vs. height = 50

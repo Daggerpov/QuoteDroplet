@@ -235,7 +235,7 @@ struct AuthorView: View {
                                 .padding(.bottom, 5)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .multilineTextAlignment(.center)
-
+                            
                             composeButton
                         }
                         
@@ -292,7 +292,7 @@ struct AuthorView: View {
                 print("No quotes found.")
                 return
             }
-
+            
             let quotesToAppend = quotes.prefix(quotesPerPage)
             
             for quote in quotesToAppend {

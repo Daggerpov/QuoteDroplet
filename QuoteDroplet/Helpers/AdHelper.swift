@@ -17,7 +17,7 @@ import GoogleMobileAds
 // UIViewControllerRepresentable wrapper for AdMob banner view
 struct AdBannerViewController: UIViewControllerRepresentable {
     let adUnitID: String
-
+    
     func makeUIViewController(context: Context) -> UIViewController {
         let bannerView = GADBannerView(adSize: GADAdSizeBanner) // Use a predefined ad size
         bannerView.adUnitID = adUnitID

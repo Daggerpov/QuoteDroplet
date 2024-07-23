@@ -15,10 +15,10 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
     }
     
     let url = URL(string: urlString)!
-
+    
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
-
+    
     URLSession.shared.dataTask(with: request) { data, response, error in
         if let error = error {
             completion(nil, error)
@@ -34,12 +34,12 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
             }
             return
         }
-
+        
         guard let data = data else {
             completion(nil, NSError(domain: "NoDataError", code: -1, userInfo: nil))
             return
         }
-
+        
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -79,12 +79,12 @@ func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) 
             }
             return
         }
-
+        
         guard let data = data else {
             completion(nil, NSError(domain: "NoDataError", code: -1, userInfo: nil))
             return
         }
-
+        
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -118,12 +118,12 @@ func getQuoteByAuthorAndIndex(author: String, index: Int, completion: @escaping 
             }
             return
         }
-
+        
         guard let data = data else {
             completion(nil, NSError(domain: "NoDataError", code: -1, userInfo: nil))
             return
         }
-
+        
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -142,16 +142,16 @@ func getRecentQuotes(limit: Int, completion: @escaping ([Quote]?, Error?) -> Voi
         completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return
     }
-
+    
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
-
+    
     URLSession.shared.dataTask(with: request) { data, response, error in
         if let error = error {
             completion(nil, error)
             return
         }
-
+        
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
             if let httpResponse = response as? HTTPURLResponse {
@@ -161,12 +161,12 @@ func getRecentQuotes(limit: Int, completion: @escaping ([Quote]?, Error?) -> Voi
             }
             return
         }
-
+        
         guard let data = data else {
             completion(nil, NSError(domain: "NoDataError", code: -1, userInfo: nil))
             return
         }
-
+        
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -220,7 +220,7 @@ func addQuote(text: String, author: String?, classification: String, completion:
                 if httpResponse.statusCode == 409 {
                     // Handle the 409 error here
                     let conflictError = NSError(domain: "ConflictError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Thanks for submitting a quote.\n\nIt happens to already exist in the database, though. Great minds think alike."])
-                                        completion(false, conflictError)
+                    completion(false, conflictError)
                 } else {
                     completion(false, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
                 }

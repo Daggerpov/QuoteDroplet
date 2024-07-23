@@ -16,7 +16,7 @@ import FirebaseCore
 @main
 struct QuoteDropletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-//    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate might not need for firebase, since I have the above one from GoogleMobileAds
+    //    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate might not need for firebase, since I have the above one from GoogleMobileAds
     
     var body: some Scene {
         WindowGroup {
@@ -33,7 +33,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         FirebaseApp.configure()
         return true
     }
-
+    
     // Register for remote notifications
     private func registerForNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
@@ -44,25 +44,25 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
             }
         }
     }
-
+    
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         // Handle the registration failure
     }
-
+    
     // MARK: - UNUserNotificationCenterDelegate
-
+    
     // Handle notification when the app is in the foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         // Customize the presentation of the notification when the app is in the foreground
         completionHandler([.alert, .sound, .badge])
     }
-
+    
     // Handle tap on the notification
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // Handle the action triggered by the user (e.g., open a specific view)
         completionHandler()
     }
-
+    
     // Observer method to handle notification permission granted
     @objc private func handleNotificationPermissionGranted() {
         // Implement the code to handle notification permission granted

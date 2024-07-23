@@ -177,7 +177,7 @@ struct InfoView: View {
         }
         
     }
-        
+    
     
     
 }

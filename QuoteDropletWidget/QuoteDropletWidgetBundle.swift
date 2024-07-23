@@ -19,6 +19,6 @@ struct QuoteDropletWidgetBundle: WidgetBundle {
         QuoteDropletWidgetWithIntentsExtraLarge()
         QuoteDropletWidgetLarge()
         QuoteDropletWidgetExtraLarge()
-//        QuoteDropletWidgetLiveActivity()
+        //        QuoteDropletWidgetLiveActivity()
     }
 }

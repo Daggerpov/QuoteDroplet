@@ -69,7 +69,7 @@ struct QuotesView: View {
             completion(counts)
         }
     }
-
+    
     private func getBookmarkedQuotesCount(completion: @escaping (Int) -> Void) {
         let bookmarkedQuotes = getBookmarkedQuotes()
         completion(bookmarkedQuotes.count)
@@ -223,7 +223,7 @@ struct QuotesView: View {
             }
         }
     }
-
+    
     private var notificationTimePicker: some View {
         VStack {
             Spacer()
@@ -267,9 +267,9 @@ struct QuotesView: View {
     
     private func scheduleNotifications() {
         NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
-                                                  quoteCategory: quoteCategory)
+                                                           quoteCategory: quoteCategory)
     }
-
+    
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
@@ -279,14 +279,14 @@ struct QuotesView: View {
             }
         }
     }
-
+    
     private var timeIntervalPicker: some View {
         HStack {
             Text("Reload Widget:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                 .padding(.horizontal, 5)
-
+            
             HStack {
                 Picker("", selection: $quoteFrequencyIndex) {
                     ForEach(0..<frequencyOptions.count, id: \.self) { index in
@@ -319,24 +319,24 @@ struct QuotesView: View {
                 )
         )
     }
-
+    
     var body: some View {
         VStack {
             HStack{
                 if #available(iOS 16.0, *) {
                     NavigationLink(destination: InfoView()) {
                         
-                            Image(systemName: "line.3.horizontal")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        Image(systemName: "line.3.horizontal")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                         
                     }
                 } else {
                     // Fallback on earlier versions
                 }
                 AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                    
+                
             }
             .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
             // TODO: test between height = 60 vs. height = 50

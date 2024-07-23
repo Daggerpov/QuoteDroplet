@@ -15,7 +15,7 @@ struct ContentView: View {
                         Spacer(minLength: 20)
                         Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                         Text("Droplets")
-                      }
+                    }
                 }
             CommunityView()
                 .tabItem {
@@ -23,7 +23,7 @@ struct ContentView: View {
                         Spacer(minLength: 20)
                         Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                         Text("Community")
-                      }
+                    }
                 }
             AppearanceView()
                 .tabItem {

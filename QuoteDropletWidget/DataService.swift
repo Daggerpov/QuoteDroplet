@@ -17,7 +17,7 @@ struct DataService {
     
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-
+    
     func getColorPalette() -> [Color] {
         return [
             widgetCustomColorPaletteFirstIndex,
