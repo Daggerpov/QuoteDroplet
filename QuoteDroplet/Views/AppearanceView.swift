@@ -29,9 +29,6 @@ struct AppearanceView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    @State private var showCustomColorAlert = false
-    @State private var showMacAlert = false
-    
     let availableFonts = [
         "Georgia", "Times New Roman", "Verdana",
         "Palatino", "Baskerville", "Didot", "Optima",
@@ -180,40 +177,6 @@ struct AppearanceView: View {
             .frame(width: 150, height: 150)
         }
     }
-    private var customColorNote: some View {
-        VStack(spacing: 10) {
-            Button(action: {
-                showCustomColorAlert = true
-            }) {
-                HStack {
-                    Image(systemName: "info.circle")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    Text("Note About Custom Colors")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.leading, 5)
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
-                .buttonStyle(CustomButtonStyle())
-            }
-            .alert(isPresented: $showCustomColorAlert) {
-                Alert(
-                    title: Text("Note About Custom Colors"),
-                    message: Text("Currently, the custom colors editing doesn't work, and simply act as one more color palette. \n\nI'm actively trying to fix this issue."),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
-        }
-    }
     
     private var reloadButton: some View {
         VStack{
@@ -240,41 +203,6 @@ struct AppearanceView: View {
         }
     }
     
-    private var macNoteSection: some View {
-        VStack (spacing: 10){
-            Button(action: {
-                showMacAlert = true
-            }) {
-                HStack {
-                    Image(systemName: "info.circle")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    Text("Note for Mac Owners")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.leading, 5)
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
-                .buttonStyle(CustomButtonStyle())
-            }
-            .alert(isPresented: $showMacAlert) {
-                Alert(
-                    title: Text("Note for Mac Owners"),
-                    message: Text("You can actually add this same iOS widget to your Mac's widgets by clicking the date in the top-right corner of your Mac -> Edit Widgets.\n\nAlso, Quote Droplet has a Mac version available on the App Store. It conveniently shows quotes from a small icon in your menu bar, even offline."),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
-        }
-    }
-    
     var body: some View {
         VStack {
             HStack{
@@ -288,11 +216,13 @@ struct AppearanceView: View {
                         
                     }
                 } else {
+                    
                     // Fallback on earlier versions
                 }
                 AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                 
             }
+            .padding()
             .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
             // TODO: test between height = 60 vs. height = 50
             Spacer()
@@ -307,8 +237,6 @@ struct AppearanceView: View {
             }
             Spacer()
             fontSelector
-            Spacer()
-            macNoteSection
             Spacer()
         }
         .frame(maxWidth: .infinity)

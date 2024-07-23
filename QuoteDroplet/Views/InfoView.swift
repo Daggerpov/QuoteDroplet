@@ -12,6 +12,15 @@ import UIKit
 import Foundation
 import StoreKit
 
+extension Bundle {
+    var releaseVersionNumber: String? {
+        return infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+    var buildVersionNumber: String? {
+        return infoDictionary?["CFBundleVersion"] as? String
+    }
+}
+
 @available(iOS 16.0, *)
 struct InfoView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
@@ -30,6 +39,8 @@ struct InfoView: View {
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
     @Environment(\.requestReview) var requestReview
+    
+    @State private var showMacAlert = false
     
     private var aboutMeSection: some View {
         HStack {
@@ -126,6 +137,41 @@ struct InfoView: View {
         }
     }
     
+    private var macNoteSection: some View {
+        VStack (spacing: 10){
+            Button(action: {
+                showMacAlert = true
+            }) {
+                HStack {
+                    Image(systemName: "info.circle")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                    Text("Note for Mac Owners")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        .padding(.leading, 5)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                        )
+                )
+                .buttonStyle(CustomButtonStyle())
+            }
+            .alert(isPresented: $showMacAlert) {
+                Alert(
+                    title: Text("Note for Mac Owners"),
+                    message: Text("You can actually add this same iOS widget to your Mac's widgets by clicking the date in the top-right corner of your Mac -> Edit Widgets.\n\nAlso, Quote Droplet has a Mac version available on the App Store. It conveniently shows quotes from a small icon in your menu bar, even offline."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+        }
+    }
+    
     var body: some View {
         NavigationView{
             VStack {
@@ -140,13 +186,20 @@ struct InfoView: View {
                     
                     Spacer()
                 }
+                shareAppButton
+                Spacer()
                 if #available(iOS 16.0, *) {
                     reviewButton
                 } else {
                     // Fallback on earlier versions
                 }
                 Spacer()
-                shareAppButton
+                Text("App Version \(Bundle.main.releaseVersionNumber ?? "Unknown")")
+                    .font(.title2)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                    .padding(.bottom, 5)
+                Spacer()
+                macNoteSection
                 Spacer()
                 aboutMeSection
                 Spacer()
