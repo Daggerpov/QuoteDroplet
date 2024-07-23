@@ -374,8 +374,6 @@ struct QuoteDropletWidgetEntryView : View {
             bookmarkedQuotes.removeAll { $0.id == widgetQuote.id }
         }
         saveBookmarkedQuotes(bookmarkedQuotes)
-        
-        interactionsIncrease(from: "widget")
     }
     
     private func toggleLike() {
@@ -388,8 +386,6 @@ struct QuoteDropletWidgetEntryView : View {
             likedQuotes.removeAll { $0.id == widgetQuote.id }
         }
         saveLikedQuotes(likedQuotes)
-        
-        interactionsIncrease(from: "widget")
     }
     
     private func likeQuoteAction() {
@@ -641,8 +637,6 @@ struct LikeQuoteIntent: AppIntent {
             likedQuotes.removeAll { $0.id == widgetQuote.id }
         }
         saveLikedQuotes(likedQuotes)
-        
-        interactionsIncrease(from: "widget")
     }
     
     private func likeQuoteAction() {

@@ -19,6 +19,13 @@ class QuoteBox: ObservableObject {
     @Published var likes: Int = 0
     @Published var isLiking: Bool = false
     
+    //------------------------------------------------------------------------------------
+    @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var interactions = 0
+    
+    @Environment(\.requestReview) var requestReview
+    //------------------------------------------------------------------------------------
+    
     func toggleBookmark(for quote: Quote) {
         DispatchQueue.main.async {
             self.isBookmarked.toggle()
@@ -31,7 +38,11 @@ class QuoteBox: ObservableObject {
             }
             saveBookmarkedQuotes(bookmarkedQuotes)
             
-            interactionsIncrease()
+            self.interactions += 1
+            if (self.interactions == 21) {
+                // within app, so review should show
+                self.requestReview()
+            }
         }
     }
     
@@ -48,7 +59,11 @@ class QuoteBox: ObservableObject {
             }
             saveLikedQuotes(likedQuotes)
             
-            interactionsIncrease()
+            self.interactions += 1
+            if (self.interactions == 21) {
+                // within app, so review should show
+                self.requestReview()
+            }
         }
     }
     

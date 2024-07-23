@@ -12,6 +12,7 @@ import UIKit
 import Foundation
 import StoreKit
 
+@available(iOS 16.0, *)
 struct InfoView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
@@ -27,6 +28,8 @@ struct InfoView: View {
     
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
+    
+    @Environment(\.requestReview) var requestReview
     
     private var aboutMeSection: some View {
         HStack {
@@ -72,37 +75,62 @@ struct InfoView: View {
         .padding(.horizontal)
     }
     
-    private var reviewButton: some View {
-        Button(action: {
+    private var shareAppButton: some View {
+        HStack{
             if #available(iOS 16.0, *) {
-                reqReview(from: "InfoView")
+                HStack{
+                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("Check out this app, Quote Droplet.")){
+                        Label("Share Quote Droplet", systemImage: "arrow.up.right.square")
+                            .font(.title)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+                    }
+                    
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                )
             } else {
                 // Fallback on earlier versions
             }
-        }) {
-            HStack {
-                Text("Rate Quote Droplet")
-                    .font(.headline)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                Image(systemName: "star.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+        }
+    }
+    
+    
+    @available(iOS 16.0, *)
+    private var reviewButton: some View {
+        
+        return HStack{
+            Button(action: {
+                requestReview()
+            }) {
+                HStack {
+                    Image(systemName: "star")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+                    Text("Rate Quote Droplet")
+                        .font(.title)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+                    
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                )
             }
             .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-            )
         }
-        .padding()
     }
     
     var body: some View {
-        NavigationView {
+        NavigationView{
             VStack {
-                HeaderView()
+                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805").frame(height: 50)
+                Spacer()
                 HStack {
                     Spacer()
                     Text("App Info")
@@ -112,11 +140,20 @@ struct InfoView: View {
                     
                     Spacer()
                 }
-                reviewButton
+                if #available(iOS 16.0, *) {
+                    reviewButton
+                } else {
+                    // Fallback on earlier versions
+                }
+                Spacer()
+                shareAppButton
+                Spacer()
                 aboutMeSection
+                Spacer()
             }
             .frame(maxWidth: .infinity)
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .padding()
             .onAppear {
                 // Fetch initial quotes when the view appears
                 sharedVars.colorPaletteIndex = widgetColorPaletteIndex
@@ -125,6 +162,22 @@ struct InfoView: View {
                 colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
                 colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
             }
+            
         }
+        .frame(maxWidth: .infinity)
+        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+        .padding()
+        .onAppear {
+            // Fetch initial quotes when the view appears
+            sharedVars.colorPaletteIndex = widgetColorPaletteIndex
+            
+            colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
+            colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
+            colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
+        }
+        
     }
+        
+    
+    
 }

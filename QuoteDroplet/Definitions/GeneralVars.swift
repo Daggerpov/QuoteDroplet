@@ -73,15 +73,15 @@ func resizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage? {
     //Create a new image context
     let renderer = UIGraphicsImageRenderer(size: targetSize)
     let newImage = renderer.image { context in
-      // Fill the background with a transparent color
-      context.cgContext.setFillColor(UIColor.clear.cgColor)
-      context.cgContext.fill(CGRect(origin: .zero, size: targetSize))
-      
-      // draw new image
-      image.draw(in: CGRect(x: 0, y: yOffset, width: newSize.width, height: newSize.height))
+        // Fill the background with a transparent color
+        context.cgContext.setFillColor(UIColor.clear.cgColor)
+        context.cgContext.fill(CGRect(origin: .zero, size: targetSize))
+        
+        // draw new image
+        image.draw(in: CGRect(x: 0, y: yOffset, width: newSize.width, height: newSize.height))
     }
     
     return newImage
-  }
+}
 
 
