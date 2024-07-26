@@ -9,29 +9,29 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            DropletsView()
-                .tabItem {
-                    VStack {
-                        Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Droplets")
-                    }
-                }
-            CommunityView()
-                .tabItem {
-                    VStack {
-                        Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Community")
-                    }
-                }
-            AppearanceView()
-                .tabItem {
-                    Spacer(minLength: 20)
-                    Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                    Text("Appearance")
-                }
             if #available(iOS 16.0, *) {
+                DropletsView()
+                    .tabItem {
+                        VStack {
+                            Spacer(minLength: 20)
+                            Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                            Text("Droplets")
+                        }
+                    }
+                CommunityView()
+                    .tabItem {
+                        VStack {
+                            Spacer(minLength: 20)
+                            Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                            Text("Community")
+                        }
+                    }
+                AppearanceView()
+                    .tabItem {
+                        Spacer(minLength: 20)
+                        Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Appearance")
+                    }
                 QuotesView()
                     .tabItem {
                         Spacer(minLength: 20)
