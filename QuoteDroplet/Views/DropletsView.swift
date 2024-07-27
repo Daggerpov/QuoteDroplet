@@ -11,6 +11,7 @@ import UIKit
 import Foundation
 import StoreKit
 
+@available(iOS 16.0, *)
 struct DropletsView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
@@ -39,10 +40,10 @@ struct DropletsView: View {
     private let maxQuotes = 15
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 HStack{
-                    if #available(iOS 16.0, *) {
+                    
                         NavigationLink(destination: InfoView()) {
                             
                             Image(systemName: "line.3.horizontal")
@@ -51,14 +52,12 @@ struct DropletsView: View {
                                 .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                             
                         }
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                     
+                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                 }
-                .padding()
-                .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
+                
+                    .padding()
+                    .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
                 // TODO: test between height = 60 vs. height = 50
                 
                 Picker(selection: $selected, label: Text("Picker"), content: {
@@ -99,14 +98,10 @@ struct DropletsView: View {
                             } else {
                                 ForEach(quotes.indices, id: \.self) { index in
                                     if let quote = quotes[safe: index] {
-                                        if #available(iOS 16.0, *) {
-                                            // likely an issue with using the indices ->
-                                            // that's what's causing the
-                                            /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
-                                            SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
-                                        } else {
-                                            // Fallback on earlier versions
-                                        }
+                                        SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
+                                        // likely an issue with using the indices ->
+                                        // that's what's causing the
+                                        /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
                                     }
                                 }
                             }
@@ -118,23 +113,14 @@ struct DropletsView: View {
                                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                     .padding(.bottom, 5)
                                     .frame(alignment: .center)
-                                if #available(iOS 15.0, *) {
-                                    Image(systemName: "bookmark")
-                                        .font(.title)
-                                        .scaleEffect(1)
-                                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                } else {
-                                    // Fallback on earlier versions
-                                }
-                                
+                                Image(systemName: "bookmark")
+                                    .font(.title)
+                                    .scaleEffect(1)
+                                    .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                             } else {
                                 ForEach(savedQuotes.indices, id: \.self) { index in
                                     if let quote = savedQuotes[safe: index] {
-                                        if #available(iOS 16.0, *) {
-                                            SingleQuoteView(quote: quote, from: "not from author view")
-                                        } else {
-                                            // Fallback on earlier versions
-                                        }
+                                        SingleQuoteView(quote: quote, from: "not from author view")
                                     }
                                 }
                             }
@@ -290,14 +276,10 @@ struct SingleQuoteView: View {
                         quoteBox.likeQuoteAction(for: quote)
                         quoteBox.toggleLike(for: quote)
                     }) {
-                        if #available(iOS 15.0, *) {
-                            Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
+                        Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
                                 .font(.title)
                                 .scaleEffect(1)
                                 .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        } else {
-                            // Fallback on earlier versions
-                        }
                     }
                     
                     // Display the like count next to the heart button
@@ -357,6 +339,7 @@ struct SingleQuoteView: View {
     }
 }
 
+@available(iOS 16.0, *)
 struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {
         DropletsView()

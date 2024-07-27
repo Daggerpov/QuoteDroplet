@@ -11,6 +11,7 @@ import UserNotifications
 import UIKit
 import Foundation
 
+@available(iOS 16.0, *)
 struct CommunityView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
@@ -258,7 +259,7 @@ struct CommunityView: View {
     // ----------------------------------------------------- SUBMIT QUOTE
     
     var body: some View {
-        NavigationView{
+        NavigationStack {
             VStack {
                 HStack{
                     if #available(iOS 16.0, *) {
@@ -309,6 +310,7 @@ struct CommunityView: View {
         }
     }
 }
+@available(iOS 16.0, *)
 struct CommunityView_Previews: PreviewProvider {
     static var previews: some View {
         CommunityView()

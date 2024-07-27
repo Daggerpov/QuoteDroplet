@@ -11,6 +11,7 @@ import UserNotifications
 import UIKit
 import Foundation
 
+@available(iOS 16.0, *)
 struct AppearanceView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
@@ -214,7 +215,7 @@ struct AppearanceView: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationStack {
             VStack {
                 HStack{
                     if #available(iOS 16.0, *) {
@@ -255,6 +256,7 @@ struct AppearanceView: View {
         }
     }
 }
+@available(iOS 16.0, *)
 struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
         AppearanceView()

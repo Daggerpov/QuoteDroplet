@@ -82,7 +82,7 @@ struct QuotesView: View {
     private var quoteCategoryPicker: some View {
         HStack {
             Text("Quote Category:")
-                .font(.title2)
+                .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             Picker("", selection: $quoteCategory) {
                 if counts.isEmpty {

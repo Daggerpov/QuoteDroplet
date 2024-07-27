@@ -12,6 +12,7 @@ import UIKit
 import Foundation
 import StoreKit
 
+@available(iOS 16.0, *)
 struct AuthorView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
@@ -187,7 +188,7 @@ struct AuthorView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805").frame(height: 50)
                 HStack {
