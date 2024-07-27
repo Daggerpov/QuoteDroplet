@@ -162,51 +162,12 @@ struct CommunityView: View {
     private var quoteAddition: some View {
         VStack {
             howWorksPopUp
-            if #available(iOS 16.0, *) {
-                NavigationStack {
-                    Form{
-                        //                    Section(header: Text("Quote Info"))
-                        Section() { // without header
-                            TextField("Quote Text", text: $quoteText)
-                            TextField("Quote Author", text: $author)
-                            submissionQuoteCategoryPicker
-                        }
-                        Button("Submit") {
-                            addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
-                                if success {
-                                    submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
-                                    // Set showSubmissionReceivedAlert to true after successful submission
-                                } else if let error = error {
-                                    submissionMessage = error.localizedDescription
-                                } else {
-                                    submissionMessage = "An unknown error occurred."
-                                }
-                                isAddingQuote = false
-                                showSubmissionReceivedAlert = true // <-- Set to true after successful submission
-                            }
-                            quoteText = ""
-                            author = ""
-                            selectedCategory = .wisdom
-                        }
-                        .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
-                            Alert(
-                                title: Text("Submission Received"),
-                                message: Text(submissionMessage),
-                                dismissButton: .default(Text("OK")) {
-                                    showSubmissionReceivedAlert = false // Dismisses the alert when OK is clicked
-                                }
-                            )
-                        }
-                        
-                    }
-                    .navigationTitle("Quote Submission")
-                    .accentColor(.blue)
-                }
-            } else {
+            NavigationStack {
                 Form{
-                    Section(header: Text("Quote Submission")) { // without header
+                    //                    Section(header: Text("Quote Info"))
+                    Section() { // without header
                         TextField("Quote Text", text: $quoteText)
-                        TextField("Author", text: $author)
+                        TextField("Quote Author", text: $author)
                         submissionQuoteCategoryPicker
                     }
                     Button("Submit") {
@@ -225,7 +186,6 @@ struct CommunityView: View {
                         quoteText = ""
                         author = ""
                         selectedCategory = .wisdom
-                        
                     }
                     .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
                         Alert(
@@ -236,7 +196,10 @@ struct CommunityView: View {
                             }
                         )
                     }
+                    
                 }
+                .navigationTitle("Quote Submission")
+                .accentColor(.blue)
             }
             AdBannerViewController(adUnitID:
                                     //                                    "ca-app-pub-5189478572039689/1371107555"
@@ -262,17 +225,13 @@ struct CommunityView: View {
         NavigationStack {
             VStack {
                 HStack{
-                    if #available(iOS 16.0, *) {
-                        NavigationLink(destination: InfoView()) {
-                            
-                            Image(systemName: "line.3.horizontal")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            
-                        }
-                    } else {
-                        // Fallback on earlier versions
+                    NavigationLink(destination: InfoView()) {
+                        
+                        Image(systemName: "line.3.horizontal")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        
                     }
                     AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                     

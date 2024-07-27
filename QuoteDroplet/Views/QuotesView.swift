@@ -326,17 +326,13 @@ struct QuotesView: View {
             
             VStack {
                 HStack{
-                    if #available(iOS 16.0, *) {
-                        NavigationLink(destination: InfoView()) {
-                            
-                            Image(systemName: "line.3.horizontal")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            
-                        }
-                    } else {
-                        // Fallback on earlier versions
+                    NavigationLink(destination: InfoView()) {
+                        
+                        Image(systemName: "line.3.horizontal")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        
                     }
                     AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                     

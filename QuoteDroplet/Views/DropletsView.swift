@@ -44,20 +44,20 @@ struct DropletsView: View {
             VStack {
                 HStack{
                     
-                        NavigationLink(destination: InfoView()) {
-                            
-                            Image(systemName: "line.3.horizontal")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            
-                        }
+                    NavigationLink(destination: InfoView()) {
+                        
+                        Image(systemName: "line.3.horizontal")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        
+                    }
                     
                     AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                 }
                 
-                    .padding()
-                    .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
+                .padding()
+                .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
                 // TODO: test between height = 60 vs. height = 50
                 
                 Picker(selection: $selected, label: Text("Picker"), content: {
@@ -277,9 +277,9 @@ struct SingleQuoteView: View {
                         quoteBox.toggleLike(for: quote)
                     }) {
                         Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                     }
                     
                     // Display the like count next to the heart button
@@ -296,20 +296,16 @@ struct SingleQuoteView: View {
                         .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                 }.padding(.leading, 5)
                 
-                if #available(iOS 16.0, *) {
-                    let authorForSharing = (isAuthorValid(authorGiven: quote.author)) ? quote.author : ""
-                    let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
-                    
-                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
-                        Image(systemName: "square.and.arrow.up")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                    }
-                    .padding(.leading, 5)
-                } else {
-                    // Fallback on earlier versions
+                let authorForSharing = (isAuthorValid(authorGiven: quote.author)) ? quote.author : ""
+                let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
+                
+                ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.title)
+                        .scaleEffect(1)
+                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                 }
+                .padding(.leading, 5)
                 
                 Spacer()
                 

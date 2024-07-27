@@ -218,18 +218,13 @@ struct AppearanceView: View {
         NavigationStack {
             VStack {
                 HStack{
-                    if #available(iOS 16.0, *) {
-                        NavigationLink(destination: InfoView()) {
-                            
-                            Image(systemName: "line.3.horizontal")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            
-                        }
-                    } else {
+                    NavigationLink(destination: InfoView()) {
                         
-                        // Fallback on earlier versions
+                        Image(systemName: "line.3.horizontal")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        
                     }
                     AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
                     

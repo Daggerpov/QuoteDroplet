@@ -44,11 +44,11 @@ struct InfoView: View {
     
     private var aboutMeSection: some View {
         HStack {
-//            Text("Contact:")
-//                .font(.title2)
-//                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-//                .padding(.leading, 10)
-//            
+            //            Text("Contact:")
+            //                .font(.title2)
+            //                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            //                .padding(.leading, 10)
+            //            
             Spacer()
             
             Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
@@ -88,23 +88,19 @@ struct InfoView: View {
     
     private var shareAppButton: some View {
         HStack{
-            if #available(iOS 16.0, *) {
-                HStack{
-                    ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("Check out this app, Quote Droplet.")){
-                        Label("Share Quote Droplet", systemImage: "arrow.up.right.square")
-                            .font(.title)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                    }
-                    
+            HStack{
+                ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("Check out this app, Quote Droplet.")){
+                    Label("Share Quote Droplet", systemImage: "arrow.up.right.square")
+                        .font(.title)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
-            } else {
-                // Fallback on earlier versions
+                
             }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+            )
         }
     }
     
@@ -188,11 +184,7 @@ struct InfoView: View {
                 }
                 shareAppButton
                 Spacer()
-                if #available(iOS 16.0, *) {
-                    reviewButton
-                } else {
-                    // Fallback on earlier versions
-                }
+                reviewButton
                 Spacer()
                 macNoteSection
                 Spacer()
