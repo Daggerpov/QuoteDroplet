@@ -30,11 +30,13 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         
         UNUserNotificationCenter.current().delegate = self
         
-//        registerForNotifications()
-        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
 //                print("All set!")
+                // what was previously in `registerNotifications()` function call is this 3-line block:
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
                 if #available(iOS 15, *) {
                     NotificationScheduler.shared.scheduleNotifications()
                 } else {
@@ -44,29 +46,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                 print(error.localizedDescription)
             }
         }
-        
-//        if #available(iOS 15, *) {
-//
-//        } else {
-//            // Fallback on earlier versions
-//        }
-        
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         FirebaseApp.configure()
         
         return true
-    }
-    
-    // Register for remote notifications
-    private func registerForNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            }
-        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
