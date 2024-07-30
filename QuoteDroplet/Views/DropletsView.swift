@@ -315,7 +315,7 @@ struct SingleQuoteView: View {
                 
                 if (isAuthorValid(authorGiven: quote.author) && from != "AuthorView"){
                     NavigationLink(destination: AuthorView(quote: quote)) {
-                        Image(systemName: "arrow.up.right.square")
+                        Image(systemName: "arrow.turn.down.right")
                             .font(.title)
                             .scaleEffect(1)
                             .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
