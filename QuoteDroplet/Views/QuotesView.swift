@@ -161,8 +161,8 @@ struct QuotesView: View {
                     }
                 } else {
                     Button(action: {
-                        if isDefaultConfigOverwritten {
-                            notificationTime = previouslySelectedNotificationTime
+                        if NotificationScheduler.isDefaultConfigOverwritten {
+                            notificationTime = NotificationScheduler.previouslySelectedNotificationTime
                         } else {
                             // one minute from current time:
                             notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
