@@ -166,6 +166,10 @@ struct DropletsView: View {
                 colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
                 colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
                 colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
+                
+                // Schedule notifications:
+                // will schedule with previous date and category values
+                NotificationScheduler.shared.scheduleNotifications()
             }
             .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
                 .onEnded { value in
