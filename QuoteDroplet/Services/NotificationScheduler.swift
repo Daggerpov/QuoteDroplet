@@ -21,12 +21,12 @@ class NotificationScheduler {
     static let shared = NotificationScheduler()
     
     // notifications default settings:
-    private var defaultNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 5, to: Date.now) ?? Date.now
+    private var defaultNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
     private var defaultQuoteCategory: QuoteCategory = QuoteCategory.all
     
     public static var isDefaultConfigOverwritten: Bool = false
     
-    public static var previouslySelectedNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 5, to: Date.now) ?? Date.now
+    public static var previouslySelectedNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
     public static var previouslySelectedNotificationCategory: QuoteCategory = QuoteCategory.all
 
     @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
