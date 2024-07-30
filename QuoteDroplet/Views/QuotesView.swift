@@ -246,7 +246,7 @@ struct QuotesView: View {
             Button(action: {
                 isTimePickerExpanded.toggle()
                 NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
-                                                                quoteCategory: quoteCategory)
+                                                                   quoteCategory: quoteCategory, defaults: false)
             }) {
                 Text("Done")
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)

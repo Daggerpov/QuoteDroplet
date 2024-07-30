@@ -24,6 +24,11 @@ class NotificationScheduler {
     private var defaultNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 1, to: Date.now) ?? Date.now
     private var defaultQuoteCategory: QuoteCategory = QuoteCategory.all
     
+    private var isDefaultConfigOverwritten: Bool = false
+    
+    private var previouslySelectedNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 1, to: Date.now) ?? Date.now
+    private var previouslySelectedNotificationCategory: QuoteCategory = QuoteCategory.all
+
     @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
     var notificationToggleEnabled: Bool = false
     
@@ -34,14 +39,25 @@ class NotificationScheduler {
     }
     
     func scheduleNotifications() {
-        if notificationToggleEnabled {
-            scheduleNotifications(notificationTime: defaultNotificationTime, quoteCategory: defaultQuoteCategory)
+        // removed toggle check to make sure user has opted in; simply notififying no matter if opted in.
+        if isDefaultConfigOverwritten {
+            scheduleNotifications(notificationTime: previouslySelectedNotificationTime, quoteCategory: previouslySelectedNotificationCategory, defaults: true)
+        } else {
+            scheduleNotifications(notificationTime: defaultNotificationTime, quoteCategory: defaultQuoteCategory, defaults: true)
         }
     }
     
-    func scheduleNotifications(notificationTime: Date, quoteCategory: QuoteCategory) {
-        defaultNotificationTime = notificationTime
-        defaultQuoteCategory = quoteCategory
+    func scheduleNotifications(notificationTime: Date, quoteCategory: QuoteCategory, defaults: Bool) {
+        // if given defaults -> don't want to overrite selections.
+        
+        // if not given defaults, so real selections, overwrite so that if default
+        // notification scheduler gets called, that's what it'll use.
+        
+        if defaults == false {
+            previouslySelectedNotificationTime = notificationTime
+            previouslySelectedNotificationCategory = quoteCategory
+            isDefaultConfigOverwritten = true
+        }
         
         // Cancel existing notifications to reschedule them with the new time
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
