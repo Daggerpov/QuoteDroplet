@@ -8,7 +8,7 @@
 import WidgetKit
 import SwiftUI
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOS 16.0, *)
 @main
 struct QuoteDropletWidgetBundle: WidgetBundle {
     var body: some Widget {

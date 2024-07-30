@@ -518,17 +518,13 @@ struct QuoteDropletWidgetExtraLarge: Widget {
     }
 }
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetWithIntentsMedium: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
-            } else {
-                // Fallback on earlier versions
-            }
+            QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget With Buttons")
