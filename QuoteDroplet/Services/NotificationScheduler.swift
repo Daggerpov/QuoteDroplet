@@ -16,8 +16,16 @@ let notificationPermissionKey = "notificationPermissionGranted"
 let notificationToggleKey = "notificationToggleEnabled"
 private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
 
+@available(iOS 15, *)
 class NotificationScheduler {
     static let shared = NotificationScheduler()
+    
+    // notifications default settings:
+    private var defaultNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 1, to: Date.now) ?? Date.now
+    private var defaultQuoteCategory: QuoteCategory = QuoteCategory.all
+    
+    @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
+    var notificationToggleEnabled: Bool = false
     
     private var quotes = [QuoteJSON]()
     
@@ -25,7 +33,16 @@ class NotificationScheduler {
         quotes = loadQuotesFromJSON()
     }
     
+    func scheduleNotifications() {
+        if notificationToggleEnabled {
+            scheduleNotifications(notificationTime: defaultNotificationTime, quoteCategory: defaultQuoteCategory)
+        }
+    }
+    
     func scheduleNotifications(notificationTime: Date, quoteCategory: QuoteCategory) {
+        defaultNotificationTime = notificationTime
+        defaultQuoteCategory = quoteCategory
+        
         // Cancel existing notifications to reschedule them with the new time
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         

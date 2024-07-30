@@ -31,10 +31,9 @@ struct QuotesView: View {
     
     
     // Notifications------------------------
-    @AppStorage("notificationFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var notificationFrequencyIndex = 3
     @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
     var notificationToggleEnabled: Bool = false
+    
     @AppStorage(notificationPermissionKey)
     var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
     
@@ -246,7 +245,8 @@ struct QuotesView: View {
             
             Button(action: {
                 isTimePickerExpanded.toggle()
-                scheduleNotifications()
+                NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
+                                                                quoteCategory: quoteCategory)
             }) {
                 Text("Done")
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -264,11 +264,6 @@ struct QuotesView: View {
         .background(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear)
         .cornerRadius(8)
         .shadow(radius: 5)
-    }
-    
-    private func scheduleNotifications() {
-        NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
-                                                           quoteCategory: quoteCategory)
     }
     
     func requestNotificationPermission() {
