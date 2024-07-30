@@ -42,12 +42,12 @@ struct InfoView: View {
     
     @State private var showMacAlert = false
     
-    @ViewBuilder func buildLinkImage (urlForImage: String, imageName: String) -> some View {
+    @ViewBuilder func buildLinkImage (urlForImage: String, imageName: String, widthSpecified: CGFloat? = 50) -> some View {
         HStack{
             Link(destination: URL(string: urlForImage)!) {
                 Image(imageName)
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: widthSpecified, height: 50)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             }
         }
@@ -73,7 +73,7 @@ struct InfoView: View {
             
             Spacer()
             
-            buildLinkImage(urlForImage: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact", imageName: "gmaillogo")
+            buildLinkImage(urlForImage: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact", imageName: "gmaillogo", widthSpecified: 60)
 
             Spacer()
         }
