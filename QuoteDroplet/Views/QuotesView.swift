@@ -161,8 +161,12 @@ struct QuotesView: View {
                     }
                 } else {
                     Button(action: {
-                        // one minute from current time:
-                        notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
+                        if isDefaultConfigOverwritten {
+                            notificationTime = previouslySelectedNotificationTime
+                        } else {
+                            // one minute from current time:
+                            notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
+                        }
                         isTimePickerExpanded.toggle()
                     }) {
                         HStack {
