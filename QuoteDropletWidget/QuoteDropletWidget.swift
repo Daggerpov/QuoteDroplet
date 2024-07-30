@@ -11,13 +11,6 @@ import Intents
 import Foundation
 import AppIntents
 
-// Fonts for widget and widget preview
-let availableFonts = [
-    "Georgia", "Times New Roman",
-    "Verdana", "Palatino", "Baskerville", "Didot",
-    "Optima", "Arial"
-]
-
 // Extension to disable content margins
 extension WidgetConfiguration {
     func disableContentMarginsIfNeeded() -> some WidgetConfiguration {

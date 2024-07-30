@@ -12,6 +12,13 @@ import UIKit
 import Foundation
 import GoogleMobileAds
 
+// Fonts for widget and widget preview
+let availableFonts = [
+    "Georgia", "Times New Roman",
+    "Verdana", "Palatino", "Baskerville", "Didot",
+    "Optima", "Arial"
+]
+
 struct GridStack<Content: View>: View {
     let rows: Int
     let columns: Int
