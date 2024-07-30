@@ -42,6 +42,20 @@ struct InfoView: View {
     
     @State private var showMacAlert = false
     
+    @ViewBuilder func buildLinkImage (urlForImage: String, imageName: String) -> some View {
+        HStack{
+            Link(destination: URL(string: urlForImage)!) {
+                Image(imageName)
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            }
+        }
+        .padding(8)
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+    
     private var aboutMeSection: some View {
         HStack {
             //            Text("Contact:")
@@ -51,31 +65,16 @@ struct InfoView: View {
             //            
             Spacer()
             
-            Link(destination: URL(string: "https://www.linkedin.com/in/danielagapov/")!) {
-                Image("linkedinlogo")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            }
+            buildLinkImage(urlForImage: "https://www.linkedin.com/in/danielagapov/", imageName: "linkedinlogo")
             
             Spacer()
             
-            Link(destination: URL(string: "https://github.com/Daggerpov")!) {
-                Image("githublogo")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            }
+            buildLinkImage(urlForImage: "https://github.com/Daggerpov", imageName: "githublogo")
             
             Spacer()
             
-            Link(destination: URL(string: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact")!) {
-                Image("gmaillogo")
-                    .resizable()
-                    .frame(width: 60, height: 50)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            }
-            
+            buildLinkImage(urlForImage: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact", imageName: "gmaillogo")
+
             Spacer()
         }
         
@@ -91,7 +90,7 @@ struct InfoView: View {
             HStack{
                 ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("Check out this app, Quote Droplet.")){
                     Label("Share Quote Droplet", systemImage: "arrow.up.right.square")
-                        .font(.title)
+                        .font(.title3)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                 }
                 
@@ -119,7 +118,7 @@ struct InfoView: View {
                         .frame(width: 25, height: 25)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                     Text("Rate Quote Droplet")
-                        .font(.title)
+                        .font(.title3)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                     
                 }
