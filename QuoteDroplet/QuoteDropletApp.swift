@@ -27,10 +27,34 @@ struct QuoteDropletApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         UNUserNotificationCenter.current().delegate = self
-        registerForNotifications()
+        
+//        registerForNotifications()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+//                print("All set!")
+                if #available(iOS 15, *) {
+                    NotificationScheduler.shared.scheduleNotifications()
+                } else {
+                    // Fallback on earlier versions
+                }
+            } else if let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+//        if #available(iOS 15, *) {
+//
+//        } else {
+//            // Fallback on earlier versions
+//        }
+        
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
         FirebaseApp.configure()
+        
         return true
     }
     
