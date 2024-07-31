@@ -103,6 +103,24 @@ struct InfoView: View {
         }
     }
     
+    private var donateButton: some View {
+        HStack{
+            HStack{
+                Link(destination: URL(string: "https://buy.stripe.com/fZe17cbqd25Q0Mw000")!) {
+                    Label("Donate", systemImage: "giftcard")
+                        .font(.title3)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+                }
+                
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+            )
+        }
+    }
+    
     
     private var reviewButton: some View {
         
@@ -173,7 +191,7 @@ struct InfoView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Text("App Info")
+                    Text("App Info (Version \(Bundle.main.releaseVersionNumber ?? "Unknown"))")
                         .font(.title)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding(.bottom, 5)
@@ -186,11 +204,7 @@ struct InfoView: View {
                 Spacer()
                 macNoteSection
                 Spacer()
-//                Text("App Version \(Bundle.main.releaseVersionNumber ?? "Unknown")")
-//                    .font(.title2)
-//                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-//                    .padding(.bottom, 5)
-                
+                donateButton
                 Spacer()
                 aboutMeSection
                 Spacer()
