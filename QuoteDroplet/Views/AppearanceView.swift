@@ -30,11 +30,6 @@ struct AppearanceView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    let availableFonts = [
-        "Georgia", "Times New Roman", "Verdana",
-        "Palatino", "Baskerville", "Didot", "Optima",
-        "Arial"
-    ]
     private var fontSelector: some View {
         HStack {
             Text("Widget Font:")
