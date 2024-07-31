@@ -104,7 +104,6 @@ struct InfoView: View {
     }
     
     
-    @available(iOS 16.0, *)
     private var reviewButton: some View {
         
         return HStack{
@@ -187,10 +186,11 @@ struct InfoView: View {
                 Spacer()
                 macNoteSection
                 Spacer()
-                Text("App Version \(Bundle.main.releaseVersionNumber ?? "Unknown")")
-                    .font(.title2)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
+//                Text("App Version \(Bundle.main.releaseVersionNumber ?? "Unknown")")
+//                    .font(.title2)
+//                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+//                    .padding(.bottom, 5)
+                
                 Spacer()
                 aboutMeSection
                 Spacer()
