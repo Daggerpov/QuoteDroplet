@@ -32,8 +32,7 @@ struct QuotesView: View {
     
     // Notifications------------------------
     @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
-    var notificationToggleEnabled: Bool = false
-    
+    var notificationToggleEnabled: Bool = true
     @AppStorage(notificationPermissionKey)
     var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
     
