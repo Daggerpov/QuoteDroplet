@@ -16,7 +16,7 @@ import Foundation
 struct QuotesView: View {
     var formattedTime: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .medium
+        dateFormatter.dateFormat = "h:mm a"  // Use "h:mm a" for 12-hour format with AM/PM
         return dateFormatter.string(from: NotificationScheduler.previouslySelectedNotificationTime)
     }
     
@@ -213,7 +213,7 @@ struct QuotesView: View {
                 Spacer()
                 
                 if NotificationScheduler.isDefaultConfigOverwritten {
-                    Text("You currently have daily notifications scheduled for: \(formattedTime)")
+                    Text("You currently have daily notifications scheduled for: \n\(formattedTime)")
                         .font(.title2)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding()
