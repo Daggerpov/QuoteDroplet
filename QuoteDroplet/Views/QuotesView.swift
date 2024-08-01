@@ -14,12 +14,17 @@ import Foundation
 
 @available(iOS 16.0, *)
 struct QuotesView: View {
-    var formattedTime: String {
+    var formattedSelectedTime: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"  // Use "h:mm a" for 12-hour format with AM/PM
         return dateFormatter.string(from: NotificationScheduler.previouslySelectedNotificationTime)
     }
-    
+    var formattedDefaultTime: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"  // Use "h:mm a" for 12-hour format with AM/PM
+        return dateFormatter.string(from: NotificationScheduler.defaultScheduledNotificationTime)
+    }
+
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @Environment(\.colorScheme) var colorScheme
@@ -213,26 +218,18 @@ struct QuotesView: View {
                 Spacer()
                 
                 if NotificationScheduler.isDefaultConfigOverwritten {
-                    Text("You currently have daily notifications scheduled for: \n\(formattedTime)")
+                    Text("You currently have daily notifications scheduled for: \n\(formattedSelectedTime)")
                         .font(.title2)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding()
                         .frame(alignment: .center)
                         .multilineTextAlignment(.center)
                 } else {
-                    // one minute from current time:
-//                    notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
-//                    Text("You currently don't have notifications scheduled")
-//                        .font(.title2)
-//                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-//                        .padding()
-//                        .frame(alignment: .center)
-                    
-                    // TODO: decide if a message needs to be here, because there was simply a default
-                    // value assigned upon opening the app
-                    // TODO: maybe make a separate variable within `NotificationScheduler.swift` for the
-                    // default value given
-
+                    Text("You currently have daily notifications scheduled automatically for: \n\(formattedDefaultTime)")
+                        .font(.title2)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .padding()
+                        .frame(alignment: .center)
                 }
                 
                 notiTimePickerColor

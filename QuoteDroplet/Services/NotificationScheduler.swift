@@ -29,6 +29,8 @@ class NotificationScheduler {
 
     private var quotes = [QuoteJSON]()
     
+    public static var defaultScheduledNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
+    
     private init() {
         quotes = loadQuotesFromJSON()
     }
@@ -38,6 +40,7 @@ class NotificationScheduler {
         if NotificationScheduler.isDefaultConfigOverwritten {
             scheduleNotifications(notificationTime: NotificationScheduler.previouslySelectedNotificationTime, quoteCategory: NotificationScheduler.previouslySelectedNotificationCategory, defaults: true)
         } else {
+            NotificationScheduler.defaultScheduledNotificationTime = defaultNotificationTime
             scheduleNotifications(notificationTime: defaultNotificationTime, quoteCategory: defaultQuoteCategory, defaults: true)
         }
     }
