@@ -29,13 +29,6 @@ struct QuotesView: View {
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencyIndex = 3
     
-    
-    // Notifications------------------------
-    @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
-    var notificationToggleEnabled: Bool = true
-    @AppStorage(notificationPermissionKey)
-    var notificationPermissionGranted: Bool = UserDefaults.standard.bool(forKey: notificationPermissionKey)
-    
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     // Notifications------------------------
     
@@ -43,8 +36,6 @@ struct QuotesView: View {
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
         }
-        // Initialize notificationPermissionGranted based on stored value
-        notificationPermissionGranted = UserDefaults.standard.bool(forKey: notificationPermissionKey)
     }
     
     private func getCategoryCounts(completion: @escaping ([String: Int]) -> Void) {
@@ -127,75 +118,50 @@ struct QuotesView: View {
     
     private var notificationSection: some View {
         Section {
-            VStack {
-                HStack {
-                    Text("Notifications:")
-                        .font(.headline)
+            if isTimePickerExpanded {
+                Button(action: {
+                    isTimePickerExpanded.toggle()
+                }) {
+                    Text("Close")
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.horizontal, 5)
-                    Toggle("", isOn: $notificationToggleEnabled)
-                        .labelsHidden()
-                        .onChange(of: notificationToggleEnabled) { newValue in
-                            UserDefaults.standard.set(newValue, forKey: notificationToggleKey)
-                            if !newValue {
-                                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-                            }
-                        }
-                }
-                if isTimePickerExpanded {
-                    Button(action: {
-                        isTimePickerExpanded.toggle()
-                    }) {
-                        Text("Close")
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                            )
-                    }
-                    .padding()
-                    .sheet(isPresented: $isTimePickerExpanded) {
-                        notificationTimePicker
-                    }
-                } else {
-                    Button(action: {
-                        if NotificationScheduler.isDefaultConfigOverwritten {
-                            notificationTime = NotificationScheduler.previouslySelectedNotificationTime
-                        } else {
-                            // one minute from current time:
-                            notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
-                        }
-                        isTimePickerExpanded.toggle()
-                    }) {
-                        HStack {
-                            Text("Schedule Daily")
-                                .font(.headline)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                            Image(systemName: "calendar.badge.clock")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                        }
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                         )
+                }
+                .padding()
+                .sheet(isPresented: $isTimePickerExpanded) {
+                    notificationTimePicker
+                }
+            } else {
+                Button(action: {
+                    if NotificationScheduler.isDefaultConfigOverwritten {
+                        notificationTime = NotificationScheduler.previouslySelectedNotificationTime
+                    } else {
+                        // one minute from current time:
+                        notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
+                    }
+                    isTimePickerExpanded.toggle()
+                }) {
+                    HStack {
+                        Text("Schedule Notifications")
+                            .font(.headline)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
+                        Image(systemName: "calendar.badge.clock")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                     }
                     .padding()
-                }
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                    .overlay(
+                    .background(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                     )
-            )
+                }
+                .padding()
+            }
         }
     }
     
@@ -269,16 +235,6 @@ struct QuotesView: View {
         .shadow(radius: 5)
     }
     
-    func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                NotificationCenter.default.post(name: NSNotification.Name("NotificationPermissionGranted"), object: nil)
-            } else if let error = error {
-                print("Error requesting notification permission: \(error.localizedDescription)")
-            }
-        }
-    }
-    
     private var timeIntervalPicker: some View {
         HStack {
             Text("Reload Widget:")
@@ -321,7 +277,6 @@ struct QuotesView: View {
     
     var body: some View {
         NavigationStack{
-            
             VStack {
                 HStack{
                     NavigationLink(destination: InfoView()) {
@@ -350,15 +305,6 @@ struct QuotesView: View {
             
             .padding()
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-            
-            .onAppear {
-                notificationToggleEnabled = UserDefaults.standard.bool(forKey: notificationToggleKey)
-                UNUserNotificationCenter.current().getNotificationSettings { settings in
-                    DispatchQueue.main.async {
-                        notificationPermissionGranted = settings.authorizationStatus == .authorized
-                    }
-                }
-            }
         }
     }
     
