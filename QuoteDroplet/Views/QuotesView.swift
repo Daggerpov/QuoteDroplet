@@ -204,6 +204,28 @@ struct QuotesView: View {
                     .multilineTextAlignment(.center)
                 Spacer()
                 
+                if NotificationScheduler.isDefaultConfigOverwritten {
+                    Text("You currently have daily notifications scheduled for: \(NotificationScheduler.previouslySelectedNotificationTime)")
+                        .font(.title2)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .padding()
+                        .frame(alignment: .center)
+                } else {
+                    // one minute from current time:
+//                    notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
+//                    Text("You currently don't have notifications scheduled")
+//                        .font(.title2)
+//                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+//                        .padding()
+//                        .frame(alignment: .center)
+                    
+                    // TODO: decide if a message needs to be here, because there was simply a default
+                    // value assigned upon opening the app
+                    // TODO: maybe make a separate variable within `NotificationScheduler.swift` for the
+                    // default value given
+
+                }
+                
                 notiTimePickerColor
                 
                 Spacer()
