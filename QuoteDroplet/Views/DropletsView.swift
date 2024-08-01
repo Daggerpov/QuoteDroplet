@@ -111,7 +111,7 @@ struct DropletsView: View {
                                 Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
                                     .font(.title2)
                                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding(.bottom, 5)
+                                    .padding()
                                     .frame(alignment: .center)
                                 Image(systemName: "bookmark")
                                     .font(.title)
