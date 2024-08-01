@@ -11,8 +11,15 @@ import UserNotifications
 import UIKit
 import Foundation
 
+
 @available(iOS 16.0, *)
 struct QuotesView: View {
+    var formattedTime: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .medium
+        return dateFormatter.string(from: NotificationScheduler.previouslySelectedNotificationTime)
+    }
+    
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @Environment(\.colorScheme) var colorScheme
@@ -194,6 +201,7 @@ struct QuotesView: View {
     }
     
     private var notificationTimePicker: some View {
+        
         VStack {
             Spacer()
             
@@ -205,11 +213,12 @@ struct QuotesView: View {
                 Spacer()
                 
                 if NotificationScheduler.isDefaultConfigOverwritten {
-                    Text("You currently have daily notifications scheduled for: \(NotificationScheduler.previouslySelectedNotificationTime)")
+                    Text("You currently have daily notifications scheduled for: \(formattedTime)")
                         .font(.title2)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding()
                         .frame(alignment: .center)
+                        .multilineTextAlignment(.center)
                 } else {
                     // one minute from current time:
 //                    notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()

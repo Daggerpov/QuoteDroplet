@@ -192,7 +192,7 @@ struct AuthorView: View {
                             Text("Missing a quote from this author?\nI'd greatly appreciate submissions:")
                                 .font(.title2)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
+                                .padding()
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .multilineTextAlignment(.center)
                             
@@ -204,7 +204,7 @@ struct AuthorView: View {
                                 Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
                                     .font(.title2)
                                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding(.bottom, 5)
+                                    .padding()
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .multilineTextAlignment(.center)
                             }
