@@ -42,23 +42,7 @@ struct DropletsView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack{
-                    
-                    NavigationLink(destination: InfoView()) {
-                        
-                        Image(systemName: "line.3.horizontal")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        
-                    }
-                    
-                    AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805")
-                }
-                
-                .padding()
-                .frame(height: 60) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
-                // TODO: test between height = 60 vs. height = 50
+                HeaderView()
                 
                 Picker(selection: $selected, label: Text("Picker"), content: {
                     Text("Quotes Feed").tag(1)
