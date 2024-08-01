@@ -12,8 +12,7 @@ import WidgetKit
 import UIKit
 import Foundation
 
-let notificationPermissionKey = "notificationPermissionGranted"
-let notificationToggleKey = "notificationToggleEnabled"
+let notificationToggleKey = ""
 private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
 
 @available(iOS 15, *)
@@ -29,7 +28,7 @@ class NotificationScheduler {
     public static var previouslySelectedNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
     public static var previouslySelectedNotificationCategory: QuoteCategory = QuoteCategory.all
 
-    @AppStorage(notificationToggleKey, store: UserDefaults(suiteName: "group.selectedSettings"))
+    @AppStorage("notificationToggleEnabled", store: UserDefaults(suiteName: "group.selectedSettings"))
     var notificationToggleEnabled: Bool = false
     
     private var quotes = [QuoteJSON]()
