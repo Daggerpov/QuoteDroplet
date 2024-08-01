@@ -151,8 +151,7 @@ struct QuotesView: View {
                     if NotificationScheduler.isDefaultConfigOverwritten {
                         notificationTime = NotificationScheduler.previouslySelectedNotificationTime
                     } else {
-                        // one minute from current time:
-                        notificationTime = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
+                        notificationTime = NotificationScheduler.defaultScheduledNotificationTime
                     }
                     isTimePickerExpanded.toggle()
                 }) {
@@ -230,6 +229,7 @@ struct QuotesView: View {
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding()
                         .frame(alignment: .center)
+                        .multilineTextAlignment(.center)
                 }
                 
                 notiTimePickerColor
