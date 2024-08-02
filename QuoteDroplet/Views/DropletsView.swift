@@ -39,107 +39,111 @@ struct DropletsView: View {
     
     private let maxQuotes = 15
     
+    private var topNavBar: some View {
+        Picker(selection: $selected, label: Text("Picker"), content: {
+            Text("Quotes Feed").tag(1)
+            Text("Saved Quotes").tag(2)
+        })
+        .pickerStyle(SegmentedPickerStyle())
+    }
+    
+    private var quotesListView: some View {
+        ScrollView {
+            Spacer()
+            LazyVStack{
+                HStack {
+                    Spacer()
+                    if selected == 1 {
+                        Text("Quotes Feed")
+                            .font(.title)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding(.bottom, 5)
+                    } else {
+                        Text("Saved Quotes")
+                            .font(.title)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding(.bottom, 5)
+                    }
+                    
+                    Spacer()
+                }
+                Spacer()
+                if selected == 1{
+                    if quotes.isEmpty {
+                        Text("Loading Quotes Feed...")
+                            .font(.title2)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding(.bottom, 5)
+                            .frame(alignment: .center)
+                    } else {
+                        ForEach(quotes.indices, id: \.self) { index in
+                            if let quote = quotes[safe: index] {
+                                SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
+                                // likely an issue with using the indices ->
+                                // that's what's causing the
+                                /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
+                            }
+                        }
+                    }
+                    
+                } else {
+                    if savedQuotes.isEmpty {
+                        Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
+                            .font(.title2)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding()
+                            .frame(alignment: .center)
+                            .multilineTextAlignment(.center)
+                        Image(systemName: "bookmark")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                    } else {
+                        ForEach(savedQuotes.indices, id: \.self) { index in
+                            if let quote = savedQuotes[safe: index] {
+                                SingleQuoteView(quote: quote, from: "not from author view")
+                            }
+                        }
+                    }
+                }
+                
+                if selected == 1{
+                    Color.clear.frame(height: 1)
+                        .onAppear {
+                            if !isLoadingMore && quotes.count < maxQuotes {
+                                loadMoreQuotes()
+                            }
+                        }
+                } else {
+                    Color.clear.frame(height: 1)
+                        .onAppear {
+                            if !isLoadingMore && savedQuotes.count < maxQuotes {
+                                loadMoreQuotes()
+                            }
+                        }
+                }
+                if !isLoadingMore {
+                    if (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) {
+                        Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
+                            .font(.title2)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding()
+                            .frame(alignment: .center)
+                            .multilineTextAlignment(.center)
+                    }
+                }
+                Spacer()
+            }
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
                 HeaderView()
-                
-                Picker(selection: $selected, label: Text("Picker"), content: {
-                    Text("Quotes Feed").tag(1)
-                    Text("Saved Quotes").tag(2)
-                })
-                .pickerStyle(SegmentedPickerStyle())
-                
-                
+                topNavBar
                 Spacer()
-                ScrollView {
-                    Spacer()
-                    LazyVStack{
-                        HStack {
-                            Spacer()
-                            if selected == 1 {
-                                Text("Quotes Feed")
-                                    .font(.title)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding(.bottom, 5)
-                            } else {
-                                Text("Saved Quotes")
-                                    .font(.title)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding(.bottom, 5)
-                            }
-                            
-                            Spacer()
-                        }
-                        Spacer()
-                        if selected == 1{
-                            if quotes.isEmpty {
-                                Text("Loading Quotes Feed...")
-                                    .font(.title2)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding(.bottom, 5)
-                                    .frame(alignment: .center)
-                            } else {
-                                ForEach(quotes.indices, id: \.self) { index in
-                                    if let quote = quotes[safe: index] {
-                                        SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
-                                        // likely an issue with using the indices ->
-                                        // that's what's causing the
-                                        /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
-                                    }
-                                }
-                            }
-                            
-                        } else {
-                            if savedQuotes.isEmpty {
-                                Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
-                                    .font(.title2)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding()
-                                    .frame(alignment: .center)
-                                    .multilineTextAlignment(.center)
-                                Image(systemName: "bookmark")
-                                    .font(.title)
-                                    .scaleEffect(1)
-                                    .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                            } else {
-                                ForEach(savedQuotes.indices, id: \.self) { index in
-                                    if let quote = savedQuotes[safe: index] {
-                                        SingleQuoteView(quote: quote, from: "not from author view")
-                                    }
-                                }
-                            }
-                        }
-                        
-                        if selected == 1{
-                            Color.clear.frame(height: 1)
-                                .onAppear {
-                                    if !isLoadingMore && quotes.count < maxQuotes {
-                                        loadMoreQuotes()
-                                    }
-                                }
-                        } else {
-                            Color.clear.frame(height: 1)
-                                .onAppear {
-                                    if !isLoadingMore && savedQuotes.count < maxQuotes {
-                                        loadMoreQuotes()
-                                    }
-                                }
-                        }
-                        if !isLoadingMore {
-                            if (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) {
-                                Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
-                                    .font(.title2)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding()
-                                    .frame(alignment: .center)
-                                    .multilineTextAlignment(.center)
-                            }
-                        }
-                        Spacer()
-                    }
-                }
-                
+                quotesListView
             }
             .frame(maxWidth: .infinity)
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
