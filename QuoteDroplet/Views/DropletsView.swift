@@ -141,9 +141,12 @@ struct DropletsView: View {
         NavigationStack {
             VStack {
                 HeaderView()
-                topNavBar
-                Spacer()
-                quotesListView
+                VStack{
+                    topNavBar
+                    Spacer()
+                    quotesListView
+                }
+                .padding()
             }
             .frame(maxWidth: .infinity)
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
@@ -316,7 +319,6 @@ struct SingleQuoteView: View {
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)
         .shadow(radius: 5)
-        .padding(.horizontal)
         .onAppear {
             quoteBox.isBookmarked = isQuoteBookmarked(quote)
             
