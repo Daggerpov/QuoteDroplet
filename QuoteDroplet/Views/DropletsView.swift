@@ -319,6 +319,7 @@ struct SingleQuoteView: View {
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)
         .shadow(radius: 5)
+        .padding(.horizontal)
         .onAppear {
             quoteBox.isBookmarked = isQuoteBookmarked(quote)
             
