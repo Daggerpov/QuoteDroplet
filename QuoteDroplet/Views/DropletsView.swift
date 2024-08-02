@@ -132,7 +132,7 @@ struct DropletsView: View {
                                     .font(.title2)
                                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                     .padding()
-                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .frame(alignment: .center)
                                     .multilineTextAlignment(.center)
                             }
                         }
