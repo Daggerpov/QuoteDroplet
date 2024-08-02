@@ -31,7 +31,7 @@ struct AppearanceView: View {
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
     private var fontSelector: some View {
-        HStack {
+        VStack {
             Text("Widget Font:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -91,11 +91,33 @@ struct AppearanceView: View {
                 }
             }
         }
+        .frame(alignment: .center)
+    }
+    
+    private var customColorSection: some View {
+        VStack {
+            Text("Custom Colors:")
+                .font(.title3)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            customColorPickers
+        }
+        .padding()
+        .frame(alignment: .center)
+    }
+    
+    private var customColorPickers: some View {
+        HStack(spacing: 10) {
+            Spacer()
+            ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
+                customColorPicker(index: customIndex)
+            }
+            Spacer()
+        }
+        .frame(alignment: .center)
     }
     
     private func customColorPicker(index: Int) -> some View {
-        ColorPicker(
-            "",
+        ColorPickerWithoutLabel(
             selection: Binding(
                 get: {
                     colorPalettes[3][index]
@@ -113,13 +135,12 @@ struct AppearanceView: View {
                     } else {
                         // do nothing, idk
                     }
-                    
                     sharedVars.colorPaletteIndex = 3
                     widgetColorPaletteIndex = 3
                     WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 }
             ),
-            supportsOpacity: false
+            supportsAlpha: true
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)
@@ -127,30 +148,9 @@ struct AppearanceView: View {
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
         }
     }
-    private var customColorSection: some View {
-        VStack(spacing: 10) {
-            Text("Custom Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
-            customColorPickers
-        }
-    }
-    
-    
-    private var customColorPickers: some View {
-        HStack(spacing: 10) {
-            ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
-                customColorPicker(index: customIndex)
-            }
-        }
-    }
     
     private var widgetPreviewSection: some View {
         VStack {
-            Text("Widget Preview:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
@@ -178,34 +178,8 @@ struct AppearanceView: View {
                     )
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: 0) // increased from black opacity of 0.2 and radius of 5
-                    .padding(.trailing, 0)
             }
             .frame(width: 150, height: 150)
-        }
-    }
-    
-    private var reloadButton: some View {
-        VStack{
-            Button(action: {
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-            }) {
-                HStack {
-                    Text("Reload Widget Now")
-                        .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding(.leading, 5)
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
-                .buttonStyle(CustomButtonStyle())
-            }
         }
     }
     
@@ -215,19 +189,22 @@ struct AppearanceView: View {
                 HeaderView()
                 Spacer()
                 Group {
-                    HStack(spacing: 20) {
-                        VStack(spacing: 10) {
-                            sampleColorSection
-                            customColorSection
+                    VStack/*(spacing: 10)*/ {
+                        HStack{
+                            Spacer()
+                            widgetPreviewSection
+                            Spacer()
+                            fontSelector
+                            Spacer()
                         }
-                        widgetPreviewSection
+                        sampleColorSection
+                        customColorSection
                     }
+//                    .frame(alignment: .center)
                 }
                 Spacer()
-                fontSelector
-                Spacer()
             }
-            .frame(maxWidth: .infinity)
+            
             .padding()
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
@@ -237,5 +214,27 @@ struct AppearanceView: View {
 struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
         AppearanceView()
+    }
+}
+
+@available(iOS 14.0, *)
+public struct ColorPickerWithoutLabel: UIViewRepresentable {
+    @Binding var selection: Color
+    var supportsAlpha: Bool = true
+    
+    public init(selection: Binding<Color>, supportsAlpha: Bool = true) {
+        self._selection = selection
+        self.supportsAlpha = supportsAlpha
+    }
+    
+    
+    public func makeUIView(context: Context) -> UIColorWell {
+        let well = UIColorWell()
+        well.supportsAlpha = supportsAlpha
+        return well
+    }
+    
+    public func updateUIView(_ uiView: UIColorWell, context: Context) {
+        uiView.selectedColor = UIColor(selection)
     }
 }
