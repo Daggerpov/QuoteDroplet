@@ -307,18 +307,18 @@ struct QuotesView: View {
         NavigationStack{
             VStack {
                 HeaderView()
-                Spacer()
-                quoteCategoryPicker
-                Spacer()
-                timeIntervalPicker
-                Spacer()
-                notificationSection
-                Spacer()
-                
+                VStack{
+                    Spacer()
+                    quoteCategoryPicker
+                    Spacer()
+                    timeIntervalPicker
+                    Spacer()
+                    notificationSection
+                    Spacer()
+                }
+                .padding()
             }
             .frame(maxWidth: .infinity)
-            
-            .padding()
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }

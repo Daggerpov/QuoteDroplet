@@ -224,18 +224,20 @@ struct CommunityView: View {
         NavigationStack {
             VStack {
                 HeaderView()
-                Spacer()
-                quoteSection
-                Spacer()
-                
-                composeButton
-                Spacer()
+                VStack{
+                    Spacer()
+                    quoteSection
+                    Spacer()
+                    composeButton
+                    Spacer()
+                }
+                .padding()
             }
             .frame(maxWidth: .infinity)
             .sheet(isPresented: $isAddingQuote) {
                 quoteAddition
             }
-            .padding()
+//            .padding()
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
             .onAppear {
                 // Fetch recent quotes when the view appears

@@ -187,25 +187,26 @@ struct AppearanceView: View {
         NavigationStack {
             VStack {
                 HeaderView()
-                Spacer()
-                Group {
-                    VStack/*(spacing: 10)*/ {
-                        HStack{
-                            Spacer()
-                            widgetPreviewSection
-                            Spacer()
-                            fontSelector
-                            Spacer()
+                VStack{
+                    Spacer()
+                    Group {
+                        VStack/*(spacing: 10)*/ {
+                            HStack{
+                                Spacer()
+                                widgetPreviewSection
+                                Spacer()
+                                fontSelector
+                                Spacer()
+                            }
+                            sampleColorSection
+                            customColorSection
                         }
-                        sampleColorSection
-                        customColorSection
                     }
-//                    .frame(alignment: .center)
+                    Spacer()
                 }
-                Spacer()
+                .padding()
             }
             
-            .padding()
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
