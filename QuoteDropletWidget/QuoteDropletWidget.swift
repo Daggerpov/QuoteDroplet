@@ -513,7 +513,7 @@ struct QuoteDropletWidgetExtraLarge: Widget {
 
 @available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetWithIntentsMedium: Widget {
-    let kind: String = "QuoteDropletWidgetWithIntents"
+    let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
@@ -528,7 +528,7 @@ struct QuoteDropletWidgetWithIntentsMedium: Widget {
 
 @available(iOSApplicationExtension 15.0, *)
 struct QuoteDropletWidgetWithIntentsLarge: Widget {
-    let kind: String = "QuoteDropletWidgetWithIntents"
+    let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
@@ -547,7 +547,7 @@ struct QuoteDropletWidgetWithIntentsLarge: Widget {
 
 @available(iOSApplicationExtension 15.0, *)
 struct QuoteDropletWidgetWithIntentsExtraLarge: Widget {
-    let kind: String = "QuoteDropletWidgetWithIntents"
+    let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
