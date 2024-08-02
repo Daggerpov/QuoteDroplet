@@ -105,18 +105,19 @@ struct AppearanceView: View {
         .frame(alignment: .center)
     }
     
-    
     private var customColorPickers: some View {
         HStack(spacing: 10) {
+            Spacer()
             ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
                 customColorPicker(index: customIndex)
             }
+            Spacer()
         }
         .frame(alignment: .center)
     }
+    
     private func customColorPicker(index: Int) -> some View {
-        ColorPicker(
-            "",
+        ColorPickerWithoutLabel(
             selection: Binding(
                 get: {
                     colorPalettes[3][index]
@@ -139,7 +140,7 @@ struct AppearanceView: View {
                     WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 }
             ),
-            supportsOpacity: false
+            supportsAlpha: true
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)
@@ -199,7 +200,7 @@ struct AppearanceView: View {
                         sampleColorSection
                         customColorSection
                     }
-                    .frame(alignment: .center)
+//                    .frame(alignment: .center)
                 }
                 Spacer()
             }
@@ -213,5 +214,27 @@ struct AppearanceView: View {
 struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
         AppearanceView()
+    }
+}
+
+@available(iOS 14.0, *)
+public struct ColorPickerWithoutLabel: UIViewRepresentable {
+    @Binding var selection: Color
+    var supportsAlpha: Bool = true
+    
+    public init(selection: Binding<Color>, supportsAlpha: Bool = true) {
+        self._selection = selection
+        self.supportsAlpha = supportsAlpha
+    }
+    
+    
+    public func makeUIView(context: Context) -> UIColorWell {
+        let well = UIColorWell()
+        well.supportsAlpha = supportsAlpha
+        return well
+    }
+    
+    public func updateUIView(_ uiView: UIColorWell, context: Context) {
+        uiView.selectedColor = UIColor(selection)
     }
 }
