@@ -46,6 +46,7 @@ struct AppearanceView: View {
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             .onChange(of: selectedFontIndex) { _ in
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
             }
         }
         .padding(10)
@@ -74,6 +75,7 @@ struct AppearanceView: View {
                             sharedVars.colorPaletteIndex = paletteIndex
                             widgetColorPaletteIndex = paletteIndex
                             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
                         }
                 }
             }
@@ -87,6 +89,7 @@ struct AppearanceView: View {
                             sharedVars.colorPaletteIndex = paletteIndex
                             widgetColorPaletteIndex = paletteIndex
                             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
                         }
                 }
             }
@@ -138,6 +141,7 @@ struct AppearanceView: View {
                     sharedVars.colorPaletteIndex = 3
                     widgetColorPaletteIndex = 3
                     WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
                 }
             ),
             supportsAlpha: true
@@ -146,6 +150,7 @@ struct AppearanceView: View {
         .cornerRadius(8)
         .onChange(of: colorPalettes) { _ in
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
         }
     }
     

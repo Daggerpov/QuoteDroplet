@@ -108,6 +108,7 @@ struct QuotesView: View {
             }
             .onTapGesture {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
             }
             
         }
@@ -289,6 +290,7 @@ struct QuotesView: View {
                 .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .onReceive([self.quoteFrequencyIndex].publisher.first()) { _ in
                     WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
                 }
             }
         }
