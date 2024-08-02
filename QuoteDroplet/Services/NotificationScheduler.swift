@@ -70,9 +70,15 @@ class NotificationScheduler {
         
         // Iterate over 60 days
         for i in 0..<60 {
-            // Calculate the trigger date for the current notification
-            var triggerDate = calendar.dateComponents([.hour, .minute], from: notificationTime)
-            triggerDate.day = calendar.component(.day, from: currentDate) + i
+            guard let futureDate = calendar.date(byAdding: .day, value: i, to: currentDate) else {
+                print("Error: Unable to calculate future date.")
+                continue
+            }
+            
+            var triggerDate = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: notificationTime)
+            triggerDate.year = calendar.component(.year, from: futureDate)
+            triggerDate.month = calendar.component(.month, from: futureDate)
+            triggerDate.day = calendar.component(.day, from: futureDate)
             
             // Create notification content
             let content = UNMutableNotificationContent()
