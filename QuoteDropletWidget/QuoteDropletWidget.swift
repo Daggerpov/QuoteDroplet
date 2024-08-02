@@ -14,7 +14,7 @@ import AppIntents
 // Extension to disable content margins
 extension WidgetConfiguration {
     func disableContentMarginsIfNeeded() -> some WidgetConfiguration {
-        if #available(iOSApplicationExtension 17.0, *) {
+        if #available(iOS 17.0, *) {
             return self.contentMarginsDisabled()
         } else {
             return self
@@ -275,7 +275,7 @@ struct QuoteDropletWidgetEntryView : View {
     
     private var likesSectionWithAuthor: some View {
         HStack {
-            if #available(iOSApplicationExtension 17.0, *) {
+            if #available(iOS 17.0, *) {
                 Button(intent: LikeQuoteIntent()) {
                     Image(systemName: isLiked ? "heart.fill" : "heart")
                         .foregroundStyle(colors[2])
@@ -435,7 +435,7 @@ struct QuoteDropletWidgetEntryView : View {
 }
 
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 struct QuoteDropletWidgetSmall: Widget {
     let kind: String = "QuoteDropletWidget"
     
@@ -450,7 +450,7 @@ struct QuoteDropletWidgetSmall: Widget {
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 struct QuoteDropletWidgetMedium: Widget {
     let kind: String = "QuoteDropletWidget"
     
@@ -465,7 +465,7 @@ struct QuoteDropletWidgetMedium: Widget {
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 struct QuoteDropletWidgetLarge: Widget {
     let kind: String = "QuoteDropletWidget"
     
@@ -480,7 +480,7 @@ struct QuoteDropletWidgetLarge: Widget {
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 struct QuoteDropletWidgetExtraLarge: Widget {
     let kind: String = "QuoteDropletWidget"
     
@@ -495,7 +495,7 @@ struct QuoteDropletWidgetExtraLarge: Widget {
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 struct QuoteDropletWidgetWithIntentsMedium: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
     
@@ -510,7 +510,7 @@ struct QuoteDropletWidgetWithIntentsMedium: Widget {
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 struct QuoteDropletWidgetWithIntentsLarge: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
     
@@ -525,7 +525,7 @@ struct QuoteDropletWidgetWithIntentsLarge: Widget {
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 struct QuoteDropletWidgetWithIntentsExtraLarge: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
     
@@ -540,6 +540,7 @@ struct QuoteDropletWidgetWithIntentsExtraLarge: Widget {
     }
 }
 
+@available(iOS 16.0, *)
 struct QuoteDropletWidget_Previews: PreviewProvider {
     static var previews: some View {
         let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 15), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "All")

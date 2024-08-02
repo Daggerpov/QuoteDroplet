@@ -3,44 +3,41 @@ import WidgetKit
 import UserNotifications
 import UIKit
 
+@available(iOS 16, *)
 struct ContentView: View {
     @StateObject var sharedVars = SharedVarsBetweenTabs()
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         TabView {
-            if #available(iOS 16.0, *) {
-                DropletsView()
-                    .tabItem {
-                        VStack {
-                            Spacer(minLength: 20)
-                            Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                            Text("Droplets")
-                        }
-                    }
-                CommunityView()
-                    .tabItem {
-                        VStack {
-                            Spacer(minLength: 20)
-                            Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                            Text("Community")
-                        }
-                    }
-                AppearanceView()
-                    .tabItem {
+            DropletsView()
+                .tabItem {
+                    VStack {
                         Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Appearance")
+                        Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Droplets")
                     }
-                QuotesView()
-                    .tabItem {
+                }
+            CommunityView()
+                .tabItem {
+                    VStack {
                         Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Quotes")
+                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Community")
                     }
-            } else {
-                // Fallback on earlier versions
-            }
+                }
+            AppearanceView()
+                .tabItem {
+                    Spacer(minLength: 20)
+                    Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                    Text("Appearance")
+                }
+            QuotesView()
+                .tabItem {
+                    Spacer(minLength: 20)
+                    Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                    Text("Quotes")
+                }
         }
         .environmentObject(sharedVars)
         .accentColor(.blue)
@@ -67,6 +64,7 @@ class SharedVarsBetweenTabs: ObservableObject {
     @Published var colorPaletteIndex = 0
 }
 
+@available(iOS 16, *)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

@@ -13,6 +13,7 @@ import GoogleMobileAds
 
 import FirebaseCore
 
+@available(iOS 16, *)
 @main
 struct QuoteDropletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -25,6 +26,7 @@ struct QuoteDropletApp: App {
     }
 }
 
+@available(iOS 15, *)
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -37,11 +39,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
-                if #available(iOS 15, *) {
                     NotificationScheduler.shared.scheduleNotifications()
-                } else {
-                    // Fallback on earlier versions
-                }
             } else if let error {
                 print(error.localizedDescription)
             }
