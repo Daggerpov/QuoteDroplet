@@ -435,17 +435,13 @@ struct QuoteDropletWidgetEntryView : View {
 }
 
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetSmall: Widget {
     let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
-            } else {
-                // Fallback on earlier versions
-            }
+            QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
@@ -454,17 +450,13 @@ struct QuoteDropletWidgetSmall: Widget {
     }
 }
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetMedium: Widget {
     let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
-            } else {
-                // Fallback on earlier versions
-            }
+            QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
@@ -473,17 +465,13 @@ struct QuoteDropletWidgetMedium: Widget {
     }
 }
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetLarge: Widget {
     let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
-            } else {
-                // Fallback on earlier versions
-            }
+            QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
@@ -492,17 +480,13 @@ struct QuoteDropletWidgetLarge: Widget {
     }
 }
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetExtraLarge: Widget {
     let kind: String = "QuoteDropletWidget"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
-            } else {
-                // Fallback on earlier versions
-            }
+            QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget")
@@ -526,17 +510,13 @@ struct QuoteDropletWidgetWithIntentsMedium: Widget {
     }
 }
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetWithIntentsLarge: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
-            } else {
-                // Fallback on earlier versions
-            }
+            QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget With Buttons")
@@ -545,17 +525,13 @@ struct QuoteDropletWidgetWithIntentsLarge: Widget {
     }
 }
 
-@available(iOSApplicationExtension 15.0, *)
+@available(iOSApplicationExtension 16.0, *)
 struct QuoteDropletWidgetWithIntentsExtraLarge: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            if #available(iOSApplicationExtension 16.0, *) {
-                QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
-            } else {
-                // Fallback on earlier versions
-            }
+            QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
         }
         .disableContentMarginsIfNeeded() // Use the extension here
         .configurationDisplayName("Example Widget With Buttons")
@@ -569,12 +545,8 @@ struct QuoteDropletWidget_Previews: PreviewProvider {
         let widgetEntry = SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: Quote(id: 1, text: "Sample Quote", author: "Sample Author", classification: "Sample Classification", likes: 15), widgetColorPaletteIndex: 420, widgetCustomColorPalette: [Color(hex: "1C7C54"), Color(hex: "E2B6CF"), Color(hex: "DEF4C6")], quoteFrequencyIndex: 3, quoteCategory: "All")
         
         
-        if #available(iOSApplicationExtension 16.0, *) {
-            QuoteDropletWidgetEntryView(entry: widgetEntry, isIntentsActive: false)
-                .previewContext(WidgetPreviewContext(family: .systemSmall))
-        } else {
-            // Fallback on earlier versions
-        }
+        QuoteDropletWidgetEntryView(entry: widgetEntry, isIntentsActive: false)
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
 
