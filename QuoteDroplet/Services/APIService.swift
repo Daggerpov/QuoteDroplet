@@ -311,7 +311,7 @@ func unlikeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
     }.resume()
 }
 
-func getBookmarkedQuoteByID(id: Int, completion: @escaping (Quote?, Error?) -> Void) {
+func getQuoteByID(id: Int, completion: @escaping (Quote?, Error?) -> Void) {
     guard let url = URL(string: "\(baseUrl)/quotes/\(id)") else {
         completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return

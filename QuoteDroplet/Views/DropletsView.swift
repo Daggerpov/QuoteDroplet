@@ -220,7 +220,7 @@ struct DropletsView: View {
             }
             for id in bookmarkedQuoteIDs {
                 group.enter()
-                getBookmarkedQuoteByID(id: id) { quote, error in
+                getQuoteByID(id: id) { quote, error in
                     if let quote = quote, !self.savedQuotes.contains(where: { $0.id == quote.id }) {
                         DispatchQueue.main.async {
                             self.savedQuotes.append(quote)
