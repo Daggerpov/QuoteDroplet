@@ -366,13 +366,7 @@ struct QuoteDropletWidgetEntryView : View {
     private func toggleLike() {
         isLiked.toggle()
         
-        var likedQuotes = getLikedQuotes()
-        if isLiked {
-            likedQuotes.append(widgetQuote)
-        } else {
-            likedQuotes.removeAll { $0.id == widgetQuote.id }
-        }
-        saveLikedQuotes(likedQuotes)
+        saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
     
     private func likeQuoteAction() {
@@ -415,12 +409,6 @@ struct QuoteDropletWidgetEntryView : View {
             return quotes
         }
         return []
-    }
-    
-    private func saveLikedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            likedQuotesData = data
-        }
     }
     
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
@@ -586,13 +574,7 @@ struct LikeQuoteIntent: AppIntent {
     private func toggleLike() {
         isLiked.toggle()
         
-        var likedQuotes = getLikedQuotes()
-        if isLiked {
-            likedQuotes.append(widgetQuote)
-        } else {
-            likedQuotes.removeAll { $0.id == widgetQuote.id }
-        }
-        saveLikedQuotes(likedQuotes)
+        saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
     
     private func likeQuoteAction() {
@@ -635,11 +617,5 @@ struct LikeQuoteIntent: AppIntent {
             return quotes
         }
         return []
-    }
-    
-    private func saveLikedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            likedQuotesData = data
-        }
     }
 }

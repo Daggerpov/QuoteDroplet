@@ -21,10 +21,18 @@ func getLikedQuotes() -> [Quote] {
     return []
 }
 
-func saveLikedQuotes(_ quotes: [Quote]) {
+func saveLikedQuote(quote: Quote, isLiked: Bool) {
+    var likedQuotes = getLikedQuotes()
+    
+    if isLiked {
+        likedQuotes.append(quote)
+    } else {
+        likedQuotes.removeAll { $0.id == quote.id }
+    }
+    
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     var likedQuotesData: Data = Data()
-    if let data = try? JSONEncoder().encode(quotes) {
+    if let data = try? JSONEncoder().encode(likedQuotes) {
         likedQuotesData = data
     }
 }

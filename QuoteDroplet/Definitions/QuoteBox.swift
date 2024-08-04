@@ -45,13 +45,7 @@ class QuoteBox: ObservableObject {
             
             self.isLiked.toggle()
             
-            var likedQuotes = getLikedQuotes()
-            if self.isLiked {
-                likedQuotes.append(quote)
-            } else {
-                likedQuotes.removeAll { $0.id == quote.id }
-            }
-            saveLikedQuotes(likedQuotes)
+            saveLikedQuote(quote: quote, isLiked: self.isLiked)
             
             self.interactions += 1
             if (self.interactions == 21) {
