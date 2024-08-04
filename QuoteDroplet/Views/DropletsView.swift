@@ -41,8 +41,8 @@ struct DropletsView: View {
     
     private var topNavBar: some View {
         Picker(selection: $selected, label: Text("Picker"), content: {
-            Text("Quotes Feed").tag(1)
-            Text("Saved Quotes").tag(2)
+            Text("Feed").tag(1)
+            Text("Saved").tag(2)
         })
         .pickerStyle(SegmentedPickerStyle())
     }
@@ -58,7 +58,7 @@ struct DropletsView: View {
                             .font(.title)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             .padding(.bottom, 5)
-                    } else {
+                    } else if selected == 2 {
                         Text("Saved Quotes")
                             .font(.title)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
@@ -86,7 +86,7 @@ struct DropletsView: View {
                         }
                     }
                     
-                } else {
+                } else if selected == 2 {
                     if savedQuotes.isEmpty {
                         Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
                             .font(.title2)
@@ -114,7 +114,7 @@ struct DropletsView: View {
                                 loadMoreQuotes()
                             }
                         }
-                } else {
+                } else if selected == 2 {
                     Color.clear.frame(height: 1)
                         .onAppear {
                             if !isLoadingMore && savedQuotes.count < maxQuotes {
@@ -169,10 +169,10 @@ struct DropletsView: View {
                     switch(value.translation.width, value.translation.height) {
                     case (...0, -30...30):
                         //                    print("left swipe")
-                        selected = 2
+                        selected += 1
                     case (0..., -30...30):
                         //                    print("right swipe")
-                        selected = 1
+                        selected -= 1
                         //                    case (-100...100, ...0):  /*print("up swipe")*/
                         //                    case (-100...100, 0...):  /*print("down swipe")*/
                     default: break
@@ -229,7 +229,7 @@ struct DropletsView: View {
             self.isLoadingMore = false
             if selected == 1{
                 self.totalQuotesLoaded += self.quotesPerPage
-            } else {
+            } else if selected == 2  {
                 self.totalSavedQuotesLoaded += self.quotesPerPage
             }
         }
