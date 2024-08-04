@@ -5,16 +5,17 @@ import Foundation
 let baseUrl = "http://quote-dropper-production.up.railway.app"
 
 func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void) {
-    var urlString: String;
+    let urlString: String
     if classification == "all" {
-        // Modify the URL to include a filter for approved quotes
-        urlString = "\(baseUrl)/quotes/"
+        urlString = "\(baseUrl)/quotes/randomQuote/classification=all"
     } else {
-        // Modify the URL to include a filter for approved quotes and classification
-        urlString = "\(baseUrl)/quotes/classification=\(classification)"
+        urlString = "\(baseUrl)/quotes/randomQuote/classification=\(classification)"
     }
     
-    let url = URL(string: urlString)!
+    guard let url = URL(string: urlString) else {
+        completion(nil, NSError(domain: "URLError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
@@ -43,19 +44,14 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let quotes = try decoder.decode([Quote].self, from: data)
-            
-            if quotes.isEmpty {
-                completion(Quote(id: -1, text: "No Quote Found.", author: nil, classification: nil, likes: 0), nil)
-            } else {
-                let randomIndex = Int.random(in: 0..<quotes.count)
-                completion(quotes[randomIndex], nil)
-            }
+            let quote = try decoder.decode(Quote.self, from: data)
+            completion(quote, nil)
         } catch {
             completion(nil, error)
         }
     }.resume()
 }
+
 
 func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) -> Void) {
     let urlString = "\(baseUrl)/quotes/author=\(author)"
@@ -84,6 +80,7 @@ func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) 
             completion(nil, NSError(domain: "NoDataError", code: -1, userInfo: nil))
             return
         }
+        
         
         do {
             let decoder = JSONDecoder()
