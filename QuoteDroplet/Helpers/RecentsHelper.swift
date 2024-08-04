@@ -21,10 +21,14 @@ func getRecentQuotes() -> [Quote] {
     return []
 }
 
-func saveRecentQuotes(_ quotes: [Quote]) {
+func saveRecentQuote(quote: Quote) {
+    var recentQuotes = getRecentQuotes()
+    
+    recentQuotes.append(quote)
+    
     @AppStorage("recentQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var recentQuotesData: Data = Data()
-    if let data = try? JSONEncoder().encode(quotes) {
+   var recentQuotesData: Data = Data()
+    if let data = try? JSONEncoder().encode(recentQuotes) {
         recentQuotesData = data
     }
 }
