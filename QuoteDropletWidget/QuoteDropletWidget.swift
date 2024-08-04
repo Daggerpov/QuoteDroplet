@@ -353,6 +353,8 @@ struct QuoteDropletWidgetEntryView : View {
                 likes = fetchedLikeCount
             }
             isLiked = isQuoteLiked(widgetQuote)
+            
+            saveRecentQuote(quote: widgetQuote) //, source: "widget") TODO: do something with source later on
         }
         
     }

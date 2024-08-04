@@ -127,6 +127,8 @@ class NotificationScheduler {
                 content.title = "Quote Droplet: \(classification)"
             }
             
+            saveRecentQuote(quote: randomQuote.toQuote()) // TODO: do something with source later
+            
             //adjusted
             if (isAuthorValid(authorGiven: randomQuote.author)) {
                 content.body = "\(randomQuote.text)\n— \(randomQuote.author)"
