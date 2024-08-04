@@ -30,10 +30,14 @@ struct DropletsView: View {
     
     @State private var quotes: [Quote] = []
     @State private var savedQuotes: [Quote] = []
+    @State private var recentQuotes: [Quote] = []
+    
     @State private var isLoadingMore: Bool = false
     private let quotesPerPage = 5
+    
     @State private var totalQuotesLoaded = 0
     @State private var totalSavedQuotesLoaded = 0
+    @State private var totalRecentQuotesLoaded = 0
     
     @State private var selected = 1
     
@@ -48,31 +52,35 @@ struct DropletsView: View {
         .pickerStyle(SegmentedPickerStyle())
     }
     
+    private var titles: some View {
+        HStack {
+            Spacer()
+            if selected == 1 {
+                Text("Quotes Feed")
+                    .font(.title)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                    .padding(.bottom, 5)
+            } else if selected == 2 {
+                Text("Saved Quotes")
+                    .font(.title)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                    .padding(.bottom, 5)
+            } else {
+                Text("Recent Quotes")
+                    .font(.title)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                    .padding(.bottom, 5)
+            }
+            
+            Spacer()
+        }
+    }
+    
     private var quotesListView: some View {
         ScrollView {
             Spacer()
             LazyVStack{
-                HStack {
-                    Spacer()
-                    if selected == 1 {
-                        Text("Quotes Feed")
-                            .font(.title)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding(.bottom, 5)
-                    } else if selected == 2 {
-                        Text("Saved Quotes")
-                            .font(.title)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding(.bottom, 5)
-                    } else {
-                        Text("Recent Quotes")
-                            .font(.title)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding(.bottom, 5)
-                    }
-                    
-                    Spacer()
-                }
+                titles
                 Spacer()
                 if selected == 1{
                     if quotes.isEmpty {
@@ -94,7 +102,7 @@ struct DropletsView: View {
                     
                 } else if selected == 2 {
                     if savedQuotes.isEmpty {
-                        Text("You have no saved quotes. Please save some from the Quotes Feed by pressing this:")
+                        Text("You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:")
                             .font(.title2)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             .padding()
@@ -104,6 +112,22 @@ struct DropletsView: View {
                             .font(.title)
                             .scaleEffect(1)
                             .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                    } else {
+                        ForEach(savedQuotes.indices, id: \.self) { index in
+                            if let quote = savedQuotes[safe: index] {
+                                SingleQuoteView(quote: quote, from: "not from author view")
+                            }
+                        }
+                    }
+                } else if selected == 3 {
+                    if recentQuotes.isEmpty {
+                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
+                            .font(.title2)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding()
+                            .frame(alignment: .center)
+                            .multilineTextAlignment(.center)
+                        // TODO: add apple widget help link here
                     } else {
                         ForEach(savedQuotes.indices, id: \.self) { index in
                             if let quote = savedQuotes[safe: index] {
@@ -127,9 +151,16 @@ struct DropletsView: View {
                                 loadMoreQuotes()
                             }
                         }
+                } else if selected == 3 {
+                    Color.clear.frame(height: 1)
+                        .onAppear {
+                            if !isLoadingMore && recentQuotes.count < maxQuotes {
+                                loadMoreQuotes()
+                            }
+                        }
                 }
                 if !isLoadingMore {
-                    if (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) {
+                    if (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) || (selected == 3 && recentQuotes.count >= maxQuotes){
                         Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
                             .font(.title2)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
@@ -191,6 +222,7 @@ struct DropletsView: View {
     private func loadInitialQuotes() {
         totalQuotesLoaded = 0
         totalSavedQuotesLoaded = 0
+        totalRecentQuotesLoaded = 0
         loadMoreQuotes() // Initial load
     }
     
@@ -229,6 +261,23 @@ struct DropletsView: View {
                     group.leave()
                 }
             }
+        } else if selected == 3 {
+            let recentQuotes = getRecentQuotes()
+            var recentQuoteIDs: [Int] = []
+            for recentQuote in recentQuotes {
+                recentQuoteIDs.append(recentQuote.id)
+            }
+            for id in recentQuoteIDs {
+                group.enter()
+                getQuoteByID(id: id) { quote, error in
+                    if let quote = quote, !self.recentQuotes.contains(where: { $0.id == quote.id }) {
+                        DispatchQueue.main.async {
+                            self.recentQuotes.append(quote)
+                        }
+                    }
+                    group.leave()
+                }
+            }
         }
         
         group.notify(queue: .main) {
@@ -237,6 +286,8 @@ struct DropletsView: View {
                 self.totalQuotesLoaded += self.quotesPerPage
             } else if selected == 2  {
                 self.totalSavedQuotesLoaded += self.quotesPerPage
+            }else if selected == 3  {
+                self.totalRecentQuotesLoaded += self.quotesPerPage
             }
         }
     }
