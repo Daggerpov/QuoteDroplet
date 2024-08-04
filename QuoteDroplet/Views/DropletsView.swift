@@ -43,6 +43,7 @@ struct DropletsView: View {
         Picker(selection: $selected, label: Text("Picker"), content: {
             Text("Feed").tag(1)
             Text("Saved").tag(2)
+            Text("Recent").tag(3)
         })
         .pickerStyle(SegmentedPickerStyle())
     }
@@ -60,6 +61,11 @@ struct DropletsView: View {
                             .padding(.bottom, 5)
                     } else if selected == 2 {
                         Text("Saved Quotes")
+                            .font(.title)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding(.bottom, 5)
+                    } else {
+                        Text("Recent Quotes")
                             .font(.title)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             .padding(.bottom, 5)
