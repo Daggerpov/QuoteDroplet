@@ -360,13 +360,7 @@ struct QuoteDropletWidgetEntryView : View {
     private func toggleBookmark() {
         isBookmarked.toggle()
         
-        var bookmarkedQuotes = getBookmarkedQuotes()
-        if isBookmarked {
-            bookmarkedQuotes.append(widgetQuote)
-        } else {
-            bookmarkedQuotes.removeAll { $0.id == widgetQuote.id }
-        }
-        saveBookmarkedQuotes(bookmarkedQuotes)
+        saveBookmarkedQuote(quote: widgetQuote, isBookmarked: isBookmarked)
     }
     
     private func toggleLike() {

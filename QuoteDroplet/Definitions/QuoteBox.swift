@@ -30,13 +30,7 @@ class QuoteBox: ObservableObject {
         DispatchQueue.main.async {
             self.isBookmarked.toggle()
             
-            var bookmarkedQuotes = getBookmarkedQuotes()
-            if self.isBookmarked {
-                bookmarkedQuotes.append(quote)
-            } else {
-                bookmarkedQuotes.removeAll { $0.id == quote.id }
-            }
-            saveBookmarkedQuotes(bookmarkedQuotes)
+            saveBookmarkedQuote(quote: quote, isBookmarked: self.isBookmarked)
             
             self.interactions += 1
             if (self.interactions == 21) {

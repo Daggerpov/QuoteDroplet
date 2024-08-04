@@ -21,10 +21,19 @@ func getBookmarkedQuotes() -> [Quote] {
     return []
 }
 
-func saveBookmarkedQuotes(_ quotes: [Quote]) {
+func saveBookmarkedQuote(quote: Quote, isBookmarked: Bool) {
+    
+    var bookmarkedQuotes = getBookmarkedQuotes()
+    
+    if isBookmarked {
+        bookmarkedQuotes.append(quote)
+    } else {
+        bookmarkedQuotes.removeAll { $0.id == quote.id }
+    }
+    
     @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     var bookmarkedQuotesData: Data = Data()
-    if let data = try? JSONEncoder().encode(quotes) {
+    if let data = try? JSONEncoder().encode(bookmarkedQuotes) {
         bookmarkedQuotesData = data
     }
 }
