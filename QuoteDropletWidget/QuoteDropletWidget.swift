@@ -257,6 +257,8 @@ struct QuoteDropletWidgetEntryView : View {
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
         self._isIntentsActive = State(initialValue: isIntentsActive)
+//        saveRecentQuote(quote: entry.quote!) //, source: "widget") TODO: do something with source later on
+    // TODO: saving way too many quotes from here: bug.
     }
     
     var colors: [Color] {
@@ -353,8 +355,6 @@ struct QuoteDropletWidgetEntryView : View {
                 likes = fetchedLikeCount
             }
             isLiked = isQuoteLiked(widgetQuote)
-            
-            saveRecentQuote(quote: widgetQuote) //, source: "widget") TODO: do something with source later on
         }
         
     }

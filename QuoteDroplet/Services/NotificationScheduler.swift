@@ -127,8 +127,6 @@ class NotificationScheduler {
                 content.title = "Quote Droplet: \(classification)"
             }
             
-            saveRecentQuote(quote: randomQuote.toQuote()) // TODO: do something with source later
-            
             //adjusted
             if (isAuthorValid(authorGiven: randomQuote.author)) {
                 content.body = "\(randomQuote.text)\n— \(randomQuote.author)"
@@ -170,12 +168,12 @@ class NotificationScheduler {
                     let text = String(components[0])
                     let author = String(components[1].dropFirst(2)) // Remove the "— " prefix
                     let quote = QuoteJSON(id: UUID().hashValue, text: text, author: author, classification: content.title)
-                    saveRecentQuote(quote: quote.toQuote())
+                    saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
                 } else {
                     // Handle case where there's no author
                     let text = String(components[0])
                     let quote = QuoteJSON(id: UUID().hashValue, text: text, author: "", classification: content.title)
-                    saveRecentQuote(quote: quote.toQuote())
+                    saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
                 }
             }
         }
