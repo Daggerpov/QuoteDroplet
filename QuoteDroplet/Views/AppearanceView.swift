@@ -31,7 +31,7 @@ struct AppearanceView: View {
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
     private var fontSelector: some View {
-        VStack {
+        HStack {
             Text("Widget Font:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -65,36 +65,37 @@ struct AppearanceView: View {
                 .font(.title3)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                 .padding(.top, 10)
+            sampleColorPickers
+        }
+        .frame(alignment: .center)
+    }
+    
+    private var sampleColorPickers: some View {
+        VStack{
             HStack(spacing: 10) {
                 ForEach(0..<3, id: \.self) { paletteIndex in
-                    ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
-                        .frame(width: 60, height: 60)
-                        .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            sharedVars.colorPaletteIndex = paletteIndex
-                            widgetColorPaletteIndex = paletteIndex
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-                        }
+                    sampleColorPicker(index: paletteIndex)
                 }
             }
             HStack(spacing: 10) {
                 ForEach(4..<colorPalettes.count, id: \.self) { paletteIndex in
-                    ColorPaletteView(colors: colorPalettes[safe: paletteIndex] ?? [])
-                        .frame(width: 60, height: 60)
-                        .border(sharedVars.colorPaletteIndex == paletteIndex ? Color.blue : Color.clear, width: 2)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            sharedVars.colorPaletteIndex = paletteIndex
-                            widgetColorPaletteIndex = paletteIndex
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-                        }
+                    sampleColorPicker(index: paletteIndex)
                 }
             }
         }
-        .frame(alignment: .center)
+    }
+    
+    private func sampleColorPicker(index: Int) -> some View {
+        ColorPaletteView(colors: colorPalettes[safe: index] ?? [])
+            .frame(width: 60, height: 60)
+            .border(sharedVars.colorPaletteIndex == index ? Color.blue : Color.clear, width: 2)
+            .cornerRadius(8)
+            .onTapGesture {
+                sharedVars.colorPaletteIndex = index
+                widgetColorPaletteIndex = index
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
+            }
     }
     
     private var customColorSection: some View {
@@ -102,21 +103,18 @@ struct AppearanceView: View {
             Text("Custom Colors:")
                 .font(.title3)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .padding(.top, 10)
             customColorPickers
         }
-        .padding()
         .frame(alignment: .center)
     }
     
     private var customColorPickers: some View {
         HStack(spacing: 10) {
-            Spacer()
             ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
                 customColorPicker(index: customIndex)
             }
-            Spacer()
         }
-        .frame(alignment: .center)
     }
     
     private func customColorPicker(index: Int) -> some View {
@@ -186,6 +184,7 @@ struct AppearanceView: View {
             }
             .frame(width: 150, height: 150)
         }
+        .padding(.bottom, 10)
     }
     
     var body: some View {
@@ -194,24 +193,16 @@ struct AppearanceView: View {
                 HeaderView()
                 VStack{
                     Spacer()
-                    Group {
-                        VStack/*(spacing: 10)*/ {
-                            HStack{
-                                Spacer()
-                                widgetPreviewSection
-                                Spacer()
-                                fontSelector
-                                Spacer()
-                            }
-                            sampleColorSection
-                            customColorSection
-                        }
-                    }
+                    widgetPreviewSection
+                    Spacer()
+                    fontSelector
+                    Spacer()
+                    sampleColorSection
+                    customColorSection
                     Spacer()
                 }
                 .padding()
             }
-            
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
