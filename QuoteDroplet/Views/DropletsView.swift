@@ -139,7 +139,7 @@ struct DropletsView: View {
                     } else {
                         ForEach(recentQuotes.indices, id: \.self) { index in
                             if let quote = recentQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, from: "recent quotes")
+                                SingleQuoteView(quote: quote, from: "not from author view")
                             }
                         }
                     }
@@ -333,22 +333,21 @@ struct SingleQuoteView: View {
             }
             
             HStack {
-                if from != "recent quotes" {
-                    HStack {
-                        Button(action: {
-                            quoteBox.likeQuoteAction(for: quote)
-                            quoteBox.toggleLike(for: quote)
-                        }) {
-                            Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
-                                .font(.title)
-                                .scaleEffect(1)
-                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        }
-                        
-                        // Display the like count next to the heart button
-                        Text("\(quoteBox.likes)")
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+               // TODO: what I need to do here is make it so likes are fetched by using the `getLikeCountForQuote` method
+                HStack {
+                    Button(action: {
+                        quoteBox.likeQuoteAction(for: quote)
+                        quoteBox.toggleLike(for: quote)
+                    }) {
+                        Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
+                            .font(.title)
+                            .scaleEffect(1)
+                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                     }
+                    
+                    // Display the like count next to the heart button
+                    Text("\(quoteBox.likes)")
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                 }
                 
                 Button(action: {
