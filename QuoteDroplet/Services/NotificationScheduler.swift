@@ -157,5 +157,29 @@ class NotificationScheduler {
             }
         }
     }
+    
+    func saveSentNotificationsAsRecents() {
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            for notification in notifications {
+                let content = notification.request.content
+                let body = content.body
+                
+                // Assuming the quote text and author are separated by "\n— " in the body
+                let components = body.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: true)
+                if components.count == 2 {
+                    let text = String(components[0])
+                    let author = String(components[1].dropFirst(2)) // Remove the "— " prefix
+                    let quote = QuoteJSON(id: UUID().hashValue, text: text, author: author, classification: content.title)
+                    saveRecentQuote(quote: quote.toQuote())
+                } else {
+                    // Handle case where there's no author
+                    let text = String(components[0])
+                    let quote = QuoteJSON(id: UUID().hashValue, text: text, author: "", classification: content.title)
+                    saveRecentQuote(quote: quote.toQuote())
+                }
+            }
+        }
+    }
+
 }
 
