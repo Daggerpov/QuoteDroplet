@@ -121,7 +121,15 @@ struct DropletsView: View {
                     }
                 } else if selected == 3 {
                     if recentQuotes.isEmpty {
-                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
+//                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
+                        Text("You have no recent quotes. \n\nBe sure to enable notifications to see them listed here.")
+                            .font(.title2)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                            .padding()
+                            .frame(alignment: .center)
+                            .multilineTextAlignment(.center)
+                        Spacer()
+                        Text("Quotes shown from the app's widget will appear here soon. Stay tuned for that update.")
                             .font(.title2)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             .padding()
@@ -129,9 +137,9 @@ struct DropletsView: View {
                             .multilineTextAlignment(.center)
                         // TODO: add apple widget help link here
                     } else {
-                        ForEach(savedQuotes.indices, id: \.self) { index in
-                            if let quote = savedQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, from: "not from author view")
+                        ForEach(recentQuotes.indices, id: \.self) { index in
+                            if let quote = recentQuotes[safe: index] {
+                                SingleQuoteView(quote: quote, from: "recent quotes")
                             }
                         }
                     }
