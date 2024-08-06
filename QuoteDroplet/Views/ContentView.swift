@@ -18,14 +18,6 @@ struct ContentView: View {
                         Text("Droplets")
                     }
                 }
-            CommunityView()
-                .tabItem {
-                    VStack {
-                        Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Community")
-                    }
-                }
             AppearanceView()
                 .tabItem {
                     Spacer(minLength: 20)
@@ -37,6 +29,14 @@ struct ContentView: View {
                     Spacer(minLength: 20)
                     Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Quotes")
+                }
+            CommunityView()
+                .tabItem {
+                    VStack {
+                        Spacer(minLength: 20)
+                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Community")
+                    }
                 }
         }
         .environmentObject(sharedVars)
@@ -58,7 +58,6 @@ struct ContentView: View {
         }
     }
 }
-
 
 class SharedVarsBetweenTabs: ObservableObject {
     @Published var colorPaletteIndex = 0

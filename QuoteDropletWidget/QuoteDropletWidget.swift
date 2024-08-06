@@ -41,6 +41,8 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
         
+        
+        
         // Calculate the frequency in seconds based on the selected index
         let frequencyInSeconds = getFrequencyInSeconds(for: data.getQuoteFrequencyIndex())
         
@@ -73,6 +75,10 @@ struct Provider: IntentTimelineProvider {
                             }
                         }
                     }
+                    
+//                    if isSavedRecent == false {
+//                    saveRecentQuote(quote: quote) , source: "widget") TODO: do something with source later on
+//                    }
                     
                     let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                     
@@ -257,6 +263,10 @@ struct QuoteDropletWidgetEntryView : View {
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
         self._isIntentsActive = State(initialValue: isIntentsActive)
+        
+        
+        
+    // TODO: saving way too many quotes from here: bug.
     }
     
     var colors: [Color] {
@@ -353,6 +363,8 @@ struct QuoteDropletWidgetEntryView : View {
                 likes = fetchedLikeCount
             }
             isLiked = isQuoteLiked(widgetQuote)
+            
+            
         }
         
     }
@@ -360,25 +372,13 @@ struct QuoteDropletWidgetEntryView : View {
     private func toggleBookmark() {
         isBookmarked.toggle()
         
-        var bookmarkedQuotes = getBookmarkedQuotes()
-        if isBookmarked {
-            bookmarkedQuotes.append(widgetQuote)
-        } else {
-            bookmarkedQuotes.removeAll { $0.id == widgetQuote.id }
-        }
-        saveBookmarkedQuotes(bookmarkedQuotes)
+        saveBookmarkedQuote(quote: widgetQuote, isBookmarked: isBookmarked)
     }
     
     private func toggleLike() {
         isLiked.toggle()
         
-        var likedQuotes = getLikedQuotes()
-        if isLiked {
-            likedQuotes.append(widgetQuote)
-        } else {
-            likedQuotes.removeAll { $0.id == widgetQuote.id }
-        }
-        saveLikedQuotes(likedQuotes)
+        saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
     
     private func likeQuoteAction() {
@@ -421,12 +421,6 @@ struct QuoteDropletWidgetEntryView : View {
             return quotes
         }
         return []
-    }
-    
-    private func saveLikedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            likedQuotesData = data
-        }
     }
     
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
@@ -592,13 +586,7 @@ struct LikeQuoteIntent: AppIntent {
     private func toggleLike() {
         isLiked.toggle()
         
-        var likedQuotes = getLikedQuotes()
-        if isLiked {
-            likedQuotes.append(widgetQuote)
-        } else {
-            likedQuotes.removeAll { $0.id == widgetQuote.id }
-        }
-        saveLikedQuotes(likedQuotes)
+        saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
     
     private func likeQuoteAction() {
@@ -641,11 +629,5 @@ struct LikeQuoteIntent: AppIntent {
             return quotes
         }
         return []
-    }
-    
-    private func saveLikedQuotes(_ quotes: [Quote]) {
-        if let data = try? JSONEncoder().encode(quotes) {
-            likedQuotesData = data
-        }
     }
 }

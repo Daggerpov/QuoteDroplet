@@ -134,6 +134,9 @@ class NotificationScheduler {
                 content.body = "\(randomQuote.text)"
             }
             
+            // Add randomQuote's id to userInfo
+            content.userInfo = ["quoteID": randomQuote.id]
+            
             // Calculate the trigger date for the current notification
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
             
@@ -155,5 +158,34 @@ class NotificationScheduler {
             }
         }
     }
+    
+    func saveSentNotificationsAsRecents() {
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            for notification in notifications {
+                let content = notification.request.content
+                let body = content.body
+                
+                // Assuming the quote text and author are separated by "\n— " in the body
+                let components = body.split(separator: "\n", maxSplits: 1, omittingEmptySubsequences: true)
+                if components.count == 2 {
+                    let text = String(components[0])
+                    let author = String(components[1].dropFirst(2)) // Remove the "— " prefix
+                    if let quoteID = content.userInfo["quoteID"] as? Int {
+                        let quote = QuoteJSON(id: quoteID, text: text, author: author, classification: content.title)
+                        saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                    }
+                } else {
+                    // Handle case where there's no author
+                    let text = String(components[0])
+                    if let quoteID = content.userInfo["quoteID"] as? Int {
+                        let quote = QuoteJSON(id: quoteID, text: text, author: "", classification: content.title)
+                        saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                    }
+                }
+            }
+        }
+    }
+
+
 }
 

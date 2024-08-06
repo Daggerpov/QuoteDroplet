@@ -30,13 +30,7 @@ class QuoteBox: ObservableObject {
         DispatchQueue.main.async {
             self.isBookmarked.toggle()
             
-            var bookmarkedQuotes = getBookmarkedQuotes()
-            if self.isBookmarked {
-                bookmarkedQuotes.append(quote)
-            } else {
-                bookmarkedQuotes.removeAll { $0.id == quote.id }
-            }
-            saveBookmarkedQuotes(bookmarkedQuotes)
+            saveBookmarkedQuote(quote: quote, isBookmarked: self.isBookmarked)
             
             self.interactions += 1
             if (self.interactions == 21) {
@@ -51,13 +45,7 @@ class QuoteBox: ObservableObject {
             
             self.isLiked.toggle()
             
-            var likedQuotes = getLikedQuotes()
-            if self.isLiked {
-                likedQuotes.append(quote)
-            } else {
-                likedQuotes.removeAll { $0.id == quote.id }
-            }
-            saveLikedQuotes(likedQuotes)
+            saveLikedQuote(quote: quote, isLiked: self.isLiked)
             
             self.interactions += 1
             if (self.interactions == 21) {
