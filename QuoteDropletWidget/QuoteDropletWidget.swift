@@ -41,6 +41,8 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
         
+        
+        
         // Calculate the frequency in seconds based on the selected index
         let frequencyInSeconds = getFrequencyInSeconds(for: data.getQuoteFrequencyIndex())
         
@@ -73,6 +75,10 @@ struct Provider: IntentTimelineProvider {
                             }
                         }
                     }
+                    
+//                    if isSavedRecent == false {
+//                    saveRecentQuote(quote: quote) , source: "widget") TODO: do something with source later on
+//                    }
                     
                     let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                     
@@ -251,8 +257,6 @@ struct QuoteDropletWidgetEntryView : View {
     
     @State private var isIntentsActive: Bool = false
     
-    @State private var isSavedRecent: Bool = false
-    
     init(entry: SimpleEntry, isIntentsActive: Bool) {
         self.entry = entry
         self.widgetQuote = entry.quote ?? Quote(id: 1, text: "", author: "", classification: "", likes: 15)
@@ -260,9 +264,7 @@ struct QuoteDropletWidgetEntryView : View {
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
         self._isIntentsActive = State(initialValue: isIntentsActive)
         
-        if isSavedRecent == false {
-            saveRecentQuote(quote: entry.quote!) //, source: "widget") TODO: do something with source later on
-        }
+        
         
     // TODO: saving way too many quotes from here: bug.
     }
@@ -361,6 +363,8 @@ struct QuoteDropletWidgetEntryView : View {
                 likes = fetchedLikeCount
             }
             isLiked = isQuoteLiked(widgetQuote)
+            
+            
         }
         
     }
