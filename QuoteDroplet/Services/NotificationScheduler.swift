@@ -134,6 +134,9 @@ class NotificationScheduler {
                 content.body = "\(randomQuote.text)"
             }
             
+            // Add randomQuote's id to userInfo
+            content.userInfo = ["quoteID": randomQuote.id]
+            
             // Calculate the trigger date for the current notification
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
             
@@ -167,17 +170,22 @@ class NotificationScheduler {
                 if components.count == 2 {
                     let text = String(components[0])
                     let author = String(components[1].dropFirst(2)) // Remove the "— " prefix
-                    let quote = QuoteJSON(id: UUID().hashValue, text: text, author: author, classification: content.title)
-                    saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                    if let quoteID = content.userInfo["quoteID"] as? Int {
+                        let quote = QuoteJSON(id: quoteID, text: text, author: author, classification: content.title)
+                        saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                    }
                 } else {
                     // Handle case where there's no author
                     let text = String(components[0])
-                    let quote = QuoteJSON(id: UUID().hashValue, text: text, author: "", classification: content.title)
-                    saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                    if let quoteID = content.userInfo["quoteID"] as? Int {
+                        let quote = QuoteJSON(id: quoteID, text: text, author: "", classification: content.title)
+                        saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                    }
                 }
             }
         }
     }
+
 
 }
 
