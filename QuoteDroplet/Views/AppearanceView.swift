@@ -112,8 +112,8 @@ struct AppearanceView: View {
     private var customColorPickers: some View {
         HStack(spacing: 10) {
             ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
-//                customColorPicker(index: customIndex)
                 if customIndex == 2 {
+                    // essentially only padding the last one
                     customColorPicker(index: customIndex)
                     .padding(.trailing, 30)
                 } else {
