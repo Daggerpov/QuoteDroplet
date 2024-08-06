@@ -112,13 +112,20 @@ struct AppearanceView: View {
     private var customColorPickers: some View {
         HStack(spacing: 10) {
             ForEach(0..<(colorPalettes.last?.count ?? 0), id: \.self) { customIndex in
-                customColorPicker(index: customIndex)
+//                customColorPicker(index: customIndex)
+                if customIndex == 2 {
+                    customColorPicker(index: customIndex)
+                    .padding(.trailing, 30)
+                } else {
+                    customColorPicker(index: customIndex)
+                }
+                
             }
         }
     }
     
     private func customColorPicker(index: Int) -> some View {
-        ColorPickerWithoutLabel(
+        ColorPicker("",
             selection: Binding(
                 get: {
                     colorPalettes[3][index]
@@ -142,7 +149,7 @@ struct AppearanceView: View {
                     WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
                 }
             ),
-            supportsAlpha: true
+            supportsOpacity: true
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)
