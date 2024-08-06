@@ -251,13 +251,19 @@ struct QuoteDropletWidgetEntryView : View {
     
     @State private var isIntentsActive: Bool = false
     
+    @State private var isSavedRecent: Bool = false
+    
     init(entry: SimpleEntry, isIntentsActive: Bool) {
         self.entry = entry
         self.widgetQuote = entry.quote ?? Quote(id: 1, text: "", author: "", classification: "", likes: 15)
         self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
         self._isIntentsActive = State(initialValue: isIntentsActive)
-//        saveRecentQuote(quote: entry.quote!) //, source: "widget") TODO: do something with source later on
+        
+        if isSavedRecent == false {
+            saveRecentQuote(quote: entry.quote!) //, source: "widget") TODO: do something with source later on
+        }
+        
     // TODO: saving way too many quotes from here: bug.
     }
     

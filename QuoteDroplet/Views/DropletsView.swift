@@ -121,8 +121,7 @@ struct DropletsView: View {
                     }
                 } else if selected == 3 {
                     if recentQuotes.isEmpty {
-//                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
-                        Text("You have no recent quotes. \n\nBe sure to enable notifications to see them listed here.")
+                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
                             .font(.title2)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             .padding()
