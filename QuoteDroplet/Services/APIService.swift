@@ -4,14 +4,18 @@ import Foundation
 
 let baseUrl = "http://quote-dropper-production.up.railway.app"
 
-func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void) {
+func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void, isShortQuoteDesired: Bool = false) {
     var urlString: String;
     if classification == "all" {
         // Modify the URL to include a filter for approved quotes
-        urlString = "\(baseUrl)/quotes/"
+        urlString = "\(baseUrl)/quotes"
     } else {
         // Modify the URL to include a filter for approved quotes and classification
         urlString = "\(baseUrl)/quotes/classification=\(classification)"
+    }
+    
+    if isShortQuoteDesired {
+        urlString.append("?maxQuoteLength=125")
     }
     
     let url = URL(string: urlString)!
