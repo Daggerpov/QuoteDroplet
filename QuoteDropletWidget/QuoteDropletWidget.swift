@@ -41,8 +41,6 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
         
-        
-        
         // Calculate the frequency in seconds based on the selected index
         let frequencyInSeconds = getFrequencyInSeconds(for: data.getQuoteFrequencyIndex())
         
@@ -65,7 +63,7 @@ struct Provider: IntentTimelineProvider {
             // Fetch the initial quote
             
             getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased(), completion:  { quote, error in
-                if var quote = quote {
+                if let quote = quote {
 //                    if isSavedRecent == false {
 //                    saveRecentQuote(quote: quote) , source: "widget") TODO: do something with source later on
 //                    }
@@ -199,7 +197,7 @@ struct QuoteDropletWidgetEntryView : View {
         }
     }
     
-    private var likesSectionWithAuthor: some View {
+    private var likesSection: some View {
         HStack {
             if #available(iOS 17.0, *) {
                 Button(intent: LikeQuoteIntent()) {
@@ -224,27 +222,23 @@ struct QuoteDropletWidgetEntryView : View {
             
             VStack {
                 if widgetQuote.text != "" {
-                    if family == .systemSmall {
-                        Text("\(widgetQuote.text)")
-                            .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16)) // Use the selected font
-                            .foregroundColor(colors[1]) // Use the second color for text color
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                    } else {
-                        Text("\(widgetQuote.text)")
+                    Text("\(widgetQuote.text)")
                             .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
                             .foregroundColor(colors[1]) // Use the second color for text color
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                             .minimumScaleFactor(0.01)
-                    }
                     
                     HStack {
                         if (isAuthorValid(authorGiven: widgetQuote.author)) {
                             Text("— \(widgetQuote.author ?? "")")
                                 .foregroundColor(colors[2]) // Use the third color for author text color
                                 .padding(.horizontal, 5)
+                                .font(Font.custom(availableFonts[data.selectedFontIndex], size: 50)) // Adjust the font size as needed
+                                .minimumScaleFactor(0.01) // Allow text to scale down to 1% of the original size
+                                .lineLimit(1) // Ensure the text stays on one line
                         }
                         if isIntentsActive {
-                            likesSectionWithAuthor
+                            likesSection
                         }
                     }
                     .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
@@ -263,7 +257,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .foregroundColor(colors[2]) // Use the third color for author text color
                             .padding(.horizontal, 10)
                         if isIntentsActive {
-                            likesSectionWithAuthor
+                            likesSection
                         }
                     }
                     .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
