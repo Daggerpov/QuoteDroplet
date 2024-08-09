@@ -15,7 +15,7 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
     }
     
     if isShortQuoteDesired {
-        urlString.append("?maxQuoteLength=125")
+        urlString.append("?maxQuoteLength=90")
     }
     
     let url = URL(string: urlString)!
