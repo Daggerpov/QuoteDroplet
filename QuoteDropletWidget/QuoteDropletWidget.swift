@@ -41,8 +41,6 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
         
-        
-        
         // Calculate the frequency in seconds based on the selected index
         let frequencyInSeconds = getFrequencyInSeconds(for: data.getQuoteFrequencyIndex())
         
@@ -63,104 +61,20 @@ struct Provider: IntentTimelineProvider {
             }
         } else {
             // Fetch the initial quote
-            getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { quote, error in
-                if var quote = quote {
-                    // Check if the quote is too long
-                    // quote.text.count > 50 ensures the quote isn't longer than 50 char, if family == .systemSmall (widget size)
-                    while isQuoteTooLong(text: quote.text, context: context, author: quote.author) || (family == .systemSmall && quote.text.count > 50) {
-                        // Fetch a new quote
-                        getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased()) { newQuote, _ in
-                            if let newQuote = newQuote {
-                                quote = newQuote
-                            }
-                        }
-                    }
-                    
+            
+            getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased(), completion:  { quote, error in
+                if let quote = quote {
 //                    if isSavedRecent == false {
 //                    saveRecentQuote(quote: quote) , source: "widget") TODO: do something with source later on
 //                    }
-                    
                     let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequencyIndex: data.getQuoteFrequencyIndex(), quoteCategory: data.getQuoteCategory())
                     
                     let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                     completion(timeline)
                 }
-            }
+            }, isShortQuoteDesired: (family == .systemSmall))
         }
     }
-    
-    // Helper function to check if a quote is too long
-    private func isQuoteTooLong(text: String, context: Context, author: String?) -> Bool {
-        let maxWidth: CGFloat = {
-            switch family {
-            case .systemSmall:
-                return 20
-            case .systemMedium:
-                return 200
-            case .systemLarge:
-                return 300
-            case .systemExtraLarge:
-                return 400
-            case .accessoryCircular:
-                return 120
-            case .accessoryRectangular:
-                return 180
-            case .accessoryInline:
-                return 100
-            @unknown default:
-                return 100
-            }
-        }()
-        
-        var maxHeight: CGFloat = {
-            switch family {
-            case .systemSmall:
-                return 20
-            case .systemMedium:
-                return 40
-            case .systemLarge:
-                return 100
-            case .systemExtraLarge:
-                return 200
-            case .accessoryCircular:
-                return 120
-            case .accessoryRectangular:
-                return 180
-            case .accessoryInline:
-                return 60
-            @unknown default:
-                return 20
-            }
-        }()
-        
-        // Check if the author is going to take up 2 lines and adjust the maxHeight accordingly
-        
-        // adjusted
-        if let author = author, (isAuthorValid(authorGiven: author)) {
-            let authorFont = UIFont.systemFont(ofSize: 14) // Use an appropriate font size for the author
-            let authorBoundingBox = author.boundingRect(
-                with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
-                options: [.usesLineFragmentOrigin],
-                attributes: [NSAttributedString.Key.font: authorFont],
-                context: nil
-            )
-            
-            if authorBoundingBox.height > maxHeight / 2 {
-                maxHeight = maxHeight * 0.85 // Adjust the factor as needed
-            }
-        }
-        
-        let font = UIFont.systemFont(ofSize: 16) // Use an appropriate font size
-        let boundingBox = text.boundingRect(
-            with: CGSize(width: maxWidth, height: maxHeight),
-            options: [.usesLineFragmentOrigin],
-            attributes: [NSAttributedString.Key.font: font],
-            context: nil
-        )
-        
-        return boundingBox.height > maxHeight
-    }
-    
 }
 
 // Helper function to convert selected frequency index to seconds
@@ -283,7 +197,7 @@ struct QuoteDropletWidgetEntryView : View {
         }
     }
     
-    private var likesSectionWithAuthor: some View {
+    private var likesSection: some View {
         HStack {
             if #available(iOS 17.0, *) {
                 Button(intent: LikeQuoteIntent()) {
@@ -328,7 +242,7 @@ struct QuoteDropletWidgetEntryView : View {
                                 .padding(.horizontal, 5)
                         }
                         if isIntentsActive {
-                            likesSectionWithAuthor
+                            likesSection
                         }
                     }
                     .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
@@ -347,7 +261,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .foregroundColor(colors[2]) // Use the third color for author text color
                             .padding(.horizontal, 10)
                         if isIntentsActive {
-                            likesSectionWithAuthor
+                            likesSection
                         }
                     }
                     .font(Font.custom(availableFonts[data.selectedFontIndex], size: getFontSizeForText(familia: family, whichText: "author"))) // Use the selected font for author text
