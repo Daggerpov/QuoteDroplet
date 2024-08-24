@@ -14,6 +14,7 @@ import StoreKit
 
 @MainActor @available(iOS 16.0, *)
 class QuoteBox: ObservableObject {
+    @Published var isCopied: Bool = false
     @Published var isLiked: Bool = false
     @Published var isBookmarked: Bool = false
     @Published var likes: Int = 0
@@ -25,6 +26,17 @@ class QuoteBox: ObservableObject {
     
     @Environment(\.requestReview) var requestReview
     //------------------------------------------------------------------------------------
+    
+    func toggleCopy(for quote: Quote) {
+        DispatchQueue.main.async {
+            self.isCopied.toggle()
+            self.interactions += 1
+            if (self.interactions == 21) {
+                // within app, so review should show
+                self.requestReview()
+            }
+        }
+    }
     
     func toggleBookmark(for quote: Quote) {
         DispatchQueue.main.async {

@@ -10,6 +10,7 @@ import UserNotifications
 import UIKit
 import Foundation
 import StoreKit
+import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct DropletsView: View {
@@ -368,6 +369,17 @@ struct SingleQuoteView: View {
                 
                 let authorForSharing = (isAuthorValid(authorGiven: quote.author)) ? quote.author : ""
                 let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
+                
+                Button(action: {
+                    UIPasteboard.general.setValue("\(quote.text)\(wholeAuthorText)",
+                        forPasteboardType: UTType.plainText.identifier)
+                    quoteBox.toggleCopy(for: quote)
+                }) {
+                    Image(systemName: "doc.on.doc")
+                        .font(.title)
+                        .scaleEffect(1)
+                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                }.padding(.leading, 5)
                 
                 ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
                     Image(systemName: "square.and.arrow.up")
