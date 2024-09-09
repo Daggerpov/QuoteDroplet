@@ -63,7 +63,7 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
 
 func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) -> Void) {
     let urlString = "\(baseUrl)/quotes/author=\(author)"
-    let url = URL(string: urlString)!
+    guard let url = URL(string: urlString) else { return }
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
@@ -138,46 +138,6 @@ func getQuotesBySearchKeyword(searchKeyword: String, completion: @escaping ([Quo
         }
     }.resume()
 }
-
-func getQuoteByAuthorAndIndex(author: String, index: Int, completion: @escaping (Quote?, Error?) -> Void) {
-    let urlString = "\(baseUrl)/quotes/author=\(author)/index=\(index)"
-    let url = URL(string: urlString)!
-    
-    var request = URLRequest(url: url)
-    request.httpMethod = "GET"
-    
-    URLSession.shared.dataTask(with: request) { data, response, error in
-        if let error = error {
-            completion(nil, error)
-            return
-        }
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            if let httpResponse = response as? HTTPURLResponse {
-                completion(nil, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
-            } else {
-                completion(nil, NSError(domain: "HTTPError", code: -1, userInfo: nil))
-            }
-            return
-        }
-        
-        guard let data = data else {
-            completion(nil, NSError(domain: "NoDataError", code: -1, userInfo: nil))
-            return
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let quote = try decoder.decode(Quote.self, from: data)
-            completion(quote, nil)
-        } catch {
-            completion(nil, error)
-        }
-    }.resume()
-}
-
 
 func getRecentQuotes(limit: Int, completion: @escaping ([Quote]?, Error?) -> Void) {
     let urlString = "\(baseUrl)/quotes/recent/\(limit)"

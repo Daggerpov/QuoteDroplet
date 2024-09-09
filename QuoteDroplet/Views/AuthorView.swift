@@ -94,6 +94,9 @@ struct AuthorView: View {
         VStack {
             howWorksPopUp
             NavigationStack {
+                Text("Submit a Quote")
+                    .font(.largeTitle.bold())
+                    .padding(.bottom, 5)
                 Form{
                     //                    Section(header: Text("Quote Info"))
                     Section() { // without header
@@ -129,7 +132,7 @@ struct AuthorView: View {
                     }
                     
                 }
-                .navigationTitle("Quote Submission")
+//                .navigationTitle("Quote Submission")
                 .accentColor(.blue)
             }
             AdBannerViewController(adUnitID:
@@ -157,7 +160,7 @@ struct AuthorView: View {
                 HStack {
                     Spacer()
                     Text("Quotes by \(quote.author ?? "Author"):")
-                        .font(.title)
+                        .font(.largeTitle.bold())
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding(.bottom, 5)
                     

@@ -44,7 +44,7 @@ struct CommunityView: View {
             HStack{
                 Spacer()
                 Text("Newest Quotes")
-                    .font(.title)
+                    .font(.largeTitle.bold())
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                     .padding(.bottom, 5)
                 Spacer()
@@ -162,6 +162,9 @@ struct CommunityView: View {
         VStack {
             howWorksPopUp
             NavigationStack {
+                Text("Submit a Quote")
+                    .font(.largeTitle.bold())
+                    .padding(.bottom, 5)
                 Form{
                     //                    Section(header: Text("Quote Info"))
                     Section() { // without header
@@ -197,7 +200,7 @@ struct CommunityView: View {
                     }
                     
                 }
-                .navigationTitle("Quote Submission")
+//                .navigationTitle("Quote Submission")
                 .accentColor(.blue)
             }
             AdBannerViewController(adUnitID:

@@ -41,30 +41,39 @@ struct SearchView: View {
     @State private var totalQuotesLoaded = 0
     
     var body: some View {
-        VStack{
-            ScrollView(.vertical) {
-                LazyVStack(spacing: 15) {
-                    ForEach(quotes.indices, id: \.self) { index in
-                        if let quote = quotes[safe: index] {
-                            SingleQuoteView(quote: quote, searchText: searchText)
-                            // likely an issue with using the indices ->
-                            // that's what's causing the
-                            /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
+        NavigationStack{
+            VStack{
+                ScrollView(.vertical) {
+                    LazyVStack(spacing: 15) {
+                        ForEach(quotes.indices, id: \.self) { index in
+                            if let quote = quotes[safe: index] {
+                                SingleQuoteView(quote: quote, searchText: searchText)
+                                // likely an issue with using the indices ->
+                                // that's what's causing the
+                                /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
+                            }
                         }
+                        
                     }
-                    
+                    //            .safeAreaPadding(15)
+                    .safeAreaInset(edge: .top, spacing: 0) {
+                        ExpandableSearchBar()
+                    }
                 }
-    //            .safeAreaPadding(15)
-                .safeAreaInset(edge: .top, spacing: 0) {
-                    ExpandableSearchBar()
-                }
+                AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/1609477369")                    .frame(height: 50)
+                    .padding(.bottom, 10)
             }
-            AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/1609477369")                    .frame(height: 50)
-                .padding(.bottom, 10)
+            
+            .frame(maxWidth: .infinity)
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .onAppear() {
+                sharedVars.colorPaletteIndex = widgetColorPaletteIndex
+                
+                colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
+                colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
+                colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
+            }
         }
-        
-        .frame(maxWidth: .infinity)
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
     }
     
     @ViewBuilder
@@ -73,6 +82,8 @@ struct SearchView: View {
             Text(title)
                 .font(.largeTitle.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                .padding(.bottom, 5)
             HStack(spacing: 12) {
                 Image(systemName: "magnifyingglass").font(.title3)
                 TextField("Search Quotes by Keyword", text: $searchText)
