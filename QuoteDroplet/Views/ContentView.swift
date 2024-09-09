@@ -18,6 +18,14 @@ struct ContentView: View {
                         Text("Droplets")
                     }
                 }
+            SearchView()
+                .tabItem {
+                    VStack {
+                        Spacer(minLength: 20)
+                        Image(uiImage: resizeImage(UIImage(systemName: "magnifyingglass.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
+                        Text("Search")
+                    }
+                }
             AppearanceView()
                 .tabItem {
                     Spacer(minLength: 20)

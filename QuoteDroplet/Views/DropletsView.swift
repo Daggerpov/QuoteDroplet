@@ -93,7 +93,7 @@ struct DropletsView: View {
                     } else {
                         ForEach(quotes.indices, id: \.self) { index in
                             if let quote = quotes[safe: index] {
-                                SingleQuoteView(quote: quote, from: "not author view, lol this is shit code")
+                                SingleQuoteView(quote: quote)
                                 // likely an issue with using the indices ->
                                 // that's what's causing the
                                 /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
@@ -116,7 +116,7 @@ struct DropletsView: View {
                     } else {
                         ForEach(savedQuotes.indices, id: \.self) { index in
                             if let quote = savedQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, from: "not from author view")
+                                SingleQuoteView(quote: quote)
                             }
                         }
                     }
@@ -147,7 +147,7 @@ struct DropletsView: View {
                             .multilineTextAlignment(.center)
                         ForEach(recentQuotes.indices.reversed(), id: \.self) { index in
                             if let quote = recentQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, from: "not from author view")
+                                SingleQuoteView(quote: quote)
                             }
                         }
                     }
@@ -313,8 +313,13 @@ struct DropletsView: View {
 @available(iOS 16.0, *)
 struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
-    let quote: Quote
-    let from: String?
+    var quote: Quote
+    var from: String?
+    
+    init(quote: Quote, from: String = "not from AuthorView or SearchView by default") {
+        self.quote = quote
+        self.from = from
+    }
     
     @StateObject private var quoteBox = QuoteBox()
     
