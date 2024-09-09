@@ -46,7 +46,7 @@ struct SearchView: View {
                 LazyVStack(spacing: 15) {
                     ForEach(quotes.indices, id: \.self) { index in
                         if let quote = quotes[safe: index] {
-                            SingleQuoteView(quote: quote, from: "SearchView")
+                            SingleQuoteView(quote: quote, searchText: searchText)
                             // likely an issue with using the indices ->
                             // that's what's causing the
                             /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/

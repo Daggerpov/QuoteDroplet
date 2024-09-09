@@ -315,10 +315,12 @@ struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     var quote: Quote
     var from: String?
+    var searchText: String?
     
-    init(quote: Quote, from: String = "not from AuthorView or SearchView by default") {
+    init(quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "") {
         self.quote = quote
         self.from = from
+        self.searchText = searchText
     }
     
     @StateObject private var quoteBox = QuoteBox()
@@ -326,7 +328,7 @@ struct SingleQuoteView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("\(quote.text)")
+                Text(attributedString)//                Text("\(quote.text)")
                     .font(.title3)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     .padding(.bottom, 2)
@@ -419,6 +421,16 @@ struct SingleQuoteView: View {
             }
             quoteBox.isLiked = isQuoteLiked(quote)
         }
+    }
+    
+    private var attributedString: AttributedString {
+        var attributedString = AttributedString(quote.text)
+
+        if let range = attributedString.range(of: searchText ?? "", options: .caseInsensitive){
+            attributedString[range].backgroundColor = (colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .yellow).opacity(0.3)
+        }
+
+        return attributedString
     }
 }
 
