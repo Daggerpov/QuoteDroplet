@@ -63,7 +63,7 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
 
 func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) -> Void) {
     let urlString = "\(baseUrl)/quotes/author=\(author)"
-    guard let url = URL(string: urlString) else { return }
+    let url = URL(string: urlString)!
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
@@ -102,7 +102,7 @@ func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) 
 
 func getQuotesBySearchKeyword(searchKeyword: String, completion: @escaping ([Quote]?, Error?) -> Void) {
     let urlString = "\(baseUrl)/admin/search/\(searchKeyword)"
-    guard let url = URL(string: urlString) else { return }
+    let url = URL(string: urlString)!
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
