@@ -203,8 +203,8 @@ struct InfoView: View {
                 reviewButton
                 Spacer()
                 macNoteSection
-                Spacer()
-                donateButton
+//                Spacer()
+//                donateButton
                 Spacer()
                 aboutMeSection
                 Spacer()
