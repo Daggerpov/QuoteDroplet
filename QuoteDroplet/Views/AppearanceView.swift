@@ -39,7 +39,8 @@ struct AppearanceView: View {
             Picker("", selection: $selectedFontIndex) {
                 ForEach(0..<availableFonts.count, id: \.self) { index in
                     Text(availableFonts[index])
-                        .font(.custom(availableFonts[index], size: 16))
+                        .font(Font.custom(availableFonts[index], size: 16))
+//                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16))
                 }
             }
             .pickerStyle(MenuPickerStyle())
@@ -76,9 +77,10 @@ struct AppearanceView: View {
                 ForEach(0..<3, id: \.self) { paletteIndex in
                     sampleColorPicker(index: paletteIndex)
                 }
+                sampleColorPicker(index: 4)
             }
             HStack(spacing: 10) {
-                ForEach(4..<colorPalettes.count, id: \.self) { paletteIndex in
+                ForEach(5..<colorPalettes.count, id: \.self) { paletteIndex in
                     sampleColorPicker(index: paletteIndex)
                 }
             }
