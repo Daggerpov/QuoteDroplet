@@ -42,6 +42,7 @@ extension Collection {
 }
 
 enum QuoteCategory: String, CaseIterable {
+    case all = "All"
     case wisdom = "Wisdom"
     case motivation = "Motivation"
     case discipline = "Discipline"
@@ -49,7 +50,6 @@ enum QuoteCategory: String, CaseIterable {
     case inspiration = "Inspiration"
     case upliftment = "Upliftment"
     case love = "Love"
-    case all = "All"
     case bookmarkedQuotes = "Saved"
     var displayName: String {
         return self.rawValue

@@ -40,7 +40,6 @@ struct AppearanceView: View {
                 ForEach(0..<availableFonts.count, id: \.self) { index in
                     Text(availableFonts[index])
                         .font(Font.custom(availableFonts[index], size: 16))
-//                        .font(Font.custom(availableFonts[data.selectedFontIndex], size: 16))
                 }
             }
             .pickerStyle(MenuPickerStyle())

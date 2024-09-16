@@ -40,6 +40,10 @@ struct SearchView: View {
     
     @State private var totalQuotesLoaded = 0
     
+    // for top UI stuff:
+    @State private var activeCategory: QuoteCategory = .all
+    @Namespace private var animation
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -97,9 +101,40 @@ struct SearchView: View {
             .background{
                 RoundedRectangle(cornerRadius: 25).fill(.background)
             }
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(QuoteCategory.allCases, id: \.rawValue) { category in
+                        Button(action: {
+                            withAnimation(.snappy) {
+                                activeCategory = category
+                            }
+                        }) {
+                            Text(category.rawValue)
+                                .font(.callout)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .blue)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 15)
+                                .background {
+                                    if activeCategory == category {
+                                        Capsule()
+                                            .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                                            .matchedGeometryEffect(id: "ACTIVECATEGORY", in: animation)
+                                    } else {
+                                        Capsule()
+                                            .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                                    }
+                                }
+                        }
+                        .buttonStyle(.plain)
+                        
+                    }
+                }
+                .padding(.top, 20)
+            }
         }
         .padding(.horizontal, 15)
-        .padding(.bottom, 10)
+        .padding(.bottom, 30)
         
     }
     
