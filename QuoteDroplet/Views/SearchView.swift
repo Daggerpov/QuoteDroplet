@@ -92,7 +92,7 @@ struct SearchView: View {
                 Image(systemName: "magnifyingglass").font(.title3)
                 TextField("Search Quotes by Keyword", text: $searchText)
                     .onChange(of: searchText) { _ in
-                        loadQuotesBySearch(searchText: searchText)
+                        loadQuotesBySearch(searchText: searchText, searchCategory: activeCategory.rawValue.lowercased())
                     }
             }
             .padding(.vertical, 10)
@@ -109,6 +109,7 @@ struct SearchView: View {
                             withAnimation(.snappy) {
                                 activeCategory = category
                             }
+                            
                         }) {
                             Text(category.rawValue)
                                 .font(.callout)
@@ -130,11 +131,14 @@ struct SearchView: View {
                         
                     }
                 }
-                .padding(.top, 20)
+                .onChange(of: activeCategory) { _ in
+                    loadQuotesBySearch(searchText: searchText, searchCategory: activeCategory.rawValue.lowercased())
+                }
+                .padding(.top, 10)
             }
         }
         .padding(.horizontal, 15)
-        .padding(.bottom, 30)
+        .padding(.bottom, 20)
         
     }
     
@@ -241,7 +245,7 @@ struct SearchView: View {
         }
     }
     
-    private func loadQuotesBySearch(searchText: String = "") {
+    private func loadQuotesBySearch(searchText: String = "", searchCategory: String = QuoteCategory.all.rawValue) {
         guard !isLoadingMore else { return }
         
         self.quotes = []
@@ -249,7 +253,7 @@ struct SearchView: View {
         isLoadingMore = true
         let group = DispatchGroup()
         
-        getQuotesBySearchKeyword(searchKeyword: searchText) {quotes, error in
+        getQuotesBySearchKeyword(searchKeyword: searchText, searchCategory: searchCategory) {quotes, error in
             if let error = error {
                 print("Error fetching quotes: \(error)")
                 return
