@@ -129,20 +129,20 @@ struct SingleQuoteView: View {
     
     private var attributedString: AttributedString {
         var attributedString = AttributedString(quote.text)
+        let searchTextLowercased = (searchText ?? "").lowercased()
+        let textLowercased = quote.text.lowercased()
+        var searchStartIndex = textLowercased.startIndex
 
-        if let range = attributedString.range(of: searchText ?? "", options: .caseInsensitive){
-            attributedString[range].backgroundColor = (colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .yellow).opacity(0.3)
+        // Loop to find and highlight all occurrences
+        while let range = textLowercased.range(of: searchTextLowercased, range: searchStartIndex..<textLowercased.endIndex) {
+            // Convert String.Index to AttributedString.Index
+            if let attributedRange = Range(NSRange(range, in: textLowercased), in: attributedString) {
+                attributedString[attributedRange].backgroundColor = (colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .yellow).opacity(0.3)
+            }
+            // Move searchStartIndex to the end of the found range to continue searching
+            searchStartIndex = range.upperBound
         }
 
         return attributedString
     }
 }
-//
-//
-//@available(iOS 16.0, *)
-//struct DropletsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DropletsView()
-//    }
-//}
-//
