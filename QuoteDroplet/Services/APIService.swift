@@ -18,7 +18,10 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
         urlString += "/maxQuoteLength=65"
     }
     
-    let url = URL(string: urlString)!
+    guard let url = URL(string: urlString) else {
+        completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
@@ -63,7 +66,11 @@ func getRandomQuoteByClassification(classification: String, completion: @escapin
 
 func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) -> Void) {
     let urlString = "\(baseUrl)/quotes/author=\(author)"
-    let url = URL(string: urlString)!
+    
+    guard let url = URL(string: urlString) else {
+        completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
@@ -100,9 +107,15 @@ func getQuotesByAuthor(author: String, completion: @escaping ([Quote]?, Error?) 
     }.resume()
 }
 
-func getQuotesBySearchKeyword(searchKeyword: String, completion: @escaping ([Quote]?, Error?) -> Void) {
-    let urlString = "\(baseUrl)/admin/search/\(searchKeyword)"
-    let url = URL(string: urlString)!
+func getQuotesBySearchKeyword(searchKeyword: String, searchCategory: String, completion: @escaping ([Quote]?, Error?) -> Void) {
+    let urlString = "\(baseUrl)/admin/search/\(searchKeyword)?category=\(searchCategory)"
+    print("URL STRING:")
+    print(urlString)
+    
+    guard let url = URL(string: urlString) else {
+        completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"

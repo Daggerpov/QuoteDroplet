@@ -167,6 +167,17 @@ struct AuthorView: View {
                     Spacer()
                 }
                 
+                ZStack{
+                    Image("authorimageframe")
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                    AsyncImage(url: URL(string: "https://your_image_url_address"))
+                    
+
+                }
+                
+                
                 ScrollView {
                     Spacer()
                     LazyVStack{
@@ -227,6 +238,12 @@ struct AuthorView: View {
                 colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
                 colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
                 colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
+                
+                loadRemoteJSON("https://www.googleapis.com/customsearch/v1?key=AIzaSyBzqkgygHO3r6i7sJC56r-vU5icYBA_f6Y&cx=238ad9d0296fb425a&searchType=image&q=Marcus%20Aurelius"){ (data: TestModel) in
+                 //data is your returned value of the generic type T.
+                    print(data)
+                }
+
             }
             .sheet(isPresented: $isAddingQuote) {
                 quoteAddition
@@ -273,3 +290,28 @@ struct AuthorView: View {
         }
     }
 }
+
+func loadRemoteJSON<T: Decodable>(_ urlString: String, completion: @escaping  ((T) -> Void)) {
+    guard let url = URL(string: urlString) else {
+        fatalError("Invalid URL")
+    }
+    
+    let request = URLRequest(url: url)
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        guard let data = data else {
+            fatalError(error?.localizedDescription ?? "Unknown Error")
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            let data = try decoder.decode(T.self, from: data)
+            print("data printed from loadremoteJSON")
+            print(data)
+            completion(data)
+        } catch {
+            fatalError("Couldn't parse data from \(urlString)\n\(error)")
+        }
+    }
+}
+
+struct TestModel: Decodable {}
