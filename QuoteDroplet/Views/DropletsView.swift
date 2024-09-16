@@ -138,7 +138,7 @@ struct DropletsView: View {
                             .multilineTextAlignment(.center)
                         // TODO: add apple widget help link here
                     } else {
-                        Text("These were shown on your widget and/or notifications.")
+                        Text("These are your most recent quotes from notifications.")
                             .font(.title2)
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                             .padding()

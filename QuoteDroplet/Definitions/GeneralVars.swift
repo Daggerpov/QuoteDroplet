@@ -50,7 +50,7 @@ enum QuoteCategory: String, CaseIterable {
     case upliftment = "Upliftment"
     case love = "Love"
     case all = "All"
-    case bookmarkedQuotes = "Favorites"
+    case bookmarkedQuotes = "Saved"
     var displayName: String {
         return self.rawValue
     }

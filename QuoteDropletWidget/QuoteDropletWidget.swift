@@ -47,7 +47,7 @@ struct Provider: IntentTimelineProvider {
         // Schedule the next update based on the calculated frequency
         let nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
         
-        if data.getQuoteCategory().lowercased() == "favorites" {
+        if data.getQuoteCategory().lowercased() == "saved" {
             let bookmarkedQuotes = getBookmarkedQuotes()
             
             if !bookmarkedQuotes.isEmpty {
@@ -56,7 +56,7 @@ struct Provider: IntentTimelineProvider {
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } else {
-                // TODO: add an error or maybe a quote with the message "No Favourites Added" Please go into the Droplets section of the app to favourite some quotes, so they can show up here"
+                // TODO: add an error or maybe a quote with the message "No Saved Added" Please go into the Droplets section of the app to save some quotes, so they can show up here"
                 completion(Timeline(entries: [], policy: .after(nextUpdate)))
             }
         } else {

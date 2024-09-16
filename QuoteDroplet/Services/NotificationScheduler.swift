@@ -96,7 +96,7 @@ class NotificationScheduler {
                 }
                 randomQuote = randomElement
                 content.title = "Quote Droplet"
-            } else if classification.lowercased() == "favorites" {
+            } else if classification.lowercased() == "saved" {
                 let bookmarkedQuotes = getBookmarkedQuotes().map { $0.toQuoteJSON() }
                 
                 if !bookmarkedQuotes.isEmpty {
@@ -105,14 +105,14 @@ class NotificationScheduler {
                     let randomElement = bookmarkedQuotes[randomIndex]
                     randomQuote = randomElement
                     
-                    content.title = "Quote Droplet: Favorites"
+                    content.title = "Quote Droplet: Saved Quotes"
                     
                     // Now randomQuote is of type Quote
                     // Proceed with using randomQuote as needed
                 } else {
                     // Handle case where bookmarkedQuotes is empty
-                    randomQuote = QuoteJSON(id: 9999999, text: "Please add a quote to favorites by clicking the favorites button under a quote in the app's \"Droplets\" tab", author: "", classification: "Favorites")
-                    content.title = "Quote Droplet: No Favorites Added"
+                    randomQuote = QuoteJSON(id: 9999999, text: "Please add a quote to saved by clicking the save button under a quote in the app's \"Droplets\" tab", author: "", classification: "Saved")
+                    content.title = "Quote Droplet: No Saved Quotes Added"
                     
                 }
                 
