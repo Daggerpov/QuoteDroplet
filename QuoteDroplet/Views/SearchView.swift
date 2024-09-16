@@ -45,15 +45,15 @@ struct SearchView: View {
             VStack{
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 15) {
-                        ForEach(quotes.indices, id: \.self) { index in
-                            if let quote = quotes[safe: index] {
-                                SingleQuoteView(quote: quote, searchText: searchText)
-                                // likely an issue with using the indices ->
-                                // that's what's causing the
-                                /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
+                        if searchText != "" {
+                            ForEach(quotes.indices, id: \.self) { index in
+                                if let quote = quotes[safe: index] {
+                                    SingleQuoteView(quote: quote, searchText: searchText)
+                                }
                             }
+                        } else {
+                            DummyQuotesView()
                         }
-                        
                     }
                     //            .safeAreaPadding(15)
                     .safeAreaInset(edge: .top, spacing: 0) {
@@ -101,6 +101,109 @@ struct SearchView: View {
         .padding(.horizontal, 15)
         .padding(.bottom, 10)
         
+    }
+    
+    // Dummy Quotes View
+    @ViewBuilder
+    func DummyQuotesView() -> some View {
+        ForEach(0..<20, id: \.self) { _ in
+            VStack {
+                HStack {
+                    VStack {
+                        HStack {
+                            Rectangle().frame(width: CGFloat(Int.random(in: 200..<250)), height:9.5)
+                                .font(.title3)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                                .padding(.bottom, 2)
+                                .frame(alignment: .leading)
+                            Spacer()
+                        }
+                        
+                        HStack{
+                            Rectangle().frame(width: CGFloat(Int.random(in: 40..<130)), height:9.5)
+                                .font(.title3)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                                .padding(.bottom, 2)
+                                .frame(alignment: .leading)
+                            Spacer()
+                        }
+                        
+                        HStack{
+                            Rectangle().frame(width: CGFloat(Int.random(in: 40..<130)), height:9.5)
+                                .font(.title3)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                                .padding(.bottom, 2)
+                                .frame(alignment: .leading)
+                            Spacer()
+                        }
+                        
+                    }
+                    Spacer()
+                }
+                
+                
+                HStack{
+                    Spacer()
+                    Text("— ")
+                        .font(.body)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        .padding(.bottom, 5)
+                        .frame(alignment: .trailing)
+                    Rectangle().frame(width: CGFloat(Int.random(in: 70..<150)), height: 9.5)
+                        .font(.body)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        .padding(.bottom, 5)
+                        .frame(alignment: .trailing)
+                }
+                
+//                HStack {
+//                    // TODO: what I need to do here is make it so likes are fetched by using the `getLikeCountForQuote` method
+//                    HStack {
+//                        Button(action: {
+//                           
+//                        }) {
+//                            Image(systemName: "heart")
+//                                .font(.title)
+//                                .scaleEffect(1)
+//                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+//                        }
+//                        
+//                        // Display the like count next to the heart button
+////                        Text("\(Int.random(in: 7..<54))")
+////                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+//                    }
+//                    
+//                    Button(action: {
+//                    }) {
+//                        Image(systemName: "bookmark")
+//                            .font(.title)
+//                            .scaleEffect(1)
+//                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+//                    }.padding(.leading, 5)
+//                    
+//                    Button(action: {
+//                    }) {
+//                        Image(systemName: "doc.on.doc")
+//                            .font(.title)
+//                            .scaleEffect(1)
+//                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+//                    }.padding(.leading, 5)
+//                    
+//                    Image(systemName: "square.and.arrow.up")
+//                        .font(.title)
+//                        .scaleEffect(1)
+//                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+//                    .padding(.leading, 5)
+//                    
+//                    Spacer()
+//                }
+            }
+            .padding()
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .cornerRadius(20)
+            .shadow(radius: 5)
+            .padding(.horizontal)
+        }
     }
     
     private func loadQuotesBySearch(searchText: String = "") {
