@@ -30,8 +30,8 @@
 		DC3C86942BA00824009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86932BA00824009F581D /* GoogleMobileAds */; };
 		DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
 		DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */; };
-		DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* HomeView.swift */; };
-		DC5205B42B9CEF620007CB5B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* HomeView.swift */; };
+		DC5205B32B9CEF620007CB5B /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* CommunityView.swift */; };
+		DC5205B42B9CEF620007CB5B /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* CommunityView.swift */; };
 		DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
 		DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
 		DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
@@ -117,7 +117,7 @@
 		DC2999092C4DCE0B0025D32E /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC29990C2C4DF2350025D32E /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
-		DC5205B22B9CEF620007CB5B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DC5205B22B9CEF620007CB5B /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
 		DC7010E02BAE63DC008678CB /* QuotesBackup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuotesBackup.json; sourceTree = "<group>"; };
 		DC7010E32BAE654F008678CB /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 			children = (
 				DCAB2DA02A9FA91300A822D7 /* ContentView.swift */,
 				DC26EB932BF96FD4004CA84F /* DropletsView.swift */,
-				DC5205B22B9CEF620007CB5B /* HomeView.swift */,
+				DC5205B22B9CEF620007CB5B /* CommunityView.swift */,
 				DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */,
 				DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */,
 				DC2999092C4DCE0B0025D32E /* AuthorView.swift */,
@@ -489,7 +489,7 @@
 				DC2998FA2C4D9C5C0025D32E /* QuoteBox.swift in Sources */,
 				DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
-				DC5205B32B9CEF620007CB5B /* HomeView.swift in Sources */,
+				DC5205B32B9CEF620007CB5B /* CommunityView.swift in Sources */,
 				DC2999072C4DBED40025D32E /* AuthorHelper.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
@@ -523,7 +523,7 @@
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */,
-				DC5205B42B9CEF620007CB5B /* HomeView.swift in Sources */,
+				DC5205B42B9CEF620007CB5B /* CommunityView.swift in Sources */,
 				DCE0F6502C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,

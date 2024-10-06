@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  CommunityView.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-03-09.
