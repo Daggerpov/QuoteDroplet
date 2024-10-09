@@ -16,8 +16,8 @@ struct SubmitView: View {
     
     @State private var isAddingQuote = false
     @State private var selectedCategory: QuoteCategory = .all
-    @State private var submissionMessage = ""
-    @State private var showSubmissionReceivedAlert = false
+    @Binding var showSubmissionReceivedAlert: Bool
+    @Binding var submissionMessage: String
     @State private var showSubmissionInfoAlert = false
     @State private var quoteText = ""
     @State private var author = ""
@@ -88,22 +88,16 @@ struct SubmitView: View {
                             } else {
                                 submissionMessage = "An unknown error occurred."
                             }
-                            isAddingQuote = false
-                            showSubmissionReceivedAlert = true // <-- Set to true after successful submission
+                            DispatchQueue.main.async {
+                                isAddingQuote = false
+                                showSubmissionReceivedAlert = true // <-- Set to true after successful submission
+                            }
                         }
                         quoteText = ""
                         author = ""
                         selectedCategory = .wisdom
                     }
-                    .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
-                        Alert(
-                            title: Text("Submission Received"),
-                            message: Text(submissionMessage),
-                            dismissButton: .default(Text("OK")) {
-                                showSubmissionReceivedAlert = false // Dismisses the alert when OK is clicked
-                            }
-                        )
-                    }
+                    
                     
                 }
 //                .navigationTitle("Quote Submission")

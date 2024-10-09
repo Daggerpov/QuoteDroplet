@@ -16,6 +16,9 @@ import StoreKit
 struct AuthorView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
+    @State private var showSubmissionReceivedAlert = false
+    @State private var submissionMessage = ""
+
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
     
@@ -95,7 +98,7 @@ struct AuthorView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .multilineTextAlignment(.center)
                             
-                            SubmitView()
+                            SubmitView(showSubmissionReceivedAlert: $showSubmissionReceivedAlert, submissionMessage: $submissionMessage)
                         }
                         
                         if !isLoadingMore {

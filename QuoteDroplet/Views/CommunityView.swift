@@ -15,6 +15,9 @@ import Foundation
 struct CommunityView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
+    @State private var showSubmissionReceivedAlert = false
+    @State private var submissionMessage = ""
+    
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
     
@@ -120,11 +123,24 @@ struct CommunityView: View {
                     Spacer()
                     quoteSection
                     Spacer()
-                    SubmitView()
+                    Text(submissionMessage)
+                    Text("\(showSubmissionReceivedAlert)")
+                    SubmitView(showSubmissionReceivedAlert: $showSubmissionReceivedAlert, submissionMessage: $submissionMessage)
+                        .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
+                            Alert(
+                                title: Text("Submission Received"),
+                                message: Text(submissionMessage.isEmpty ? "Your submission has been received." : submissionMessage),
+                                dismissButton: .default(Text("OK")) {
+                                    showSubmissionReceivedAlert = false // Dismisses the alert when OK is clicked
+                                }
+                            )
+                        }
                     Spacer()
                 }
                 .padding()
             }
+            
+
             .frame(maxWidth: .infinity)
             
 //            .padding()
