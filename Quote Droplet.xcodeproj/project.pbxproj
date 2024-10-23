@@ -69,6 +69,12 @@
 		DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCBA0C882C5C270700A2E949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA0C872C5C270600A2E949 /* HeaderView.swift */; };
 		DCBA0C892C5C270700A2E949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA0C872C5C270600A2E949 /* HeaderView.swift */; };
+		DCC0B3602CC9B136002DED7A /* QuoteCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */; };
+		DCC0B3612CC9B136002DED7A /* QuoteCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */; };
+		DCC0B3632CC9B154002DED7A /* FontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3622CC9B154002DED7A /* FontHelper.swift */; };
+		DCC0B3642CC9B154002DED7A /* FontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3622CC9B154002DED7A /* FontHelper.swift */; };
+		DCC0B3662CC9B1A4002DED7A /* QuoteJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */; };
+		DCC0B3672CC9B1A4002DED7A /* QuoteJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */; };
 		DCE0F64C2C8EA2A900F24BC6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */; };
 		DCE0F64D2C8EA2A900F24BC6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */; };
 		DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64E2C8EBCEE00F24BC6 /* SingleQuoteView.swift */; };
@@ -148,6 +154,9 @@
 		DCAB2DD02A9FBAB800A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DCB722132B9D06E60094BAB8 /* GeneralVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralVars.swift; sourceTree = "<group>"; };
 		DCBA0C872C5C270600A2E949 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCategory.swift; sourceTree = "<group>"; };
+		DCC0B3622CC9B154002DED7A /* FontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontHelper.swift; sourceTree = "<group>"; };
+		DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteJSON.swift; sourceTree = "<group>"; };
 		DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		DCE0F64E2C8EBCEE00F24BC6 /* SingleQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,9 +203,7 @@
 			children = (
 				DC0EFB832C4CB18100B4D46A /* AdHelper.swift */,
 				DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */,
-				DC0EFB892C4CB29400B4D46A /* JSONHelper.swift */,
-				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
-				DC890E7E2C5F211900008838 /* LocalQuotesHelper.swift */,
+				DCC0B3622CC9B154002DED7A /* FontHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -204,6 +211,7 @@
 		DC0EFB8C2C4CB74D00B4D46A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC0EFB7F2C4CB11900B4D46A /* Helpers */,
 				DCAB2DA02A9FA91300A822D7 /* ContentView.swift */,
 				DC26EB932BF96FD4004CA84F /* DropletsView.swift */,
 				DC5205B22B9CEF620007CB5B /* CommunityView.swift */,
@@ -228,15 +236,16 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		DC2998FC2C4D9C670025D32E /* Definitions */ = {
+		DC2998FC2C4D9C670025D32E /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
+				DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */,
+				DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */,
 				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
 				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
-				DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */,
 			);
-			path = Definitions;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		DC2998FD2C4D9C7B0025D32E /* Utils */ = {
@@ -275,10 +284,10 @@
 			isa = PBXGroup;
 			children = (
 				DC2998FD2C4D9C7B0025D32E /* Utils */,
-				DC2998FC2C4D9C670025D32E /* Definitions */,
-				DC0EFB8D2C4CB79100B4D46A /* Services */,
 				DC0EFB8C2C4CB74D00B4D46A /* Views */,
-				DC0EFB7F2C4CB11900B4D46A /* Helpers */,
+				DCC0B35E2CC9B057002DED7A /* ViewModels */,
+				DC0EFB8D2C4CB79100B4D46A /* Services */,
+				DC2998FC2C4D9C670025D32E /* Models */,
 				DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */,
 				DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */,
 				DCAB2DD02A9FBAB800A822D7 /* Info.plist */,
@@ -319,6 +328,17 @@
 				DC8279432AA09134004E2BBF /* DataService.swift */,
 			);
 			path = QuoteDropletWidget;
+			sourceTree = "<group>";
+		};
+		DCC0B35E2CC9B057002DED7A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DC0EFB892C4CB29400B4D46A /* JSONHelper.swift */,
+				DC890E7E2C5F211900008838 /* LocalQuotesHelper.swift */,
+				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
+				DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -490,12 +510,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC890E7F2C5F211900008838 /* LocalQuotesHelper.swift in Sources */,
+				DCC0B3632CC9B154002DED7A /* FontHelper.swift in Sources */,
 				DC2998FA2C4D9C5C0025D32E /* QuoteBox.swift in Sources */,
 				DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* CommunityView.swift in Sources */,
 				DC2999072C4DBED40025D32E /* AuthorHelper.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
+				DCC0B3662CC9B1A4002DED7A /* QuoteJSON.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DC29990D2C4DF2350025D32E /* InfoView.swift in Sources */,
 				DC0EFB872C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
@@ -507,6 +529,7 @@
 				DC0EFB842C4CB18100B4D46A /* AdHelper.swift in Sources */,
 				DCBA0C882C5C270700A2E949 /* HeaderView.swift in Sources */,
 				DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
+				DCC0B3602CC9B136002DED7A /* QuoteCategory.swift in Sources */,
 				DC29990A2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
@@ -531,6 +554,7 @@
 				DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */,
 				DC5205B42B9CEF620007CB5B /* CommunityView.swift in Sources */,
 				DCE0F6502C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
+				DCC0B3612CC9B136002DED7A /* QuoteCategory.swift in Sources */,
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
@@ -544,6 +568,8 @@
 				DC0EFB852C4CB18100B4D46A /* AdHelper.swift in Sources */,
 				DC2999082C4DBED40025D32E /* AuthorHelper.swift in Sources */,
 				DCBA0C892C5C270700A2E949 /* HeaderView.swift in Sources */,
+				DCC0B3642CC9B154002DED7A /* FontHelper.swift in Sources */,
+				DCC0B3672CC9B1A4002DED7A /* QuoteJSON.swift in Sources */,
 				DC8279442AA09134004E2BBF /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

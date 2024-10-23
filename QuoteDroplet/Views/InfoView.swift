@@ -58,11 +58,6 @@ struct InfoView: View {
     
     private var aboutMeSection: some View {
         HStack {
-            //            Text("Contact:")
-            //                .font(.title2)
-            //                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            //                .padding(.leading, 10)
-            //            
             Spacer()
             
             buildLinkImage(urlForImage: "https://www.linkedin.com/in/danielagapov/", imageName: "linkedinlogo")
