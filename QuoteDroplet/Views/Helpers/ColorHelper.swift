@@ -52,11 +52,3 @@ var colorPalettes = [
     
     // Could also try: E2856E, 03312E, 070707, 564138, 931621, C1292E (lighter than prev red, 931621)
 ]
-
-struct ColorPaletteView: View {
-    var colors: [Color]
-    var body: some View {
-        LinearGradient(gradient: Gradient(colors: colors), startPoint: .topLeading, endPoint: .bottomTrailing)
-            .ignoresSafeArea()
-    }
-}
