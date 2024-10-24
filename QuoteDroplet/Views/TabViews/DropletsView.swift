@@ -185,7 +185,7 @@ struct DropletsView: View {
                 
                 // Schedule notifications:
                 // will schedule with previous date and category values
-                NotificationScheduler.shared.scheduleNotifications()
+                NotificationSchedulerService.shared.scheduleNotifications()
             }
             .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
                 .onEnded { value in

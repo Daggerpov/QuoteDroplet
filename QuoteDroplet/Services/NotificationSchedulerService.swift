@@ -1,5 +1,5 @@
 //
-//  NotificationScheduler.swift
+//  NotificationSchedulerService.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-03-22.
@@ -15,8 +15,8 @@ import Foundation
 private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
 
 @available(iOS 15, *)
-class NotificationScheduler {
-    static let shared = NotificationScheduler(localQuotesService: LocalQuotesService())
+class NotificationSchedulerService {
+    static let shared = NotificationSchedulerService(localQuotesService: LocalQuotesService())
     
     // notifications default settings:
     private var defaultNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
@@ -44,10 +44,10 @@ class NotificationScheduler {
     
     func scheduleNotifications() {
         // removed toggle check to make sure user has opted in; simply notififying no matter if opted in.
-        if NotificationScheduler.isDefaultConfigOverwritten {
-            scheduleNotifications(notificationTime: NotificationScheduler.previouslySelectedNotificationTime, quoteCategory: NotificationScheduler.previouslySelectedNotificationCategory, defaults: true)
+        if NotificationSchedulerService.isDefaultConfigOverwritten {
+            scheduleNotifications(notificationTime: NotificationSchedulerService.previouslySelectedNotificationTime, quoteCategory: NotificationSchedulerService.previouslySelectedNotificationCategory, defaults: true)
         } else {
-            NotificationScheduler.defaultScheduledNotificationTime = defaultNotificationTime
+            NotificationSchedulerService.defaultScheduledNotificationTime = defaultNotificationTime
             scheduleNotifications(notificationTime: defaultNotificationTime, quoteCategory: defaultQuoteCategory, defaults: true)
         }
     }
@@ -59,9 +59,9 @@ class NotificationScheduler {
         // notification scheduler gets called, that's what it'll use.
         
         if defaults == false {
-            NotificationScheduler.previouslySelectedNotificationTime = notificationTime
-            NotificationScheduler.previouslySelectedNotificationCategory = quoteCategory
-            NotificationScheduler.isDefaultConfigOverwritten = true
+            NotificationSchedulerService.previouslySelectedNotificationTime = notificationTime
+            NotificationSchedulerService.previouslySelectedNotificationCategory = quoteCategory
+            NotificationSchedulerService.isDefaultConfigOverwritten = true
         }
         
         // Cancel existing notifications to reschedule them with the new time

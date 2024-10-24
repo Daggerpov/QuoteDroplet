@@ -14,13 +14,10 @@ class QuotesViewModel: ObservableObject{
     private var notificationTime = Date()
     private var isTimePickerExpanded = false
     private var showNotificationPicker = false
-    private var counts: [String: Int] = [:]
+    @Published var counts: [String: Int] = [:]
     
-    private var notificationScheduledTimeMessage: String = ""
     
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-    // Notifications------------------------
-    
     let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     
     let localQuotesService: LocalQuotesService
@@ -28,8 +25,9 @@ class QuotesViewModel: ObservableObject{
     let quoteFrequencyIndex: Int
     let quoteCategory: QuoteCategory
     
-    let notificationTimeCase: NotificationTime
-    
+    private var notificationTimeCase: NotificationTime = .defaultScheduled
+    private var notificationScheduledTimeMessage: String = ""
+
     init(localQuotesService: LocalQuotesService, apiService: APIService, quoteFrequencyIndex: Int, quoteCategory: QuoteCategory) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
@@ -38,6 +36,12 @@ class QuotesViewModel: ObservableObject{
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
         }
+    }
+    
+    public func handleNotificationScheduleAction() {
+        isTimePickerExpanded.toggle()
+        NotificationSchedulerService.shared.scheduleNotifications(notificationTime: notificationTime,
+                                                           quoteCategory: quoteCategory, defaults: false)
     }
     
     public func fetchNotificationScheduledTimeInfo () {
@@ -49,14 +53,14 @@ class QuotesViewModel: ObservableObject{
     public func getNotificationTime() -> Date {
         switch notificationTimeCase {
         case .previouslySelected:
-            return NotificationScheduler.previouslySelectedNotificationTime
+            return NotificationSchedulerService.previouslySelectedNotificationTime
         case .defaultScheduled:
-            return NotificationScheduler.defaultScheduledNotificationTime
+            return NotificationSchedulerService.defaultScheduledNotificationTime
         }
     }
  
     public func getIsDefaultConfigOverwritten () -> Bool {
-        return NotificationScheduler.isDefaultConfigOverwritten
+        return NotificationSchedulerService.isDefaultConfigOverwritten
     }
     
     private func formattedFrequency() -> String {
@@ -64,10 +68,10 @@ class QuotesViewModel: ObservableObject{
     }
 
     public func scheduleNotificationsAction() {
-        if NotificationScheduler.isDefaultConfigOverwritten {
-            notificationTime = NotificationScheduler.previouslySelectedNotificationTime
+        if NotificationSchedulerService.isDefaultConfigOverwritten {
+            notificationTime = NotificationSchedulerService.previouslySelectedNotificationTime
         } else {
-            notificationTime = NotificationScheduler.defaultScheduledNotificationTime
+            notificationTime = NotificationSchedulerService.defaultScheduledNotificationTime
         }
         isTimePickerExpanded.toggle()
     }

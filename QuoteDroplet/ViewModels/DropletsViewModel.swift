@@ -82,7 +82,7 @@ class DropletsViewModel: ObservableObject {
                 }
             }
         } else if selected == .recent {
-            NotificationScheduler.shared.saveSentNotificationsAsRecents()
+            NotificationSchedulerService.shared.saveSentNotificationsAsRecents()
             let recentQuotes = localQuotesService.getRecentLocalQuotes()
             var recentQuoteIDs: [Int] = []
             for recentQuote in recentQuotes {

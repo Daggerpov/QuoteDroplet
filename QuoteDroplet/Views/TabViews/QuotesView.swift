@@ -163,9 +163,7 @@ extension QuotesView {
             .padding()
             Spacer()
             Button(action: {
-                isTimePickerExpanded.toggle()
-                NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
-                                                                   quoteCategory: quoteCategory, defaults: false)
+                viewModel.handleNotificationScheduleAction()
             }) {
                 Text("Done")
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -229,13 +227,13 @@ extension QuotesView {
             Text("Quote Category:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            Picker("", selection: $quoteCategory) {
+            Picker("", selection: $viewModel.quoteCategory) {
                 if counts.isEmpty {
                     Text("Loading...")
                 } else {
                     ForEach(QuoteCategory.allCases, id: \.self) { category in
-                        if let categoryCount = counts[category.rawValue] {
-                            let displayNameWithCount = "\(category.displayName) (\(categoryCount))"
+                        if let categoryCount: Int = viewModel.counts[category.rawValue] {
+                            let displayNameWithCount: String = "\(category.displayName) (\(categoryCount))"
                             Text(displayNameWithCount)
                                 .font(.headline)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -246,7 +244,7 @@ extension QuotesView {
             .pickerStyle(MenuPickerStyle())
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             .onAppear {
-                getCategoryCounts { fetchedCounts in
+                viewModel.getCategoryCounts { fetchedCounts in
                     counts = fetchedCounts
                 }
             }
