@@ -22,9 +22,9 @@ class QuoteBox: ObservableObject {
     
     //------------------------------------------------------------------------------------
     @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var interactions = 0
+    var interactions: Int = 0
     
-    @Environment(\.requestReview) var requestReview
+    @Environment(\.requestReview) var requestReview: RequestReviewAction
     //------------------------------------------------------------------------------------
     
     let localQuotesService: LocalQuotesService
@@ -33,14 +33,20 @@ class QuoteBox: ObservableObject {
         self.localQuotesService = localQuotesService
     }
     
-    func toggleCopy(for quote: Quote) {
-        DispatchQueue.main.async {
-            self.isCopied.toggle()
-            self.interactions += 1
-            if (self.interactions == 21) {
+    func increaseInteractions() {
+        DispatchQueue.main.async { [weak self] in
+            self?.interactions += 1
+            if (self?.interactions == 21) {
                 // within app, so review should show
-                self.requestReview()
+                self?.requestReview()
             }
+        }
+    }
+    
+    func toggleCopy(for quote: Quote) {
+        DispatchQueue.main.async { [weak self] in
+            self?.isCopied.toggle()
+            self?.increaseInteractions()
         }
     }
     
@@ -53,11 +59,7 @@ class QuoteBox: ObservableObject {
                 self?.localQuotesService.saveBookmarkedQuote(quote: quote, isBookmarked: isBookmarked)
             }
             
-            self?.interactions += 1
-            if (self?.interactions == 21) {
-                // within app, so review should show
-                self?.requestReview()
-            }
+            self?.increaseInteractions()
         }
     }
     
@@ -69,11 +71,7 @@ class QuoteBox: ObservableObject {
                 self?.localQuotesService.saveLikedQuote(quote: quote, isLiked: isLiked)
             }
             
-            self?.interactions += 1
-            if (self?.interactions == 21) {
-                // within app, so review should show
-                self?.requestReview()
-            }
+            self?.increaseInteractions()
         }
     }
     
