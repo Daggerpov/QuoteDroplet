@@ -59,10 +59,10 @@ struct QuotesView_Previews: PreviewProvider {
 
 @available(iOSApplicationExtension 16.0, *)
 extension QuotesView {
-    public func formatTime (notificationTimeCase: NotificationTime) -> String {
+    public func getFormattedNotificationTime () -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"  // Use "h:mm a" for 12-hour format with AM/PM
-        return dateFormatter.string(from: viewModel.getNotificationTime(notificationTimeCase: notificationTimeCase))
+        return dateFormatter.string(from: viewModel.getNotificationTime())
     }
     
     private var notificationSection: some View {
@@ -137,7 +137,6 @@ extension QuotesView {
     }
     
     private var notificationTimePicker: some View {
-        
         VStack {
             Spacer()
             
@@ -148,30 +147,21 @@ extension QuotesView {
                     .multilineTextAlignment(.center)
                 Spacer()
                 
-                if NotificationScheduler.isDefaultConfigOverwritten {
-                    Text("You currently have daily notifications scheduled for: \n\(formattedSelectedTime)")
-                        .font(.title2)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .padding()
-                        .frame(alignment: .center)
-                        .multilineTextAlignment(.center)
-                } else {
-                    Text("You currently have daily notifications scheduled automatically for: \n\(formattedDefaultTime)")
-                        .font(.title2)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .padding()
-                        .frame(alignment: .center)
-                        .multilineTextAlignment(.center)
-                }
-                
+                Text("\(viewModel.notificationScheduledTimeMessage)\(getFormattedNotificationTime)")
+                    .font(.title2)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                    .padding()
+                    .frame(alignment: .center)
+                    .multilineTextAlignment(.center)
+
                 notiTimePickerColor
-                
                 Spacer()
             }
+            .onAppear() {
+                viewModel.fetchNotificationScheduledTimeInfo()
+            }
             .padding()
-            
             Spacer()
-            
             Button(action: {
                 isTimePickerExpanded.toggle()
                 NotificationScheduler.shared.scheduleNotifications(notificationTime: notificationTime,
