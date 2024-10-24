@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ColorPaletteView: View {
     var colors: [Color]
