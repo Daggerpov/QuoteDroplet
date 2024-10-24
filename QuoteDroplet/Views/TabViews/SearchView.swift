@@ -44,6 +44,12 @@ struct SearchView: View {
     @State private var activeCategory: QuoteCategory = .all
     @Namespace private var animation
     
+    let localQuotesService: LocalQuotesService
+    
+    init(localQuotesService: LocalQuotesService) {
+        self.localQuotesService = localQuotesService
+    }
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -52,7 +58,7 @@ struct SearchView: View {
                         if searchText != "" {
                             ForEach(quotes.indices, id: \.self) { index in
                                 if let quote = quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, searchText: searchText)
+                                    SingleQuoteView(quote: quote, searchText: searchText, localQuotesService: localQuotesService)
                                 }
                             }
                         } else {
@@ -285,6 +291,6 @@ struct SearchView: View {
 @available(iOS 16.0, *)
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SearchView(localQuotesService: LocalQuotesService())
     }
 }

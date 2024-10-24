@@ -31,6 +31,12 @@ struct CommunityView: View {
     
     @State private var recentQuotes: [Quote] = []
     
+    let localQuotesService: LocalQuotesService
+            
+    init(localQuotesService: LocalQuotesService) {
+        self.localQuotesService = localQuotesService
+    }
+    
     private var quoteSection: some View {
         VStack(alignment: .leading) {
             HStack{
@@ -150,7 +156,7 @@ struct CommunityView: View {
 @available(iOS 16.0, *)
 struct CommunityView_Previews: PreviewProvider {
     static var previews: some View {
-        CommunityView()
+        CommunityView(localQuotesService: LocalQuotesService())
     }
 }
 

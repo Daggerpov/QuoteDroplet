@@ -20,13 +20,16 @@ struct SingleQuoteView: View {
     var from: String?
     var searchText: String?
     
-    init(quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "") {
+    private let localQuotesService: LocalQuotesService
+    private let quoteBox: QuoteBox
+    
+    init(quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "", localQuotesService: LocalQuotesService) {
         self.quote = quote
         self.from = from
         self.searchText = searchText
+        self.localQuotesService = localQuotesService
+        self.quoteBox = QuoteBox(localQuotesService: localQuotesService)
     }
-    
-    @StateObject private var quoteBox = QuoteBox()
     
     var body: some View {
             VStack {
@@ -102,7 +105,7 @@ struct SingleQuoteView: View {
                     Spacer()
                     
                     if (isAuthorValid(authorGiven: quote.author) && from != "AuthorView"){
-                        NavigationLink(destination: AuthorView(quote: quote)) {
+                        NavigationLink(destination: AuthorView(quote: quote, localQuotesService: localQuotesService)) {
                             Image(systemName: "arrow.turn.down.right")
                                 .font(.title)
                                 .scaleEffect(1)
@@ -117,12 +120,12 @@ struct SingleQuoteView: View {
             .shadow(radius: 5)
             .padding(.horizontal)
             .onAppear {
-                quoteBox.isBookmarked = isQuoteBookmarked(quote)
+                quoteBox.isBookmarked = localQuotesService.isQuoteBookmarked(quote)
                 
                 quoteBox.getQuoteLikeCountMethod(for: quote) { fetchedLikeCount in
                     quoteBox.likes = fetchedLikeCount
                 }
-                quoteBox.isLiked = isQuoteLiked(quote)
+                quoteBox.isLiked = localQuotesService.isQuoteLiked(quote)
             }
         
     }

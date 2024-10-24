@@ -44,7 +44,10 @@ struct QuotesView: View {
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     // Notifications------------------------
     
-    init() {
+    let localQuotesService: LocalQuotesService
+        
+    init(localQuotesService: LocalQuotesService) {
+        self.localQuotesService = localQuotesService
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
         }
@@ -73,7 +76,7 @@ struct QuotesView: View {
     }
     
     private func getBookmarkedQuotesCount(completion: @escaping (Int) -> Void) {
-        let bookmarkedQuotes = getBookmarkedQuotes()
+        let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()
         completion(bookmarkedQuotes.count)
     }
     
@@ -329,6 +332,6 @@ struct QuotesView: View {
 @available(iOS 16.0, *)
 struct QuotesView_Previews: PreviewProvider {
     static var previews: some View {
-            QuotesView()
+        QuotesView(localQuotesService: LocalQuotesService())
     }
 }

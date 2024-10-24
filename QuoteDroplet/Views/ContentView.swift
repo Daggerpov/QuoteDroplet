@@ -8,9 +8,11 @@ struct ContentView: View {
     @StateObject var sharedVars = SharedVarsBetweenTabs()
     @Environment(\.colorScheme) var colorScheme
     
+    let localQuotesService: LocalQuotesService = LocalQuotesService()
+    
     var body: some View {
         TabView {
-            DropletsView()
+            DropletsView(localQuotesService: localQuotesService)
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)
@@ -18,7 +20,7 @@ struct ContentView: View {
                         Text("Droplets")
                     }
                 }
-            SearchView()
+            SearchView(localQuotesService: localQuotesService)
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)
@@ -26,19 +28,19 @@ struct ContentView: View {
                         Text("Search")
                     }
                 }
-            AppearanceView()
+            AppearanceView(localQuotesService: localQuotesService)
                 .tabItem {
                     Spacer(minLength: 20)
                     Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Appearance")
                 }
-            QuotesView()
+            QuotesView(localQuotesService: localQuotesService)
                 .tabItem {
                     Spacer(minLength: 20)
                     Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Quotes")
                 }
-            CommunityView()
+            CommunityView(localQuotesService: localQuotesService)
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)

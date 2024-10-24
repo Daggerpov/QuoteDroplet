@@ -30,6 +30,12 @@ struct AppearanceView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
+    let localQuotesService: LocalQuotesService
+        
+    init(localQuotesService: LocalQuotesService) {
+        self.localQuotesService = localQuotesService
+    }
+    
     private var fontSelector: some View {
         HStack {
             Text("Widget Font:")
@@ -218,28 +224,6 @@ struct AppearanceView: View {
 @available(iOS 16.0, *)
 struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
-        AppearanceView()
-    }
-}
-
-@available(iOS 14.0, *)
-public struct ColorPickerWithoutLabel: UIViewRepresentable {
-    @Binding var selection: Color
-    var supportsAlpha: Bool = true
-    
-    public init(selection: Binding<Color>, supportsAlpha: Bool = true) {
-        self._selection = selection
-        self.supportsAlpha = supportsAlpha
-    }
-    
-    
-    public func makeUIView(context: Context) -> UIColorWell {
-        let well = UIColorWell()
-        well.supportsAlpha = supportsAlpha
-        return well
-    }
-    
-    public func updateUIView(_ uiView: UIColorWell, context: Context) {
-        uiView.selectedColor = UIColor(selection)
+        AppearanceView(localQuotesService: LocalQuotesService())
     }
 }

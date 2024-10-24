@@ -38,6 +38,13 @@ struct AuthorView: View {
     
     let quote: Quote // given when made
     
+    let localQuotesService: LocalQuotesService
+    
+    init(quote: Quote, localQuotesService: LocalQuotesService) {
+        self.quote = quote
+        self.localQuotesService = localQuotesService
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -75,7 +82,7 @@ struct AuthorView: View {
                         } else {
                             ForEach(quotes.indices, id: \.self) { index in
                                 if let quote = quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, from: "AuthorView")
+                                    SingleQuoteView(quote: quote, from: "AuthorView", localQuotesService: localQuotesService)
                                 }
                             }
                         }
