@@ -39,10 +39,12 @@ struct AuthorView: View {
     let quote: Quote // given when made
     
     let localQuotesService: LocalQuotesService
+    let apiService: APIService
     
-    init(quote: Quote, localQuotesService: LocalQuotesService) {
+    init(quote: Quote, localQuotesService: LocalQuotesService, apiService: APIService) {
         self.quote = quote
         self.localQuotesService = localQuotesService
+        self.apiService = apiService
     }
     
     var body: some View {
@@ -82,7 +84,7 @@ struct AuthorView: View {
                         } else {
                             ForEach(quotes.indices, id: \.self) { index in
                                 if let quote = quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, from: "AuthorView", localQuotesService: localQuotesService)
+                                    SingleQuoteView(quote: quote, from: "AuthorView", localQuotesService: localQuotesService, apiService: apiService)
                                 }
                             }
                         }
@@ -102,7 +104,7 @@ struct AuthorView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .multilineTextAlignment(.center)
                             
-                            SubmitView()
+                            SubmitView(apiService: apiService)
                         }
                         
                         if !isLoadingMore {
@@ -151,7 +153,7 @@ struct AuthorView: View {
         isLoadingMore = true
         let group = DispatchGroup()
         
-        getQuotesByAuthor(author: quote.author!) {quotes, error in
+        apiService.getQuotesByAuthor(author: quote.author!) {quotes, error in
             if let error = error {
                 print("Error fetching quotes: \(error)")
                 return

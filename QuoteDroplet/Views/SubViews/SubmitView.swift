@@ -24,6 +24,12 @@ struct SubmitView: View {
 
     // ----------------------------------------------------- SUBMIT QUOTE
     
+    let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
+    
     private var composeButton: some View {
         Button(action: {
             isAddingQuote = true
@@ -79,7 +85,7 @@ struct SubmitView: View {
                         submissionQuoteCategoryPicker
                     }
                     Button("Submit") {
-                        addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
+                        apiService.addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
                             if success {
                                 submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
                                 // Set showSubmissionReceivedAlert to true after successful submission

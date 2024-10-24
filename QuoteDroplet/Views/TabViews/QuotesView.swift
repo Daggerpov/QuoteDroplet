@@ -45,9 +45,11 @@ struct QuotesView: View {
     // Notifications------------------------
     
     let localQuotesService: LocalQuotesService
+    let apiService: APIService
         
-    init(localQuotesService: LocalQuotesService) {
+    init(localQuotesService: LocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
+        self.apiService = apiService
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
         }
@@ -64,7 +66,7 @@ struct QuotesView: View {
                     group.leave()
                 }
             } else {
-                getCountForCategory(category: category) { categoryCount in
+                apiService.getCountForCategory(category: category) { categoryCount in
                     counts[category.rawValue] = categoryCount
                     group.leave()
                 }
@@ -332,6 +334,6 @@ struct QuotesView: View {
 @available(iOS 16.0, *)
 struct QuotesView_Previews: PreviewProvider {
     static var previews: some View {
-        QuotesView(localQuotesService: LocalQuotesService())
+        QuotesView(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
 }

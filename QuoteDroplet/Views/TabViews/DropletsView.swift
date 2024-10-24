@@ -45,9 +45,11 @@ struct DropletsView: View {
     private let maxQuotes = 15
     
     let localQuotesService: LocalQuotesService
+    let apiService: APIService
     
-    init(localQuotesService: LocalQuotesService) {
+    init(localQuotesService: LocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
+        self.apiService = apiService
     }
     
     private var topNavBar: some View {
@@ -98,7 +100,7 @@ struct DropletsView: View {
                     } else {
                         ForEach(quotes.indices, id: \.self) { index in
                             if let quote = quotes[safe: index] {
-                                SingleQuoteView(quote: quote, localQuotesService: localQuotesService)
+                                SingleQuoteView(quote: quote, localQuotesService: localQuotesService, apiService: apiService)
                                 // likely an issue with using the indices ->
                                 // that's what's causing the
                                 /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
@@ -121,7 +123,7 @@ struct DropletsView: View {
                     } else {
                         ForEach(savedQuotes.indices, id: \.self) { index in
                             if let quote = savedQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, localQuotesService: localQuotesService)
+                                SingleQuoteView(quote: quote, localQuotesService: localQuotesService, apiService: apiService)
                             }
                         }
                     }
@@ -152,7 +154,7 @@ struct DropletsView: View {
                             .multilineTextAlignment(.center)
                         ForEach(recentQuotes.indices.reversed(), id: \.self) { index in
                             if let quote = recentQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, localQuotesService: localQuotesService)
+                                SingleQuoteView(quote: quote, localQuotesService: localQuotesService, apiService: apiService)
                             }
                         }
                     }
@@ -256,7 +258,7 @@ struct DropletsView: View {
         if selected == 1 {
             for _ in 0..<quotesPerPage {
                 group.enter()
-                getRandomQuoteByClassification(classification: "all") { quote, error in
+                apiService.getRandomQuoteByClassification(classification: "all") { quote, error in
                     if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
                         DispatchQueue.main.async {
                             self.quotes.append(quote)
@@ -273,7 +275,7 @@ struct DropletsView: View {
             }
             for id in bookmarkedQuoteIDs {
                 group.enter()
-                getQuoteByID(id: id) { quote, error in
+                apiService.getQuoteByID(id: id) { quote, error in
                     if let quote = quote, !self.savedQuotes.contains(where: { $0.id == quote.id }) {
                         DispatchQueue.main.async {
                             self.savedQuotes.append(quote)
@@ -291,7 +293,7 @@ struct DropletsView: View {
             }
             for id in recentQuoteIDs {
                 group.enter()
-                getQuoteByID(id: id) { quote, error in
+                apiService.getQuoteByID(id: id) { quote, error in
                     if let quote = quote, !self.recentQuotes.contains(where: { $0.id == quote.id }) {
                         DispatchQueue.main.async {
                             self.recentQuotes.append(quote)
@@ -318,7 +320,7 @@ struct DropletsView: View {
 @available(iOS 16.0, *)
 struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {
-        DropletsView(localQuotesService: LocalQuotesService())
+        DropletsView(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
 }
 

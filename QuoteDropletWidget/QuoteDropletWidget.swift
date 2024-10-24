@@ -23,8 +23,9 @@ extension WidgetConfiguration {
 }
 
 struct Provider: IntentTimelineProvider {
-    let localQuotesService: LocalQuotesService = LocalQuotesService()
     let data: DataService = DataService()
+    let localQuotesService: LocalQuotesService = LocalQuotesService()
+    let apiService: APIService = APIService()
     @Environment(\.widgetFamily) var family
     
     func placeholder(in context: Context) -> SimpleEntry {
@@ -63,7 +64,7 @@ struct Provider: IntentTimelineProvider {
         } else {
             // Fetch the initial quote
             
-            getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased(), completion:  { quote, error in
+            apiService.getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased(), completion:  { quote, error in
                 if let quote = quote {
 //                    if isSavedRecent == false {
 //                    saveRecentQuote(quote: quote) , source: "widget") TODO: do something with source later on
@@ -157,6 +158,7 @@ struct MinimumFontModifier: ViewModifier {
 struct QuoteDropletWidgetEntryView : View {
     var data: DataService = DataService()
     let localQuotesService: LocalQuotesService = LocalQuotesService()
+    let apiService: APIService = APIService()
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
     
@@ -194,7 +196,7 @@ struct QuoteDropletWidgetEntryView : View {
     }
     
     private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
-        getLikeCountForQuote(quoteGiven: widgetQuote) { likeCount in
+        apiService.getLikeCountForQuote(quoteGiven: widgetQuote) { likeCount in
             completion(likeCount)
         }
     }
@@ -309,7 +311,7 @@ struct QuoteDropletWidgetEntryView : View {
         
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
-            unlikeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
+            apiService.unlikeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
@@ -319,7 +321,7 @@ struct QuoteDropletWidgetEntryView : View {
                 }
             }
         } else {
-            likeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
+            apiService.likeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
@@ -481,6 +483,7 @@ struct LikeQuoteIntent: AppIntent {
     @State private var isLiking: Bool = false // Add state for liking status
     
     let localQuotesService: LocalQuotesService = LocalQuotesService()
+    let apiService: APIService = APIService()
     
     init() {
         self.widgetQuote = Quote(id: 1, text: "", author: "", classification: "", likes: 15)
@@ -519,7 +522,7 @@ struct LikeQuoteIntent: AppIntent {
         
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
-            unlikeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
+            apiService.unlikeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
@@ -529,7 +532,7 @@ struct LikeQuoteIntent: AppIntent {
                 }
             }
         } else {
-            likeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
+            apiService.likeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count

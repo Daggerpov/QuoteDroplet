@@ -32,9 +32,11 @@ struct CommunityView: View {
     @State private var recentQuotes: [Quote] = []
     
     let localQuotesService: LocalQuotesService
+    let apiService: APIService
             
-    init(localQuotesService: LocalQuotesService) {
+    init(localQuotesService: LocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
+        self.apiService = apiService
     }
     
     private var quoteSection: some View {
@@ -126,7 +128,7 @@ struct CommunityView: View {
                     Spacer()
                     quoteSection
                     Spacer()
-                    SubmitView()
+                    SubmitView(apiService: apiService)
                     Spacer()
                 }
                 .padding()
@@ -137,7 +139,7 @@ struct CommunityView: View {
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
             .onAppear {
                 // Fetch recent quotes when the view appears
-                getRecentQuotes(limit: 3) { quotes, error in
+                apiService.getRecentQuotes(limit: 3) { quotes, error in
                     if let quotes = quotes {
                         recentQuotes = quotes
                     } else if let error = error {
@@ -156,7 +158,6 @@ struct CommunityView: View {
 @available(iOS 16.0, *)
 struct CommunityView_Previews: PreviewProvider {
     static var previews: some View {
-        CommunityView(localQuotesService: LocalQuotesService())
+        CommunityView(localQuotesService: LocalQuotesService(), apiService: try! APIService())
     }
 }
-

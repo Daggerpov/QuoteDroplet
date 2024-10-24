@@ -20,15 +20,17 @@ struct SingleQuoteView: View {
     var from: String?
     var searchText: String?
     
-    private let localQuotesService: LocalQuotesService
     private let quoteBox: QuoteBox
+    private let localQuotesService: LocalQuotesService
+    private let apiService: APIService
     
-    init(quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "", localQuotesService: LocalQuotesService) {
+    init(quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "", localQuotesService: LocalQuotesService, apiService: APIService) {
         self.quote = quote
         self.from = from
         self.searchText = searchText
         self.localQuotesService = localQuotesService
-        self.quoteBox = QuoteBox(localQuotesService: localQuotesService)
+        self.apiService = apiService
+        self.quoteBox = QuoteBox(localQuotesService: self.localQuotesService, apiService: self.apiService)
     }
     
     var body: some View {
@@ -105,7 +107,7 @@ struct SingleQuoteView: View {
                     Spacer()
                     
                     if (isAuthorValid(authorGiven: quote.author) && from != "AuthorView"){
-                        NavigationLink(destination: AuthorView(quote: quote, localQuotesService: localQuotesService)) {
+                        NavigationLink(destination: AuthorView(quote: quote, localQuotesService: localQuotesService, apiService: apiService)) {
                             Image(systemName: "arrow.turn.down.right")
                                 .font(.title)
                                 .scaleEffect(1)

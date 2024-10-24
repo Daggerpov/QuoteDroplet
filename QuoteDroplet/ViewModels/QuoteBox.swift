@@ -28,9 +28,11 @@ class QuoteBox: ObservableObject {
     //------------------------------------------------------------------------------------
     
     let localQuotesService: LocalQuotesService
-    
-    init(localQuotesService: LocalQuotesService) {
+    let apiService: APIService
+
+    init(localQuotesService: LocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
+        self.apiService = apiService
     }
     
     func increaseInteractions() {
@@ -76,7 +78,7 @@ class QuoteBox: ObservableObject {
     }
     
     func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) {
-        getLikeCountForQuote(quoteGiven: quote) { likeCount in
+        apiService.getLikeCountForQuote(quoteGiven: quote) { likeCount in
             DispatchQueue.main.async {
                 completion(likeCount)
             }
@@ -95,7 +97,7 @@ class QuoteBox: ObservableObject {
         
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
-            unlikeQuote(quoteID: quote.id) { updatedQuote, error in
+            apiService.unlikeQuote(quoteID: quote.id) { updatedQuote, error in
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
@@ -105,7 +107,7 @@ class QuoteBox: ObservableObject {
                 }
             }
         } else {
-            likeQuote(quoteID: quote.id) { updatedQuote, error in
+            apiService.likeQuote(quoteID: quote.id) { updatedQuote, error in
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count

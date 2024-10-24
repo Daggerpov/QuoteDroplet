@@ -45,9 +45,11 @@ struct SearchView: View {
     @Namespace private var animation
     
     let localQuotesService: LocalQuotesService
-    
-    init(localQuotesService: LocalQuotesService) {
+    let apiService: APIService
+
+    init(localQuotesService: LocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
+        self.apiService = apiService
     }
     
     var body: some View {
@@ -58,7 +60,7 @@ struct SearchView: View {
                         if searchText != "" {
                             ForEach(quotes.indices, id: \.self) { index in
                                 if let quote = quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, searchText: searchText, localQuotesService: localQuotesService)
+                                    SingleQuoteView(quote: quote, searchText: searchText, localQuotesService: localQuotesService, apiService: apiService)
                                 }
                             }
                         } else {
@@ -186,7 +188,6 @@ struct SearchView: View {
                     Spacer()
                 }
                 
-                
                 HStack{
                     Spacer()
                     Text("— ")
@@ -200,48 +201,6 @@ struct SearchView: View {
                         .padding(.bottom, 5)
                         .frame(alignment: .trailing)
                 }
-                
-//                HStack {
-//                    // TODO: what I need to do here is make it so likes are fetched by using the `getLikeCountForQuote` method
-//                    HStack {
-//                        Button(action: {
-//                           
-//                        }) {
-//                            Image(systemName: "heart")
-//                                .font(.title)
-//                                .scaleEffect(1)
-//                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                        }
-//                        
-//                        // Display the like count next to the heart button
-////                        Text("\(Int.random(in: 7..<54))")
-////                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    }
-//                    
-//                    Button(action: {
-//                    }) {
-//                        Image(systemName: "bookmark")
-//                            .font(.title)
-//                            .scaleEffect(1)
-//                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    }.padding(.leading, 5)
-//                    
-//                    Button(action: {
-//                    }) {
-//                        Image(systemName: "doc.on.doc")
-//                            .font(.title)
-//                            .scaleEffect(1)
-//                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    }.padding(.leading, 5)
-//                    
-//                    Image(systemName: "square.and.arrow.up")
-//                        .font(.title)
-//                        .scaleEffect(1)
-//                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    .padding(.leading, 5)
-//                    
-//                    Spacer()
-//                }
             }
             .padding()
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
@@ -259,7 +218,7 @@ struct SearchView: View {
         isLoadingMore = true
         let group = DispatchGroup()
         
-        getQuotesBySearchKeyword(searchKeyword: searchText, searchCategory: searchCategory) {quotes, error in
+        apiService.getQuotesBySearchKeyword(searchKeyword: searchText, searchCategory: searchCategory) {quotes, error in
             if let error = error {
                 print("Error fetching quotes: \(error)")
                 return
@@ -291,6 +250,6 @@ struct SearchView: View {
 @available(iOS 16.0, *)
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(localQuotesService: LocalQuotesService())
+        SearchView(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
 }
