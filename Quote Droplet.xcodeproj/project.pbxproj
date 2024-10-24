@@ -65,6 +65,10 @@
 		DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
 		DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
+		DCB844602CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */; };
+		DCB844612CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */; };
+		DCB844632CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */; };
+		DCB844642CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */; };
 		DCBA0C882C5C270700A2E949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA0C872C5C270600A2E949 /* HeaderView.swift */; };
 		DCBA0C892C5C270700A2E949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA0C872C5C270600A2E949 /* HeaderView.swift */; };
 		DCC0B3602CC9B136002DED7A /* QuoteCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */; };
@@ -172,6 +176,8 @@
 		DCAB2DCC2A9FACC300A822D7 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		DCAB2DD02A9FBAB800A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DCB722132B9D06E60094BAB8 /* GeneralVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralVars.swift; sourceTree = "<group>"; };
+		DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesViewModel.swift; sourceTree = "<group>"; };
+		DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTimeEnum.swift; sourceTree = "<group>"; };
 		DCBA0C872C5C270600A2E949 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCategory.swift; sourceTree = "<group>"; };
 		DCC0B3622CC9B154002DED7A /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -235,6 +241,7 @@
 				DCC0B3712CC9CFC9002DED7A /* LinkImageBuilder.swift */,
 				DCC0B37C2CC9DD97002DED7A /* ColorPickerWithoutLabel.swift */,
 				DCC0B3912CCA11F2002DED7A /* SelectedPageEnum.swift */,
+				DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -367,6 +374,7 @@
 				DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */,
 				DCC0B38B2CCA0903002DED7A /* DropletsViewModel.swift */,
 				DCC0B38E2CCA0F44002DED7A /* SearchViewModel.swift */,
+				DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -572,6 +580,7 @@
 				DCC0B38F2CCA0F44002DED7A /* SearchViewModel.swift in Sources */,
 				DCC0B3782CC9DBD8002DED7A /* QuoteDropletWidget.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
+				DCB844632CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
 				DCC0B3792CC9DC08002DED7A /* DataService.swift in Sources */,
 				DCC0B3832CC9FC2F002DED7A /* GoogleImageModel.swift in Sources */,
 				DCC0B3922CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */,
@@ -600,6 +609,7 @@
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
 				DC420D052CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
+				DCB844602CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +621,7 @@
 				DC26EB952BF96FD4004CA84F /* DropletsView.swift in Sources */,
 				DCC0B3772CC9D4CA002DED7A /* APIErrors.swift in Sources */,
 				DC7010E52BAE654F008678CB /* NotificationSchedulerService.swift in Sources */,
+				DCB844612CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */,
 				DCC0B36B2CC9B2D0002DED7A /* ColorPaletteView.swift in Sources */,
 				DCC0B3902CCA0F44002DED7A /* SearchViewModel.swift in Sources */,
 				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
@@ -630,6 +641,7 @@
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
+				DCB844642CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
 				DCC0B38A2CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DC2998FB2C4D9C5C0025D32E /* QuoteBox.swift in Sources */,
 				DC29990E2C4DF2350025D32E /* InfoView.swift in Sources */,

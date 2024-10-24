@@ -14,131 +14,62 @@ import Foundation
 
 @available(iOS 16.0, *)
 struct QuotesView: View {
-    var formattedSelectedTime: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"  // Use "h:mm a" for 12-hour format with AM/PM
-        return dateFormatter.string(from: NotificationScheduler.previouslySelectedNotificationTime)
-    }
-    var formattedDefaultTime: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"  // Use "h:mm a" for 12-hour format with AM/PM
-        return dateFormatter.string(from: NotificationScheduler.defaultScheduledNotificationTime)
-    }
-
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
-    
     @Environment(\.colorScheme) var colorScheme
+
+    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
+    var quoteFrequencyIndex: Int = 3
     
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
     
+    @ObservedObject var viewModel: QuotesViewModel
     
-    @State private var notificationTime = Date()
-    @State private var isTimePickerExpanded = false
-    @State private var showNotificationPicker = false
-    @State private var counts: [String: Int] = [:]
+    init () {
+        viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService(), quoteFrequencyIndex: quoteFrequencyIndex, quoteCategory: quoteCategory)
+    }
     
-    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var quoteFrequencyIndex = 3
-    
-    let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-    // Notifications------------------------
-    
-    let localQuotesService: LocalQuotesService
-    let apiService: APIService
-        
-    init(localQuotesService: LocalQuotesService, apiService: APIService) {
-        self.localQuotesService = localQuotesService
-        self.apiService = apiService
-        if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
-            UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
+    var body: some View {
+        NavigationStack{
+            VStack {
+                HeaderView()
+                VStack{
+                    Spacer()
+                    quoteCategoryPicker
+                    Spacer()
+                    timeIntervalPicker
+                    Spacer()
+                    notificationSection
+                    Spacer()
+                }
+                .padding()
+            }
+            .frame(maxWidth: .infinity)
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
-    
-    private func getCategoryCounts(completion: @escaping ([String: Int]) -> Void) {
-        let group = DispatchGroup()
-        var counts: [String: Int] = [:]
-        for category in QuoteCategory.allCases {
-            group.enter()
-            if category == .bookmarkedQuotes {
-                getBookmarkedQuotesCount { bookmarkedCount in
-                    counts[category.rawValue] = bookmarkedCount
-                    group.leave()
-                }
-            } else {
-                apiService.getCountForCategory(category: category) { categoryCount in
-                    counts[category.rawValue] = categoryCount
-                    group.leave()
-                }
-            }
-        }
-        group.notify(queue: .main) {
-            completion(counts)
-        }
+}
+
+@available(iOS 16.0, *)
+struct QuotesView_Previews: PreviewProvider {
+    static var previews: some View {
+        QuotesView(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
-    
-    private func getBookmarkedQuotesCount(completion: @escaping (Int) -> Void) {
-        let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()
-        completion(bookmarkedQuotes.count)
-    }
-    
-    private func getSelectedQuoteCategory() -> String {
-        return quoteCategory.rawValue
-    }
-    private var quoteCategoryPicker: some View {
-        HStack {
-            Text("Quote Category:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            Picker("", selection: $quoteCategory) {
-                if counts.isEmpty {
-                    Text("Loading...")
-                } else {
-                    ForEach(QuoteCategory.allCases, id: \.self) { category in
-                        if let categoryCount = counts[category.rawValue] {
-                            let displayNameWithCount = "\(category.displayName) (\(categoryCount))"
-                            Text(displayNameWithCount)
-                                .font(.headline)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        }
-                    }
-                }
-            }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-            .onAppear {
-                getCategoryCounts { fetchedCounts in
-                    counts = fetchedCounts
-                }
-            }
-            .onTapGesture {
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-            }
-            
-        }
-        .padding(10)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
-        )
-    }
-    
-    let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-    
-    private func formattedFrequency() -> String {
-        return frequencyOptions[quoteFrequencyIndex]
+}
+
+@available(iOSApplicationExtension 16.0, *)
+extension QuotesView {
+    public func formatTime (notificationTimeCase: NotificationTime) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"  // Use "h:mm a" for 12-hour format with AM/PM
+        return dateFormatter.string(from: viewModel.getNotificationTime(notificationTimeCase: notificationTimeCase))
     }
     
     private var notificationSection: some View {
         Section {
-            if isTimePickerExpanded {
+            if viewModel.isTimePickerExpanded {
                 Button(action: {
-                    isTimePickerExpanded.toggle()
+                    viewModel.isTimePickerExpanded.toggle()
                 }) {
                     Text("Close")
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -149,17 +80,12 @@ struct QuotesView: View {
                         )
                 }
                 .padding()
-                .sheet(isPresented: $isTimePickerExpanded) {
+                .sheet(isPresented: $viewModel.isTimePickerExpanded) {
                     notificationTimePicker
                 }
             } else {
                 Button(action: {
-                    if NotificationScheduler.isDefaultConfigOverwritten {
-                        notificationTime = NotificationScheduler.previouslySelectedNotificationTime
-                    } else {
-                        notificationTime = NotificationScheduler.defaultScheduledNotificationTime
-                    }
-                    isTimePickerExpanded.toggle()
+                    viewModel.scheduleNotificationsAction()
                 }) {
                     HStack {
                         Text("Schedule Notifications")
@@ -268,7 +194,6 @@ struct QuotesView: View {
         .cornerRadius(8)
         .shadow(radius: 5)
     }
-    
     private var timeIntervalPicker: some View {
         HStack {
             Text("Reload Widget:")
@@ -309,31 +234,46 @@ struct QuotesView: View {
                 )
         )
     }
-    
-    var body: some View {
-        NavigationStack{
-            VStack {
-                HeaderView()
-                VStack{
-                    Spacer()
-                    quoteCategoryPicker
-                    Spacer()
-                    timeIntervalPicker
-                    Spacer()
-                    notificationSection
-                    Spacer()
+    private var quoteCategoryPicker: some View {
+        HStack {
+            Text("Quote Category:")
+                .font(.headline)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            Picker("", selection: $quoteCategory) {
+                if counts.isEmpty {
+                    Text("Loading...")
+                } else {
+                    ForEach(QuoteCategory.allCases, id: \.self) { category in
+                        if let categoryCount = counts[category.rawValue] {
+                            let displayNameWithCount = "\(category.displayName) (\(categoryCount))"
+                            Text(displayNameWithCount)
+                                .font(.headline)
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                        }
+                    }
                 }
-                .padding()
             }
-            .frame(maxWidth: .infinity)
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .pickerStyle(MenuPickerStyle())
+            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            .onAppear {
+                getCategoryCounts { fetchedCounts in
+                    counts = fetchedCounts
+                }
+            }
+            .onTapGesture {
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
+            }
+            
         }
-    }
-    
-}
-@available(iOS 16.0, *)
-struct QuotesView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuotesView(localQuotesService: LocalQuotesService(), apiService: APIService())
+        .padding(10)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                )
+        )
     }
 }
