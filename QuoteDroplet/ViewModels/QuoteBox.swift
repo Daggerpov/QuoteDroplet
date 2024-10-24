@@ -27,6 +27,12 @@ class QuoteBox: ObservableObject {
     @Environment(\.requestReview) var requestReview
     //------------------------------------------------------------------------------------
     
+    let localQuotesService: LocalQuotesService
+    
+    init(localQuotesService: LocalQuotesService) {
+        self.localQuotesService = localQuotesService
+    }
+    
     func toggleCopy(for quote: Quote) {
         DispatchQueue.main.async {
             self.isCopied.toggle()
@@ -39,30 +45,34 @@ class QuoteBox: ObservableObject {
     }
     
     func toggleBookmark(for quote: Quote) {
-        DispatchQueue.main.async {
-            self.isBookmarked.toggle()
+        DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
+            self?.isBookmarked.toggle()
             
-            saveBookmarkedQuote(quote: quote, isBookmarked: self.isBookmarked)
+            if let isBookmarked = self?.isBookmarked {
+                
+                self?.localQuotesService.saveBookmarkedQuote(quote: quote, isBookmarked: isBookmarked)
+            }
             
-            self.interactions += 1
-            if (self.interactions == 21) {
+            self?.interactions += 1
+            if (self?.interactions == 21) {
                 // within app, so review should show
-                self.requestReview()
+                self?.requestReview()
             }
         }
     }
     
     func toggleLike(for quote: Quote) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
+            self?.isLiked.toggle()
             
-            self.isLiked.toggle()
+            if let isLiked = self?.isLiked {
+                self?.localQuotesService.saveLikedQuote(quote: quote, isLiked: isLiked)
+            }
             
-            saveLikedQuote(quote: quote, isLiked: self.isLiked)
-            
-            self.interactions += 1
-            if (self.interactions == 21) {
+            self?.interactions += 1
+            if (self?.interactions == 21) {
                 // within app, so review should show
-                self.requestReview()
+                self?.requestReview()
             }
         }
     }
@@ -83,7 +93,7 @@ class QuoteBox: ObservableObject {
         }
         
         // Check if the quote is already liked
-        let isAlreadyLiked = isQuoteLiked(quote)
+        let isAlreadyLiked = localQuotesService.isQuoteLiked(quote)
         
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
