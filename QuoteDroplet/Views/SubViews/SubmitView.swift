@@ -11,13 +11,10 @@ import SwiftUI
 @available(iOS 16.0, *)
 struct SubmitView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    @ObservedObject var viewModel: SubmitViewModel
     
-    let apiService: APIService
-    
-    @StateObject var viewModel: SubmitViewModel = SubmitViewModel()
-    
-    init(apiService: APIService) {
-        self.apiService = apiService
+    init(viewModel: SubmitViewModel) {
+        self.viewModel = viewModel
     }
     
     private var composeButton: some View {
@@ -75,21 +72,7 @@ struct SubmitView: View {
                         submissionQuoteCategoryPicker
                     }
                     Button("Submit") {
-                        apiService.addQuote(text: viewModel.quoteText, author: viewModel.author, classification: viewModel.selectedCategory.rawValue) { success, error in
-                            if success {
-                                viewModel.submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
-                                // Set showSubmissionReceivedAlert to true after successful submission
-                            } else if let error = error {
-                                viewModel.submissionMessage = error.localizedDescription
-                            } else {
-                                viewModel.submissionMessage = "An unknown error occurred."
-                            }
-                            viewModel.isAddingQuote = false
-                            viewModel.showSubmissionReceivedAlert = true // <-- Set to true after successful submission
-                        }
-                        viewModel.quoteText = ""
-                        viewModel.author = ""
-                        viewModel.selectedCategory = .wisdom
+                        viewModel.addQuote()
                     }
                     .alert(isPresented: $viewModel.showSubmissionReceivedAlert) { // Modify this line
                         Alert(

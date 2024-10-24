@@ -30,13 +30,8 @@ struct AuthorView: View {
     
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-    
-    let localQuotesService: LocalQuotesService
-    let apiService: APIService
-    
-    init(localQuotesService:  LocalQuotesService, apiService: APIService, viewModel: AuthorViewModel) {
-        self.localQuotesService = localQuotesService
-        self.apiService = apiService
+        
+    init(viewModel: AuthorViewModel) {
         self.viewModel = viewModel
     }
     
@@ -75,7 +70,7 @@ struct AuthorView: View {
                         } else {
                             ForEach(viewModel.quotes.indices, id: \.self) { index in
                                 if let quote = viewModel.quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, from: "AuthorView", localQuotesService: localQuotesService, apiService: apiService)
+                                    SingleQuoteView(quote: quote, from: "AuthorView", localQuotesService: viewModel.localQuotesService, apiService: viewModel.apiService)
                                 }
                             }
                         }
@@ -95,7 +90,7 @@ struct AuthorView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .multilineTextAlignment(.center)
                             
-                            SubmitView(apiService: apiService)
+                            SubmitView(viewModel: SubmitViewModel(apiService: viewModel.apiService))
                         }
                         
                         if !viewModel.isLoadingMore {

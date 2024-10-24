@@ -18,9 +18,11 @@ class AuthorViewModel: ObservableObject {
     let quote: Quote // given when made
     
     let apiService: APIService
+    let localQuotesService: LocalQuotesService
     
-    init(quote: Quote, apiService: APIService) {
+    init(quote: Quote, localQuotesService: LocalQuotesService, apiService: APIService) {
         self.quote = quote
+        self.localQuotesService = localQuotesService
         self.apiService = apiService
     }
     

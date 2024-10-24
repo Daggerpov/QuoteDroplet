@@ -128,7 +128,7 @@ struct CommunityView: View {
                     Spacer()
                     quoteSection
                     Spacer()
-                    SubmitView(apiService: apiService)
+                    SubmitView(viewModel: SubmitViewModel(apiService: apiService))
                     Spacer()
                 }
                 .padding()

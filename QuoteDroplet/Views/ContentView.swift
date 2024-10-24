@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            DropletsView(localQuotesService: localQuotesService, apiService: apiService)
+            DropletsView(viewModel: DropletsViewModel(localQuotesService: localQuotesService, apiService: apiService))
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)
