@@ -107,7 +107,7 @@ struct SingleQuoteView: View {
                     Spacer()
                     
                     if (isAuthorValid(authorGiven: quote.author) && from != "AuthorView"){
-                        NavigationLink(destination: AuthorView(quote: quote, localQuotesService: localQuotesService, apiService: apiService)) {
+                        NavigationLink(destination: AuthorView(localQuotesService: localQuotesService, apiService: apiService, viewModel: AuthorViewModel(quote: quote, apiService: apiService))) {
                             Image(systemName: "arrow.turn.down.right")
                                 .font(.title)
                                 .scaleEffect(1)

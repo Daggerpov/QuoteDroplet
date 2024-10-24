@@ -14,6 +14,8 @@ import StoreKit
 
 @available(iOS 16.0, *)
 struct AuthorView: View {
+    var viewModel: AuthorViewModel
+    
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -29,22 +31,13 @@ struct AuthorView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    @State private var quotes: [Quote] = []
-    @State private var isLoadingMore: Bool = false
-    private let quotesPerPage = 100
-    @State private var totalQuotesLoaded = 0
-    
-    private let maxQuotes = 200
-    
-    let quote: Quote // given when made
-    
     let localQuotesService: LocalQuotesService
     let apiService: APIService
     
-    init(quote: Quote, localQuotesService: LocalQuotesService, apiService: APIService) {
-        self.quote = quote
+    init(localQuotesService:  LocalQuotesService, apiService: APIService, viewModel: AuthorViewModel) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -53,7 +46,7 @@ struct AuthorView: View {
                 AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/7801914805").frame(height: 50)
                 HStack {
                     Spacer()
-                    Text("Quotes by \(quote.author ?? "Author"):")
+                    Text("Quotes by \(viewModel.quote.author ?? "Author"):")
                         .font(.largeTitle.bold())
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding(.bottom, 5)
@@ -75,23 +68,23 @@ struct AuthorView: View {
                 ScrollView {
                     Spacer()
                     LazyVStack{
-                        if quotes.isEmpty {
+                        if viewModel.quotes.isEmpty {
                             Text("Loading Quotes...")
                                 .font(.title2)
                                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                 .padding(.bottom, 5)
                                 .frame(alignment: .center)
                         } else {
-                            ForEach(quotes.indices, id: \.self) { index in
-                                if let quote = quotes[safe: index] {
+                            ForEach(viewModel.quotes.indices, id: \.self) { index in
+                                if let quote = viewModel.quotes[safe: index] {
                                     SingleQuoteView(quote: quote, from: "AuthorView", localQuotesService: localQuotesService, apiService: apiService)
                                 }
                             }
                         }
                         Color.clear.frame(height: 1)
                             .onAppear {
-                                if !isLoadingMore && quotes.count < maxQuotes {
-                                    loadMoreQuotes()
+                                if !viewModel.isLoadingMore && viewModel.quotes.count < AuthorViewModel.maxQuotes {
+                                    viewModel.loadMoreQuotes()
                                 }
                             }
                         Spacer()
@@ -107,9 +100,9 @@ struct AuthorView: View {
                             SubmitView(apiService: apiService)
                         }
                         
-                        if !isLoadingMore {
-                            if (quotes.count >= maxQuotes) {
-                                Text("You've reached the quote limit of \(maxQuotes). Maybe take a break?")
+                        if !viewModel.isLoadingMore {
+                            if (viewModel.quotes.count >= AuthorViewModel.maxQuotes) {
+                                Text("You've reached the quote limit of \(AuthorViewModel.maxQuotes). Maybe take a break?")
                                     .font(.title2)
                                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                                     .padding()
@@ -126,7 +119,7 @@ struct AuthorView: View {
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
             .onAppear {
                 // Fetch initial quotes when the view appears
-                loadInitialQuotes()
+                viewModel.loadInitialQuotes()
                 sharedVars.colorPaletteIndex = widgetColorPaletteIndex
                 
                 colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
@@ -139,45 +132,6 @@ struct AuthorView: View {
                 }
 
             }
-        }
-    }
-    
-    private func loadInitialQuotes() {
-        totalQuotesLoaded = 0
-        loadMoreQuotes() // Initial load
-    }
-    
-    private func loadMoreQuotes() {
-        guard !isLoadingMore else { return }
-        
-        isLoadingMore = true
-        let group = DispatchGroup()
-        
-        apiService.getQuotesByAuthor(author: quote.author!) {quotes, error in
-            if let error = error {
-                print("Error fetching quotes: \(error)")
-                return
-            }
-            
-            guard let quotes = quotes else {
-                print("No quotes found.")
-                return
-            }
-            
-            let quotesToAppend = quotes.prefix(quotesPerPage)
-            
-            for quote in quotesToAppend {
-                DispatchQueue.main.async {
-                    if !self.quotes.contains(where: { $0.id == quote.id }) {
-                        self.quotes.append(quote)
-                    }
-                }
-            }
-        }
-        
-        group.notify(queue: .main) {
-            self.isLoadingMore = false
-            self.totalQuotesLoaded += self.quotesPerPage
         }
     }
 }
