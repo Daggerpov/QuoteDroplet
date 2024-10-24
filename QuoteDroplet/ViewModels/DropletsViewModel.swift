@@ -17,7 +17,7 @@ class DropletsViewModel: ObservableObject {
     private var totalQuotesLoaded = 0
     private var totalSavedQuotesLoaded = 0
     private var totalRecentQuotesLoaded = 0
-    @Published var selected = 1
+    @Published var selected: SelectedPage = .feed
     let maxQuotes = 15
     
     let localQuotesService: LocalQuotesService
@@ -43,7 +43,7 @@ class DropletsViewModel: ObservableObject {
     
     public func checkLimitReached() -> Bool {
         return !isLoadingMore && (
-            (selected == 1 && quotes.count >= maxQuotes) || (selected == 2 && savedQuotes.count >= maxQuotes) || (selected == 3 && recentQuotes.count >= maxQuotes))
+            (selected == .feed && quotes.count >= maxQuotes) || (selected == .saved && savedQuotes.count >= maxQuotes) || (selected == .recent && recentQuotes.count >= maxQuotes))
     }
     
     private func loadMoreQuotes() {
@@ -52,7 +52,7 @@ class DropletsViewModel: ObservableObject {
         isLoadingMore = true
         let group = DispatchGroup()
         
-        if selected == 1 {
+        if selected == .feed {
             for _ in 0..<quotesPerPage {
                 group.enter()
                 apiService.getRandomQuoteByClassification(classification: "all") { quote, error in
@@ -64,7 +64,7 @@ class DropletsViewModel: ObservableObject {
                     group.leave()
                 }
             }
-        } else if selected == 2 {
+        } else if selected == .saved {
             let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()
             var bookmarkedQuoteIDs: [Int] = []
             for bookmarkedQuote in bookmarkedQuotes {
@@ -81,7 +81,7 @@ class DropletsViewModel: ObservableObject {
                     group.leave()
                 }
             }
-        } else if selected == 3 {
+        } else if selected == .recent {
             NotificationScheduler.shared.saveSentNotificationsAsRecents()
             let recentQuotes = localQuotesService.getRecentLocalQuotes()
             var recentQuoteIDs: [Int] = []
@@ -103,11 +103,11 @@ class DropletsViewModel: ObservableObject {
         
         group.notify(queue: .main) {
             self.isLoadingMore = false
-            if self.selected == 1{
+            if self.selected == .feed {
                 self.totalQuotesLoaded += self.quotesPerPage
-            } else if self.selected == 2  {
+            } else if self.selected == .saved {
                 self.totalSavedQuotesLoaded += self.quotesPerPage
-            }else if self.selected == 3  {
+            }else if self.selected == .recent {
                 self.totalRecentQuotesLoaded += self.quotesPerPage
             }
         }

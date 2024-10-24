@@ -47,12 +47,12 @@ struct DropletsView: View {
     private var titles: some View {
         HStack {
             Spacer()
-            if viewModel.selected == 1 {
+            if viewModel.selected == .feed {
                 Text("Quotes Feed")
                     .font(.largeTitle.bold())
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                     .padding(.bottom, 5)
-            } else if viewModel.selected == 2 {
+            } else if viewModel.selected == .saved {
                 Text("Saved Quotes")
                     .font(.largeTitle.bold())
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
@@ -73,7 +73,7 @@ struct DropletsView: View {
             LazyVStack{
                 titles
                 Spacer()
-                if viewModel.selected == 1{
+                if viewModel.selected == .feed {
                     if viewModel.quotes.isEmpty {
                         Text("Loading Quotes Feed...")
                             .font(.title2)
@@ -91,7 +91,7 @@ struct DropletsView: View {
                         }
                     }
                     
-                } else if viewModel.selected == 2 {
+                } else if viewModel.selected == .saved {
                     if viewModel.savedQuotes.isEmpty {
                         Text("You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:")
                             .font(.title2)
@@ -110,7 +110,7 @@ struct DropletsView: View {
                             }
                         }
                     }
-                } else if viewModel.selected == 3 {
+                } else if viewModel.selected == .recent {
                     
                     if viewModel.recentQuotes.isEmpty {
                         //                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
@@ -191,9 +191,17 @@ struct DropletsView: View {
                 .onEnded { value in
                     switch(value.translation.width, value.translation.height) {
                     case (...0, -30...30): // left swipe
-                        viewModel.selected += 1
+                        if viewModel.selected == .feed {
+                            viewModel.selected = .saved
+                        } else if viewModel.selected == .saved {
+                            viewModel.selected = .recent
+                        }
                     case (0..., -30...30): // right swipe
-                        viewModel.selected -= 1 // up or down swipe
+                        if viewModel.selected == .recent {
+                            viewModel.selected = .saved
+                        } else if viewModel.selected == .saved {
+                            viewModel.selected = .feed
+                        }
                     default: break
                     }
                 }
