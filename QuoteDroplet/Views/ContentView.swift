@@ -21,7 +21,7 @@ struct ContentView: View {
                         Text("Droplets")
                     }
                 }
-            SearchView(localQuotesService: localQuotesService, apiService: apiService)
+            SearchView(viewModel: SearchViewModel(localQuotesService: localQuotesService, apiService: apiService))
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)
