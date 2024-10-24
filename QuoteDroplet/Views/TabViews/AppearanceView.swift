@@ -36,6 +36,35 @@ struct AppearanceView: View {
         self.localQuotesService = localQuotesService
     }
     
+    var body: some View {
+        NavigationStack {
+            VStack {
+                HeaderView()
+                VStack{
+                    Spacer()
+                    widgetPreviewSection
+                    Spacer()
+                    fontSelector
+                    Spacer()
+                    sampleColorSection
+                    customColorSection
+                    Spacer()
+                }
+                .padding()
+            }
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+        }
+    }
+}
+@available(iOS 16.0, *)
+struct AppearanceView_Previews: PreviewProvider {
+    static var previews: some View {
+        AppearanceView(localQuotesService: LocalQuotesService())
+    }
+}
+
+@available(iOS 16.0, *)
+extension AppearanceView {
     private var fontSelector: some View {
         HStack {
             Text("Widget Font:")
@@ -199,31 +228,5 @@ struct AppearanceView: View {
             .frame(width: 150, height: 150)
         }
         .padding(.bottom, 10)
-    }
-    
-    var body: some View {
-        NavigationStack {
-            VStack {
-                HeaderView()
-                VStack{
-                    Spacer()
-                    widgetPreviewSection
-                    Spacer()
-                    fontSelector
-                    Spacer()
-                    sampleColorSection
-                    customColorSection
-                    Spacer()
-                }
-                .padding()
-            }
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        }
-    }
-}
-@available(iOS 16.0, *)
-struct AppearanceView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppearanceView(localQuotesService: LocalQuotesService())
     }
 }
