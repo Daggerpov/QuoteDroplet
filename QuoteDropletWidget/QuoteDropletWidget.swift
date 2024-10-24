@@ -23,7 +23,8 @@ extension WidgetConfiguration {
 }
 
 struct Provider: IntentTimelineProvider {
-    var data = DataService()
+    let localQuotesService: LocalQuotesService = LocalQuotesService()
+    let data: DataService = DataService()
     @Environment(\.widgetFamily) var family
     
     func placeholder(in context: Context) -> SimpleEntry {
@@ -48,7 +49,7 @@ struct Provider: IntentTimelineProvider {
         let nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
         
         if data.getQuoteCategory().lowercased() == "saved" {
-            let bookmarkedQuotes = getBookmarkedQuotes()
+            let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()
             
             if !bookmarkedQuotes.isEmpty {
                 let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
@@ -154,7 +155,8 @@ struct MinimumFontModifier: ViewModifier {
 
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetEntryView : View {
-    var data = DataService()
+    var data: DataService = DataService()
+    let localQuotesService: LocalQuotesService = LocalQuotesService()
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
     
@@ -289,13 +291,13 @@ struct QuoteDropletWidgetEntryView : View {
     private func toggleBookmark() {
         isBookmarked.toggle()
         
-        saveBookmarkedQuote(quote: widgetQuote, isBookmarked: isBookmarked)
+        localQuotesService.saveBookmarkedQuote(quote: widgetQuote, isBookmarked: isBookmarked)
     }
     
     private func toggleLike() {
         isLiked.toggle()
         
-        saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
+        localQuotesService.saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
     
     private func likeQuoteAction() {
@@ -341,7 +343,7 @@ struct QuoteDropletWidgetEntryView : View {
     }
     
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
-        return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
+        return localQuotesService.getBookmarkedQuotes().contains(where: { $0.id == quote.id })
     }
 }
 
@@ -478,6 +480,8 @@ struct LikeQuoteIntent: AppIntent {
     @State private var likes: Int = 69 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
     
+    let localQuotesService: LocalQuotesService = LocalQuotesService()
+    
     init() {
         self.widgetQuote = Quote(id: 1, text: "", author: "", classification: "", likes: 15)
         self._isLiked = State(initialValue: false)
@@ -503,7 +507,7 @@ struct LikeQuoteIntent: AppIntent {
     private func toggleLike() {
         isLiked.toggle()
         
-        saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
+        localQuotesService.saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
     
     private func likeQuoteAction() {

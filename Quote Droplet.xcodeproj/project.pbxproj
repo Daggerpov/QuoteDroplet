@@ -38,8 +38,8 @@
 		DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
 		DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
 		DC7010E22BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
-		DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* NotificationScheduler.swift */; };
-		DC7010E52BAE654F008678CB /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* NotificationScheduler.swift */; };
+		DC7010E42BAE654F008678CB /* NotificationSchedulerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */; };
+		DC7010E52BAE654F008678CB /* NotificationSchedulerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */; };
 		DC8279442AA09134004E2BBF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8279432AA09134004E2BBF /* DataService.swift */; };
 		DC890E7F2C5F211900008838 /* LocalQuotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC890E7E2C5F211900008838 /* LocalQuotesService.swift */; };
 		DC890E802C5F211900008838 /* LocalQuotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC890E7E2C5F211900008838 /* LocalQuotesService.swift */; };
@@ -139,7 +139,7 @@
 		DC5205B22B9CEF620007CB5B /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
 		DC7010E02BAE63DC008678CB /* QuotesBackup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuotesBackup.json; sourceTree = "<group>"; };
-		DC7010E32BAE654F008678CB /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedulerService.swift; sourceTree = "<group>"; };
 		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
 		DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuoteDropletWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DC8279432AA09134004E2BBF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 			children = (
 				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
 				DC890E7E2C5F211900008838 /* LocalQuotesService.swift */,
-				DC7010E32BAE654F008678CB /* NotificationScheduler.swift */,
+				DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */,
 				DCC0B3752CC9D4CA002DED7A /* APIErrors.swift */,
 			);
 			path = Services;
@@ -547,7 +547,7 @@
 				DCC0B3632CC9B154002DED7A /* Fonts.swift in Sources */,
 				DC2998FA2C4D9C5C0025D32E /* QuoteBox.swift in Sources */,
 				DCC0B3722CC9CFC9002DED7A /* LinkImageBuilder.swift in Sources */,
-				DC7010E42BAE654F008678CB /* NotificationScheduler.swift in Sources */,
+				DC7010E42BAE654F008678CB /* NotificationSchedulerService.swift in Sources */,
 				DCC0B3782CC9DBD8002DED7A /* QuoteDropletWidget.swift in Sources */,
 				DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */,
 				DCC0B3792CC9DC08002DED7A /* DataService.swift in Sources */,
@@ -584,7 +584,7 @@
 			files = (
 				DC26EB952BF96FD4004CA84F /* DropletsView.swift in Sources */,
 				DCC0B3772CC9D4CA002DED7A /* APIErrors.swift in Sources */,
-				DC7010E52BAE654F008678CB /* NotificationScheduler.swift in Sources */,
+				DC7010E52BAE654F008678CB /* NotificationSchedulerService.swift in Sources */,
 				DCC0B36B2CC9B2D0002DED7A /* ColorPaletteView.swift in Sources */,
 				DC0EFB8B2C4CB29400B4D46A /* JSONHelper.swift in Sources */,
 				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
