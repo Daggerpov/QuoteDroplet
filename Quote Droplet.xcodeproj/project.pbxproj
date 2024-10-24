@@ -87,6 +87,8 @@
 		DCC0B3812CC9F561002DED7A /* AuthorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B37F2CC9F561002DED7A /* AuthorViewModel.swift */; };
 		DCC0B3832CC9FC2F002DED7A /* GoogleImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3822CC9FC2F002DED7A /* GoogleImageModel.swift */; };
 		DCC0B3842CC9FC2F002DED7A /* GoogleImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3822CC9FC2F002DED7A /* GoogleImageModel.swift */; };
+		DCC0B3892CCA01FB002DED7A /* SubmitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */; };
+		DCC0B38A2CCA01FB002DED7A /* SubmitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */; };
 		DCE0F64C2C8EA2A900F24BC6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */; };
 		DCE0F64D2C8EA2A900F24BC6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */; };
 		DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64E2C8EBCEE00F24BC6 /* SingleQuoteView.swift */; };
@@ -174,6 +176,7 @@
 		DCC0B37C2CC9DD97002DED7A /* ColorPickerWithoutLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerWithoutLabel.swift; sourceTree = "<group>"; };
 		DCC0B37F2CC9F561002DED7A /* AuthorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewModel.swift; sourceTree = "<group>"; };
 		DCC0B3822CC9FC2F002DED7A /* GoogleImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleImageModel.swift; sourceTree = "<group>"; };
+		DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitViewModel.swift; sourceTree = "<group>"; };
 		DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		DCE0F64E2C8EBCEE00F24BC6 /* SingleQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -351,6 +354,7 @@
 				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
 				DC2998F92C4D9C5C0025D32E /* QuoteBox.swift */,
 				DCC0B37F2CC9F561002DED7A /* AuthorViewModel.swift */,
+				DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -577,6 +581,7 @@
 				DCC0B3602CC9B136002DED7A /* QuoteCategory.swift in Sources */,
 				DC29990A2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
+				DCC0B3892CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
 				DC420D052CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
@@ -607,6 +612,7 @@
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
+				DCC0B38A2CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DC2998FB2C4D9C5C0025D32E /* QuoteBox.swift in Sources */,
 				DC29990E2C4DF2350025D32E /* InfoView.swift in Sources */,
 				DCAB2DB82A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift in Sources */,
