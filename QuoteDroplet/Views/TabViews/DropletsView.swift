@@ -92,6 +92,7 @@ struct DropletsView_Previews: PreviewProvider {
     }
 }
 
+@available(iOS 16.0, *)
 extension DropletsView {
     private var topNavBar: some View {
         Picker(selection: $viewModel.selected, label: Text("Picker"), content: {

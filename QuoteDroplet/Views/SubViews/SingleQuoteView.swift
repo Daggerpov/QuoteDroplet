@@ -125,9 +125,9 @@ struct SingleQuoteView: View {
         
     }
     
-    }
 }
 
+@available(iOS 16.0, *)
 extension SingleQuoteView {
     private var attributedString: AttributedString {
         var attributedString = AttributedString(quote.text)

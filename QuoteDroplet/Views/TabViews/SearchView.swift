@@ -81,6 +81,7 @@ struct SearchView_Previews: PreviewProvider {
     }
 }
 
+@available(iOS 16.0, *)
 extension SearchView {
     @ViewBuilder
     func ExpandableSearchBar(_ title: String = "Quote Search") -> some View {

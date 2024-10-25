@@ -121,8 +121,9 @@ struct AuthorView: View {
                 colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
                 colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
                 colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
-                
-                viewModel.loadRemoteJSON("https://www.googleapis.com/customsearch/v1?key=AIzaSyBzqkgygHO3r6i7sJC56r-vU5icYBA_f6Y&cx=238ad9d0296fb425a&searchType=image&q=Marcus%20Aurelius"){ (data: TestModel) in
+
+                // old API key, that's since been rotated:
+                viewModel.loadRemoteJSON("https://www.googleapis.com/customsearch/v1?key=\(ProcessInfo.processInfo.environment["GoogleImagesAPIKey"])&cx=238ad9d0296fb425a&searchType=image&q=Marcus%20Aurelius"){ (data: TestModel) in
                  //data is your returned value of the generic type T.
                     print(data)
                 }
