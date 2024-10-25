@@ -15,19 +15,21 @@ import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct SingleQuoteView: View {
+    @StateObject var viewModel: SingleQuoteViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    
     var quote: Quote
     var from: String?
     var searchText: String?
     
-    init(quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "") {
-        self.quote = quote
-        self.from = from
-        self.searchText = searchText
+    // TODO: change from to an enum
+    init(quote: Quote, from: String?, searchText: String?) {
+        SingleQuoteViewModel(
+            localQuotesService: LocalQuotesService(),
+            apiService: APIService(), quote: quote, from: "default")
     }
-    
-    @StateObject private var quoteBox = QuoteBox()
-    
+
+    // TODO: could separate these UI elements into smaller Views (Components)
     var body: some View {
             VStack {
                 HStack {
@@ -54,24 +56,24 @@ struct SingleQuoteView: View {
                     // TODO: what I need to do here is make it so likes are fetched by using the `getLikeCountForQuote` method
                     HStack {
                         Button(action: {
-                            quoteBox.likeQuoteAction(for: quote)
-                            quoteBox.toggleLike(for: quote)
+                            viewModel.likeQuoteAction(for: quote)
+                            viewModel.toggleLike(for: quote)
                         }) {
-                            Image(systemName: quoteBox.isLiked ? "heart.fill" : "heart")
+                            Image(systemName: viewModel.isLiked ? "heart.fill" : "heart")
                                 .font(.title)
                                 .scaleEffect(1)
                                 .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                         }
                         
                         // Display the like count next to the heart button
-                        Text("\(quoteBox.likes)")
+                        Text("\(viewModel.likes)")
                             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                     }
                     
                     Button(action: {
-                        quoteBox.toggleBookmark(for: quote)
+                        viewModel.toggleBookmark(for: quote)
                     }) {
-                        Image(systemName: quoteBox.isBookmarked ? "bookmark.fill" : "bookmark")
+                        Image(systemName: viewModel.isBookmarked ? "bookmark.fill" : "bookmark")
                             .font(.title)
                             .scaleEffect(1)
                             .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
@@ -83,7 +85,7 @@ struct SingleQuoteView: View {
                     Button(action: {
                         UIPasteboard.general.setValue("\(quote.text)\(wholeAuthorText)",
                                                       forPasteboardType: UTType.plainText.identifier)
-                        quoteBox.toggleCopy(for: quote)
+                        viewModel.toggleCopy(for: quote)
                     }) {
                         Image(systemName: "doc.on.doc")
                             .font(.title)
@@ -101,14 +103,15 @@ struct SingleQuoteView: View {
                     
                     Spacer()
                     
-                    if (isAuthorValid(authorGiven: quote.author) && from != "AuthorView"){
-                        NavigationLink(destination: AuthorView(quote: quote)) {
+                    if (viewModel.shouldShowArrow()) {
+                        NavigationLink(destination: AuthorView(quote: viewModel.quote)) {
                             Image(systemName: "arrow.turn.down.right")
                                 .font(.title)
                                 .scaleEffect(1)
                                 .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                         }
                     }
+
                 }
             }
             .padding()
@@ -117,22 +120,21 @@ struct SingleQuoteView: View {
             .shadow(radius: 5)
             .padding(.horizontal)
             .onAppear {
-                quoteBox.isBookmarked = isQuoteBookmarked(quote)
-                
-                quoteBox.getQuoteLikeCountMethod(for: quote) { fetchedLikeCount in
-                    quoteBox.likes = fetchedLikeCount
-                }
-                quoteBox.isLiked = isQuoteLiked(quote)
+                viewModel.getQuoteInfo()
             }
         
     }
     
+}
+
+@available(iOS 16.0, *)
+extension SingleQuoteView {
     private var attributedString: AttributedString {
         var attributedString = AttributedString(quote.text)
         let searchTextLowercased = (searchText ?? "").lowercased()
         let textLowercased = quote.text.lowercased()
         var searchStartIndex = textLowercased.startIndex
-
+        
         // Loop to find and highlight all occurrences
         while let range = textLowercased.range(of: searchTextLowercased, range: searchStartIndex..<textLowercased.endIndex) {
             // Convert String.Index to AttributedString.Index
@@ -142,7 +144,7 @@ struct SingleQuoteView: View {
             // Move searchStartIndex to the end of the found range to continue searching
             searchStartIndex = range.upperBound
         }
-
+        
         return attributedString
     }
 }

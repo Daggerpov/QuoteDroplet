@@ -31,10 +31,8 @@ struct HeaderView: View {
         }
         
         // Note that padding definitely shouldn't be added here, but perhaps removed from Home and Quotes Views
-        // * Note that now, QuotesView and HomeView match padding, while DropletsView and AppearanceView
+        // * Note that now, QuotesView and CommunityView match padding, while DropletsView and AppearanceView
         // are more to the left
-        .frame(height: 55) // TODO: test with putting this here vs. below the AdBannerViewController, like it was before
-        // TODO: test between height = 60 vs. height = 50
-
+        .frame(height: 55)
     }
 }

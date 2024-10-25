@@ -15,6 +15,11 @@ import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct SearchView: View {
+    @StateObject var viewModel: SearchViewModel = SearchViewModel(
+        localQuotesService: LocalQuotesService(),
+        apiService: APIService()
+    )
+    
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -30,18 +35,7 @@ struct SearchView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    @State private var quotes: [Quote] = []
-    @State private var searchText: String = ""
-    @State private var isLoadingMore: Bool = false
-   
-    private let quotesPerPage = 5
-    
-    private let maxQuotes = 10
-    
-    @State private var totalQuotesLoaded = 0
-    
     // for top UI stuff:
-    @State private var activeCategory: QuoteCategory = .all
     @Namespace private var animation
     
     var body: some View {
@@ -49,17 +43,16 @@ struct SearchView: View {
             VStack{
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 15) {
-                        if searchText != "" {
-                            ForEach(quotes.indices, id: \.self) { index in
-                                if let quote = quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, searchText: searchText)
+                        if viewModel.searchText != "" {
+                            ForEach(viewModel.quotes.indices, id: \.self) { index in
+                                if let quote = viewModel.quotes[safe: index] {
+                                    SingleQuoteView(quote: quote, searchText: viewModel.searchText, localQuotesService: viewModel.localQuotesService, apiService: viewModel.apiService)
                                 }
                             }
                         } else {
                             DummyQuotesView()
                         }
                     }
-                    //            .safeAreaPadding(15)
                     .safeAreaInset(edge: .top, spacing: 0) {
                         ExpandableSearchBar()
                     }
@@ -79,7 +72,17 @@ struct SearchView: View {
             }
         }
     }
-    
+}
+
+@available(iOS 16.0, *)
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView()
+    }
+}
+
+@available(iOS 16.0, *)
+extension SearchView {
     @ViewBuilder
     func ExpandableSearchBar(_ title: String = "Quote Search") -> some View {
         VStack(spacing: 10) {
@@ -90,9 +93,9 @@ struct SearchView: View {
                 .padding(.bottom, 5)
             HStack(spacing: 12) {
                 Image(systemName: "magnifyingglass").font(.title3)
-                TextField("Search Quotes by Keyword", text: $searchText)
-                    .onChange(of: searchText) { _ in
-                        loadQuotesBySearch(searchText: searchText, searchCategory: activeCategory.rawValue.lowercased())
+                TextField("Search Quotes by Keyword", text: $viewModel.searchText)
+                    .onChange(of: viewModel.searchText) { _ in
+                        viewModel.loadQuotesBySearch()
                     }
             }
             .padding(.vertical, 10)
@@ -107,7 +110,7 @@ struct SearchView: View {
                     ForEach(QuoteCategory.allCases, id: \.rawValue) { category in
                         Button(action: {
                             withAnimation(.snappy) {
-                                activeCategory = category
+                                viewModel.activeCategory = category
                             }
                             
                         }) {
@@ -117,7 +120,7 @@ struct SearchView: View {
                                 .padding(.vertical, 8)
                                 .padding(.horizontal, 15)
                                 .background {
-                                    if activeCategory == category {
+                                    if viewModel.activeCategory == category {
                                         Capsule()
                                             .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                                             .matchedGeometryEffect(id: "ACTIVECATEGORY", in: animation)
@@ -131,15 +134,14 @@ struct SearchView: View {
                         
                     }
                 }
-                .onChange(of: activeCategory) { _ in
-                    loadQuotesBySearch(searchText: searchText, searchCategory: activeCategory.rawValue.lowercased())
+                .onChange(of: viewModel.activeCategory) { _ in
+                    viewModel.loadQuotesBySearch()
                 }
                 .padding(.top, 10)
             }
         }
         .padding(.horizontal, 15)
         .padding(.bottom, 20)
-        
     }
     
     // Dummy Quotes View
@@ -180,7 +182,6 @@ struct SearchView: View {
                     Spacer()
                 }
                 
-                
                 HStack{
                     Spacer()
                     Text("— ")
@@ -194,48 +195,6 @@ struct SearchView: View {
                         .padding(.bottom, 5)
                         .frame(alignment: .trailing)
                 }
-                
-//                HStack {
-//                    // TODO: what I need to do here is make it so likes are fetched by using the `getLikeCountForQuote` method
-//                    HStack {
-//                        Button(action: {
-//                           
-//                        }) {
-//                            Image(systemName: "heart")
-//                                .font(.title)
-//                                .scaleEffect(1)
-//                                .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                        }
-//                        
-//                        // Display the like count next to the heart button
-////                        Text("\(Int.random(in: 7..<54))")
-////                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    }
-//                    
-//                    Button(action: {
-//                    }) {
-//                        Image(systemName: "bookmark")
-//                            .font(.title)
-//                            .scaleEffect(1)
-//                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    }.padding(.leading, 5)
-//                    
-//                    Button(action: {
-//                    }) {
-//                        Image(systemName: "doc.on.doc")
-//                            .font(.title)
-//                            .scaleEffect(1)
-//                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    }.padding(.leading, 5)
-//                    
-//                    Image(systemName: "square.and.arrow.up")
-//                        .font(.title)
-//                        .scaleEffect(1)
-//                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-//                    .padding(.leading, 5)
-//                    
-//                    Spacer()
-//                }
             }
             .padding()
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
@@ -243,48 +202,5 @@ struct SearchView: View {
             .shadow(radius: 5)
             .padding(.horizontal)
         }
-    }
-    
-    private func loadQuotesBySearch(searchText: String = "", searchCategory: String = QuoteCategory.all.rawValue) {
-        guard !isLoadingMore else { return }
-        
-        self.quotes = []
-        
-        isLoadingMore = true
-        let group = DispatchGroup()
-        
-        getQuotesBySearchKeyword(searchKeyword: searchText, searchCategory: searchCategory) {quotes, error in
-            if let error = error {
-                print("Error fetching quotes: \(error)")
-                return
-            }
-            
-            guard let quotes = quotes else {
-                print("No quotes found.")
-                return
-            }
-            
-            let quotesToAppend = quotes.prefix(quotesPerPage)
-            
-            for quote in quotesToAppend {
-                DispatchQueue.main.async {
-                    if !self.quotes.contains(where: { $0.id == quote.id }) {
-                        self.quotes.append(quote)
-                    }
-                }
-            }
-        }
-        
-        group.notify(queue: .main) {
-            self.isLoadingMore = false
-            self.totalQuotesLoaded += self.quotesPerPage
-        }
-    }
-}
-
-@available(iOS 16.0, *)
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
     }
 }
