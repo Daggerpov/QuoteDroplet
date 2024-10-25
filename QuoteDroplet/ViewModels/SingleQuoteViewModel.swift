@@ -1,5 +1,5 @@
 //
-//  QuoteBox.swift
+//  SingleQuoteViewModel.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-07-21.
@@ -13,7 +13,7 @@ import Foundation
 import StoreKit
 
 @MainActor @available(iOS 16.0, *)
-class QuoteBox: ObservableObject {
+class SingleQuoteViewModel: ObservableObject {
     @Published var isCopied: Bool = false
     @Published var isLiked: Bool = false
     @Published var isBookmarked: Bool = false
@@ -27,14 +27,34 @@ class QuoteBox: ObservableObject {
     @Environment(\.requestReview) var requestReview: RequestReviewAction
     //------------------------------------------------------------------------------------
     
+    var quote: Quote
+    var from: String?
+    var searchText: String?
+    
     let localQuotesService: LocalQuotesService
     let apiService: APIService
 
-    init(localQuotesService: LocalQuotesService, apiService: APIService) {
+    init(localQuotesService: LocalQuotesService, apiService: APIService, quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "") {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
+        self.quote = quote
+        self.from = from
+        self.searchText = searchText
     }
     
+    public func shouldShowArrow() -> Bool {
+        return isAuthorValid(authorGiven: quote.author) && from != "AuthorView"
+    }
+    
+    public func getQuoteInfo() {
+        isBookmarked = localQuotesService.isQuoteBookmarked(quote)
+        
+        getQuoteLikeCountMethod(for: quote) { [weak self] fetchedLikeCount in // to avoid memory leaks
+            self?.likes = fetchedLikeCount
+        }
+        isLiked = localQuotesService.isQuoteLiked(quote)
+    }
+        
     func increaseInteractions() {
         DispatchQueue.main.async { [weak self] in
             self?.interactions += 1

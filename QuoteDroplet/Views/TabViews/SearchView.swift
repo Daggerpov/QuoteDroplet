@@ -198,6 +198,6 @@ struct SearchView: View {
 @available(iOS 16.0, *)
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(viewModel: SearchViewModel(localQuotesService: LocalQuotesService(), apiService: APIService()))
+        SearchView()
     }
 }

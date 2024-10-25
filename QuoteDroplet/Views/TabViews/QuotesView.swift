@@ -11,19 +11,17 @@ import UserNotifications
 import UIKit
 import Foundation
 
-
 @available(iOS 16.0, *)
 struct QuotesView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @Environment(\.colorScheme) var colorScheme
+    @StateObject var viewModel: QuotesViewModel
 
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencyIndex: Int = 3
     
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
-    
-    @ObservedObject var viewModel: QuotesViewModel
     
     init () {
         viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService(), quoteFrequencyIndex: quoteFrequencyIndex, quoteCategory: quoteCategory)
@@ -53,11 +51,11 @@ struct QuotesView: View {
 @available(iOS 16.0, *)
 struct QuotesView_Previews: PreviewProvider {
     static var previews: some View {
-        QuotesView(localQuotesService: LocalQuotesService(), apiService: APIService())
+        QuotesView()
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
+@available(iOS 16.0, *)
 extension QuotesView {
     public func getFormattedNotificationTime () -> String {
         let dateFormatter = DateFormatter()
@@ -123,7 +121,7 @@ extension QuotesView {
                 .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             } else {
                 Group {
-                    DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+                    DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
                         .datePickerStyle(WheelDatePickerStyle())
                         .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
@@ -190,18 +188,16 @@ extension QuotesView {
                 .padding(.horizontal, 5)
             
             HStack {
-                Picker("", selection: $quoteFrequencyIndex) {
-                    ForEach(0..<frequencyOptions.count, id: \.self) { index in
-                        if self.frequencyOptions[index] == "1 day" {
-                            Text("Every day")
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        } else if self.frequencyOptions[index] == "1 week" {
-                            Text("Every week")
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        } else {
-                            Text("Every \(self.frequencyOptions[index])")
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                Picker("", selection: $viewModel.quoteFrequencyIndex) {
+                    ForEach(0..<viewModel.frequencyOptions.count, id: \.self) { index in
+                        var frequencyText: String
+                        switch viewModel.frequencyOptions[index]{
+                            case "1 day": frequencyText = "day"
+                            case "1 week": frequencyText = "week"
+                            default: frequencyText = "\(viewModel.frequencyOptions[index])"
                         }
+                        Text("Every \(frequencyText)")
+                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())

@@ -30,12 +30,6 @@ struct AppearanceView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    let localQuotesService: LocalQuotesService
-        
-    init(localQuotesService: LocalQuotesService) {
-        self.localQuotesService = localQuotesService
-    }
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -59,7 +53,7 @@ struct AppearanceView: View {
 @available(iOS 16.0, *)
 struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
-        AppearanceView(localQuotesService: LocalQuotesService())
+        AppearanceView()
     }
 }
 

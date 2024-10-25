@@ -213,7 +213,7 @@ struct DropletsView: View {
 @available(iOS 16.0, *)
 struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {
-        DropletsView(viewModel: DropletsViewModel(localQuotesService: LocalQuotesService(), apiService: APIService()))
+        DropletsView())
     }
 }
 

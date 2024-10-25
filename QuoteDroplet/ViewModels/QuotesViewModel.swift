@@ -7,26 +7,23 @@
 
 import Foundation
 
-@available(iOSApplicationExtension 15, *)
+@available(iOS 15, *)
 class QuotesViewModel: ObservableObject{
-    
-   
-    private var notificationTime = Date()
-    private var isTimePickerExpanded = false
-    private var showNotificationPicker = false
+    @Published var notificationTime = Date()
+    @Published var notificationScheduledTimeMessage: String = ""
     @Published var counts: [String: Int] = [:]
-    
+    @Published var isTimePickerExpanded = false
+    public let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
+
+    private var showNotificationPicker = false
+    private var notificationTimeCase: NotificationTime = .defaultScheduled
     
     let notificationFrequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
-    let frequencyOptions = ["8 hrs", "12 hrs", "1 day", "2 days", "4 days", "1 week"]
     
     let localQuotesService: LocalQuotesService
     let apiService: APIService
     let quoteFrequencyIndex: Int
     let quoteCategory: QuoteCategory
-    
-    private var notificationTimeCase: NotificationTime = .defaultScheduled
-    private var notificationScheduledTimeMessage: String = ""
 
     init(localQuotesService: LocalQuotesService, apiService: APIService, quoteFrequencyIndex: Int, quoteCategory: QuoteCategory) {
         self.localQuotesService = localQuotesService
@@ -105,8 +102,5 @@ class QuotesViewModel: ObservableObject{
     private func getBookmarkedQuotesCount(completion: @escaping (Int) -> Void) {
         let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()
         completion(bookmarkedQuotes.count)
-        
-        
-        
     }
 }

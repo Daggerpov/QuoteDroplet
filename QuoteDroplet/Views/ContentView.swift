@@ -35,13 +35,13 @@ struct ContentView: View {
                     Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Appearance")
                 }
-            QuotesView(localQuotesService: localQuotesService, apiService: apiService)
+            QuotesView()
                 .tabItem {
                     Spacer(minLength: 20)
                     Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
                     Text("Quotes")
                 }
-            CommunityView(localQuotesService: localQuotesService, apiService: apiService)
+            CommunityView()
                 .tabItem {
                     VStack {
                         Spacer(minLength: 20)
