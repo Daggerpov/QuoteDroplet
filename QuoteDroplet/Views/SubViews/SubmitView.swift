@@ -10,23 +10,23 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 struct SubmitView: View {
+    @StateObject var viewModel: SubmitViewModel = SubmitViewModel(apiService: APIService())
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
-    // ----------------------------------------------------- SUBMIT QUOTE
-    
-    @State private var isAddingQuote = false
-    @State private var selectedCategory: QuoteCategory = .all
-    @State private var submissionMessage = ""
-    @State private var showSubmissionReceivedAlert = false
-    @State private var showSubmissionInfoAlert = false
-    @State private var quoteText = ""
-    @State private var author = ""
+    var body: some View {
+        VStack{
+            composeButton
+        }.sheet(isPresented: $viewModel.isAddingQuote) {
+            quoteAddition
+        }
+    }
+}
 
-    // ----------------------------------------------------- SUBMIT QUOTE
-    
+@available(iOS 16.0, *)
+extension SubmitView {
     private var composeButton: some View {
         Button(action: {
-            isAddingQuote = true
+            viewModel.isAddingQuote = true
         }) {
             HStack {
                 Text("Submit a Quote")
@@ -47,7 +47,7 @@ struct SubmitView: View {
     }
     var howWorksPopUp: some View {
         Button(action: {
-            showSubmissionInfoAlert = true
+            viewModel.showSubmissionInfoAlert = true
         }) {
             HStack {
                 Image(systemName: "info.circle")
@@ -56,7 +56,7 @@ struct SubmitView: View {
             }
             .padding()
         }
-        .alert(isPresented: $showSubmissionInfoAlert) {
+        .alert(isPresented: $viewModel.showSubmissionInfoAlert) {
             Alert(
                 title: Text("How Quote Submission Works"),
                 message: Text("Submitted quotes will either be approved to be added into the app's quote database, or dismissed.\n\nI'll be able to edit typos or insert missing fields, such as author and classification, so don't worry about this when submitting."),
@@ -74,39 +74,25 @@ struct SubmitView: View {
                 Form{
                     //                    Section(header: Text("Quote Info"))
                     Section() { // without header
-                        TextField("Quote Text", text: $quoteText)
-                        TextField("Quote Author", text: $author)
+                        TextField("Quote Text", text: $viewModel.quoteText)
+                        TextField("Quote Author", text: $viewModel.author)
                         submissionQuoteCategoryPicker
                     }
                     Button("Submit") {
-                        addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
-                            if success {
-                                submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
-                                // Set showSubmissionReceivedAlert to true after successful submission
-                            } else if let error = error {
-                                submissionMessage = error.localizedDescription
-                            } else {
-                                submissionMessage = "An unknown error occurred."
-                            }
-                            isAddingQuote = false
-                            showSubmissionReceivedAlert = true // <-- Set to true after successful submission
-                        }
-                        quoteText = ""
-                        author = ""
-                        selectedCategory = .wisdom
+                        viewModel.addQuote()
                     }
-                    .alert(isPresented: $showSubmissionReceivedAlert) { // Modify this line
+                    .alert(isPresented: $viewModel.showSubmissionReceivedAlert) { // Modify this line
                         Alert(
                             title: Text("Submission Received"),
-                            message: Text(submissionMessage),
+                            message: Text(viewModel.submissionMessage),
                             dismissButton: .default(Text("OK")) {
-                                showSubmissionReceivedAlert = false // Dismisses the alert when OK is clicked
+                                viewModel.showSubmissionReceivedAlert = false // Dismisses the alert when OK is clicked
                             }
                         )
                     }
                     
                 }
-//                .navigationTitle("Quote Submission")
+                //                .navigationTitle("Quote Submission")
                 .accentColor(.blue)
             }
             AdBannerViewController(adUnitID:
@@ -118,20 +104,12 @@ struct SubmitView: View {
     }
     private var submissionQuoteCategoryPicker: some View {
         HStack {
-            Picker("Quote Category", selection: $selectedCategory) {
+            Picker("Quote Category", selection: $viewModel.selectedCategory) {
                 // Create a custom array that places .all at the beginning and filters out .bookmarkedQuotes
                 ForEach([.all] + QuoteCategory.allCases.filter { $0 != .bookmarkedQuotes && $0 != .all }, id: \.self) { category in
                     Text(category == .all ? "Unsure" : category.rawValue)
                 }
             }
-        }
-    }
-    var body: some View {
-        VStack{
-            composeButton
-        }.sheet(isPresented: $isAddingQuote) {
-            quoteAddition
-            // TODO: maybe move this .sheet modifier back to caller body, and just publish this isaddingquote var for caller to observe
         }
     }
 }

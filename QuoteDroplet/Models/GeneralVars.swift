@@ -10,14 +10,6 @@ import WidgetKit
 import UserNotifications
 import UIKit
 import Foundation
-import GoogleMobileAds
-
-// Fonts for widget and widget preview
-let availableFonts = [
-    "Georgia", "Times New Roman",
-    "Verdana", "Palatino", "Baskerville", "Didot",
-    "Optima", "Arial"
-]
 
 struct GridStack<Content: View>: View {
     let rows: Int
@@ -41,20 +33,6 @@ extension Collection {
     }
 }
 
-enum QuoteCategory: String, CaseIterable {
-    case all = "All"
-    case wisdom = "Wisdom"
-    case motivation = "Motivation"
-    case discipline = "Discipline"
-    case philosophy = "Philosophy"
-    case inspiration = "Inspiration"
-    case upliftment = "Upliftment"
-    case love = "Love"
-    case bookmarkedQuotes = "Saved"
-    var displayName: String {
-        return self.rawValue
-    }
-}
 
 struct CustomButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {

@@ -1,5 +1,5 @@
 //
-//  NotificationScheduler.swift
+//  NotificationSchedulerService.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-03-22.
@@ -15,8 +15,8 @@ import Foundation
 private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
 
 @available(iOS 15, *)
-class NotificationScheduler {
-    static let shared = NotificationScheduler()
+class NotificationSchedulerService {
+    static let shared = NotificationSchedulerService(localQuotesService: LocalQuotesService())
     
     // notifications default settings:
     private var defaultNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
@@ -31,16 +31,23 @@ class NotificationScheduler {
     
     public static var defaultScheduledNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
     
-    private init() {
-        quotes = loadQuotesFromJSON()
+    let localQuotesService: LocalQuotesService
+    
+    private init(localQuotesService: LocalQuotesService) {
+        self.localQuotesService = localQuotesService
+        fetchQuotesFromJSON()
+    }
+    
+    func fetchQuotesFromJSON() {
+        quotes = localQuotesService.loadQuotesFromJSON()
     }
     
     func scheduleNotifications() {
         // removed toggle check to make sure user has opted in; simply notififying no matter if opted in.
-        if NotificationScheduler.isDefaultConfigOverwritten {
-            scheduleNotifications(notificationTime: NotificationScheduler.previouslySelectedNotificationTime, quoteCategory: NotificationScheduler.previouslySelectedNotificationCategory, defaults: true)
+        if NotificationSchedulerService.isDefaultConfigOverwritten {
+            scheduleNotifications(notificationTime: NotificationSchedulerService.previouslySelectedNotificationTime, quoteCategory: NotificationSchedulerService.previouslySelectedNotificationCategory, defaults: true)
         } else {
-            NotificationScheduler.defaultScheduledNotificationTime = defaultNotificationTime
+            NotificationSchedulerService.defaultScheduledNotificationTime = defaultNotificationTime
             scheduleNotifications(notificationTime: defaultNotificationTime, quoteCategory: defaultQuoteCategory, defaults: true)
         }
     }
@@ -52,9 +59,9 @@ class NotificationScheduler {
         // notification scheduler gets called, that's what it'll use.
         
         if defaults == false {
-            NotificationScheduler.previouslySelectedNotificationTime = notificationTime
-            NotificationScheduler.previouslySelectedNotificationCategory = quoteCategory
-            NotificationScheduler.isDefaultConfigOverwritten = true
+            NotificationSchedulerService.previouslySelectedNotificationTime = notificationTime
+            NotificationSchedulerService.previouslySelectedNotificationCategory = quoteCategory
+            NotificationSchedulerService.isDefaultConfigOverwritten = true
         }
         
         // Cancel existing notifications to reschedule them with the new time
@@ -97,7 +104,7 @@ class NotificationScheduler {
                 randomQuote = randomElement
                 content.title = "Quote Droplet"
             } else if classification.lowercased() == "saved" {
-                let bookmarkedQuotes = getBookmarkedQuotes().map { $0.toQuoteJSON() }
+                let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes().map { $0.toQuoteJSON() }
                 
                 if !bookmarkedQuotes.isEmpty {
                     let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
@@ -160,7 +167,7 @@ class NotificationScheduler {
     }
     
     func saveSentNotificationsAsRecents() {
-        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+        UNUserNotificationCenter.current().getDeliveredNotifications { [weak self] notifications in // weak to prevent memory leaks (automatic reference count can't go to 0 due to deadlock)
             for notification in notifications {
                 let content = notification.request.content
                 let body = content.body
@@ -172,14 +179,14 @@ class NotificationScheduler {
                     let author = String(components[1].dropFirst(2)) // Remove the "— " prefix
                     if let quoteID = content.userInfo["quoteID"] as? Int {
                         let quote = QuoteJSON(id: quoteID, text: text, author: author, classification: content.title)
-                        saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                        self?.localQuotesService.saveRecentQuote(quote: quote.toQuote())
                     }
                 } else {
                     // Handle case where there's no author
                     let text = String(components[0])
                     if let quoteID = content.userInfo["quoteID"] as? Int {
                         let quote = QuoteJSON(id: quoteID, text: text, author: "", classification: content.title)
-                        saveRecentQuote(quote: quote.toQuote()) // TODO: do something with source later
+                        self?.localQuotesService.saveRecentQuote(quote: quote.toQuote())
                     }
                 }
             }

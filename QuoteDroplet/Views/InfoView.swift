@@ -42,39 +42,14 @@ struct InfoView: View {
     
     @State private var showMacAlert = false
     
-    @ViewBuilder func buildLinkImage (urlForImage: String, imageName: String, widthSpecified: CGFloat? = 50) -> some View {
-        HStack{
-            Link(destination: URL(string: urlForImage)!) {
-                Image(imageName)
-                    .resizable()
-                    .frame(width: widthSpecified, height: 50)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            }
-        }
-        .padding(8)
-        .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-    }
-    
     private var aboutMeSection: some View {
         HStack {
-            //            Text("Contact:")
-            //                .font(.title2)
-            //                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            //                .padding(.leading, 10)
-            //            
             Spacer()
-            
             buildLinkImage(urlForImage: "https://www.linkedin.com/in/danielagapov/", imageName: "linkedinlogo")
-            
             Spacer()
-            
             buildLinkImage(urlForImage: "https://github.com/Daggerpov", imageName: "githublogo")
-            
             Spacer()
-            
             buildLinkImage(urlForImage: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact", imageName: "gmaillogo", widthSpecified: 60)
-
             Spacer()
         }
         
@@ -203,8 +178,6 @@ struct InfoView: View {
                 reviewButton
                 Spacer()
                 macNoteSection
-//                Spacer()
-//                donateButton
                 Spacer()
                 aboutMeSection
                 Spacer()

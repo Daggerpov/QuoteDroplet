@@ -39,7 +39,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
-                    NotificationScheduler.shared.scheduleNotifications()
+                    NotificationSchedulerService.shared.scheduleNotifications()
             } else if let error {
                 print(error.localizedDescription)
             }
