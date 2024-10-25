@@ -378,7 +378,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					DCAB2D9A2A9FA91300A822D7 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -681,7 +681,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Quote Droplet.entitlements";
@@ -720,7 +719,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C8BE2D0CF8DA61E79354E83 /* Pods-Quote Droplet.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Quote Droplet.entitlements";
