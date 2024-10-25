@@ -88,7 +88,7 @@ struct DropletsView: View {
 @available(iOS 16.0, *)
 struct DropletsView_Previews: PreviewProvider {
     static var previews: some View {
-        DropletsView())
+        DropletsView()
     }
 }
 
@@ -140,16 +140,13 @@ extension DropletsView {
                             .padding(.bottom, 5)
                             .frame(alignment: .center)
                     } else {
-                        ForEach(viewModel.quotes.indices, id: \.self) { index in
-                            if let quote = viewModel.quotes[safe: index] {
-                                SingleQuoteView(quote: quote, localQuotesService: viewModel.localQuotesService, apiService: viewModel.apiService)
-                                // likely an issue with using the indices ->
-                                // that's what's causing the
-                                /*https://stackoverflow.com/questions/78737833/instance-of-struct-affecting-anothers-state*/
-                            }
+                        ForEach(viewModel.quotes) { quote in
+                            SingleQuoteView(
+                                quote: quote,
+                                from: "dropletsview, not authorview"
+                            )
                         }
                     }
-                    
                 } else if viewModel.selected == .saved {
                     if viewModel.savedQuotes.isEmpty {
                         Text("You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:")
@@ -163,10 +160,8 @@ extension DropletsView {
                             .scaleEffect(1)
                             .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                     } else {
-                        ForEach(viewModel.savedQuotes.indices, id: \.self) { index in
-                            if let quote = viewModel.savedQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, localQuotesService: viewModel.localQuotesService, apiService: viewModel.apiService)
-                            }
+                        ForEach(viewModel.savedQuotes) { quote in
+                            SingleQuoteView(quote: quote, from: "Droplets view")
                         }
                     }
                 } else if viewModel.selected == .recent {
@@ -194,10 +189,8 @@ extension DropletsView {
                             .padding()
                             .frame(alignment: .center)
                             .multilineTextAlignment(.center)
-                        ForEach(viewModel.recentQuotes.indices.reversed(), id: \.self) { index in
-                            if let quote = viewModel.recentQuotes[safe: index] {
-                                SingleQuoteView(quote: quote, localQuotesService: viewModel.localQuotesService, apiService: viewModel.apiService)
-                            }
+                        ForEach(viewModel.recentQuotes) {quote in
+                            SingleQuoteView(quote: quote, from: "dropletsivew")
                         }
                     }
                 }

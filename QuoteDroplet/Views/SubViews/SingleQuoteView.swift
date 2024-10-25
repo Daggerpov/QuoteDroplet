@@ -15,7 +15,7 @@ import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct SingleQuoteView: View {
-    @StateObject var viewModel: SingleQuoteViewModel
+    @ObservedObject var viewModel: SingleQuoteViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     var quote: Quote
@@ -23,8 +23,11 @@ struct SingleQuoteView: View {
     var searchText: String?
     
     // TODO: change from to an enum
-    init(quote: Quote, from: String?, searchText: String?) {
-        SingleQuoteViewModel(
+    init(quote: Quote, from: String?, searchText: String? = "") {
+        self.quote = quote
+        self.from = from
+        self.searchText = searchText
+        self.viewModel = SingleQuoteViewModel(
             localQuotesService: LocalQuotesService(),
             apiService: APIService(), quote: quote, from: "default")
     }

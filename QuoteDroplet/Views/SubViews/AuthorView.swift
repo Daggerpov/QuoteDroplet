@@ -14,7 +14,7 @@ import StoreKit
 
 @available(iOS 16.0, *)
 struct AuthorView: View {
-    @StateObject var viewModel: AuthorViewModel
+    @ObservedObject var viewModel: AuthorViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -31,7 +31,7 @@ struct AuthorView: View {
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
         
     init(quote: Quote) {
-        self.viewModel: AuthorViewModel = AuthorViewModel(
+        self.viewModel = AuthorViewModel(
             quote: quote,
             localQuotesService: LocalQuotesService(),
             apiService: APIService()
@@ -71,10 +71,8 @@ struct AuthorView: View {
                                 .padding(.bottom, 5)
                                 .frame(alignment: .center)
                         } else {
-                            ForEach(viewModel.quotes.indices, id: \.self) { index in
-                                if let quote = viewModel.quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, from: "AuthorView", localQuotesService: viewModel.localQuotesService, apiService: viewModel.apiService)
-                                }
+                            ForEach(viewModel.quotes) { quote in
+                                SingleQuoteView(quote: quote, from: "AuthorView")
                             }
                         }
                         Color.clear.frame(height: 1)
@@ -122,12 +120,15 @@ struct AuthorView: View {
                 colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
                 colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
 
-                // old API key, that's since been rotated:
-                viewModel.loadRemoteJSON("https://www.googleapis.com/customsearch/v1?key=\(ProcessInfo.processInfo.environment["GoogleImagesAPIKey"])&cx=238ad9d0296fb425a&searchType=image&q=Marcus%20Aurelius"){ (data: TestModel) in
-                 //data is your returned value of the generic type T.
-                    print(data)
+                if let APIKey: String = ProcessInfo.processInfo.environment["GoogleImagesAPIKey"] {
+                    viewModel
+                        .loadRemoteJSON("https://www.googleapis.com/customsearch/v1?key=\(APIKey)&cx=238ad9d0296fb425a&searchType=image&q=Marcus%20Aurelius"){ (
+                            data: TestModel
+                        ) in
+                            //data is your returned value of the generic type T.
+                            print(data)
+                        }
                 }
-
             }
         }
     }

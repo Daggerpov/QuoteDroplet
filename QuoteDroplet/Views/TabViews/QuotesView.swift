@@ -13,7 +13,7 @@ import Foundation
 
 @available(iOS 16.0, *)
 struct QuotesView: View {
-    @StateObject var viewModel: QuotesViewModel
+    @ObservedObject var viewModel: QuotesViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @Environment(\.colorScheme) var colorScheme
 
@@ -110,7 +110,7 @@ extension QuotesView {
         Group{
             if (colorScheme == .light) {
                 Group {
-                    DatePicker("", selection: $notificationTime, displayedComponents: .hourAndMinute)
+                    DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
                         .datePickerStyle(WheelDatePickerStyle())
                         .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
@@ -224,7 +224,7 @@ extension QuotesView {
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             Picker("", selection: $viewModel.quoteCategory) {
-                if counts.isEmpty {
+                if viewModel.counts.isEmpty {
                     Text("Loading...")
                 } else {
                     ForEach(QuoteCategory.allCases, id: \.self) { category in

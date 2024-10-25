@@ -44,10 +44,12 @@ struct SearchView: View {
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 15) {
                         if viewModel.searchText != "" {
-                            ForEach(viewModel.quotes.indices, id: \.self) { index in
-                                if let quote = viewModel.quotes[safe: index] {
-                                    SingleQuoteView(quote: quote, searchText: viewModel.searchText, localQuotesService: viewModel.localQuotesService, apiService: viewModel.apiService)
-                                }
+                            ForEach(viewModel.quotes) { quote in
+                                SingleQuoteView(
+                                    quote: quote,
+                                    from: "searchview",
+                                    searchText: viewModel.searchText
+                                )
                             }
                         } else {
                             DummyQuotesView()
