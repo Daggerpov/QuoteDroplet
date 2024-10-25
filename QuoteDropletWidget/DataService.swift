@@ -33,20 +33,20 @@ struct DataService {
         return widgetColorPaletteIndex
     }
     
-    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var quoteFrequencyIndex = 3
-    
-    func getQuoteFrequencyIndex() -> Int {
-        return quoteFrequencyIndex
-    }
-    
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var quoteCategory = "all"
-    
+    private var quoteCategory = QuoteCategory.all
+
     func getQuoteCategory() -> String {
         return quoteCategory
     }
-    
+
+    @AppStorage("quoteFrequencySelected", store: UserDefaults(suiteName: "group.selectedSettings"))
+    private var quoteCategory = QuoteFrequencyOption.oneDay
+
+    func getQuoteFrequencySelected() -> String {
+        return quoteCategory
+    }
+
     // Add @AppStorage property for selectedFontIndex
     @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var selectedFontIndex = 0
