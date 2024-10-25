@@ -14,8 +14,7 @@ import StoreKit
 
 @available(iOS 16.0, *)
 struct AuthorView: View {
-    var viewModel: AuthorViewModel
-    
+    @StateObject var viewModel: AuthorViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -31,8 +30,12 @@ struct AuthorView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
         
-    init(viewModel: AuthorViewModel) {
-        self.viewModel = viewModel
+    init(quote: Quote) {
+        self.viewModel: AuthorViewModel = AuthorViewModel(
+            quote: quote,
+            localQuotesService: LocalQuotesService(),
+            apiService: APIService()
+        )
     }
     
     var body: some View {

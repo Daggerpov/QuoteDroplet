@@ -10,13 +10,20 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 struct SubmitView: View {
+    @StateObject var viewModel: SubmitViewModel = SubmitViewModel(apiService: APIService())
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
-    @ObservedObject var viewModel: SubmitViewModel
     
-    init(viewModel: SubmitViewModel) {
-        self.viewModel = viewModel
+    var body: some View {
+        VStack{
+            composeButton
+        }.sheet(isPresented: $viewModel.isAddingQuote) {
+            quoteAddition
+        }
     }
-    
+}
+
+@available(iOS 16.0, *)
+extension SubmitView {
     private var composeButton: some View {
         Button(action: {
             viewModel.isAddingQuote = true
@@ -85,7 +92,7 @@ struct SubmitView: View {
                     }
                     
                 }
-//                .navigationTitle("Quote Submission")
+                //                .navigationTitle("Quote Submission")
                 .accentColor(.blue)
             }
             AdBannerViewController(adUnitID:
@@ -103,14 +110,6 @@ struct SubmitView: View {
                     Text(category == .all ? "Unsure" : category.rawValue)
                 }
             }
-        }
-    }
-    var body: some View {
-        VStack{
-            composeButton
-        }.sheet(isPresented: $viewModel.isAddingQuote) {
-            quoteAddition
-            // TODO: maybe move this .sheet modifier back to caller body, and just publish this isaddingquote var for caller to observe
         }
     }
 }

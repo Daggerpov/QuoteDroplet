@@ -13,9 +13,9 @@ import Foundation
 
 @available(iOS 16.0, *)
 struct QuotesView: View {
+    @StateObject var viewModel: QuotesViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: QuotesViewModel
 
     @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencyIndex: Int = 3

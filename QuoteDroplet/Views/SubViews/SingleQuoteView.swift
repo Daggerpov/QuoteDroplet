@@ -15,8 +15,7 @@ import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct SingleQuoteView: View {
-    @StateObject var viewModel: SingleQuoteViewModel =
-    )
+    @StateObject var viewModel: SingleQuoteViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     var quote: Quote
@@ -27,10 +26,10 @@ struct SingleQuoteView: View {
     init(quote: Quote, from: String?, searchText: String?) {
         SingleQuoteViewModel(
             localQuotesService: LocalQuotesService(),
-            apiService: APIService(), quote: quote, from: from)
+            apiService: APIService(), quote: quote, from: "default")
     }
-    
-    
+
+    // TODO: could separate these UI elements into smaller Views (Components)
     var body: some View {
             VStack {
                 HStack {
@@ -105,7 +104,7 @@ struct SingleQuoteView: View {
                     Spacer()
                     
                     if (viewModel.shouldShowArrow()) {
-                        NavigationLink(destination: AuthorView()) {
+                        NavigationLink(destination: AuthorView(quote: viewModel.quote)) {
                             Image(systemName: "arrow.turn.down.right")
                                 .font(.title)
                                 .scaleEffect(1)
@@ -126,12 +125,16 @@ struct SingleQuoteView: View {
         
     }
     
+    }
+}
+
+extension SingleQuoteView {
     private var attributedString: AttributedString {
         var attributedString = AttributedString(quote.text)
         let searchTextLowercased = (searchText ?? "").lowercased()
         let textLowercased = quote.text.lowercased()
         var searchStartIndex = textLowercased.startIndex
-
+        
         // Loop to find and highlight all occurrences
         while let range = textLowercased.range(of: searchTextLowercased, range: searchStartIndex..<textLowercased.endIndex) {
             // Convert String.Index to AttributedString.Index
@@ -141,7 +144,7 @@ struct SingleQuoteView: View {
             // Move searchStartIndex to the end of the found range to continue searching
             searchStartIndex = range.upperBound
         }
-
+        
         return attributedString
     }
 }

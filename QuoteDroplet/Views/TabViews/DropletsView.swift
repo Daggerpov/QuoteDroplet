@@ -14,6 +14,11 @@ import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct DropletsView: View {
+    @StateObject var viewModel: DropletsViewModel = DropletsViewModel(
+        localQuotesService: LocalQuotesService(),
+        apiService: APIService()
+    )
+    
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -29,12 +34,65 @@ struct DropletsView: View {
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
     
-    @ObservedObject var viewModel: DropletsViewModel
     
-    init(viewModel: DropletsViewModel){
-        self.viewModel = viewModel
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                HeaderView()
+                VStack{
+                    topNavBar
+                    Spacer()
+                    quotesListView
+                }
+                .padding()
+            }
+            .frame(maxWidth: .infinity)
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .onAppear {
+                // Fetch initial quotes when the view appears
+                viewModel.loadInitialQuotes()
+                sharedVars.colorPaletteIndex = widgetColorPaletteIndex
+                
+                colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
+                colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
+                colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
+                
+                // Schedule notifications:
+                // will schedule with previous date and category values
+                NotificationSchedulerService.shared.scheduleNotifications()
+            }
+            .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
+                .onEnded { value in
+                    switch(value.translation.width, value.translation.height) {
+                    case (...0, -30...30): // left swipe
+                        if viewModel.selected == .feed {
+                            viewModel.selected = .saved
+                        } else if viewModel.selected == .saved {
+                            viewModel.selected = .recent
+                        }
+                    case (0..., -30...30): // right swipe
+                        if viewModel.selected == .recent {
+                            viewModel.selected = .saved
+                        } else if viewModel.selected == .saved {
+                            viewModel.selected = .feed
+                        }
+                    default: break
+                    }
+                }
+            )
+        }
     }
-    
+}
+
+@available(iOS 16.0, *)
+struct DropletsView_Previews: PreviewProvider {
+    static var previews: some View {
+        DropletsView())
+    }
+}
+
+extension DropletsView {
     private var topNavBar: some View {
         Picker(selection: $viewModel.selected, label: Text("Picker"), content: {
             Text("Feed").tag(1)
@@ -160,60 +218,4 @@ struct DropletsView: View {
             }
         }
     }
-    
-    var body: some View {
-        NavigationStack {
-            VStack {
-                HeaderView()
-                VStack{
-                    topNavBar
-                    Spacer()
-                    quotesListView
-                }
-                .padding()
-            }
-            .frame(maxWidth: .infinity)
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-            .onAppear {
-                // Fetch initial quotes when the view appears
-                viewModel.loadInitialQuotes()
-                sharedVars.colorPaletteIndex = widgetColorPaletteIndex
-                
-                colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
-                colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
-                colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
-                
-                // Schedule notifications:
-                // will schedule with previous date and category values
-                NotificationSchedulerService.shared.scheduleNotifications()
-            }
-            .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
-                .onEnded { value in
-                    switch(value.translation.width, value.translation.height) {
-                    case (...0, -30...30): // left swipe
-                        if viewModel.selected == .feed {
-                            viewModel.selected = .saved
-                        } else if viewModel.selected == .saved {
-                            viewModel.selected = .recent
-                        }
-                    case (0..., -30...30): // right swipe
-                        if viewModel.selected == .recent {
-                            viewModel.selected = .saved
-                        } else if viewModel.selected == .saved {
-                            viewModel.selected = .feed
-                        }
-                    default: break
-                    }
-                }
-            )
-        }
-    }
 }
-
-@available(iOS 16.0, *)
-struct DropletsView_Previews: PreviewProvider {
-    static var previews: some View {
-        DropletsView())
-    }
-}
-

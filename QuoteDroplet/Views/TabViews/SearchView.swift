@@ -15,7 +15,11 @@ import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct SearchView: View {
-    @ObservedObject var viewModel: SearchViewModel
+    @StateObject var viewModel: SearchViewModel = SearchViewModel(
+        localQuotesService: LocalQuotesService(),
+        apiService: APIService()
+    )
+    
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -33,10 +37,6 @@ struct SearchView: View {
     
     // for top UI stuff:
     @Namespace private var animation
-    
-    init (viewModel: SearchViewModel) {
-        self.viewModel = viewModel
-    }
     
     var body: some View {
         NavigationStack{
@@ -72,7 +72,16 @@ struct SearchView: View {
             }
         }
     }
-    
+}
+
+@available(iOS 16.0, *)
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView()
+    }
+}
+
+extension SearchView {
     @ViewBuilder
     func ExpandableSearchBar(_ title: String = "Quote Search") -> some View {
         VStack(spacing: 10) {
@@ -192,12 +201,5 @@ struct SearchView: View {
             .shadow(radius: 5)
             .padding(.horizontal)
         }
-    }
-}
-
-@available(iOS 16.0, *)
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
     }
 }
