@@ -7,8 +7,6 @@
 
 import SwiftUI
 import WidgetKit
-import UserNotifications
-import UIKit
 import Foundation
 
 @available(iOS 16.0, *)

@@ -7,9 +7,6 @@
 
 import Foundation
 import UserNotifications
-import SwiftUI
-import WidgetKit
-import UIKit
 import Foundation
 
 private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already

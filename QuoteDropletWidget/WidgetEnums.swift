@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Combine
-import WidgetKit
 
 enum WidgetTextType {
     case quoteText

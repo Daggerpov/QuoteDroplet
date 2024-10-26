@@ -6,11 +6,7 @@
 //
 
 import SwiftUI
-//import UIKit
-//import UserNotifications
-
 import GoogleMobileAds
-
 import FirebaseCore
 
 @available(iOS 16, *)

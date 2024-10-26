@@ -5,12 +5,6 @@
 //  Created by Daniel Agapov on 2024-05-18.
 //
 import SwiftUI
-import WidgetKit
-import UserNotifications
-import UIKit
-import Foundation
-import StoreKit
-import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct DropletsView: View {
@@ -33,8 +27,6 @@ struct DropletsView: View {
     
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-    
-    
     
     var body: some View {
         NavigationStack {

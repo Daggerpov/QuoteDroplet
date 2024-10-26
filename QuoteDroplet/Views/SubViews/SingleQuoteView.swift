@@ -6,11 +6,7 @@
 //
 
 import SwiftUI
-import WidgetKit
-import UserNotifications
-import UIKit
 import Foundation
-import StoreKit
 import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)

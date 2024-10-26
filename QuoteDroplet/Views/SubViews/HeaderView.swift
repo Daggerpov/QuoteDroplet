@@ -7,10 +7,6 @@
 
 import Foundation
 import SwiftUI
-import WidgetKit
-import UserNotifications
-import UIKit
-
 
 @available(iOS 16.0, *)
 struct HeaderView: View {

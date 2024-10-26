@@ -257,6 +257,7 @@
 		DC0EFB7F2C4CB11900B4D46A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
 				DC0EFB832C4CB18100B4D46A /* AdHelper.swift */,
 				DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */,
 				DCC0B3712CC9CFC9002DED7A /* LinkImageBuilder.swift */,
@@ -293,9 +294,8 @@
 			children = (
 				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
 				DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */,
-				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
-				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
 				DCC0B3822CC9FC2F002DED7A /* GoogleImageModel.swift */,
+				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
 			);
 			path = Models;
 			sourceTree = "<group>";

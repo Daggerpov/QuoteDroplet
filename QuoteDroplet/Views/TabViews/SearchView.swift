@@ -7,11 +7,6 @@
 
 import Foundation
 import SwiftUI
-import WidgetKit
-import UserNotifications
-import UIKit
-import StoreKit
-import UniformTypeIdentifiers
 
 @available(iOS 16.0, *)
 struct SearchView: View {

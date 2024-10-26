@@ -7,9 +7,6 @@
 
 import Foundation
 import SwiftUI
-import WidgetKit
-import UserNotifications
-import UIKit
 import Foundation
 
 class LocalQuotesService {

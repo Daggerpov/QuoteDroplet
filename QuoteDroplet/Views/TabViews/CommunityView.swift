@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import WidgetKit
-import UIKit
 import Foundation
 
 @available(iOS 16.0, *)

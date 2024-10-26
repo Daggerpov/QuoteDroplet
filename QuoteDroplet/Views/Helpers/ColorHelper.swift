@@ -6,11 +6,6 @@
 //
 
 import SwiftUI
-import WidgetKit
-import UserNotifications
-import UIKit
-import Foundation
-import GoogleMobileAds
 
 extension Color {
     init(hex: String) {

@@ -1,7 +1,4 @@
 import SwiftUI
-import WidgetKit
-import UserNotifications
-import UIKit
 
 @available(iOS 16, *)
 struct ContentView: View {

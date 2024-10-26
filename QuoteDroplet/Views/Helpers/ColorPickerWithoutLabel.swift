@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-
 @available(iOS 14.0, *)
 public struct ColorPickerWithoutLabel: UIViewRepresentable {
     @Binding var selection: Color

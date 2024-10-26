@@ -6,13 +6,9 @@
 //
 
 import Foundation
-import SwiftUI
-import WidgetKit
-import UserNotifications
 import UIKit
-
 import GoogleMobileAds
-
+import SwiftUI
 
 // UIViewControllerRepresentable wrapper for AdMob banner view
 struct AdBannerViewController: UIViewControllerRepresentable {
