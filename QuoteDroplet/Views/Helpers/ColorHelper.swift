@@ -44,6 +44,4 @@ var colorPalettes = [
     [Color(hex: "A0B9C6"), Color(hex: "33658A"), Color(hex: "2F4858")],
     [Color(hex: "39474F"), Color(hex: "E7F3F1"), Color(hex: "DEAABE")],
     [Color(hex: "2A2E40"), Color(hex: "DADFE3"), Color(hex: "909AAB")],
-    
-    // Could also try: E2856E, 03312E, 070707, 564138, 931621, C1292E (lighter than prev red, 931621)
 ]

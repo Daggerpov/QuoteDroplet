@@ -32,6 +32,7 @@
 		DC29990B2C4DCE0B0025D32E /* AuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2999092C4DCE0B0025D32E /* AuthorView.swift */; };
 		DC29990D2C4DF2350025D32E /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29990C2C4DF2350025D32E /* InfoView.swift */; };
 		DC29990E2C4DF2350025D32E /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC29990C2C4DF2350025D32E /* InfoView.swift */; };
+		DC2D00992CCD840D002B365D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DC2D00982CCD840D002B365D /* ComposableArchitecture */; };
 		DC3C86922BA005DE009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86912BA005DE009F581D /* GoogleMobileAds */; };
 		DC3C86942BA00824009F581D /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DC3C86932BA00824009F581D /* GoogleMobileAds */; };
 		DC420D052CB65BD8003C7753 /* SubmitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC420D042CB65BD8003C7753 /* SubmitView.swift */; };
@@ -227,6 +228,7 @@
 			files = (
 				DC3C86922BA005DE009F581D /* GoogleMobileAds in Frameworks */,
 				E7A00833EB7F4A57F27D2AE0 /* Pods_Quote_Droplet.framework in Frameworks */,
+				DC2D00992CCD840D002B365D /* ComposableArchitecture in Frameworks */,
 				DC8C1B042BB2337400B073B7 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +467,7 @@
 			packageProductDependencies = (
 				DC3C86912BA005DE009F581D /* GoogleMobileAds */,
 				DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */,
+				DC2D00982CCD840D002B365D /* ComposableArchitecture */,
 			);
 			productName = QuoteDroplet;
 			productReference = DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */;
@@ -522,6 +525,7 @@
 			packageReferences = (
 				DC3C86902BA0056A009F581D /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				DC8C1B022BB2337400B073B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				DC2D00972CCD840D002B365D /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = DCAB2D9C2A9FA91300A822D7 /* Products */;
 			projectDirPath = "";
@@ -1014,6 +1018,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DC2D00972CCD840D002B365D /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.15.2;
+			};
+		};
 		DC3C86902BA0056A009F581D /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
@@ -1033,6 +1045,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC2D00982CCD840D002B365D /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC2D00972CCD840D002B365D /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
 		DC3C86912BA005DE009F581D /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC3C86902BA0056A009F581D /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
