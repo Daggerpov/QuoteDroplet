@@ -8,16 +8,22 @@
 import SwiftUI
 import GoogleMobileAds
 import FirebaseCore
+import ComposableArchitecture
 
 @available(iOS 16, *)
 @main
 struct QuoteDropletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     //    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate might not need for firebase, since I have the above one from GoogleMobileAds
-    
+
+    static let store = Store(initialState: CounterFeature.State()) {
+        CounterFeature()
+            ._printChanges()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(store: QuoteDropletApp.store)
         }
     }
 }
