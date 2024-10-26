@@ -190,6 +190,7 @@ extension DropletsView {
                         .padding()
                         .frame(alignment: .center)
                         .multilineTextAlignment(.center)
+                    // .modifier(DropletsText())
                 }
                 Spacer()
             }

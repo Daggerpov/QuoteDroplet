@@ -18,8 +18,6 @@ struct QuotesView: View {
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
 
-    let quoteIndex: Int
-
     init () {
         viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
@@ -104,13 +102,31 @@ extension QuotesView {
     }
     
     private var notiTimePickerColor: some View {
-        if (colorScheme == .light) {
-            DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                .modifier(DatePicker())
+        Group {
+            if (colorScheme == .light) {
+                Group {
+                    DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
+                    //                .modifier(DatePicker())
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
+                        .padding()
+                        .scaleEffect(1.25)
+                }
                 .colorInvert()
-        } else {
-            DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                .modifier(DatePicker())
+                .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            } else {
+                Group{
+                    DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
+                        .padding()
+                        .scaleEffect(1.25)
+                }
+                .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                //                .modifier(DatePicker())
+            }
         }
     }
     
@@ -170,24 +186,24 @@ extension QuotesView {
             Text("Quote Category:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            Picker("", selection: $viewModel.quoteCategory) {
-                if viewModel.counts.isEmpty {
-                    Text("Loading...")
-                } else {
-                    ForEach(QuoteCategory.allCases, id: \.self) { category in
-                        Text("\(category.displayName) (\(viewModel.counts[category.rawValue] ?? 0))")
-                            .font(.headline)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    }
-                }
-            }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-
-            .onTapGesture {
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-            }
+//            Picker("", selection: $viewModel.quoteCategory) {
+//                if viewModel.counts.isEmpty {
+//                    Text("Loading...")
+//                } else {
+//                    ForEach(QuoteCategory.allCases, id: \.self) { category in
+//                        Text("\(category.displayName) (\(viewModel.counts[category.rawValue] ?? 0))")
+//                            .font(.headline)
+//                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+//                    }
+//                }
+//            }
+//            .pickerStyle(MenuPickerStyle())
+//            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+//
+//            .onTapGesture {
+//                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+//                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
+//            }
         }
         .padding(10)
         .background(
