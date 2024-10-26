@@ -60,10 +60,7 @@ struct AuthorView: View {
                     LazyVStack{
                         if viewModel.quotes.isEmpty {
                             Text("Loading Quotes...")
-                                .font(.title2)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .center)
+                                .modifier(QuotesPageTextStyling())
                         } else {
                             ForEach(viewModel.quotes) { quote in
                                 SingleQuoteView(quote: quote, from: .authorView)
@@ -79,11 +76,7 @@ struct AuthorView: View {
 
                         VStack{
                             Text("Missing a quote from this author?\nI'd greatly appreciate submissions:")
-                                .font(.title2)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .multilineTextAlignment(.center)
+                                .modifier(QuotesPageTextStyling())
 
                             SubmitView(viewModel: SubmitViewModel(apiService: viewModel.apiService))
                         }
@@ -91,11 +84,7 @@ struct AuthorView: View {
                         if !viewModel.isLoadingMore {
                             if (viewModel.quotes.count >= AuthorViewModel.maxQuotes) {
                                 Text("You've reached the quote limit of \(AuthorViewModel.maxQuotes). Maybe take a break?")
-                                    .font(.title2)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                                    .padding()
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .multilineTextAlignment(.center)
+                                    .modifier(QuotesPageTextStyling())
                             }
                         }
                         Spacer()

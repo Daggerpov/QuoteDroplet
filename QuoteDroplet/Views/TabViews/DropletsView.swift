@@ -100,11 +100,7 @@ extension DropletsView {
         HStack {
             Spacer()
             Text(viewModel.getTitleText())
-                .modifier(QuotesPageTitleStyling)
-
-
-                
-
+                .modifier(QuotesPageTitleStyling())
             Spacer()
         }
     }
@@ -118,7 +114,7 @@ extension DropletsView {
 
                 if viewModel.getPageSpecificQuotes().isEmpty {
                     Text(viewModel.getPageSpecificEmptyText())
-                        .modifier(DropletsPageTextStyling())
+                        .modifier(QuotesPageTextStyling())
                     if viewModel.selected == .saved {
                         Image(systemName: "bookmark")
                             .modifier(QuoteInteractionButtonStyling())
@@ -126,7 +122,7 @@ extension DropletsView {
                 } else {
                     if viewModel.selected == .recent {
                         Text("These are your most recent quotes from notifications.")
-                            .modifier(DropletsPageTextStyling())
+                            .modifier(QuotesPageTextStyling())
                     }
                     ForEach(viewModel.getPageSpecificQuotes()) { quote in
                         SingleQuoteView(
@@ -142,7 +138,7 @@ extension DropletsView {
                     }
                 if viewModel.checkLimitReached() {
                     Text("You've reached the quote limit of \(viewModel.maxQuotes). Maybe take a break?")
-                        .modifier(DropletsPageTextStyling())
+                        .modifier(QuotesPageTextStyling())
                 }
                 Spacer()
             }

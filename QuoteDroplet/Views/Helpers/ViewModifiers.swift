@@ -20,7 +20,7 @@ struct DatePickerStyling: ViewModifier {
             .scaleEffect(1.25)
     }
 }
-struct DropletsPageTextStyling: ViewModifier {
+struct QuotesPageTextStyling: ViewModifier {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     func body(content: Content) -> some View {
         content
