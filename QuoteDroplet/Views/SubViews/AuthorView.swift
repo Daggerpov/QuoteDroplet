@@ -72,7 +72,7 @@ struct AuthorView: View {
                                 .frame(alignment: .center)
                         } else {
                             ForEach(viewModel.quotes) { quote in
-                                SingleQuoteView(quote: quote, from: "AuthorView")
+                                SingleQuoteView(quote: quote, from: .authorView)
                             }
                         }
                         Color.clear.frame(height: 1)

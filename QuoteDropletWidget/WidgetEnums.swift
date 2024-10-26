@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import Combine
+import WidgetKit
 
 enum TextSize {
     case quoteText
     case authorText
 }
+

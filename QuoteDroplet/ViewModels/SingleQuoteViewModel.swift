@@ -28,13 +28,19 @@ class SingleQuoteViewModel: ObservableObject {
     //------------------------------------------------------------------------------------
     
     var quote: Quote
-    var from: String?
+    var from: SingleQuoteSource
     var searchText: String?
     
     let localQuotesService: LocalQuotesService
     let apiService: APIService
 
-    init(localQuotesService: LocalQuotesService, apiService: APIService, quote: Quote, from: String = "not from AuthorView, by default", searchText: String = "") {
+    init(
+        localQuotesService: LocalQuotesService,
+        apiService: APIService,
+        quote: Quote,
+        from: SingleQuoteSource = .standardView,
+        searchText: String = ""
+    ) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
         self.quote = quote
@@ -43,7 +49,7 @@ class SingleQuoteViewModel: ObservableObject {
     }
     
     public func shouldShowArrow() -> Bool {
-        return isAuthorValid(authorGiven: quote.author) && from != "AuthorView"
+        return isAuthorValid(authorGiven: quote.author) && from != .authorView
     }
     
     public func getQuoteInfo() {

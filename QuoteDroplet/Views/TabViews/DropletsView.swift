@@ -143,7 +143,7 @@ extension DropletsView {
                         ForEach(viewModel.quotes) { quote in
                             SingleQuoteView(
                                 quote: quote,
-                                from: "dropletsview, not authorview"
+                                from: .standardView
                             )
                         }
                     }
@@ -161,7 +161,7 @@ extension DropletsView {
                             .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
                     } else {
                         ForEach(viewModel.savedQuotes) { quote in
-                            SingleQuoteView(quote: quote, from: "Droplets view")
+                            SingleQuoteView(quote: quote, from: .standardView)
                         }
                     }
                 } else if viewModel.selected == .recent {
@@ -190,7 +190,7 @@ extension DropletsView {
                             .frame(alignment: .center)
                             .multilineTextAlignment(.center)
                         ForEach(viewModel.recentQuotes) {quote in
-                            SingleQuoteView(quote: quote, from: "dropletsivew")
+                            SingleQuoteView(quote: quote, from: .standardView)
                         }
                     }
                 }
