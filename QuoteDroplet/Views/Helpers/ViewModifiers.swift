@@ -72,3 +72,14 @@ struct QuoteInteractionButtonStyling: ViewModifier {
             .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
     }
 }
+
+@available(iOS 15.0, *)
+struct QuotesPageTitleStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle.bold())
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            .padding(.bottom, 5)
+    }
+}

@@ -100,10 +100,11 @@ extension DropletsView {
         HStack {
             Spacer()
             Text(viewModel.getTitleText())
-                .font(.largeTitle.bold())
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                .padding(.bottom, 5)
-            
+                .modifier(QuotesPageTitleStyling)
+
+
+                
+
             Spacer()
         }
     }

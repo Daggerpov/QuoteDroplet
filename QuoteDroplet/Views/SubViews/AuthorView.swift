@@ -41,9 +41,7 @@ struct AuthorView: View {
                 HStack {
                     Spacer()
                     Text("Quotes by \(viewModel.quote.author ?? "Author"):")
-                        .font(.largeTitle.bold())
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .padding(.bottom, 5)
+                        .modifier(QuotesPageTitleStyling())
 
                     Spacer()
                 }

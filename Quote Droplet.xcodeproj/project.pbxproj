@@ -73,8 +73,8 @@
 		DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
 		DCB1DA592CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */; };
 		DCB1DA5A2CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */; };
-		DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */; };
-		DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */; };
+		DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */; };
+		DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */; };
 		DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB82F782CCB301700E81549 /* CommunityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB82F772CCB301200E81549 /* CommunityViewModel.swift */; };
@@ -196,7 +196,7 @@
 		DCAB2DCC2A9FACC300A822D7 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		DCAB2DD02A9FBAB800A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteFrequencyEnum.swift; sourceTree = "<group>"; };
-		DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalPicker.swift; sourceTree = "<group>"; };
+		DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalPickerView.swift; sourceTree = "<group>"; };
 		DCB722132B9D06E60094BAB8 /* GeneralVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralVars.swift; sourceTree = "<group>"; };
 		DCB82F772CCB301200E81549 /* CommunityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewModel.swift; sourceTree = "<group>"; };
 		DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesViewModel.swift; sourceTree = "<group>"; };
@@ -421,7 +421,7 @@
 		DCC0B3682CC9B2BF002DED7A /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */,
+				DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */,
 				DCBA0C872C5C270600A2E949 /* HeaderView.swift */,
 				DCC0B3692CC9B2D0002DED7A /* ColorPaletteView.swift */,
 				DC2999092C4DCE0B0025D32E /* AuthorView.swift */,
@@ -629,7 +629,7 @@
 				DC03AD522CCC82AD000C6572 /* WidgetHelpers.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3662CC9B1A4002DED7A /* QuoteJSON.swift in Sources */,
-				DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */,
+				DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DC29990D2C4DF2350025D32E /* InfoView.swift in Sources */,
 				DCC0B3762CC9D4CA002DED7A /* APIErrors.swift in Sources */,
@@ -682,7 +682,7 @@
 				DC29990B2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DC420D062CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DCC0B3732CC9CFC9002DED7A /* LinkImageBuilder.swift in Sources */,
-				DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */,
+				DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */,
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3812CC9F561002DED7A /* AuthorViewModel.swift in Sources */,
