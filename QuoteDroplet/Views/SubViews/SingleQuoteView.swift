@@ -78,14 +78,16 @@ extension SingleQuoteView {
     }
 
     private var authorTextView: some View {
-        if let author = quote.author, isAuthorValid(authorGiven: quote.author) {
-            HStack {
-                Spacer()
-                Text("— \(author)")
-                    .font(.body)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                    .padding(.bottom, 5)
-                    .frame(alignment: .trailing)
+        HStack{
+            if let author: String = quote.author, isAuthorValid(authorGiven: quote.author) {
+                HStack {
+                    Spacer()
+                    Text("— \(author)")
+                        .font(.body)
+                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                        .padding(.bottom, 5)
+                        .frame(alignment: .trailing)
+                }
             }
         }
     }

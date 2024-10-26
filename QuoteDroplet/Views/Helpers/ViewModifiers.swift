@@ -62,6 +62,7 @@ struct MainScreenBackgroundStyling: ViewModifier {
     }
 }
 
+@available(iOS 15.0, *)
 struct QuoteInteractionButtonStyling: ViewModifier {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     func body(content: Content) -> some View {

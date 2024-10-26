@@ -43,6 +43,8 @@ struct DropletsView: View {
             .onAppear {
                 // Fetch initial quotes when the view appears
                 viewModel.loadInitialQuotes()
+                // ------------------------------------------
+
                 sharedVars.colorPaletteIndex = widgetColorPaletteIndex
                 
                 colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
@@ -58,15 +60,15 @@ struct DropletsView: View {
                     switch(value.translation.width, value.translation.height) {
                         case (...0, -30...30): // left swipe
                             if viewModel.selected == .feed {
-                                viewModel.selected = .saved
+                                viewModel.setSelected(newValue: .saved)
                             } else if viewModel.selected == .saved {
-                                viewModel.selected = .recent
+                                viewModel.setSelected(newValue: .recent)
                             }
                         case (0..., -30...30): // right swipe
                             if viewModel.selected == .recent {
-                                viewModel.selected = .saved
+                                viewModel.setSelected(newValue: .saved)
                             } else if viewModel.selected == .saved {
-                                viewModel.selected = .feed
+                                viewModel.setSelected(newValue: .feed)
                             }
                         default: break
                     }
@@ -87,14 +89,14 @@ struct DropletsView_Previews: PreviewProvider {
 extension DropletsView {
     private var topNavBar: some View {
         Picker(selection: $viewModel.selected, label: Text("Picker"), content: {
-            Text("Feed").tag(1)
-            Text("Saved").tag(2)
-            Text("Recent").tag(3)
+            Text("Feed").tag(SelectedPage.feed)
+            Text("Saved").tag(SelectedPage.saved)
+            Text("Recent").tag(SelectedPage.recent)
         })
         .pickerStyle(SegmentedPickerStyle())
     }
     
-    private var titles: some View {
+    private var titleText: some View {
         HStack {
             Spacer()
             Text(viewModel.getTitleText())
@@ -110,59 +112,32 @@ extension DropletsView {
         ScrollView {
             Spacer()
             LazyVStack{
-                titles
+                titleText
                 Spacer()
-                if viewModel.selected == .feed {
-                    if viewModel.quotes.isEmpty {
-                        Text("Loading Quotes Feed...")
-                            .font(.title2)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding(.bottom, 5)
-                            .frame(alignment: .center)
-                    } else {
-                        ForEach(viewModel.quotes) { quote in
-                            SingleQuoteView(
-                                quote: quote,
-                                from: .standardView
-                            )
-                        }
-                    }
-                } else if viewModel.selected == .saved {
-                    if viewModel.savedQuotes.isEmpty {
-                        Text("You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:")
-                            .modifier(DropletsPageTextStyling())
+
+                if viewModel.getPageSpecificQuotes().isEmpty {
+                    Text(viewModel.getPageSpecificEmptyText())
+                        .modifier(DropletsPageTextStyling())
+                    if viewModel.selected == .saved {
                         Image(systemName: "bookmark")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                    } else {
-                        ForEach(viewModel.savedQuotes) { quote in
-                            SingleQuoteView(quote: quote, from: .standardView)
-                        }
+                            .modifier(QuoteInteractionButtonStyling())
                     }
-                } else if viewModel.selected == .recent {
-                    
-                    if viewModel.recentQuotes.isEmpty {
-                        //                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
-                        Text("You have no recent quotes. \n\nBe sure to enable notifications to see them listed here.")
-                            .modifier(DropletsPageTextStyling())
-                        Spacer()
-                        Text("Quotes shown from the app's widget will appear here soon. Stay tuned for that update.")
-                            .modifier(DropletsPageTextStyling())
-                        // TODO: add apple widget help link here
-                    } else {
+                } else {
+                    if viewModel.selected == .recent {
                         Text("These are your most recent quotes from notifications.")
                             .modifier(DropletsPageTextStyling())
-                        ForEach(viewModel.recentQuotes) {quote in
-                            SingleQuoteView(quote: quote, from: .standardView)
-                        }
+                    }
+                    ForEach(viewModel.getPageSpecificQuotes()) { quote in
+                        SingleQuoteView(
+                            quote: quote,
+                            from: .standardView
+                        )
                     }
                 }
                 
                 Color.clear.frame(height: 1)
                     .onAppear {
                         viewModel.checkMoreQuotesNeeded()
-                        
                     }
                 if viewModel.checkLimitReached() {
                     Text("You've reached the quote limit of \(viewModel.maxQuotes). Maybe take a break?")
