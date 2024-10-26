@@ -31,3 +31,33 @@ struct DropletsPageTextStyling: ViewModifier {
             .multilineTextAlignment(.center)
     }
 }
+struct DummyQuoteTextStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.title3)
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            .padding(.bottom, 2)
+            .frame(alignment: .leading)
+    }
+}
+
+struct DummyQuoteAuthorTextStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.body)
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+            .padding(.bottom, 5)
+            .frame(alignment: .trailing)
+    }
+}
+
+struct MainScreenBackgroundStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity)
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+    }
+}

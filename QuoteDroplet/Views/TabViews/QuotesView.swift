@@ -37,8 +37,7 @@ struct QuotesView: View {
                 }
                 .padding()
             }
-            .frame(maxWidth: .infinity)
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .modifier(MainScreenBackgroundStyling())
         }
     }
 }

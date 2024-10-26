@@ -12,22 +12,22 @@ import Foundation
 @available(iOS 16.0, *)
 struct AppearanceView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
-    
+
     @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var selectedFontIndex = 0
-    
+
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
-    
+
     @AppStorage("widgetCustomColorPaletteFirstIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteFirstIndex = "1C7C54"
-    
+
     @AppStorage("widgetCustomColorPaletteSecondIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteSecondIndex = "E2B6CF"
-    
+
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -47,6 +47,9 @@ struct AppearanceView: View {
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
+
+
+
 }
 @available(iOS 16.0, *)
 struct AppearanceView_Previews: PreviewProvider {

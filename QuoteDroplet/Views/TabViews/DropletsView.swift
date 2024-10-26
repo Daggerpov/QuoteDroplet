@@ -39,8 +39,7 @@ struct DropletsView: View {
                 }
                 .padding()
             }
-            .frame(maxWidth: .infinity)
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .modifier(MainScreenBackgroundStyling())
             .onAppear {
                 // Fetch initial quotes when the view appears
                 viewModel.loadInitialQuotes()
