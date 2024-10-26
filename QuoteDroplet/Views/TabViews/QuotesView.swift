@@ -18,8 +18,6 @@ struct QuotesView: View {
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
 
-    let quoteIndex: Int
-
     init () {
         viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
@@ -30,7 +28,7 @@ struct QuotesView: View {
                 HeaderView()
                 VStack{
                     Spacer()
-                    quoteCategoryPicker
+                    quoteCategoryPickerSection
                     Spacer()
                     TimeIntervalPicker()
                     Spacer()
@@ -174,35 +172,42 @@ extension QuotesView {
         .cornerRadius(8)
         .shadow(radius: 5)
     }
+    private var renderedPickerOptions: some View {
+        ForEach(QuoteCategory.allCases, id: \.self) { category in
+            if let categoryCount: Int = viewModel.counts[category.rawValue] {
+                let displayNameWithCount: String = "\(category.displayName) (\(categoryCount))"
+                Text(displayNameWithCount)
+                    .font(.headline)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            }
+        }
+    }
+
     private var quoteCategoryPicker: some View {
+        Picker("", selection: $quoteCategory) {
+            if viewModel.counts.isEmpty {
+                Text("Loading...")
+            } else {
+                renderedPickerOptions
+            }
+        }
+        .pickerStyle(MenuPickerStyle())
+        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+        .onAppear {
+            viewModel.initializeCounts()
+        }
+        .onTapGesture {
+            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
+        }
+    }
+
+    private var quoteCategoryPickerSection: some View {
         HStack {
             Text("Quote Category:")
                 .font(.headline)
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            Picker("", selection: $viewModel.quoteCategory) {
-                if viewModel.counts.isEmpty {
-                    Text("Loading...")
-                } else {
-                    ForEach(QuoteCategory.allCases, id: \.self) { category in
-                        if let categoryCount: Int = viewModel.counts[category.rawValue] {
-                            let displayNameWithCount: String = "\(category.displayName) (\(categoryCount))"
-                            Text(displayNameWithCount)
-                                .font(.headline)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        }
-                    }
-                }
-            }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-            .onAppear {
-                viewModel.initializeCounts()
-            }
-            .onTapGesture {
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-            }
-            
+            quoteCategoryPicker
         }
         .padding(10)
         .background(

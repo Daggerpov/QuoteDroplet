@@ -27,7 +27,17 @@ class DropletsViewModel: ObservableObject {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }
-    
+
+    func getTitleText() -> String {
+        let titleText: String
+        switch selected {
+            case .feed: titleText = "Quotes Feed"
+            case .saved: titleText = "Saved Quotes"
+            case .recent: titleText = "Recent Quotes"
+        }
+        return titleText
+    }
+
     func loadInitialQuotes() {
         totalQuotesLoaded = 0
         totalSavedQuotesLoaded = 0

@@ -98,22 +98,11 @@ extension DropletsView {
     private var titles: some View {
         HStack {
             Spacer()
-            if viewModel.selected == .feed {
-                Text("Quotes Feed")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
-            } else if viewModel.selected == .saved {
-                Text("Saved Quotes")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
-            } else {
-                Text("Recent Quotes")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
-            }
+            Text(viewModel.getTitleText())
+                .font(.largeTitle.bold())
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                .padding(.bottom, 5)
+
             Spacer()
         }
     }
@@ -142,11 +131,7 @@ extension DropletsView {
                 } else if viewModel.selected == .saved {
                     if viewModel.savedQuotes.isEmpty {
                         Text("You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:")
-                            .font(.title2)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding()
-                            .frame(alignment: .center)
-                            .multilineTextAlignment(.center)
+                            .modifier(DropletsPageTextStyling())
                         Image(systemName: "bookmark")
                             .font(.title)
                             .scaleEffect(1)
@@ -161,26 +146,14 @@ extension DropletsView {
                     if viewModel.recentQuotes.isEmpty {
                         //                        Text("You have no recent quotes. \n\nBe sure to add the Quote Droplet widget and/or enable notifications to see them listed here.")
                         Text("You have no recent quotes. \n\nBe sure to enable notifications to see them listed here.")
-                            .font(.title2)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding()
-                            .frame(alignment: .center)
-                            .multilineTextAlignment(.center)
+                            .modifier(DropletsPageTextStyling())
                         Spacer()
                         Text("Quotes shown from the app's widget will appear here soon. Stay tuned for that update.")
-                            .font(.title2)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding()
-                            .frame(alignment: .center)
-                            .multilineTextAlignment(.center)
+                            .modifier(DropletsPageTextStyling())
                         // TODO: add apple widget help link here
                     } else {
                         Text("These are your most recent quotes from notifications.")
-                            .font(.title2)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                            .padding()
-                            .frame(alignment: .center)
-                            .multilineTextAlignment(.center)
+                            .modifier(DropletsPageTextStyling())
                         ForEach(viewModel.recentQuotes) {quote in
                             SingleQuoteView(quote: quote, from: .standardView)
                         }
@@ -194,11 +167,7 @@ extension DropletsView {
                     }
                 if viewModel.checkLimitReached() {
                     Text("You've reached the quote limit of \(viewModel.maxQuotes). Maybe take a break?")
-                        .font(.title2)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .padding()
-                        .frame(alignment: .center)
-                        .multilineTextAlignment(.center)
+                        .modifier(DropletsPageTextStyling())
                 }
                 Spacer()
             }
