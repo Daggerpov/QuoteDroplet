@@ -24,7 +24,7 @@ class NotificationSchedulerService {
     
     public static var previouslySelectedNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
     public static var previouslySelectedNotificationCategory: QuoteCategory = QuoteCategory.all
-
+    
     private var quotes = [QuoteJSON]()
     
     public static var defaultScheduledNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
@@ -186,7 +186,7 @@ class NotificationSchedulerService {
             }
         }
     }
-
-
+    
+    
 }
 

@@ -11,15 +11,16 @@ class SearchViewModel: ObservableObject {
     @Published var quotes: [Quote] = []
     @Published var searchText: String = ""
     @Published var activeCategory: QuoteCategory = .all
-    private var isLoadingMore: Bool = false
-    
+
     static let quotesPerPage = 5
+
+    private var isLoadingMore: Bool = false
     private let maxQuotes = 10
     private var totalQuotesLoaded = 0
     
     let localQuotesService: LocalQuotesService
     let apiService: APIService
-
+    
     init(localQuotesService: LocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService

@@ -12,22 +12,22 @@ import Foundation
 @available(iOS 16.0, *)
 struct AppearanceView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
-
+    
     @AppStorage("selectedFontIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var selectedFontIndex = 0
-
+    
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
-
+    
     @AppStorage("widgetCustomColorPaletteFirstIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteFirstIndex = "1C7C54"
-
+    
     @AppStorage("widgetCustomColorPaletteSecondIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteSecondIndex = "E2B6CF"
-
+    
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -47,9 +47,9 @@ struct AppearanceView: View {
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
-
-
-
+    
+    
+    
 }
 @available(iOS 16.0, *)
 struct AppearanceView_Previews: PreviewProvider {
@@ -146,7 +146,7 @@ extension AppearanceView {
                 if customIndex == 2 {
                     // essentially only padding the last one
                     customColorPicker(index: customIndex)
-                    .padding(.trailing, 30)
+                        .padding(.trailing, 30)
                 } else {
                     customColorPicker(index: customIndex)
                 }
@@ -157,30 +157,30 @@ extension AppearanceView {
     
     private func customColorPicker(index: Int) -> some View {
         ColorPicker("",
-            selection: Binding(
-                get: {
-                    colorPalettes[3][index]
-                },
-                set: { newColor in
-                    
-                    colorPalettes[3][index] = newColor
-                    
-                    if (index == 0) {
-                        widgetCustomColorPaletteFirstIndex = newColor.hex
-                    } else if (index == 1) {
-                        widgetCustomColorPaletteSecondIndex = newColor.hex
-                    } else if (index == 2) {
-                        widgetCustomColorPaletteThirdIndex = newColor.hex
-                    } else {
-                        // do nothing, idk
-                    }
-                    sharedVars.colorPaletteIndex = 3
-                    widgetColorPaletteIndex = 3
-                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-                }
-            ),
-            supportsOpacity: true
+                    selection: Binding(
+                        get: {
+                            colorPalettes[3][index]
+                        },
+                        set: { newColor in
+                            
+                            colorPalettes[3][index] = newColor
+                            
+                            if (index == 0) {
+                                widgetCustomColorPaletteFirstIndex = newColor.hex
+                            } else if (index == 1) {
+                                widgetCustomColorPaletteSecondIndex = newColor.hex
+                            } else if (index == 2) {
+                                widgetCustomColorPaletteThirdIndex = newColor.hex
+                            } else {
+                                // do nothing, idk
+                            }
+                            sharedVars.colorPaletteIndex = 3
+                            widgetColorPaletteIndex = 3
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
+                        }
+                    ),
+                    supportsOpacity: true
         )
         .frame(width: 60, height: 60)
         .cornerRadius(8)

@@ -18,7 +18,7 @@ class LocalQuotesService {
         }
         return []
     }
-
+    
     func saveLikedQuote(quote: Quote, isLiked: Bool) {
         var likedQuotes = getLikedQuotes()
         
@@ -34,7 +34,7 @@ class LocalQuotesService {
             likedQuotesData = data
         }
     }
-
+    
     func getBookmarkedQuotes() -> [Quote] {
         @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
         var bookmarkedQuotesData: Data = Data()
@@ -43,7 +43,7 @@ class LocalQuotesService {
         }
         return []
     }
-
+    
     func saveBookmarkedQuote(quote: Quote, isBookmarked: Bool) {
         
         var bookmarkedQuotes = getBookmarkedQuotes()
@@ -60,8 +60,8 @@ class LocalQuotesService {
             bookmarkedQuotesData = data
         }
     }
-
-
+    
+    
     func getRecentLocalQuotes() -> [Quote] {
         @AppStorage("recentQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
         var recentQuotesData: Data = Data()
@@ -70,7 +70,7 @@ class LocalQuotesService {
         }
         return []
     }
-
+    
     func saveRecentQuote(quote: Quote){
         var recentQuotes = getRecentLocalQuotes()
         
@@ -99,15 +99,15 @@ class LocalQuotesService {
         }
         return []
     }
-
+    
     func isQuoteLiked(_ quote: Quote) -> Bool {
         return getLikedQuotes().contains(where: { $0.id == quote.id })
     }
-
+    
     func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return getBookmarkedQuotes().contains(where: { $0.id == quote.id })
     }
-
+    
 }
 
 

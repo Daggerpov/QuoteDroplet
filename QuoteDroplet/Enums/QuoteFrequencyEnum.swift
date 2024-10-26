@@ -14,7 +14,7 @@ enum QuoteFrequency: String, CaseIterable {
     case twoDays = "2 days"
     case fourDays = "4 days"
     case oneWeek = "1 week"
-
+    
     var displayName: String {
         switch self {
             case .oneDay:

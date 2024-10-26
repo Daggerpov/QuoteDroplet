@@ -13,21 +13,21 @@ struct TimeIntervalPicker: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @AppStorage("quoteFrequencySelected", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteFrequencySelected: QuoteFrequency = QuoteFrequency.oneDay
-
+    
     private var renderPickerSelections: some View {
         ForEach(QuoteFrequency.allCases, id: \.rawValue) { frequencyOption in
             Text("Every \(frequencyOption.displayName)")
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
         }
     }
-
+    
     private var headerText: some View {
         Text("Reload Widget:")
             .font(.headline)
             .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
             .padding(.horizontal, 5)
     }
-
+    
     private var picker: some View {
         Picker("", selection: $quoteFrequencySelected) {
             renderPickerSelections
@@ -39,7 +39,7 @@ struct TimeIntervalPicker: View {
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
         }
     }
-
+    
     private var background: some View {
         RoundedRectangle(cornerRadius: 8)
             .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
@@ -48,7 +48,7 @@ struct TimeIntervalPicker: View {
                     .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
             )
     }
-
+    
     var body: some View {
         HStack {
             headerText

@@ -21,24 +21,24 @@ extension Bundle {
 @available(iOS 16.0, *)
 struct InfoView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
-    
+
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
-    
+
     // actual colors of custom:
     @AppStorage("widgetCustomColorPaletteFirstIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteFirstIndex = "1C7C54"
-    
+
     @AppStorage("widgetCustomColorPaletteSecondIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteSecondIndex = "E2B6CF"
-    
+
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-    
+
     @Environment(\.requestReview) var requestReview
-    
+
     @State private var showMacAlert = false
-    
+
     private var aboutMeSection: some View {
         HStack {
             Spacer()
@@ -49,14 +49,14 @@ struct InfoView: View {
             buildLinkImage(urlForImage: "mailto:danielagapov1@gmail.com?subject=Quote%20Droplet%20Contact", imageName: "gmaillogo", widthSpecified: 60)
             Spacer()
         }
-        
+
         .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         .cornerRadius(20)
         .shadow(radius: 5)
         .padding(.horizontal)
     }
-    
+
     private var shareAppButton: some View {
         HStack{
             HStack{
@@ -65,7 +65,7 @@ struct InfoView: View {
                         .font(.title3)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                 }
-                
+
             }
             .padding()
             .background(
@@ -74,7 +74,7 @@ struct InfoView: View {
             )
         }
     }
-    
+
     private var donateButton: some View {
         HStack{
             HStack{
@@ -83,7 +83,7 @@ struct InfoView: View {
                         .font(.title3)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                 }
-                
+
             }
             .padding()
             .background(
@@ -92,10 +92,10 @@ struct InfoView: View {
             )
         }
     }
-    
-    
+
+
     private var reviewButton: some View {
-        
+
         return HStack{
             Button(action: {
                 requestReview()
@@ -109,7 +109,7 @@ struct InfoView: View {
                     Text("Rate Quote Droplet")
                         .font(.title3)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                    
+
                 }
                 .padding()
                 .background(
@@ -120,7 +120,7 @@ struct InfoView: View {
             .padding()
         }
     }
-    
+
     private var macNoteSection: some View {
         VStack (spacing: 10){
             Button(action: {
@@ -155,7 +155,7 @@ struct InfoView: View {
             }
         }
     }
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -167,7 +167,7 @@ struct InfoView: View {
                         .font(.title)
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding(.bottom, 5)
-                    
+
                     Spacer()
                 }
                 shareAppButton
@@ -185,12 +185,12 @@ struct InfoView: View {
             .onAppear {
                 // Fetch initial quotes when the view appears
                 sharedVars.colorPaletteIndex = widgetColorPaletteIndex
-                
+
                 colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
                 colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
                 colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
             }
-            
+
         }
         .frame(maxWidth: .infinity)
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
@@ -198,14 +198,11 @@ struct InfoView: View {
         .onAppear {
             // Fetch initial quotes when the view appears
             sharedVars.colorPaletteIndex = widgetColorPaletteIndex
-            
+
             colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
             colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
             colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
         }
-        
+
     }
-    
-    
-    
 }

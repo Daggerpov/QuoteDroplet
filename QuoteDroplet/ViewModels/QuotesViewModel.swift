@@ -13,13 +13,13 @@ class QuotesViewModel: ObservableObject{
     @Published var notificationScheduledTimeMessage: String = ""
     @Published var counts: [String: Int] = [:]
     @Published var isTimePickerExpanded: Bool = false
-
+    
     private var showNotificationPicker = false
     private var notificationTimeCase: NotificationTime = .defaultScheduled
     
     let localQuotesService: LocalQuotesService
     let apiService: APIService
-
+    
     init(localQuotesService: LocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
@@ -27,13 +27,13 @@ class QuotesViewModel: ObservableObject{
             UserDefaults.standard.setValue(false, forKey: "isFirstLaunch")
         }
     }
-
+    
     public func initializeCounts() {
         getCategoryCounts { [weak self] fetchedCounts in
             self?.counts = fetchedCounts
         }
     }
-
+    
     
     
     public func fetchNotificationScheduledTimeInfo () {
@@ -44,13 +44,13 @@ class QuotesViewModel: ObservableObject{
     
     public func getNotificationTime() -> Date {
         switch notificationTimeCase {
-        case .previouslySelected:
-            return NotificationSchedulerService.previouslySelectedNotificationTime
-        case .defaultScheduled:
-            return NotificationSchedulerService.defaultScheduledNotificationTime
+            case .previouslySelected:
+                return NotificationSchedulerService.previouslySelectedNotificationTime
+            case .defaultScheduled:
+                return NotificationSchedulerService.defaultScheduledNotificationTime
         }
     }
- 
+    
     public func getIsDefaultConfigOverwritten () -> Bool {
         return NotificationSchedulerService.isDefaultConfigOverwritten
     }

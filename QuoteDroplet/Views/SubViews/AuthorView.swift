@@ -12,20 +12,20 @@ import Foundation
 struct AuthorView: View {
     @ObservedObject var viewModel: AuthorViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
-    
+
     @AppStorage("widgetColorPaletteIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     var widgetColorPaletteIndex = 0
-    
+
     // actual colors of custom:
     @AppStorage("widgetCustomColorPaletteFirstIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteFirstIndex = "1C7C54"
-    
+
     @AppStorage("widgetCustomColorPaletteSecondIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteSecondIndex = "E2B6CF"
-    
+
     @AppStorage("widgetCustomColorPaletteThirdIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var widgetCustomColorPaletteThirdIndex = "DEF4C6"
-        
+
     init(quote: Quote) {
         self.viewModel = AuthorViewModel(
             quote: quote,
@@ -33,7 +33,7 @@ struct AuthorView: View {
             apiService: APIService()
         )
     }
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -44,10 +44,10 @@ struct AuthorView: View {
                         .font(.largeTitle.bold())
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                         .padding(.bottom, 5)
-                    
+
                     Spacer()
                 }
-                
+
                 ZStack{
                     Image("authorimageframe")
                         .resizable()
@@ -55,8 +55,8 @@ struct AuthorView: View {
                         .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     AsyncImage(url: URL(string: "https://your_image_url_address"))
                 }
-                
-                
+
+
                 ScrollView {
                     Spacer()
                     LazyVStack{
@@ -78,7 +78,7 @@ struct AuthorView: View {
                                 }
                             }
                         Spacer()
-                        
+
                         VStack{
                             Text("Missing a quote from this author?\nI'd greatly appreciate submissions:")
                                 .font(.title2)
@@ -86,10 +86,10 @@ struct AuthorView: View {
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .multilineTextAlignment(.center)
-                            
+
                             SubmitView(viewModel: SubmitViewModel(apiService: viewModel.apiService))
                         }
-                        
+
                         if !viewModel.isLoadingMore {
                             if (viewModel.quotes.count >= AuthorViewModel.maxQuotes) {
                                 Text("You've reached the quote limit of \(AuthorViewModel.maxQuotes). Maybe take a break?")
@@ -103,14 +103,14 @@ struct AuthorView: View {
                         Spacer()
                     }
                 }
-                
+
             }
             .modifier(MainScreenBackgroundStyling())
             .onAppear {
                 // Fetch initial quotes when the view appears
                 viewModel.loadInitialQuotes()
                 sharedVars.colorPaletteIndex = widgetColorPaletteIndex
-                
+
                 colorPalettes[3][0] = Color(hex: widgetCustomColorPaletteFirstIndex)
                 colorPalettes[3][1] = Color(hex: widgetCustomColorPaletteSecondIndex)
                 colorPalettes[3][2] = Color(hex: widgetCustomColorPaletteThirdIndex)
@@ -128,7 +128,3 @@ struct AuthorView: View {
         }
     }
 }
-
-
-
-

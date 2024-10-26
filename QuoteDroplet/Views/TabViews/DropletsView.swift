@@ -56,19 +56,19 @@ struct DropletsView: View {
             .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
                 .onEnded { value in
                     switch(value.translation.width, value.translation.height) {
-                    case (...0, -30...30): // left swipe
-                        if viewModel.selected == .feed {
-                            viewModel.selected = .saved
-                        } else if viewModel.selected == .saved {
-                            viewModel.selected = .recent
-                        }
-                    case (0..., -30...30): // right swipe
-                        if viewModel.selected == .recent {
-                            viewModel.selected = .saved
-                        } else if viewModel.selected == .saved {
-                            viewModel.selected = .feed
-                        }
-                    default: break
+                        case (...0, -30...30): // left swipe
+                            if viewModel.selected == .feed {
+                                viewModel.selected = .saved
+                            } else if viewModel.selected == .saved {
+                                viewModel.selected = .recent
+                            }
+                        case (0..., -30...30): // right swipe
+                            if viewModel.selected == .recent {
+                                viewModel.selected = .saved
+                            } else if viewModel.selected == .saved {
+                                viewModel.selected = .feed
+                            }
+                        default: break
                     }
                 }
             )
@@ -101,7 +101,7 @@ extension DropletsView {
                 .font(.largeTitle.bold())
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.bottom, 5)
-
+            
             Spacer()
         }
     }
