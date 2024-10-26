@@ -61,3 +61,13 @@ struct MainScreenBackgroundStyling: ViewModifier {
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
     }
 }
+
+struct QuoteInteractionButtonStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.title)
+            .scaleEffect(1)
+            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+    }
+}

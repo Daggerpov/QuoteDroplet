@@ -18,7 +18,6 @@ struct SingleQuoteView: View {
     var from: SingleQuoteSource
     var searchText: String?
     
-    // TODO: change from to an enum
     init(quote: Quote, from: SingleQuoteSource, searchText: String? = "") {
         self.quote = quote
         self.from = from
@@ -28,90 +27,11 @@ struct SingleQuoteView: View {
             apiService: APIService(), quote: quote, from: from)
     }
     
-    // TODO: could separate these UI elements into smaller Views (Components)
     var body: some View {
         VStack {
-            HStack {
-                Text(attributedString)
-                    .font(.title3)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    .padding(.bottom, 2)
-                    .frame(alignment: .leading)
-                Spacer()
-            }
-            
-            if let author = quote.author, isAuthorValid(authorGiven: quote.author) {
-                HStack {
-                    Spacer()
-                    Text("— \(author)")
-                        .font(.body)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        .padding(.bottom, 5)
-                        .frame(alignment: .trailing)
-                }
-            }
-            
-            HStack {
-                // TODO: what I need to do here is make it so likes are fetched by using the `getLikeCountForQuote` method
-                HStack {
-                    Button(action: {
-                        viewModel.likeQuoteAction(for: quote)
-                        viewModel.toggleLike(for: quote)
-                    }) {
-                        Image(systemName: viewModel.isLiked ? "heart.fill" : "heart")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                    }
-                    
-                    // Display the like count next to the heart button
-                    Text("\(viewModel.likes)")
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                }
-                
-                Button(action: {
-                    viewModel.toggleBookmark(for: quote)
-                }) {
-                    Image(systemName: viewModel.isBookmarked ? "bookmark.fill" : "bookmark")
-                        .font(.title)
-                        .scaleEffect(1)
-                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                }.padding(.leading, 5)
-                
-                let authorForSharing = (isAuthorValid(authorGiven: quote.author)) ? quote.author : ""
-                let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
-                
-                Button(action: {
-                    UIPasteboard.general.setValue("\(quote.text)\(wholeAuthorText)",
-                                                  forPasteboardType: UTType.plainText.identifier)
-                    viewModel.toggleCopy(for: quote)
-                }) {
-                    Image(systemName: "doc.on.doc")
-                        .font(.title)
-                        .scaleEffect(1)
-                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                }.padding(.leading, 5)
-                
-                ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
-                    Image(systemName: "square.and.arrow.up")
-                        .font(.title)
-                        .scaleEffect(1)
-                        .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                }
-                .padding(.leading, 5)
-                
-                Spacer()
-                
-                if (viewModel.shouldShowArrow()) {
-                    NavigationLink(destination: AuthorView(quote: viewModel.quote)) {
-                        Image(systemName: "arrow.turn.down.right")
-                            .font(.title)
-                            .scaleEffect(1)
-                            .foregroundStyle(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                    }
-                }
-                
-            }
+            quoteTextView
+            authorTextView
+            quoteInteractionButtons
         }
         .padding()
         .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
@@ -121,6 +41,7 @@ struct SingleQuoteView: View {
         .onAppear {
             viewModel.getQuoteInfo()
         }
+        
     }
 }
 
@@ -143,5 +64,82 @@ extension SingleQuoteView {
         }
         
         return attributedString
+    }
+
+    private var quoteTextView: some View {
+        HStack {
+            Text(attributedString)
+                .font(.title3)
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .padding(.bottom, 2)
+                .frame(alignment: .leading)
+            Spacer()
+        }
+    }
+
+    private var authorTextView: some View {
+        if let author = quote.author, isAuthorValid(authorGiven: quote.author) {
+            HStack {
+                Spacer()
+                Text("— \(author)")
+                    .font(.body)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+                    .padding(.bottom, 5)
+                    .frame(alignment: .trailing)
+            }
+        }
+    }
+
+    private var quoteInteractionButtons: some View {
+        HStack {
+            HStack {
+                Button(action: {
+                    viewModel.likeQuoteAction(for: quote)
+                    viewModel.toggleLike(for: quote)
+                }) {
+                    Image(systemName: viewModel.isLiked ? "heart.fill" : "heart")
+                        .modifier(QuoteInteractionButtonStyling())
+                }
+
+                // Display the like count next to the heart button
+                Text("\(viewModel.likes)")
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+            }
+
+            Button(action: {
+                viewModel.toggleBookmark(for: quote)
+            }) {
+                Image(systemName: viewModel.isBookmarked ? "bookmark.fill" : "bookmark")
+                    .modifier(QuoteInteractionButtonStyling())
+            }.padding(.leading, 5)
+
+            let authorForSharing = (isAuthorValid(authorGiven: quote.author)) ? quote.author : ""
+            let wholeAuthorText = (authorForSharing != "") ? "\n— \(authorForSharing ?? "Unknown Author")" : ""
+
+            Button(action: {
+                UIPasteboard.general.setValue("\(quote.text)\(wholeAuthorText)",
+                                              forPasteboardType: UTType.plainText.identifier)
+                viewModel.toggleCopy(for: quote)
+            }) {
+                Image(systemName: "doc.on.doc")
+                    .modifier(QuoteInteractionButtonStyling())
+            }.padding(.leading, 5)
+
+            ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
+                Image(systemName: "square.and.arrow.up")
+                    .modifier(QuoteInteractionButtonStyling())
+            }
+            .padding(.leading, 5)
+
+            Spacer()
+
+            if (viewModel.shouldShowArrow()) {
+                NavigationLink(destination: AuthorView(quote: viewModel.quote)) {
+                    Image(systemName: "arrow.turn.down.right")
+                        .modifier(QuoteInteractionButtonStyling())
+                }
+            }
+
+        }
     }
 }
