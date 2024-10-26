@@ -33,8 +33,6 @@ class QuotesViewModel: ObservableObject{
             self?.counts = fetchedCounts
         }
     }
-
-    
     
     public func fetchNotificationScheduledTimeInfo () {
         notificationTimeCase = getIsDefaultConfigOverwritten() ? .previouslySelected : .defaultScheduled

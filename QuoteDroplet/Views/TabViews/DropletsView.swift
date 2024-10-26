@@ -98,22 +98,16 @@ extension DropletsView {
     private var titles: some View {
         HStack {
             Spacer()
-            if viewModel.selected == .feed {
-                Text("Quotes Feed")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
-            } else if viewModel.selected == .saved {
-                Text("Saved Quotes")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
-            } else {
-                Text("Recent Quotes")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
+            let titleText: String
+            switch viewModel.selected {
+                case .feed: titleText = "Quotes Feed"
+                case .saved: titleText = "Saved Quotes"
+                case .recent: titleText = "Recent Quotes"
             }
+            Text(titleText)
+                .font(.largeTitle.bold())
+                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                .padding(.bottom, 5)
             Spacer()
         }
     }

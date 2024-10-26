@@ -104,30 +104,13 @@ extension QuotesView {
     }
     
     private var notiTimePickerColor: some View {
-        Group{
-            if (colorScheme == .light) {
-                Group {
-                    DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                        .padding()
-                        .scaleEffect(1.25)
-                }
+        if (colorScheme == .light) {
+            DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
+                .modifier(DatePicker())
                 .colorInvert()
-                .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-            } else {
-                Group {
-                    DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                        .padding()
-                        .scaleEffect(1.25)
-                }
-                // here we didn't do .colorInvert(), since we're on dark mode already
-                .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-            }
+        } else {
+            DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
+                .modifier(DatePicker())
         }
     }
     
@@ -192,25 +175,19 @@ extension QuotesView {
                     Text("Loading...")
                 } else {
                     ForEach(QuoteCategory.allCases, id: \.self) { category in
-                        if let categoryCount: Int = viewModel.counts[category.rawValue] {
-                            let displayNameWithCount: String = "\(category.displayName) (\(categoryCount))"
-                            Text(displayNameWithCount)
-                                .font(.headline)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        }
+                        Text("\(category.displayName) (\(viewModel.counts[category.rawValue] ?? 0))")
+                            .font(.headline)
+                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     }
                 }
             }
             .pickerStyle(MenuPickerStyle())
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-            .onAppear {
-                viewModel.initializeCounts()
-            }
+
             .onTapGesture {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
             }
-            
         }
         .padding(10)
         .background(
@@ -221,5 +198,8 @@ extension QuotesView {
                         .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
                 )
         )
+        .onAppear {
+            viewModel.initializeCounts()
+        }
     }
 }

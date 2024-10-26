@@ -407,13 +407,13 @@
 			isa = PBXGroup;
 			children = (
 				DCB82F772CCB301200E81549 /* CommunityViewModel.swift */,
-				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
 				DC2998F92C4D9C5C0025D32E /* SingleQuoteViewModel.swift */,
 				DCC0B37F2CC9F561002DED7A /* AuthorViewModel.swift */,
 				DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */,
 				DCC0B38B2CCA0903002DED7A /* DropletsViewModel.swift */,
 				DCC0B38E2CCA0F44002DED7A /* SearchViewModel.swift */,
 				DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */,
+				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
