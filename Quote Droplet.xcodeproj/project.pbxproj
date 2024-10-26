@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		58C409FAC2AEF9737D7FBC0C /* Pods_QuoteDropletWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */; };
+		DC03AD4F2CCC6AC3000C6572 /* WidgetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */; };
+		DC03AD502CCC6AC3000C6572 /* WidgetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */; };
 		DC0EFB842C4CB18100B4D46A /* AdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EFB832C4CB18100B4D46A /* AdHelper.swift */; };
 		DC0EFB852C4CB18100B4D46A /* AdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EFB832C4CB18100B4D46A /* AdHelper.swift */; };
 		DC0EFB872C4CB1C500B4D46A /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */; };
@@ -143,6 +145,7 @@
 		92EE9E79963F79E0C5F7FF15 /* Pods-QuoteDropletWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuoteDropletWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-QuoteDropletWidgetExtension/Pods-QuoteDropletWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		95461FB5248B4845B525336A /* Pods_Quote_Droplet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quote_Droplet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quote Droplet.debug.xcconfig"; path = "Target Support Files/Pods-Quote Droplet/Pods-Quote Droplet.debug.xcconfig"; sourceTree = "<group>"; };
+		DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEnums.swift; sourceTree = "<group>"; };
 		DC0EFB832C4CB18100B4D46A /* AdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdHelper.swift; sourceTree = "<group>"; };
 		DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
 		DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -361,6 +364,7 @@
 		DCAB2DB62A9FA95A00A822D7 /* QuoteDropletWidget */ = {
 			isa = PBXGroup;
 			children = (
+				DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */,
 				DCAB2DB72A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift */,
 				DCAB2DB92A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift */,
 				DCAB2DBB2A9FA95A00A822D7 /* QuoteDropletWidget.swift */,
@@ -632,6 +636,7 @@
 				DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 				DCB82F792CCB301700E81549 /* CommunityViewModel.swift in Sources */,
 				DCB1DA5A2CCC5FBE00D823B0 /* QuoteFrequencyOptionEnum.swift in Sources */,
+				DC03AD502CCC6AC3000C6572 /* WidgetEnums.swift in Sources */,
 				DCB844602CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,6 +657,7 @@
 				DCE0F64D2C8EA2A900F24BC6 /* SearchView.swift in Sources */,
 				DCC0B37E2CC9DD97002DED7A /* ColorPickerWithoutLabel.swift in Sources */,
 				DCC0B38D2CCA0903002DED7A /* DropletsViewModel.swift in Sources */,
+				DC03AD4F2CCC6AC3000C6572 /* WidgetEnums.swift in Sources */,
 				DC29990B2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DC420D062CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DCC0B3732CC9CFC9002DED7A /* LinkImageBuilder.swift in Sources */,

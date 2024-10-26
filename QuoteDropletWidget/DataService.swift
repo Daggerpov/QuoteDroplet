@@ -36,15 +36,15 @@ struct DataService {
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var quoteCategory = QuoteCategory.all
 
-    func getQuoteCategory() -> String {
+    func getQuoteCategory() -> QuoteCategory {
         return quoteCategory
     }
 
     @AppStorage("quoteFrequencySelected", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var quoteCategory = QuoteFrequencyOption.oneDay
+    private var quoteFrequencySelected = QuoteFrequencyOption.oneDay
 
-    func getQuoteFrequencySelected() -> String {
-        return quoteCategory
+    func getQuoteFrequencySelected() -> QuoteFrequencyOption {
+        return quoteFrequencySelected
     }
 
     // Add @AppStorage property for selectedFontIndex

@@ -9,8 +9,6 @@ import Foundation
 import Combine
 
 enum QuoteFrequencyOption: String, CaseIterable {
-
-
     case eightHours = "8 hours"
     case twelveHours = "12 hours"
     case oneDay = "1 day"

@@ -64,7 +64,11 @@ struct Provider: IntentTimelineProvider {
         } else {
             // Fetch the initial quote
             
-            apiService.getRandomQuoteByClassification(classification: data.getQuoteCategory().lowercased(), completion:  { quote, error in
+            apiService
+                .getRandomQuoteByClassification(
+                    classification: data
+                        .getQuoteCategory().lowercasedName,
+                    completion:  { quote, error in
                 if let quote = quote {
 //                    if isSavedRecent == false {
 //                    saveRecentQuote(quote: quote) , source: "widget") TODO: do something with source later on
@@ -74,27 +78,27 @@ struct Provider: IntentTimelineProvider {
                     let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                     completion(timeline)
                 }
-            }, isShortQuoteDesired: (family == .systemSmall))
+            },
+ isShortQuoteDesired: (family == .systemSmall))
         }
     }
 }
 
-// Helper function to convert selected frequency index to seconds
-public func getFrequencyInSeconds(for index: Int) -> Int {
-    switch index {
-    case 0: return 28800                // 8 hrs
-    case 1: return 43200                // 12 hrs
-    case 2: return 86400                // 1 day
-    case 3: return 172800               // 2 days
-    case 4: return 345600               // 4 days
-    case 5: return 604800               // 1 week
-    default: return 86400               // 1 Day
+// Helper function to convert selected quote frequency to seconds
+public func getFrequencyInSeconds(quoteFrequency: QuoteFrequencyOption) -> Int {
+    switch quoteFrequency {
+        case .eightHours: return 28800
+        case .twelveHours: return 43200
+        case .oneDay: return 86400
+        case .twoDays: return 172800
+        case .fourDays: return 345600
+        case .oneWeek: return 604800
     }
 }
 
 @available(iOS 16.0, *)
-public func getFontSizeForText(familia: WidgetFamily, whichText: String) -> CGFloat {
-    if (whichText == "text") {
+public func getFontSizeForText(familia: WidgetFamily, whichText: TextSize) -> CGFloat {
+    if (whichText == .quoteText) {
         // widgetAppropriateTextFontSize
         if familia == .systemExtraLarge {
             return 32
@@ -106,7 +110,6 @@ public func getFontSizeForText(familia: WidgetFamily, whichText: String) -> CGFl
             return 16
         }
     } else {
-        // author
         if familia == .systemExtraLarge {
             return 22
         } else if familia == .systemLarge {
@@ -138,7 +141,7 @@ struct SimpleEntry: TimelineEntry {
     let widgetColorPaletteIndex: Int
     let widgetCustomColorPalette: [Color]
     let quoteFrequencyIndex: Int
-    let quoteCategory: String
+    let quoteCategory: QuoteCategory
 }
 
 struct MinimumFontModifier: ViewModifier {
