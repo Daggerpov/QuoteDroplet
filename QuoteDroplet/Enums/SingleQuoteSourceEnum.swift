@@ -8,6 +8,6 @@
 import Foundation
 
 enum SingleQuoteSource {
-    case .authorView
-    case .standardView
+    case authorView
+    case standardView
 }

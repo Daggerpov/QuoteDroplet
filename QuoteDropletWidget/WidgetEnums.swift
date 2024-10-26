@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import WidgetKit
 
-enum TextSize {
+enum WidgetTextType {
     case quoteText
     case authorText
 }

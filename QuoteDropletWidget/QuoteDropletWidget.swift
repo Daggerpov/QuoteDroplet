@@ -550,7 +550,7 @@ private func getFrequencyInSeconds(quoteFrequency: QuoteFrequency) -> Int {
 
 
 @available(iOS 16.0, *)
-private func getFontSizeForText(familia: WidgetFamily, whichText: TextSize) -> CGFloat {
+private func getFontSizeForText(familia: WidgetFamily, whichText: WidgetTextType) -> CGFloat {
     if (whichText == .quoteText) {
         // widgetAppropriateTextFontSize
         if familia == .systemExtraLarge {
