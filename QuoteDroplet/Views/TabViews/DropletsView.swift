@@ -98,13 +98,7 @@ extension DropletsView {
     private var titles: some View {
         HStack {
             Spacer()
-            let titleText: String
-            switch viewModel.selected {
-                case .feed: titleText = "Quotes Feed"
-                case .saved: titleText = "Saved Quotes"
-                case .recent: titleText = "Recent Quotes"
-            }
-            Text(titleText)
+            Text(viewModel.getTitleText())
                 .font(.largeTitle.bold())
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                 .padding(.bottom, 5)
@@ -160,6 +154,7 @@ extension DropletsView {
                             .padding()
                             .frame(alignment: .center)
                             .multilineTextAlignment(.center)
+//                            .modifier(DropletsText())
                         Spacer()
                         Text("Quotes shown from the app's widget will appear here soon. Stay tuned for that update.")
                             .font(.title2)
@@ -167,6 +162,7 @@ extension DropletsView {
                             .padding()
                             .frame(alignment: .center)
                             .multilineTextAlignment(.center)
+                        //                            .modifier(DropletsText())
                         // TODO: add apple widget help link here
                     } else {
                         Text("These are your most recent quotes from notifications.")
@@ -175,6 +171,7 @@ extension DropletsView {
                             .padding()
                             .frame(alignment: .center)
                             .multilineTextAlignment(.center)
+                        //                            .modifier(DropletsText())
                         ForEach(viewModel.recentQuotes) {quote in
                             SingleQuoteView(quote: quote, from: .standardView)
                         }

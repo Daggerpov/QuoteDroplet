@@ -12,14 +12,15 @@ class DropletsViewModel: ObservableObject {
     @Published var quotes: [Quote] = []
     @Published var savedQuotes: [Quote] = []
     @Published var recentQuotes: [Quote] = []
+    @Published var selected: SelectedPage = .feed
+
     private var isLoadingMore: Bool = false
     let quotesPerPage = 5
     private var totalQuotesLoaded = 0
     private var totalSavedQuotesLoaded = 0
     private var totalRecentQuotesLoaded = 0
-    @Published var selected: SelectedPage = .feed
     let maxQuotes = 15
-    
+
     let localQuotesService: LocalQuotesService
     let apiService: APIService
     
@@ -27,7 +28,17 @@ class DropletsViewModel: ObservableObject {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }
-    
+
+    func getTitleText() -> String {
+        var titleText: String
+        switch selected {
+            case .feed: titleText = "Quotes Feed"
+            case .saved: titleText = "Saved Quotes"
+            case .recent: titleText = "Recent Quotes"
+        }
+        return titleText
+    }
+
     func loadInitialQuotes() {
         totalQuotesLoaded = 0
         totalSavedQuotesLoaded = 0

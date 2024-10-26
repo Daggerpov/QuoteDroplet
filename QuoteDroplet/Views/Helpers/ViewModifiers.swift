@@ -23,7 +23,7 @@ struct DatePicker: ViewModifier {
     }
 }
 
-struct EmptyDropletsText: ViewModifiers {
+struct DropletsText: ViewModifiers {
     func body(content: Content) -> some View {
         content
             .font(.title2)
