@@ -113,6 +113,8 @@
 		DCC0B3902CCA0F44002DED7A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B38E2CCA0F44002DED7A /* SearchViewModel.swift */; };
 		DCC0B3922CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3912CCA11F2002DED7A /* SelectedPageEnum.swift */; };
 		DCC0B3932CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3912CCA11F2002DED7A /* SelectedPageEnum.swift */; };
+		DCDF64272CCC93F900FBA5B1 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF64262CCC93F400FBA5B1 /* ViewModifiers.swift */; };
+		DCDF64282CCC93F900FBA5B1 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF64262CCC93F400FBA5B1 /* ViewModifiers.swift */; };
 		DCE0F64C2C8EA2A900F24BC6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */; };
 		DCE0F64D2C8EA2A900F24BC6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */; };
 		DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE0F64E2C8EBCEE00F24BC6 /* SingleQuoteView.swift */; };
@@ -213,6 +215,7 @@
 		DCC0B38B2CCA0903002DED7A /* DropletsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropletsViewModel.swift; sourceTree = "<group>"; };
 		DCC0B38E2CCA0F44002DED7A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		DCC0B3912CCA11F2002DED7A /* SelectedPageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPageEnum.swift; sourceTree = "<group>"; };
+		DCDF64262CCC93F400FBA5B1 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		DCE0F64B2C8EA2A900F24BC6 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		DCE0F64E2C8EBCEE00F24BC6 /* SingleQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,6 +260,7 @@
 		DC0EFB7F2C4CB11900B4D46A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				DCDF64262CCC93F400FBA5B1 /* ViewModifiers.swift */,
 				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
 				DC0EFB832C4CB18100B4D46A /* AdHelper.swift */,
 				DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */,
@@ -643,6 +647,7 @@
 				DCC0B37D2CC9DD97002DED7A /* ColorPickerWithoutLabel.swift in Sources */,
 				DCC0B3602CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */,
 				DC29990A2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
+				DCDF64272CCC93F900FBA5B1 /* ViewModifiers.swift in Sources */,
 				DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCC0B3892CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
@@ -687,6 +692,7 @@
 				DCE0F6502C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCC0B3612CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */,
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
+				DCDF64282CCC93F900FBA5B1 /* ViewModifiers.swift in Sources */,
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCB844642CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import WidgetKit
 
 @available(iOS 16.0, *)
 struct QuotesView: View {
@@ -20,7 +21,7 @@ struct QuotesView: View {
     let quoteIndex: Int
 
     init () {
-        viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService(), quoteCategory: quoteCategory)
+        viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
     
     var body: some View {
@@ -159,8 +160,8 @@ extension QuotesView {
             .padding()
             Spacer()
             Button(action: {
-                isTimePickerExpanded.toggle()
-                NotificationSchedulerService.shared.scheduleNotifications(notificationTime: notificationTime,
+                viewModel.isTimePickerExpanded.toggle()
+                NotificationSchedulerService.shared.scheduleNotifications(notificationTime: viewModel.notificationTime,
                                                                           quoteCategory: quoteCategory, defaults: false)
 
             }) {
