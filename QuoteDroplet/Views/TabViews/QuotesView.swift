@@ -17,14 +17,13 @@ struct QuotesView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @Environment(\.colorScheme) var colorScheme
 
-    @AppStorage("quoteFrequencyIndex", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var quoteFrequencyIndex: Int = 3
-    
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
-    
+
+    let quoteIndex: Int
+
     init () {
-        viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService(), quoteFrequencyIndex: quoteFrequencyIndex, quoteCategory: quoteCategory)
+        viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService(), quoteCategory: quoteCategory)
     }
     
     var body: some View {
@@ -35,7 +34,7 @@ struct QuotesView: View {
                     Spacer()
                     quoteCategoryPicker
                     Spacer()
-                    timeIntervalPicker
+                    TimeIntervalPicker()
                     Spacer()
                     notificationSection
                     Spacer()
@@ -145,7 +144,9 @@ extension QuotesView {
                     .multilineTextAlignment(.center)
                 Spacer()
                 
-                Text("\(viewModel.notificationScheduledTimeMessage)\(getFormattedNotificationTime)")
+                Text(
+                    "\(viewModel.notificationScheduledTimeMessage)\(String(describing: getFormattedNotificationTime))"
+                )
                     .font(.title2)
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
                     .padding()
@@ -161,7 +162,10 @@ extension QuotesView {
             .padding()
             Spacer()
             Button(action: {
-                viewModel.handleNotificationScheduleAction()
+                isTimePickerExpanded.toggle()
+                NotificationSchedulerService.shared.scheduleNotifications(notificationTime: notificationTime,
+                                                                          quoteCategory: quoteCategory, defaults: false)
+
             }) {
                 Text("Done")
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -179,44 +183,6 @@ extension QuotesView {
         .background(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear)
         .cornerRadius(8)
         .shadow(radius: 5)
-    }
-    private var timeIntervalPicker: some View {
-        HStack {
-            Text("Reload Widget:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.horizontal, 5)
-            
-            HStack {
-                Picker("", selection: $viewModel.quoteFrequencyIndex) {
-                    ForEach(0..<viewModel.frequencyOptions.count, id: \.self) { index in
-                        var frequencyText: String
-                        switch viewModel.frequencyOptions[index]{
-                            case "1 day": frequencyText = "day"
-                            case "1 week": frequencyText = "week"
-                            default: frequencyText = "\(viewModel.frequencyOptions[index])"
-                        }
-                        Text("Every \(frequencyText)")
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    }
-                }
-                .pickerStyle(MenuPickerStyle())
-                .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                .onReceive([self.quoteFrequencyIndex].publisher.first()) { _ in
-                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-                }
-            }
-        }
-        .padding(10)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
-        )
     }
     private var quoteCategoryPicker: some View {
         HStack {
@@ -240,9 +206,7 @@ extension QuotesView {
             .pickerStyle(MenuPickerStyle())
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             .onAppear {
-                viewModel.getCategoryCounts { fetchedCounts in
-                    counts = fetchedCounts
-                }
+                viewModel.initializeCounts()
             }
             .onTapGesture {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")

@@ -19,17 +19,17 @@ struct SingleQuoteView: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     
     var quote: Quote
-    var from: String?
+    var from: SingleQuoteSource
     var searchText: String?
     
     // TODO: change from to an enum
-    init(quote: Quote, from: String?, searchText: String? = "") {
+    init(quote: Quote, from: SingleQuoteSource, searchText: String? = "") {
         self.quote = quote
         self.from = from
         self.searchText = searchText
         self.viewModel = SingleQuoteViewModel(
             localQuotesService: LocalQuotesService(),
-            apiService: APIService(), quote: quote, from: "default")
+            apiService: APIService(), quote: quote, from: from)
     }
 
     // TODO: could separate these UI elements into smaller Views (Components)

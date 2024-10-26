@@ -20,4 +20,7 @@ enum QuoteCategory: String, CaseIterable {
     var displayName: String {
         return self.rawValue
     }
+    var lowercasedName: String {
+        return self.rawValue.lowercased()
+    }
 }

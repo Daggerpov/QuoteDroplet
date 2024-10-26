@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		58C409FAC2AEF9737D7FBC0C /* Pods_QuoteDropletWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */; };
+		DC03AD4F2CCC6AC3000C6572 /* WidgetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */; };
+		DC03AD502CCC6AC3000C6572 /* WidgetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */; };
+		DC03AD522CCC82AD000C6572 /* WidgetHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD512CCC82AB000C6572 /* WidgetHelpers.swift */; };
+		DC03AD532CCC82AD000C6572 /* WidgetHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD512CCC82AB000C6572 /* WidgetHelpers.swift */; };
+		DC03AD552CCC88CE000C6572 /* WidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD542CCC88C9000C6572 /* WidgetViewModel.swift */; };
+		DC03AD562CCC88CE000C6572 /* WidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD542CCC88C9000C6572 /* WidgetViewModel.swift */; };
+		DC03AD582CCC89B3000C6572 /* SingleQuoteSourceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD572CCC89AC000C6572 /* SingleQuoteSourceEnum.swift */; };
+		DC03AD592CCC89B3000C6572 /* SingleQuoteSourceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD572CCC89AC000C6572 /* SingleQuoteSourceEnum.swift */; };
 		DC0EFB842C4CB18100B4D46A /* AdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EFB832C4CB18100B4D46A /* AdHelper.swift */; };
 		DC0EFB852C4CB18100B4D46A /* AdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EFB832C4CB18100B4D46A /* AdHelper.swift */; };
 		DC0EFB872C4CB1C500B4D46A /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */; };
@@ -63,6 +71,10 @@
 		DCAB2DCD2A9FACC300A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
 		DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */; };
 		DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
+		DCB1DA592CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */; };
+		DCB1DA5A2CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */; };
+		DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */; };
+		DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */; };
 		DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB82F782CCB301700E81549 /* CommunityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB82F772CCB301200E81549 /* CommunityViewModel.swift */; };
@@ -73,8 +85,8 @@
 		DCB844642CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */; };
 		DCBA0C882C5C270700A2E949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA0C872C5C270600A2E949 /* HeaderView.swift */; };
 		DCBA0C892C5C270700A2E949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA0C872C5C270600A2E949 /* HeaderView.swift */; };
-		DCC0B3602CC9B136002DED7A /* QuoteCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */; };
-		DCC0B3612CC9B136002DED7A /* QuoteCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */; };
+		DCC0B3602CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B35F2CC9B136002DED7A /* QuoteCategoryEnum.swift */; };
+		DCC0B3612CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B35F2CC9B136002DED7A /* QuoteCategoryEnum.swift */; };
 		DCC0B3632CC9B154002DED7A /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3622CC9B154002DED7A /* Fonts.swift */; };
 		DCC0B3662CC9B1A4002DED7A /* QuoteJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */; };
 		DCC0B3672CC9B1A4002DED7A /* QuoteJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */; };
@@ -139,6 +151,10 @@
 		92EE9E79963F79E0C5F7FF15 /* Pods-QuoteDropletWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuoteDropletWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-QuoteDropletWidgetExtension/Pods-QuoteDropletWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		95461FB5248B4845B525336A /* Pods_Quote_Droplet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quote_Droplet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quote Droplet.debug.xcconfig"; path = "Target Support Files/Pods-Quote Droplet/Pods-Quote Droplet.debug.xcconfig"; sourceTree = "<group>"; };
+		DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEnums.swift; sourceTree = "<group>"; };
+		DC03AD512CCC82AB000C6572 /* WidgetHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetHelpers.swift; sourceTree = "<group>"; };
+		DC03AD542CCC88C9000C6572 /* WidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetViewModel.swift; sourceTree = "<group>"; };
+		DC03AD572CCC89AC000C6572 /* SingleQuoteSourceEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuoteSourceEnum.swift; sourceTree = "<group>"; };
 		DC0EFB832C4CB18100B4D46A /* AdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdHelper.swift; sourceTree = "<group>"; };
 		DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
 		DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -177,12 +193,14 @@
 		DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		DCAB2DCC2A9FACC300A822D7 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		DCAB2DD02A9FBAB800A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteFrequencyEnum.swift; sourceTree = "<group>"; };
+		DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalPicker.swift; sourceTree = "<group>"; };
 		DCB722132B9D06E60094BAB8 /* GeneralVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralVars.swift; sourceTree = "<group>"; };
 		DCB82F772CCB301200E81549 /* CommunityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewModel.swift; sourceTree = "<group>"; };
 		DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesViewModel.swift; sourceTree = "<group>"; };
 		DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTimeEnum.swift; sourceTree = "<group>"; };
 		DCBA0C872C5C270600A2E949 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCategory.swift; sourceTree = "<group>"; };
+		DCC0B35F2CC9B136002DED7A /* QuoteCategoryEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCategoryEnum.swift; sourceTree = "<group>"; };
 		DCC0B3622CC9B154002DED7A /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteJSON.swift; sourceTree = "<group>"; };
 		DCC0B3692CC9B2D0002DED7A /* ColorPaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPaletteView.swift; sourceTree = "<group>"; };
@@ -243,8 +261,6 @@
 				DC0EFB862C4CB1C500B4D46A /* ColorHelper.swift */,
 				DCC0B3712CC9CFC9002DED7A /* LinkImageBuilder.swift */,
 				DCC0B37C2CC9DD97002DED7A /* ColorPickerWithoutLabel.swift */,
-				DCC0B3912CCA11F2002DED7A /* SelectedPageEnum.swift */,
-				DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -277,7 +293,6 @@
 			children = (
 				DCAB2DCC2A9FACC300A822D7 /* Quote.swift */,
 				DCC0B3652CC9B1A4002DED7A /* QuoteJSON.swift */,
-				DCC0B35F2CC9B136002DED7A /* QuoteCategory.swift */,
 				DCB722132B9D06E60094BAB8 /* GeneralVars.swift */,
 				DC7010E02BAE63DC008678CB /* QuotesBackup.json */,
 				DCC0B3822CC9FC2F002DED7A /* GoogleImageModel.swift */,
@@ -324,6 +339,7 @@
 				DC2998FD2C4D9C7B0025D32E /* Utils */,
 				DC0EFB8C2C4CB74D00B4D46A /* Views */,
 				DCC0B35E2CC9B057002DED7A /* ViewModels */,
+				DCB1DA5B2CCC5FE900D823B0 /* Enums */,
 				DC0EFB8D2C4CB79100B4D46A /* Services */,
 				DC2998FC2C4D9C670025D32E /* Models */,
 				DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */,
@@ -357,6 +373,9 @@
 		DCAB2DB62A9FA95A00A822D7 /* QuoteDropletWidget */ = {
 			isa = PBXGroup;
 			children = (
+				DC03AD542CCC88C9000C6572 /* WidgetViewModel.swift */,
+				DC03AD512CCC82AB000C6572 /* WidgetHelpers.swift */,
+				DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */,
 				DCAB2DB72A9FA95A00A822D7 /* QuoteDropletWidgetBundle.swift */,
 				DCAB2DB92A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift */,
 				DCAB2DBB2A9FA95A00A822D7 /* QuoteDropletWidget.swift */,
@@ -366,6 +385,18 @@
 				DC8279432AA09134004E2BBF /* DataService.swift */,
 			);
 			path = QuoteDropletWidget;
+			sourceTree = "<group>";
+		};
+		DCB1DA5B2CCC5FE900D823B0 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				DC03AD572CCC89AC000C6572 /* SingleQuoteSourceEnum.swift */,
+				DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */,
+				DCC0B3912CCA11F2002DED7A /* SelectedPageEnum.swift */,
+				DCB844622CCAD37D0023BCEF /* NotificationTimeEnum.swift */,
+				DCC0B35F2CC9B136002DED7A /* QuoteCategoryEnum.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		DCC0B35E2CC9B057002DED7A /* ViewModels */ = {
@@ -386,6 +417,7 @@
 		DCC0B3682CC9B2BF002DED7A /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */,
 				DCBA0C872C5C270600A2E949 /* HeaderView.swift */,
 				DCC0B3692CC9B2D0002DED7A /* ColorPaletteView.swift */,
 				DC2999092C4DCE0B0025D32E /* AuthorView.swift */,
@@ -590,8 +622,10 @@
 				DCC0B3922CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* CommunityView.swift in Sources */,
 				DC2999072C4DBED40025D32E /* AuthorHelper.swift in Sources */,
+				DC03AD522CCC82AD000C6572 /* WidgetHelpers.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3662CC9B1A4002DED7A /* QuoteJSON.swift in Sources */,
+				DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DC29990D2C4DF2350025D32E /* InfoView.swift in Sources */,
 				DCC0B3762CC9D4CA002DED7A /* APIErrors.swift in Sources */,
@@ -603,10 +637,11 @@
 				DCC0B36A2CC9B2D0002DED7A /* ColorPaletteView.swift in Sources */,
 				DCAB2DCD2A9FACC300A822D7 /* Quote.swift in Sources */,
 				DC0EFB842C4CB18100B4D46A /* AdHelper.swift in Sources */,
+				DC03AD562CCC88CE000C6572 /* WidgetViewModel.swift in Sources */,
 				DCBA0C882C5C270700A2E949 /* HeaderView.swift in Sources */,
 				DC5205B02B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCC0B37D2CC9DD97002DED7A /* ColorPickerWithoutLabel.swift in Sources */,
-				DCC0B3602CC9B136002DED7A /* QuoteCategory.swift in Sources */,
+				DCC0B3602CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */,
 				DC29990A2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCC0B3892CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
@@ -614,7 +649,10 @@
 				DC420D052CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 				DCB82F792CCB301700E81549 /* CommunityViewModel.swift in Sources */,
+				DCB1DA5A2CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */,
+				DC03AD502CCC6AC3000C6572 /* WidgetEnums.swift in Sources */,
 				DCB844602CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */,
+				DC03AD582CCC89B3000C6572 /* SingleQuoteSourceEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +664,7 @@
 				DC26EB952BF96FD4004CA84F /* DropletsView.swift in Sources */,
 				DCC0B3772CC9D4CA002DED7A /* APIErrors.swift in Sources */,
 				DC7010E52BAE654F008678CB /* NotificationSchedulerService.swift in Sources */,
+				DCB1DA592CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */,
 				DCB844612CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */,
 				DCC0B36B2CC9B2D0002DED7A /* ColorPaletteView.swift in Sources */,
 				DCC0B3902CCA0F44002DED7A /* SearchViewModel.swift in Sources */,
@@ -633,9 +672,12 @@
 				DCE0F64D2C8EA2A900F24BC6 /* SearchView.swift in Sources */,
 				DCC0B37E2CC9DD97002DED7A /* ColorPickerWithoutLabel.swift in Sources */,
 				DCC0B38D2CCA0903002DED7A /* DropletsViewModel.swift in Sources */,
+				DC03AD4F2CCC6AC3000C6572 /* WidgetEnums.swift in Sources */,
+				DC03AD532CCC82AD000C6572 /* WidgetHelpers.swift in Sources */,
 				DC29990B2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DC420D062CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DCC0B3732CC9CFC9002DED7A /* LinkImageBuilder.swift in Sources */,
+				DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */,
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3812CC9F561002DED7A /* AuthorViewModel.swift in Sources */,
@@ -643,11 +685,13 @@
 				DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */,
 				DC5205B42B9CEF620007CB5B /* CommunityView.swift in Sources */,
 				DCE0F6502C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
-				DCC0B3612CC9B136002DED7A /* QuoteCategory.swift in Sources */,
+				DCC0B3612CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */,
 				DCAB2DBA2A9FA95A00A822D7 /* QuoteDropletWidgetLiveActivity.swift in Sources */,
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCB844642CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
+				DC03AD592CCC89B3000C6572 /* SingleQuoteSourceEnum.swift in Sources */,
+				DC03AD552CCC88CE000C6572 /* WidgetViewModel.swift in Sources */,
 				DCC0B38A2CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DC2998FB2C4D9C5C0025D32E /* SingleQuoteViewModel.swift in Sources */,
 				DC29990E2C4DF2350025D32E /* InfoView.swift in Sources */,

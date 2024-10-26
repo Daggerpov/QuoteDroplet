@@ -47,7 +47,7 @@ struct SearchView: View {
                             ForEach(viewModel.quotes) { quote in
                                 SingleQuoteView(
                                     quote: quote,
-                                    from: "searchview",
+                                    from: .standardView,
                                     searchText: viewModel.searchText
                                 )
                             }
