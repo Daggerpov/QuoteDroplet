@@ -104,26 +104,18 @@ extension QuotesView {
     }
     
     private var notiTimePickerColor: some View {
-        Group{
+        Group{ // bug arises if I don't surround with this `Group{}` 
             if (colorScheme == .light) {
                 Group {
                     DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                        .padding()
-                        .scaleEffect(1.25)
+                        .modifier(DatePickerStyling())
                 }
                 .colorInvert()
                 .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             } else {
                 Group {
                     DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                        .padding()
-                        .scaleEffect(1.25)
+                        .modifier(DatePickerStyling())
                 }
                 // here we didn't do .colorInvert(), since we're on dark mode already
                 .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
