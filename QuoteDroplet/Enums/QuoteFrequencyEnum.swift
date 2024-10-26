@@ -1,5 +1,5 @@
 //
-//  QuoteFrequencyOptionEnum.swift
+//  QuoteFrequencyEnum.swift
 //  Quote Droplet
 //
 //  Created by Daniel Agapov on 2024-10-25.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-enum QuoteFrequencyOption: String, CaseIterable {
+enum QuoteFrequency: String, CaseIterable {
     case eightHours = "8 hours"
     case twelveHours = "12 hours"
     case oneDay = "1 day"

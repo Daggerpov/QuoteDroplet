@@ -41,9 +41,9 @@ struct DataService {
     }
 
     @AppStorage("quoteFrequencySelected", store: UserDefaults(suiteName: "group.selectedSettings"))
-    private var quoteFrequencySelected = QuoteFrequencyOption.oneDay
+    private var quoteFrequencySelected = QuoteFrequency.oneDay
 
-    func getQuoteFrequencySelected() -> QuoteFrequencyOption {
+    func getQuoteFrequencySelected() -> QuoteFrequency {
         return quoteFrequencySelected
     }
 

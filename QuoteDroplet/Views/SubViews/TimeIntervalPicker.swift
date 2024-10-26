@@ -12,10 +12,10 @@ import WidgetKit
 struct TimeIntervalPicker: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @AppStorage("quoteFrequencySelected", store: UserDefaults(suiteName: "group.selectedSettings"))
-    var quoteFrequencySelected: QuoteFrequencyOption = QuoteFrequencyOption.oneDay
+    var quoteFrequencySelected: QuoteFrequency = QuoteFrequency.oneDay
 
     private var renderPickerSelections: some View {
-        ForEach(QuoteFrequencyOption.allCases, id: \.rawValue) { frequencyOption in
+        ForEach(QuoteFrequency.allCases, id: \.rawValue) { frequencyOption in
             Text("Every \(frequencyOption.displayName)")
                 .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
         }
