@@ -132,3 +132,34 @@ struct BasePicker_PickerStyling: ViewModifier {
             .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
     }
 }
+
+@available(iOS 15.0, *)
+struct ColorPickerOuterStyling: ViewModifier {
+    var index: Int
+
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .frame(width: 60, height: 60)
+            .border(sharedVars.colorPaletteIndex == index ? Color.blue : Color.clear, width: 2)
+            .cornerRadius(8)
+    }
+}
+
+@available(iOS 15.0, *)
+struct WidgetPreviewTextStyling: ViewModifier {
+    var fontSize: CGFloat
+    var selectedFontIndex: Int
+    var colorPaletteIndex: Int
+
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(Font.custom(availableFonts[selectedFontIndex], size: fontSize))
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[colorPaletteIndex] ?? .white)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 10)
+            .minimumScaleFactor(0.5)
+
+    }
+}

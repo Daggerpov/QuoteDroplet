@@ -79,21 +79,7 @@ extension QuotesView {
                 Button(action: {
                     viewModel.scheduleNotificationsAction()
                 }) {
-                    HStack {
-                        Text("Schedule Notifications")
-                            .font(.headline)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                        Image(systemName: "calendar.badge.clock")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                    )
+                    SubmitButtonView(text: "Schedule Notifications", imageSystemName: "calendar.badge.clock")
                 }
                 .padding()
             }

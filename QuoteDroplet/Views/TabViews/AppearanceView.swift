@@ -44,6 +44,7 @@ struct AppearanceView: View {
                 }
                 .padding()
             }
+            // only main page view that doesn't have the `.frame(maxWidth: .infinity)`, so I'll keep it that way, instead of applying the `MainScreenBackgroundStyling()` modifier
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
@@ -103,9 +104,7 @@ extension AppearanceView {
     
     private func sampleColorPicker(index: Int) -> some View {
         ColorPaletteView(colors: colorPalettes[safe: index] ?? [])
-            .frame(width: 60, height: 60)
-            .border(sharedVars.colorPaletteIndex == index ? Color.blue : Color.clear, width: 2)
-            .cornerRadius(8)
+            .modifier(ColorPickerOuterStyling(index: index))
             .onTapGesture {
                 sharedVars.colorPaletteIndex = index
                 widgetColorPaletteIndex = index
@@ -140,33 +139,32 @@ extension AppearanceView {
     
     private func customColorPicker(index: Int) -> some View {
         ColorPicker("",
-                    selection: Binding(
-                        get: {
-                            colorPalettes[3][index]
-                        },
-                        set: { newColor in
-                            
-                            colorPalettes[3][index] = newColor
-                            
-                            if (index == 0) {
-                                widgetCustomColorPaletteFirstIndex = newColor.hex
-                            } else if (index == 1) {
-                                widgetCustomColorPaletteSecondIndex = newColor.hex
-                            } else if (index == 2) {
-                                widgetCustomColorPaletteThirdIndex = newColor.hex
-                            } else {
-                                // do nothing, idk
-                            }
-                            sharedVars.colorPaletteIndex = 3
-                            widgetColorPaletteIndex = 3
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-                        }
-                    ),
-                    supportsOpacity: true
+            selection: Binding(
+                get: {
+                    colorPalettes[3][index]
+                },
+                set: { newColor in
+
+                    colorPalettes[3][index] = newColor
+
+                    if (index == 0) {
+                        widgetCustomColorPaletteFirstIndex = newColor.hex
+                    } else if (index == 1) {
+                        widgetCustomColorPaletteSecondIndex = newColor.hex
+                    } else if (index == 2) {
+                        widgetCustomColorPaletteThirdIndex = newColor.hex
+                    } else {
+                        // do nothing, idk
+                    }
+                    sharedVars.colorPaletteIndex = 3
+                    widgetColorPaletteIndex = 3
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+                    WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
+                }
+            ),
+            supportsOpacity: true
         )
-        .frame(width: 60, height: 60)
-        .cornerRadius(8)
+        .modifier(ColorPickerOuterStyling(index: index))
         .onChange(of: colorPalettes) { _ in
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
@@ -182,22 +180,14 @@ extension AppearanceView {
                         VStack {
                             Spacer()
                             Text("More is lost by indecision than by wrong decision.")
-                                .font(Font.custom(availableFonts[selectedFontIndex], size: 16))
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
+                                .modifier(WidgetPreviewTextStyling(fontSize: 16, selectedFontIndex: selectedFontIndex, colorPaletteIndex: 1))
                                 .multilineTextAlignment(.center)
                                 .lineSpacing(4)
-                                .minimumScaleFactor(0.5)
                                 .frame(maxHeight: .infinity)
                             
                             Text("— Cicero")
-                                .font(Font.custom(availableFonts[selectedFontIndex], size: 14))
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.horizontal, 20)
-                                .padding(.bottom, 10)
+                                .modifier(WidgetPreviewTextStyling(fontSize: 14, selectedFontIndex: selectedFontIndex, colorPaletteIndex: 2))
                                 .lineLimit(1)
-                                .minimumScaleFactor(0.5)
                         }
                     )
                     .cornerRadius(8)
