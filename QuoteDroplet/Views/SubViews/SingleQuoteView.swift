@@ -33,10 +33,7 @@ struct SingleQuoteView: View {
             authorTextView
             quoteInteractionButtons
         }
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .cornerRadius(20)
-        .shadow(radius: 5)
+        .modifier(QuotesSectionOuterStyling())
         .padding(.horizontal)
         .onAppear {
             viewModel.getQuoteInfo()

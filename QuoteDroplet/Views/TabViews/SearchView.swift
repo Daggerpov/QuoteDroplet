@@ -176,10 +176,7 @@ extension SearchView {
                         .modifier(DummyQuoteAuthorTextStyling())
                 }
             }
-            .padding()
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-            .cornerRadius(20)
-            .shadow(radius: 5)
+            .modifier(QuotesSectionOuterStyling())
             .padding(.horizontal)
         }
     }

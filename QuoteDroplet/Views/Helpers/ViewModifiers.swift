@@ -177,3 +177,40 @@ struct RoundedRectangleStyling: ViewModifier {
             )
     }
 }
+
+@available(iOS 15.0, *)
+struct CommunityQuotesTextStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.title3)
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            .padding(.bottom, 2)
+            .frame(alignment: .leading)
+    }
+}
+
+
+@available(iOS 15.0, *)
+struct CommunityQuotesAuthorTextStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.body)
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
+            .padding(.bottom, 5)
+            .frame(alignment: .trailing)
+    }
+}
+
+@available(iOS 15.0, *)
+struct QuotesSectionOuterStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .cornerRadius(20)
+            .shadow(radius: 5)
+    }
+}

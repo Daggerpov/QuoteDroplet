@@ -70,36 +70,25 @@ extension CommunityView {
             HStack{
                 Spacer()
                 Text("Newest Quotes")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding(.bottom, 5)
+                    .modifier(QuotesPageTitleStyling())
                 Spacer()
             }
-            
-            
+
             if viewModel.recentQuotes.isEmpty {
                 Text("Loading Quotes ...")
-                    .font(.title3)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    .padding(.bottom, 2)
+                    .modifier(CommunityQuotesTextStyling())
                 ForEach(1..<4) { index in
                     VStack() {
                         HStack {
                             Text("Quote Loading")
-                                .font(.title3)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.bottom, 2)
-                                .frame(alignment: .leading)
+                                .modifier(CommunityQuotesTextStyling())
                             Spacer()
                         }
                         
                         HStack{
                             Spacer()
                             Text("— Author Loading")
-                                .font(.body)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .trailing)
+                                .modifier(CommunityQuotesAuthorTextStyling())
                         }
                     }
                 }
@@ -108,10 +97,7 @@ extension CommunityView {
                     VStack() {
                         HStack{
                             Text("\(quote.text)")
-                                .font(.title3)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.bottom, 2)
-                                .frame(alignment: .leading)
+                                .modifier(CommunityQuotesTextStyling())
                             Spacer()
                         }
                         
@@ -120,25 +106,16 @@ extension CommunityView {
                             HStack{
                                 Spacer()
                                 Text("— \(author)")
-                                    .font(.body)
-                                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                    .padding(.bottom, 5)
-                                    .frame(alignment: .trailing)
+                                    .modifier(CommunityQuotesAuthorTextStyling)
                             }
                         } else {
                             Text("")
-                                .font(.body)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.bottom, 5)
-                                .frame(alignment: .trailing)
+                                .modifier(CommunityQuotesAuthorTextStyling())
                         }
                     }
                 }
             }
         }
-        .padding()
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-        .cornerRadius(20)
-        .shadow(radius: 5)
+        .modifier(QuotesSectionOuterStyling())
     }
 }
