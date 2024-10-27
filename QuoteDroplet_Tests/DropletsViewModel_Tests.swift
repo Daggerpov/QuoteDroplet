@@ -9,7 +9,7 @@ import Testing
 
 @Suite("Droplets View Model Tests") struct DropletsViewModel_Tests {
 
-    let sut: DropletsViewModel = DropletsViewModel(localQuotesService: MockLocalQuotesService(), apiService: APIService())
+    let sut: DropletsViewModel = DropletsViewModel(localQuotesService: MockLocalQuotesService(), apiService: MockAPIService())
 
     @Test func setSelected() {
         #expect(sut.selected == SelectedPage.feed)
@@ -28,6 +28,7 @@ import Testing
         #expect(sut.getTitleText() == "Recent Quotes")
     }
 
+    // will work once I mock APIService
     @Test func loadInitialQuotes() async {
         // Initially, `quotes`, `savedQuotes`, and `recentQuotes` should be empty
         #expect(sut.quotes.isEmpty)

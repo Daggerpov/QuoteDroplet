@@ -16,9 +16,9 @@ class SubmitViewModel: ObservableObject {
     @Published var quoteText = ""
     @Published var author = ""
     
-    let apiService: APIService
+    let apiService: IAPIService
     
-    init (apiService: APIService) {
+    init (apiService: IAPIService) {
         self.apiService = apiService
     }
     

@@ -19,9 +19,9 @@ class SearchViewModel: ObservableObject {
     private var totalQuotesLoaded = 0
     
     let localQuotesService: ILocalQuotesService
-    let apiService: APIService
-    
-    init(localQuotesService: ILocalQuotesService, apiService: APIService) {
+    let apiService: IAPIService
+
+    init(localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }

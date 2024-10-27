@@ -22,9 +22,9 @@ class DropletsViewModel: ObservableObject {
     let maxQuotes = 15
     
     let localQuotesService: ILocalQuotesService
-    let apiService: APIService
-    
-    init(localQuotesService: ILocalQuotesService, apiService: APIService) {
+    let apiService: IAPIService
+
+    init(localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }

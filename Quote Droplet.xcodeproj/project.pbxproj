@@ -57,6 +57,10 @@
 		DC8E763C2CCDE16000F9EB0E /* ILocalQuotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E763A2CCDE15C00F9EB0E /* ILocalQuotesService.swift */; };
 		DC8E764E2CCDE43500F9EB0E /* MockLocalQuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */; };
 		DC8E764F2CCDE43500F9EB0E /* MockLocalQuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */; };
+		DC8E76512CCDEAD000F9EB0E /* IAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */; };
+		DC8E76522CCDEAD000F9EB0E /* IAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */; };
+		DC8E76542CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */; };
+		DC8E76552CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCA1E2A52C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
 		DCA1E2A62C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
@@ -194,6 +198,8 @@
 		DC890E7E2C5F211900008838 /* LocalQuotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalQuotesService.swift; sourceTree = "<group>"; };
 		DC8E763A2CCDE15C00F9EB0E /* ILocalQuotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILocalQuotesService.swift; sourceTree = "<group>"; };
 		DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocalQuoteService.swift; sourceTree = "<group>"; };
+		DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPIService.swift; sourceTree = "<group>"; };
+		DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
 		DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-for-noti-water-drip-pixabay.mp3"; path = "../../../../Downloads/sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quote Droplet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletApp.swift; sourceTree = "<group>"; };
@@ -366,6 +372,8 @@
 		DC8E76372CCDDE2800F9EB0E /* APIService */ = {
 			isa = PBXGroup;
 			children = (
+				DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */,
+				DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */,
 				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
 			);
 			path = APIService;
@@ -721,6 +729,7 @@
 				DCB844632CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
 				DCC0B3792CC9DC08002DED7A /* DataService.swift in Sources */,
 				DCC0B3832CC9FC2F002DED7A /* GoogleImageModel.swift in Sources */,
+				DC8E76542CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */,
 				DC5DD51F2CCDC5C900B80F5D /* SubmitButtonView.swift in Sources */,
 				DCC0B3922CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* CommunityView.swift in Sources */,
@@ -747,6 +756,7 @@
 				DCC0B3602CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */,
 				DC29990A2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DCDF64272CCC93F900FBA5B1 /* ViewModifiers.swift in Sources */,
+				DC8E76522CCDEAD000F9EB0E /* IAPIService.swift in Sources */,
 				DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCC0B3892CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
@@ -788,6 +798,7 @@
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3812CC9F561002DED7A /* AuthorViewModel.swift in Sources */,
+				DC8E76552CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */,
 				DCB82F782CCB301700E81549 /* CommunityViewModel.swift in Sources */,
 				DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */,
 				DC5205B42B9CEF620007CB5B /* CommunityView.swift in Sources */,
@@ -798,6 +809,7 @@
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCB844642CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
+				DC8E76512CCDEAD000F9EB0E /* IAPIService.swift in Sources */,
 				DC03AD592CCC89B3000C6572 /* SingleQuoteSourceEnum.swift in Sources */,
 				DC03AD552CCC88CE000C6572 /* WidgetViewModel.swift in Sources */,
 				DC8E763B2CCDE16000F9EB0E /* ILocalQuotesService.swift in Sources */,

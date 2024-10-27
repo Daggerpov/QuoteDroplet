@@ -5,7 +5,6 @@
 //  Created by Daniel Agapov on 2024-10-26.
 //
 
-/*
 import Testing
 
 @Suite("Author View Model Tests") struct AuthorViewModel_Tests {
@@ -21,4 +20,3 @@ import Testing
 
 }
 
-*/
