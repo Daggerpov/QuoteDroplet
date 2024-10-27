@@ -5,7 +5,11 @@
 //  Created by Daniel Agapov on 2024-10-26.
 //
 
+import SwiftUI
+
+@available(iOS 15.0, *)
 struct SubmitButtonView: View {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     var text: String
     var imageSystemName: String
 
@@ -13,17 +17,11 @@ struct SubmitButtonView: View {
         HStack {
             Text(text)
                 .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
             Image(systemName: imageSystemName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-        )
+        .modifier(RoundedRectangleStyling())
     }
 }

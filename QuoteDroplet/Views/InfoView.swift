@@ -67,11 +67,7 @@ struct InfoView: View {
                 }
 
             }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-            )
+            .modifier(RoundedRectangleStyling())
         }
     }
 
@@ -85,11 +81,7 @@ struct InfoView: View {
                 }
 
             }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-            )
+            .modifier(RoundedRectangleStyling())
         }
     }
 
@@ -105,17 +97,10 @@ struct InfoView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 25, height: 25)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
                     Text("Rate Quote Droplet")
                         .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
+                .modifier(RoundedRectangleStyling())
             }
             .padding()
         }
@@ -129,21 +114,11 @@ struct InfoView: View {
                 HStack {
                     Image(systemName: "info.circle")
                         .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                     Text("Note for Mac Owners")
                         .font(.title3)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
                         .padding(.leading, 5)
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
-                )
+                .modifier(BasePicker_OuterBackgroundStyling())
                 .buttonStyle(CustomButtonStyle())
             }
             .alert(isPresented: $showMacAlert) {
@@ -179,8 +154,7 @@ struct InfoView: View {
                 aboutMeSection
                 Spacer()
             }
-            .frame(maxWidth: .infinity)
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .modifier(MainScreenBackgroundStyling())
             .padding()
             .onAppear {
                 // Fetch initial quotes when the view appears
@@ -192,8 +166,7 @@ struct InfoView: View {
             }
 
         }
-        .frame(maxWidth: .infinity)
-        .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+        .modifier(MainScreenBackgroundStyling())
         .padding()
         .onAppear {
             // Fetch initial quotes when the view appears

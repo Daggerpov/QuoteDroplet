@@ -64,12 +64,7 @@ extension QuotesView {
                     viewModel.isTimePickerExpanded.toggle()
                 }) {
                     Text("Close")
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
+                        .modifier(RoundedRectangleStyling())
                 }
                 .padding()
                 .sheet(isPresented: $viewModel.isTimePickerExpanded) {
@@ -120,11 +115,7 @@ extension QuotesView {
                 Text(
                     "\(viewModel.notificationScheduledTimeMessage)\(String(describing: getFormattedNotificationTime))"
                 )
-                    .font(.title2)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding()
-                    .frame(alignment: .center)
-                    .multilineTextAlignment(.center)
+                .modifier(QuotesPageTextStyling())
 
                 notiTimePickerColor
                 Spacer()
@@ -141,13 +132,8 @@ extension QuotesView {
 
             }) {
                 Text("Done")
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    .padding()
                     .frame(maxWidth: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                    )
+                    .modifier(RoundedRectangleStyling())
             }
             .padding(.horizontal)
             .padding(.bottom, 20)

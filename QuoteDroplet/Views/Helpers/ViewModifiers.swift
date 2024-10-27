@@ -163,3 +163,17 @@ struct WidgetPreviewTextStyling: ViewModifier {
 
     }
 }
+
+@available(iOS 15.0, *)
+struct RoundedRectangleStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+            )
+    }
+}
