@@ -30,7 +30,7 @@ class SingleQuoteViewModel: ObservableObject {
     
     let localQuotesService: LocalQuotesService
     let apiService: APIService
-
+    
     init(
         localQuotesService: LocalQuotesService,
         apiService: APIService,
@@ -57,7 +57,7 @@ class SingleQuoteViewModel: ObservableObject {
         }
         isLiked = localQuotesService.isQuoteLiked(quote)
     }
-        
+    
     func increaseInteractions() {
         DispatchQueue.main.async { [weak self] in
             self?.interactions += 1

@@ -42,6 +42,8 @@
 		DC5205B42B9CEF620007CB5B /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B22B9CEF620007CB5B /* CommunityView.swift */; };
 		DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
 		DC5205B72B9CEF7B0007CB5B /* QuotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */; };
+		DC5DD51E2CCDC5C900B80F5D /* SubmitButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DD51D2CCDC5C400B80F5D /* SubmitButtonView.swift */; };
+		DC5DD51F2CCDC5C900B80F5D /* SubmitButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5DD51D2CCDC5C400B80F5D /* SubmitButtonView.swift */; };
 		DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
 		DC7010E22BAE63DC008678CB /* QuotesBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = DC7010E02BAE63DC008678CB /* QuotesBackup.json */; };
 		DC7010E42BAE654F008678CB /* NotificationSchedulerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */; };
@@ -73,8 +75,8 @@
 		DCAB2DCF2A9FAE9400A822D7 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DCC2A9FACC300A822D7 /* Quote.swift */; };
 		DCB1DA592CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */; };
 		DCB1DA5A2CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */; };
-		DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */; };
-		DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */; };
+		DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */; };
+		DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */; };
 		DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB722132B9D06E60094BAB8 /* GeneralVars.swift */; };
 		DCB82F782CCB301700E81549 /* CommunityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB82F772CCB301200E81549 /* CommunityViewModel.swift */; };
@@ -171,6 +173,7 @@
 		DC5205AF2B9CED5B0007CB5B /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		DC5205B22B9CEF620007CB5B /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
+		DC5DD51D2CCDC5C400B80F5D /* SubmitButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButtonView.swift; sourceTree = "<group>"; };
 		DC7010E02BAE63DC008678CB /* QuotesBackup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuotesBackup.json; sourceTree = "<group>"; };
 		DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedulerService.swift; sourceTree = "<group>"; };
 		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
@@ -196,7 +199,7 @@
 		DCAB2DCC2A9FACC300A822D7 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		DCAB2DD02A9FBAB800A822D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DCB1DA582CCC5FB600D823B0 /* QuoteFrequencyEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteFrequencyEnum.swift; sourceTree = "<group>"; };
-		DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalPicker.swift; sourceTree = "<group>"; };
+		DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalPickerView.swift; sourceTree = "<group>"; };
 		DCB722132B9D06E60094BAB8 /* GeneralVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralVars.swift; sourceTree = "<group>"; };
 		DCB82F772CCB301200E81549 /* CommunityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewModel.swift; sourceTree = "<group>"; };
 		DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesViewModel.swift; sourceTree = "<group>"; };
@@ -421,7 +424,8 @@
 		DCC0B3682CC9B2BF002DED7A /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPicker.swift */,
+				DC5DD51D2CCDC5C400B80F5D /* SubmitButtonView.swift */,
+				DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */,
 				DCBA0C872C5C270600A2E949 /* HeaderView.swift */,
 				DCC0B3692CC9B2D0002DED7A /* ColorPaletteView.swift */,
 				DC2999092C4DCE0B0025D32E /* AuthorView.swift */,
@@ -623,13 +627,14 @@
 				DCB844632CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
 				DCC0B3792CC9DC08002DED7A /* DataService.swift in Sources */,
 				DCC0B3832CC9FC2F002DED7A /* GoogleImageModel.swift in Sources */,
+				DC5DD51F2CCDC5C900B80F5D /* SubmitButtonView.swift in Sources */,
 				DCC0B3922CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* CommunityView.swift in Sources */,
 				DC2999072C4DBED40025D32E /* AuthorHelper.swift in Sources */,
 				DC03AD522CCC82AD000C6572 /* WidgetHelpers.swift in Sources */,
 				DCB722142B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3662CC9B1A4002DED7A /* QuoteJSON.swift in Sources */,
-				DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */,
+				DCB1DA5E2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */,
 				DCAB2DC22A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DC29990D2C4DF2350025D32E /* InfoView.swift in Sources */,
 				DCC0B3762CC9D4CA002DED7A /* APIErrors.swift in Sources */,
@@ -672,6 +677,7 @@
 				DCB1DA592CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */,
 				DCB844612CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */,
 				DCC0B36B2CC9B2D0002DED7A /* ColorPaletteView.swift in Sources */,
+				DC5DD51E2CCDC5C900B80F5D /* SubmitButtonView.swift in Sources */,
 				DCC0B3902CCA0F44002DED7A /* SearchViewModel.swift in Sources */,
 				DCAB2DC12A9FA96100A822D7 /* QuoteDropletWidget.intentdefinition in Sources */,
 				DCE0F64D2C8EA2A900F24BC6 /* SearchView.swift in Sources */,
@@ -682,7 +688,7 @@
 				DC29990B2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DC420D062CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DCC0B3732CC9CFC9002DED7A /* LinkImageBuilder.swift in Sources */,
-				DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPicker.swift in Sources */,
+				DCB1DA5D2CCC64E300D823B0 /* TimeIntervalPickerView.swift in Sources */,
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3812CC9F561002DED7A /* AuthorViewModel.swift in Sources */,

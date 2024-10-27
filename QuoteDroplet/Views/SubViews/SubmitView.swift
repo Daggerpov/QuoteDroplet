@@ -28,21 +28,7 @@ extension SubmitView {
         Button(action: {
             viewModel.isAddingQuote = true
         }) {
-            HStack {
-                Text("Submit a Quote")
-                    .font(.headline)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                Image(systemName: "paperplane.circle")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-            )
+            SubmitButtonView(text: "Submit a Quote", imageSystemName: "paperplane.circle")
         }
     }
     var howWorksPopUp: some View {

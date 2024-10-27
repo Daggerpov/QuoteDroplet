@@ -11,6 +11,7 @@ import Foundation
 
 private var scheduledNotificationIDs: Set<String> = Set() // for the quotes shown already
 
+// Singleton class
 @available(iOS 15, *)
 class NotificationSchedulerService {
     static let shared = NotificationSchedulerService(localQuotesService: LocalQuotesService())
@@ -23,7 +24,7 @@ class NotificationSchedulerService {
     
     public static var previouslySelectedNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
     public static var previouslySelectedNotificationCategory: QuoteCategory = QuoteCategory.all
-
+    
     private var quotes = [QuoteJSON]()
     
     public static var defaultScheduledNotificationTime: Date = Calendar.current.date(byAdding: .minute, value: 3, to: Date.now) ?? Date.now
@@ -154,11 +155,7 @@ class NotificationSchedulerService {
             UNUserNotificationCenter.current().add(request) { error in
                 if let error = error {
                     print("Error scheduling notification: \(error.localizedDescription)")
-                } //else {
-                //                    print("Notification scheduled successfully.")
-                //                    print("Body of notification scheduled: \(content.body)")
-                //                    print("Scheduled for this time: \(triggerDate)")
-                //}
+                }
             }
         }
     }
@@ -189,7 +186,7 @@ class NotificationSchedulerService {
             }
         }
     }
-
-
+    
+    
 }
 

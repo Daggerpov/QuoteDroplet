@@ -57,9 +57,7 @@ struct SearchView: View {
                 AdBannerViewController(adUnitID: "ca-app-pub-5189478572039689/1609477369")                    .frame(height: 50)
                     .padding(.bottom, 10)
             }
-            
-            .frame(maxWidth: .infinity)
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .modifier(MainScreenBackgroundStyling())
             .onAppear() {
                 sharedVars.colorPaletteIndex = widgetColorPaletteIndex
                 
@@ -150,28 +148,19 @@ extension SearchView {
                     VStack {
                         HStack {
                             Rectangle().frame(width: CGFloat(Int.random(in: 200..<250)), height:9.5)
-                                .font(.title3)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.bottom, 2)
-                                .frame(alignment: .leading)
+                                .modifier(DummyQuoteTextStyling())
                             Spacer()
                         }
                         
                         HStack{
                             Rectangle().frame(width: CGFloat(Int.random(in: 40..<130)), height:9.5)
-                                .font(.title3)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.bottom, 2)
-                                .frame(alignment: .leading)
+                                .modifier(DummyQuoteTextStyling())
                             Spacer()
                         }
                         
                         HStack{
                             Rectangle().frame(width: CGFloat(Int.random(in: 40..<130)), height:9.5)
-                                .font(.title3)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.bottom, 2)
-                                .frame(alignment: .leading)
+                                .modifier(DummyQuoteTextStyling())
                             Spacer()
                         }
                         
@@ -182,21 +171,12 @@ extension SearchView {
                 HStack{
                     Spacer()
                     Text("— ")
-                        .font(.body)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        .padding(.bottom, 5)
-                        .frame(alignment: .trailing)
+                        .modifier(DummyQuoteAuthorTextStyling())
                     Rectangle().frame(width: CGFloat(Int.random(in: 70..<150)), height: 9.5)
-                        .font(.body)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                        .padding(.bottom, 5)
-                        .frame(alignment: .trailing)
+                        .modifier(DummyQuoteAuthorTextStyling())
                 }
             }
-            .padding()
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
-            .cornerRadius(20)
-            .shadow(radius: 5)
+            .modifier(QuotesSectionOuterStyling())
             .padding(.horizontal)
         }
     }

@@ -44,10 +44,12 @@ struct AppearanceView: View {
                 }
                 .padding()
             }
+            // only main page view that doesn't have the `.frame(maxWidth: .infinity)`, so I'll keep it that way, instead of applying the `MainScreenBackgroundStyling()` modifier
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
 }
+
 @available(iOS 16.0, *)
 struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
@@ -60,38 +62,25 @@ extension AppearanceView {
     private var fontSelector: some View {
         HStack {
             Text("Widget Font:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.horizontal, 5)
+                .modifier(BasePicker_TextStyling())
             Picker("", selection: $selectedFontIndex) {
                 ForEach(0..<availableFonts.count, id: \.self) { index in
                     Text(availableFonts[index])
                         .font(Font.custom(availableFonts[index], size: 16))
                 }
             }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            .modifier(BasePicker_PickerStyling())
             .onChange(of: selectedFontIndex) { _ in
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
             }
         }
-        .padding(10)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
-        )
+        .modifier(BasePicker_OuterBackgroundStyling())
     }
     private var sampleColorSection: some View {
         VStack {
             Text("Sample Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
+                modifier(ColorPaletteTitleStyling())
             sampleColorPickers
         }
         .frame(alignment: .center)
@@ -115,9 +104,7 @@ extension AppearanceView {
     
     private func sampleColorPicker(index: Int) -> some View {
         ColorPaletteView(colors: colorPalettes[safe: index] ?? [])
-            .frame(width: 60, height: 60)
-            .border(sharedVars.colorPaletteIndex == index ? Color.blue : Color.clear, width: 2)
-            .cornerRadius(8)
+            .modifier(ColorPickerOuterStyling(index: index))
             .onTapGesture {
                 sharedVars.colorPaletteIndex = index
                 widgetColorPaletteIndex = index
@@ -129,9 +116,7 @@ extension AppearanceView {
     private var customColorSection: some View {
         VStack {
             Text("Custom Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
+                .modifier(ColorPaletteTitleStyling())
             customColorPickers
         }
         .frame(alignment: .center)
@@ -143,7 +128,7 @@ extension AppearanceView {
                 if customIndex == 2 {
                     // essentially only padding the last one
                     customColorPicker(index: customIndex)
-                    .padding(.trailing, 30)
+                        .padding(.trailing, 30)
                 } else {
                     customColorPicker(index: customIndex)
                 }
@@ -159,9 +144,9 @@ extension AppearanceView {
                     colorPalettes[3][index]
                 },
                 set: { newColor in
-                    
+
                     colorPalettes[3][index] = newColor
-                    
+
                     if (index == 0) {
                         widgetCustomColorPaletteFirstIndex = newColor.hex
                     } else if (index == 1) {
@@ -179,8 +164,7 @@ extension AppearanceView {
             ),
             supportsOpacity: true
         )
-        .frame(width: 60, height: 60)
-        .cornerRadius(8)
+        .modifier(ColorPickerOuterStyling(index: index))
         .onChange(of: colorPalettes) { _ in
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
@@ -196,22 +180,14 @@ extension AppearanceView {
                         VStack {
                             Spacer()
                             Text("More is lost by indecision than by wrong decision.")
-                                .font(Font.custom(availableFonts[selectedFontIndex], size: 16))
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
+                                .modifier(WidgetPreviewTextStyling(fontSize: 16, selectedFontIndex: selectedFontIndex, colorPaletteIndex: 1))
                                 .multilineTextAlignment(.center)
                                 .lineSpacing(4)
-                                .minimumScaleFactor(0.5)
                                 .frame(maxHeight: .infinity)
                             
                             Text("— Cicero")
-                                .font(Font.custom(availableFonts[selectedFontIndex], size: 14))
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .white)
-                                .padding(.horizontal, 20)
-                                .padding(.bottom, 10)
+                                .modifier(WidgetPreviewTextStyling(fontSize: 14, selectedFontIndex: selectedFontIndex, colorPaletteIndex: 2))
                                 .lineLimit(1)
-                                .minimumScaleFactor(0.5)
                         }
                     )
                     .cornerRadius(8)

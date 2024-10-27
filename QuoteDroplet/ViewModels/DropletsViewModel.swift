@@ -12,12 +12,13 @@ class DropletsViewModel: ObservableObject {
     @Published var quotes: [Quote] = []
     @Published var savedQuotes: [Quote] = []
     @Published var recentQuotes: [Quote] = []
+    @Published var selected: SelectedPage = .feed
+
     private var isLoadingMore: Bool = false
     let quotesPerPage = 5
     private var totalQuotesLoaded = 0
     private var totalSavedQuotesLoaded = 0
     private var totalRecentQuotesLoaded = 0
-    @Published var selected: SelectedPage = .feed
     let maxQuotes = 15
     
     let localQuotesService: LocalQuotesService
@@ -27,7 +28,38 @@ class DropletsViewModel: ObservableObject {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }
-    
+
+    func setSelected(newValue: SelectedPage) {
+        selected = newValue
+    }
+
+    func getTitleText() -> String {
+        switch selected {
+            case .feed: return "Quotes Feed"
+            case .saved: return "Saved Quotes"
+            case .recent: return "Recent Quotes"
+        }
+    }
+
+    func getPageSpecificQuotes() -> [Quote] {
+        switch selected {
+            case .feed: return quotes
+            case .saved: return savedQuotes
+            case .recent: return recentQuotes
+        }
+    }
+
+    func getPageSpecificEmptyText() -> String {
+        switch selected {
+            case .feed:
+                return "Loading Quotes Feed..."
+            case .saved:
+                return "You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:"
+            case .recent:
+                return "You have no recent quotes. \n\nBe sure to enable notifications to see them listed here.\n\nQuotes shown from the app's widget will appear here soon. Stay tuned for that update."
+        }
+    }
+
     func loadInitialQuotes() {
         totalQuotesLoaded = 0
         totalSavedQuotesLoaded = 0

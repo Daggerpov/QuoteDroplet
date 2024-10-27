@@ -18,8 +18,6 @@ struct QuotesView: View {
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
 
-    let quoteIndex: Int
-
     init () {
         viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
@@ -30,7 +28,7 @@ struct QuotesView: View {
                 HeaderView()
                 VStack{
                     Spacer()
-                    quoteCategoryPicker
+                    quoteCategoryPickerSection
                     Spacer()
                     TimeIntervalPicker()
                     Spacer()
@@ -39,8 +37,7 @@ struct QuotesView: View {
                 }
                 .padding()
             }
-            .frame(maxWidth: .infinity)
-            .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
+            .modifier(MainScreenBackgroundStyling())
         }
     }
 }
@@ -67,12 +64,7 @@ extension QuotesView {
                     viewModel.isTimePickerExpanded.toggle()
                 }) {
                     Text("Close")
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                        )
+                        .modifier(RoundedRectangleStyling())
                 }
                 .padding()
                 .sheet(isPresented: $viewModel.isTimePickerExpanded) {
@@ -82,21 +74,7 @@ extension QuotesView {
                 Button(action: {
                     viewModel.scheduleNotificationsAction()
                 }) {
-                    HStack {
-                        Text("Schedule Notifications")
-                            .font(.headline)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                        Image(systemName: "calendar.badge.clock")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .blue)
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                    )
+                    SubmitButtonView(text: "Schedule Notifications", imageSystemName: "calendar.badge.clock")
                 }
                 .padding()
             }
@@ -104,26 +82,18 @@ extension QuotesView {
     }
     
     private var notiTimePickerColor: some View {
-        Group{
+        Group{ // bug arises if I don't surround with this `Group{}` 
             if (colorScheme == .light) {
                 Group {
                     DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                        .padding()
-                        .scaleEffect(1.25)
+                        .modifier(DatePickerStyling())
                 }
                 .colorInvert()
                 .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
             } else {
                 Group {
                     DatePicker("", selection: $viewModel.notificationTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                        .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .black)
-                        .padding()
-                        .scaleEffect(1.25)
+                        .modifier(DatePickerStyling())
                 }
                 // here we didn't do .colorInvert(), since we're on dark mode already
                 .colorMultiply(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
@@ -145,11 +115,7 @@ extension QuotesView {
                 Text(
                     "\(viewModel.notificationScheduledTimeMessage)\(String(describing: getFormattedNotificationTime))"
                 )
-                    .font(.title2)
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                    .padding()
-                    .frame(alignment: .center)
-                    .multilineTextAlignment(.center)
+                .modifier(QuotesPageTextStyling())
 
                 notiTimePickerColor
                 Spacer()
@@ -166,13 +132,8 @@ extension QuotesView {
 
             }) {
                 Text("Done")
-                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                    .padding()
                     .frame(maxWidth: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                    )
+                    .modifier(RoundedRectangleStyling())
             }
             .padding(.horizontal)
             .padding(.bottom, 20)
@@ -182,44 +143,41 @@ extension QuotesView {
         .cornerRadius(8)
         .shadow(radius: 5)
     }
+    private var renderedPickerOptions: some View {
+        ForEach(QuoteCategory.allCases, id: \.self) { category in
+            if let categoryCount: Int = viewModel.counts[category.rawValue] {
+                let displayNameWithCount: String = "\(category.displayName) (\(categoryCount))"
+                Text(displayNameWithCount)
+                    .font(.headline)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            }
+        }
+    }
+
     private var quoteCategoryPicker: some View {
+        Picker("", selection: $quoteCategory) {
+            if viewModel.counts.isEmpty {
+                Text("Loading...")
+            } else {
+                renderedPickerOptions
+            }
+        }
+        .modifier(BasePicker_PickerStyling())
+        .onAppear {
+            viewModel.initializeCounts()
+        }
+        .onTapGesture {
+            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
+            WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
+        }
+    }
+
+    private var quoteCategoryPickerSection: some View {
         HStack {
             Text("Quote Category:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            Picker("", selection: $viewModel.quoteCategory) {
-                if viewModel.counts.isEmpty {
-                    Text("Loading...")
-                } else {
-                    ForEach(QuoteCategory.allCases, id: \.self) { category in
-                        if let categoryCount: Int = viewModel.counts[category.rawValue] {
-                            let displayNameWithCount: String = "\(category.displayName) (\(categoryCount))"
-                            Text(displayNameWithCount)
-                                .font(.headline)
-                                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                        }
-                    }
-                }
-            }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-            .onAppear {
-                viewModel.initializeCounts()
-            }
-            .onTapGesture {
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
-                WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
-            }
-            
+                .modifier(BasePicker_TextStyling())
+            quoteCategoryPicker
         }
-        .padding(10)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
-        )
+        .modifier(BasePicker_OuterBackgroundStyling())
     }
 }

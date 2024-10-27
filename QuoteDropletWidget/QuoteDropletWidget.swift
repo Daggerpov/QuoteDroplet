@@ -16,12 +16,12 @@ struct Provider: IntentTimelineProvider {
     let localQuotesService: LocalQuotesService = LocalQuotesService()
     let apiService: APIService = APIService()
     @Environment(\.widgetFamily) var family
-
+    
     func placeholder(in context: Context) -> SimpleEntry {
         let res: [String] = getTextForWidgetPreview(familia: .systemSmall)
         let placeholderQuoteText: String = res[0]
         let placeholderQuoteAuthor: String = res[1]
-
+        
         let defaultQuote = Quote(
             id: 1,
             text: placeholderQuoteText,
@@ -31,29 +31,29 @@ struct Provider: IntentTimelineProvider {
         )
         return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), quote: defaultQuote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequency: data.getQuoteFrequencySelected(), quoteCategory: data.getQuoteCategory())
     }
-
-
+    
+    
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let entry = SimpleEntry(date: Date(), configuration: configuration, quote: nil, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequency: data.getQuoteFrequencySelected(), quoteCategory: data.getQuoteCategory())
         completion(entry)
     }
-
+    
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
         let startDate = Calendar.current.date(byAdding: .second, value: 0, to: currentDate)!
-
+        
         // Calculate the frequency in seconds based on the selected index
         let frequencyInSeconds = getFrequencyInSeconds(
             quoteFrequency: data.getQuoteFrequencySelected()
         )
-
+        
         // Schedule the next update based on the calculated frequency
         let nextUpdate = Calendar.current.date(byAdding: .second, value: frequencyInSeconds, to: startDate)!
-
+        
         if data
             .getQuoteCategory() == .bookmarkedQuotes {
             let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()
-
+            
             if !bookmarkedQuotes.isEmpty {
                 let randomIndex = Int.random(in: 0..<bookmarkedQuotes.count)
                 let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: bookmarkedQuotes[randomIndex], widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequency: data.getQuoteFrequencySelected(), quoteCategory: data.getQuoteCategory())
@@ -65,7 +65,7 @@ struct Provider: IntentTimelineProvider {
             }
         } else {
             // Fetch the initial quote
-
+            
             apiService
                 .getRandomQuoteByClassification(
                     classification: data
@@ -76,7 +76,7 @@ struct Provider: IntentTimelineProvider {
                             //                    saveRecentQuote(quote: quote) , source: "widget") TODO: do something with source later on
                             //                    }
                             let entry = SimpleEntry(date: nextUpdate, configuration: configuration, quote: quote, widgetColorPaletteIndex: data.getIndex(), widgetCustomColorPalette: data.getColorPalette(), quoteFrequency: data.getQuoteFrequencySelected(), quoteCategory: data.getQuoteCategory())
-
+                            
                             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                             completion(timeline)
                         }
@@ -93,20 +93,20 @@ struct QuoteDropletWidgetEntryView : View {
     let apiService: APIService = APIService()
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
-
+    
     let widgetQuote: Quote
-
+    
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
-
+    
     @State private var isLiked: Bool = false
     @State private var isBookmarked: Bool = false
     @State private var likes: Int = 69 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
-
+    
     @State private var isIntentsActive: Bool = false
-
+    
     init(entry: SimpleEntry, isIntentsActive: Bool) {
         self.entry = entry
         self.widgetQuote = entry.quote ?? Quote(id: 1, text: "", author: "", classification: "", likes: 15)
@@ -115,7 +115,7 @@ struct QuoteDropletWidgetEntryView : View {
         self._isIntentsActive = State(initialValue: isIntentsActive)
         // TODO: saving way too many quotes from here: bug.
     }
-
+    
     var colors: [Color] {
         if (data.getIndex() == 3) {
             return data.getColorPalette()
@@ -123,13 +123,13 @@ struct QuoteDropletWidgetEntryView : View {
             return colorPalettes[safe: data.getIndex()] ?? [Color.clear]
         }
     }
-
+    
     private func getQuoteLikeCountMethod(completion: @escaping (Int) -> Void) {
         apiService.getLikeCountForQuote(quoteGiven: widgetQuote) { likeCount in
             completion(likeCount)
         }
     }
-
+    
     private var likesSection: some View {
         HStack {
             if #available(iOS 17.0, *) {
@@ -141,18 +141,18 @@ struct QuoteDropletWidgetEntryView : View {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
                     .foregroundStyle(colors[2])
             }
-
+            
             Text("\(widgetQuote.likes ?? 69)")
                 .foregroundColor(colors[2])
         }
-
-
+        
+        
     }
-
+    
     var body: some View {
         ZStack {
             colors[0] // Use the first color as the background color
-
+            
             VStack {
                 if widgetQuote.text != "" {
                     if family == .systemSmall {
@@ -168,7 +168,7 @@ struct QuoteDropletWidgetEntryView : View {
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                             .minimumScaleFactor(0.01)
                     }
-
+                    
                     HStack {
                         if (isAuthorValid(authorGiven: widgetQuote.author)) {
                             Text("— \(widgetQuote.author ?? "")")
@@ -191,7 +191,7 @@ struct QuoteDropletWidgetEntryView : View {
                                 )
                             )
                     ) // Use the selected font for author text
-
+                    
                 } else {
                     Text("\(getTextForWidgetPreview(familia: family)[0])")
                         .font(Font.custom(availableFonts[data.selectedFontIndex], size: 500)) // Use the selected font
@@ -202,7 +202,7 @@ struct QuoteDropletWidgetEntryView : View {
                     //                    Spacer() // Add a spacer to push the author text to the center
                     HStack {
                         Text("— \(getTextForWidgetPreview(familia: family)[1])")
-
+                        
                             .foregroundColor(colors[2]) // Use the third color for author text color
                             .padding(.horizontal, 10)
                         if isIntentsActive {
@@ -216,36 +216,36 @@ struct QuoteDropletWidgetEntryView : View {
         }
         .onAppear {
             isBookmarked = isQuoteBookmarked(widgetQuote)
-
+            
             getQuoteLikeCountMethod { fetchedLikeCount in
                 likes = fetchedLikeCount
             }
             isLiked = isQuoteLiked(widgetQuote)
-
-
+            
+            
         }
-
+        
     }
-
+    
     private func toggleBookmark() {
         isBookmarked.toggle()
-
+        
         localQuotesService.saveBookmarkedQuote(quote: widgetQuote, isBookmarked: isBookmarked)
     }
-
+    
     private func toggleLike() {
         isLiked.toggle()
-
+        
         localQuotesService.saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
-
+    
     private func likeQuoteAction() {
         guard !isLiking else { return }
         isLiking = true
-
+        
         // Check if the quote is already liked
         let isAlreadyLiked = isQuoteLiked(widgetQuote)
-
+        
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
             apiService.unlikeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
@@ -269,18 +269,18 @@ struct QuoteDropletWidgetEntryView : View {
             }
         }
     }
-
+    
     private func isQuoteLiked(_ quote: Quote) -> Bool {
         return getLikedQuotes().contains(where: { $0.id == quote.id })
     }
-
+    
     private func getLikedQuotes() -> [Quote] {
         if let quotes = try? JSONDecoder().decode([Quote].self, from: likedQuotesData) {
             return quotes
         }
         return []
     }
-
+    
     private func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return localQuotesService.getBookmarkedQuotes().contains(where: { $0.id == quote.id })
     }
@@ -290,7 +290,7 @@ struct QuoteDropletWidgetEntryView : View {
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetSmall: Widget {
     let kind: String = "QuoteDropletWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
@@ -305,7 +305,7 @@ struct QuoteDropletWidgetSmall: Widget {
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetMedium: Widget {
     let kind: String = "QuoteDropletWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
@@ -320,7 +320,7 @@ struct QuoteDropletWidgetMedium: Widget {
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetLarge: Widget {
     let kind: String = "QuoteDropletWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
@@ -335,7 +335,7 @@ struct QuoteDropletWidgetLarge: Widget {
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetExtraLarge: Widget {
     let kind: String = "QuoteDropletWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: false)
@@ -350,7 +350,7 @@ struct QuoteDropletWidgetExtraLarge: Widget {
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetWithIntentsMedium: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
@@ -365,7 +365,7 @@ struct QuoteDropletWidgetWithIntentsMedium: Widget {
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetWithIntentsLarge: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
@@ -380,7 +380,7 @@ struct QuoteDropletWidgetWithIntentsLarge: Widget {
 @available(iOS 16.0, *)
 struct QuoteDropletWidgetWithIntentsExtraLarge: Widget {
     let kind: String = "QuoteDropletWidgetWithIntents"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             QuoteDropletWidgetEntryView(entry: entry, isIntentsActive: true)
@@ -414,8 +414,8 @@ struct QuoteDropletWidget_Previews: PreviewProvider {
             quoteFrequency: .oneDay,
             quoteCategory: .all
         )
-
-
+        
+        
         QuoteDropletWidgetEntryView(entry: widgetEntry, isIntentsActive: false)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
@@ -424,57 +424,57 @@ struct QuoteDropletWidget_Previews: PreviewProvider {
 @available(iOS 16.0, *)
 struct LikeQuoteIntent: AppIntent {
     let widgetQuote: Quote
-
+    
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     private var likedQuotesData: Data = Data()
-
+    
     //    @AppStorage("bookmarkedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
     //    private var bookmarkedQuotesData: Data = Data()
-
+    
     @State private var isLiked: Bool = false
     //    @State private var isBookmarked: Bool = false
     @State private var likes: Int = 69 // Change likes to non-optional
     @State private var isLiking: Bool = false // Add state for liking status
-
+    
     let localQuotesService: LocalQuotesService = LocalQuotesService()
     let apiService: APIService = APIService()
-
+    
     init() {
         self.widgetQuote = Quote(id: 1, text: "", author: "", classification: "", likes: 15)
         self._isLiked = State(initialValue: false)
     }
-
+    
     init(quote: Quote) {
         self.widgetQuote = quote
         //        self._isBookmarked = State(initialValue: isQuoteBookmarked(widgetQuote))
         self._isLiked = State(initialValue: isQuoteLiked(widgetQuote))
     }
-
+    
     static var title: LocalizedStringResource = "Like Quote Button"
-
+    
     static var description = IntentDescription("Like/Unlike Quote")
-
+    
     func perform() async throws -> some IntentResult {
         likeQuoteAction()
         toggleLike()
-
+        
         return .result()
     }
-
+    
     private func toggleLike() {
         isLiked.toggle()
-
+        
         localQuotesService.saveLikedQuote(quote: widgetQuote, isLiked: isLiked)
     }
-
+    
     private func likeQuoteAction() {
         guard !isLiking else { return }
         isLiking = true
-
+        
         // Check if the quote is already liked
         let isAlreadyLiked = isQuoteLiked(widgetQuote)
-
+        
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
             apiService.unlikeQuote(quoteID: widgetQuote.id) { updatedQuote, error in
@@ -498,11 +498,11 @@ struct LikeQuoteIntent: AppIntent {
             }
         }
     }
-
+    
     private func isQuoteLiked(_ quote: Quote) -> Bool {
         return getLikedQuotes().contains(where: { $0.id == quote.id })
     }
-
+    
     private func getLikedQuotes() -> [Quote] {
         if let quotes = try? JSONDecoder().decode([Quote].self, from: likedQuotesData) {
             return quotes
@@ -527,7 +527,7 @@ struct MinimumFontModifier: ViewModifier {
     let weight: Font.Weight
     let design: Font.Design
     let minimumSize: CGFloat
-
+    
     func body(content: Content) -> some View {
         content
             .font(Font.system(size: max(size, minimumSize), weight: weight, design: design))
@@ -582,5 +582,5 @@ public func getTextForWidgetPreview(familia: WidgetFamily) -> [String] {
         // .systemLarge
         return ["Show me a person who has never made a mistake and I'll show you someone who hasn't achieved much.", "Joan Collins"];
     }
-
+    
 }

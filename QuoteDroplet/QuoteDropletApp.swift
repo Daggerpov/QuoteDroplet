@@ -30,12 +30,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
-//                print("All set!")
+                //                print("All set!")
                 // what was previously in `registerNotifications()` function call is this 3-line block:
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
-                    NotificationSchedulerService.shared.scheduleNotifications()
+                NotificationSchedulerService.shared.scheduleNotifications()
             } else if let error {
                 print(error.localizedDescription)
             }
