@@ -7,14 +7,24 @@
 
 import Testing
 @testable import Quote_Droplet
+import Foundation
 
 @Suite("Quotes View Model Tests") struct QuotesViewModel_Tests {
+    let mockAPIService: MockAPIService
+    let sut: QuotesViewModel
 
-    let sut = QuotesViewModel(localQuotesService: MockLocalQuotesService(), apiService: MockAPIService())
+    init() {
+        self.mockAPIService = MockAPIService()
+        self.sut = QuotesViewModel(
+            localQuotesService: MockLocalQuotesService(),
+            apiService: mockAPIService
+        )
+    }
 
     @Test func initializeCounts_success() async {
         // Configure the mock API to return expected category counts
-        sut.apiService.setCategoryCounts(["motivation": 10, "wisdom": 15, "bookmarkedQuotes": 5])
+        mockAPIService
+            .setCountForCategoryResponse(count: 2)
 
         // Call initializeCounts and check counts are correctly set
         sut.initializeCounts()

@@ -6,6 +6,17 @@
 //
 
 class MockLocalQuotesService: ILocalQuotesService {
+    // for testing manipulation:
+    private var isBookmarked = false
+    private var isLiked = false
+
+    func setIsBookmarked(_ bookmarked: Bool) {
+        isBookmarked = bookmarked
+    }
+
+    func setIsLiked(_ liked: Bool) {
+        isLiked = liked
+    }
 
 
     func getLikedQuotes() -> [Quote] {
@@ -43,4 +54,6 @@ class MockLocalQuotesService: ILocalQuotesService {
     func isQuoteBookmarked(_ quote: Quote) -> Bool {
         return true
     }
+
+
 }

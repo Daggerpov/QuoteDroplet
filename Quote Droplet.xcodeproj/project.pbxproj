@@ -247,7 +247,14 @@
 		DC8E764B2CCDE20E00F9EB0E /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AuthorHelper_Tests.swift,
+				AuthorViewModel_Tests.swift,
+				CommunityViewModel_Tests.swift,
 				DropletsViewModel_Tests.swift,
+				QuotesViewModel_Tests.swift,
+				SearchViewModel_Tests.swift,
+				SingleQuoteViewModel_Tests.swift,
+				SubmitViewModel_Tests.swift,
 			);
 			target = DC5DD5232CCDD0ED00B80F5D /* Quote DropletTests */;
 		};

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Quote: Codable, Identifiable {
+struct Quote: Codable, Identifiable, Equatable {
     let id: Int
     let text: String
     let author: String?

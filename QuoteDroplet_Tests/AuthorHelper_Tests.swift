@@ -6,6 +6,7 @@
 //
 
 import Testing
+@testable import Quote_Droplet
 
 @Suite("Author Helper Tests") struct AuthorHelper_Tests {
     @Test func isAuthorValid_True() {

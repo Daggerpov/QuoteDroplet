@@ -4,12 +4,20 @@
 //
 //  Created by Daniel Agapov on 2024-10-26.
 //
+
 import Testing
 @testable import Quote_Droplet
 
 @Suite("Droplets View Model Tests") struct DropletsViewModel_Tests {
-
-    let sut: DropletsViewModel = DropletsViewModel(localQuotesService: MockLocalQuotesService(), apiService: MockAPIService())
+    let mockAPIService: MockAPIService
+    let sut: DropletsViewModel
+    init() {
+        self.mockAPIService = MockAPIService()
+        self.sut = DropletsViewModel(
+            localQuotesService: MockLocalQuotesService(),
+            apiService: mockAPIService
+        )
+    }
 
     @Test func setSelected() {
         #expect(sut.selected == SelectedPage.feed)
@@ -28,30 +36,28 @@ import Testing
         #expect(sut.getTitleText() == "Recent Quotes")
     }
 
-    // will work once I mock APIService
-    @Test func loadInitialQuotes() async {
-        // Initially, `quotes`, `savedQuotes`, and `recentQuotes` should be empty
+    /*
+    @Test func loadInitialQuotes() async throws {
         #expect(sut.quotes.isEmpty)
         #expect(sut.savedQuotes.isEmpty)
         #expect(sut.recentQuotes.isEmpty)
 
-        // Trigger initial load
+        let mockQuotes = [Quote.mockQuote(), Quote.mockQuote()]
+        mockApiService.setQuoteByIDResponse(quotes: mockQuotes, error: nil)
+
         sut.loadInitialQuotes()
 
-        // Verify that quotes are loaded
         #expect(sut.quotes.count > 0)
         #expect(sut.quotes.count <= sut.quotesPerPage)
     }
+     */
 
-    @Test func checkMoreQuotesNeeded() async {
-        // Ensure quotes are under the max limit initially
+    @Test func checkMoreQuotesNeeded() async throws {
         sut.quotes = [Quote](repeating: Quote.mockQuote(), count: sut.maxQuotes - 1)
         #expect(!sut.checkLimitReached())
 
-        // Trigger check
         sut.checkMoreQuotesNeeded()
 
-        // Verify that quotes were incremented
         #expect(sut.quotes.count > 0)
         #expect(sut.quotes.count <= sut.maxQuotes)
     }

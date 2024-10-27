@@ -9,48 +9,63 @@ import Testing
 @testable import Quote_Droplet
 
 @Suite("Author View Model Tests") struct AuthorViewModel_Tests {
-    let mockQuote = Quote.mockQuote()
-    let sut: AuthorViewModel = AuthorViewModel(
-        quote: mockQuote,
-        localQuotesService: MockLocalQuotesService(),
-        apiService: MockAPIService()
-    )
+    let mockQuote: Quote
+    let mockAPIService: MockAPIService
+    let sut: AuthorViewModel
+    init () {
+        self.mockQuote = Quote.mockQuote()
+        self.mockAPIService = MockAPIService()
+        self.sut = AuthorViewModel(
+            quote: mockQuote,
+            localQuotesService: MockLocalQuotesService(),
+            apiService: mockAPIService
+        )
+    }
 
     @Test func initialization() {
         // Test initial values
         #expect(sut.quotes.isEmpty)
         #expect(sut.isLoadingMore == false)
-        #expect(sut.totalQuotesLoaded == 0)
     }
 
     @Test func loadInitialQuotes() async {
+        // Set mock response for initial load
+        let mockQuotes = [Quote.mockQuote(), Quote.mockQuote()]
+        mockAPIService.setQuotesByAuthorResponse(quotes: mockQuotes, error: nil)
+
         // Test initial loading of quotes
         #expect(sut.quotes.isEmpty)
         sut.loadInitialQuotes()
 
         // Wait for async loading to complete
-        #expect(sut.quotes.count > 0)
+        #expect(sut.quotes.count == mockQuotes.count)
         #expect(sut.quotes.count <= AuthorViewModel.quotesPerPage)
-        #expect(sut.totalQuotesLoaded == AuthorViewModel.quotesPerPage)
     }
 
     @Test func loadMoreQuotes() async {
         // Initial setup
-        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: AuthorViewModel.quotesPerPage)
-        sut.totalQuotesLoaded = AuthorViewModel.quotesPerPage
+        let initialQuotes = [Quote](repeating: Quote.mockQuote(), count: AuthorViewModel.quotesPerPage)
+        sut.quotes = initialQuotes
+
+        // Set mock response for additional quotes
+        let additionalQuotes = [Quote.mockQuote(), Quote.mockQuote()]
+        mockAPIService.setQuotesByAuthorResponse(quotes: additionalQuotes, error: nil)
 
         // Trigger load more quotes
         sut.loadMoreQuotes()
 
         // Verify additional quotes loaded
-        #expect(sut.quotes.count > AuthorViewModel.quotesPerPage)
+        #expect(sut.quotes.count == initialQuotes.count + additionalQuotes.count)
         #expect(sut.quotes.count <= AuthorViewModel.maxQuotes)
     }
 
     @Test func loadMoreQuotes_limitReached() async {
         // Set quotes to max limit to simulate reaching the limit
-        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: AuthorViewModel.maxQuotes)
-        sut.totalQuotesLoaded = AuthorViewModel.maxQuotes
+        let maxQuotes = [Quote](repeating: Quote.mockQuote(), count: AuthorViewModel.maxQuotes)
+        sut.quotes = maxQuotes
+
+        // Set mock response (irrelevant here as no more quotes should load)
+        mockAPIService.setQuotesByAuthorResponse(quotes: [Quote.mockQuote()], error: nil)
 
         // Trigger load more quotes
         sut.loadMoreQuotes()
@@ -61,16 +76,18 @@ import Testing
     }
 
     @Test func loadRemoteJSON_success() async {
-        let urlString = "https://example.com/success.json" // replace with a mock URL or API call
+        // Assuming URLSession can be mocked for this test
+        let mockData = [Quote.mockQuote()]
+        let urlString = "https://example.com/success.json"
         sut.loadRemoteJSON(urlString) { (result: [Quote]) in
-            #expect(result.count > 0)
+            #expect(result == mockData)
         }
     }
 
     @Test func loadRemoteJSON_failure() async {
         let urlString = "invalid_url"
         sut.loadRemoteJSON(urlString) { (_: [Quote]) in
-            #expect(false, "Expected failure due to invalid URL")
+            #expect(Bool(false), "Expected failure due to invalid URL")
         }
     }
 }
