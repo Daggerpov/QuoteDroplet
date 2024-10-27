@@ -68,8 +68,7 @@ extension AppearanceView {
                         .font(Font.custom(availableFonts[index], size: 16))
                 }
             }
-            .pickerStyle(MenuPickerStyle())
-            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+            .modifier(BasePicker_PickerStyling())
             .onChange(of: selectedFontIndex) { _ in
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")

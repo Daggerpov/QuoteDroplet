@@ -122,3 +122,13 @@ struct BasePicker_TextStyling: ViewModifier {
             .padding(.horizontal, 5)
     }
 }
+
+@available(iOS 15.0, *)
+struct BasePicker_PickerStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .pickerStyle(MenuPickerStyle())
+            .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+    }
+}

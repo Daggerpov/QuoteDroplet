@@ -31,8 +31,7 @@ struct TimeIntervalPicker: View {
         Picker("", selection: $quoteFrequencySelected) {
             renderPickerSelections
         }
-        .pickerStyle(MenuPickerStyle())
-        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+        .modifier(BasePicker_PickerStyling())
         .onChange(of: quoteFrequencySelected) { _ in
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidget")
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")

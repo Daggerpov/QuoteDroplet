@@ -190,8 +190,7 @@ extension QuotesView {
                 renderedPickerOptions
             }
         }
-        .pickerStyle(MenuPickerStyle())
-        .accentColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+        .modifier(BasePicker_PickerStyling())
         .onAppear {
             viewModel.initializeCounts()
         }
