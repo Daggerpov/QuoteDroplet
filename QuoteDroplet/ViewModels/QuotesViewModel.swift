@@ -17,10 +17,10 @@ class QuotesViewModel: ObservableObject{
     private var showNotificationPicker = false
     private var notificationTimeCase: NotificationTime = .defaultScheduled
     
-    let localQuotesService: LocalQuotesService
+    let localQuotesService: ILocalQuotesService
     let apiService: APIService
     
-    init(localQuotesService: LocalQuotesService, apiService: APIService) {
+    init(localQuotesService: ILocalQuotesService, apiService: APIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
