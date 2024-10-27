@@ -106,7 +106,7 @@ extension CommunityView {
                             HStack{
                                 Spacer()
                                 Text("— \(author)")
-                                    .modifier(CommunityQuotesAuthorTextStyling)
+                                    .modifier(CommunityQuotesAuthorTextStyling())
                             }
                         } else {
                             Text("")

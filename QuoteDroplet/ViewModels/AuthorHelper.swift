@@ -7,6 +7,8 @@
 
 import Foundation
 
-func isAuthorValid (authorGiven: String?)-> Bool {
+public func isAuthorValid (authorGiven: String?)-> Bool {
     return (authorGiven != "Unknown Author" && authorGiven != "NULL" && authorGiven != "" && authorGiven != nil &&  (authorGiven?.isEmpty == false))
 }
+
+

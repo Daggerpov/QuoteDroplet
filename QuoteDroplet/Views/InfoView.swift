@@ -113,11 +113,10 @@ struct InfoView: View {
             }) {
                 HStack {
                     Image(systemName: "info.circle")
-                        .font(.title3)
                     Text("Note for Mac Owners")
-                        .font(.title3)
                         .padding(.leading, 5)
                 }
+                .font(.title3)
                 .modifier(BasePicker_OuterBackgroundStyling())
                 .buttonStyle(CustomButtonStyle())
             }
