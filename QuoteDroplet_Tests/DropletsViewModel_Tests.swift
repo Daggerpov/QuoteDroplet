@@ -1,13 +1,14 @@
 //
-//  CommunityViewModel_Tests.swift
+//  DropletsViewModel_Tests.swift
 //  Quote DropletTests
 //
 //  Created by Daniel Agapov on 2024-10-26.
 //
-/*
 import Testing
 
-@Suite("Community View Model Tests") struct CommunityViewModel_Tests {
+@Suite("Droplets View Model Tests") struct DropletsViewModel_Tests {
+
+    let sut: DropletsViewModel = DropletsViewModel(localQuotesService: MockLocalQuoteService)
 
     @Test func getRecentQuotes_success() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
@@ -19,4 +20,3 @@ import Testing
     }
 
 }
-*/

@@ -54,6 +54,13 @@
 		DC890E802C5F211900008838 /* LocalQuotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC890E7E2C5F211900008838 /* LocalQuotesService.swift */; };
 		DC8C1B042BB2337400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */; };
 		DC8C1B062BB2343400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B052BB2343400B073B7 /* FirebaseAnalytics */; };
+		DC8E76292CCDDB4500F9EB0E /* DropletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B38B2CCA0903002DED7A /* DropletsViewModel.swift */; };
+		DC8E762A2CCDDB5100F9EB0E /* AuthorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B37F2CC9F561002DED7A /* AuthorViewModel.swift */; };
+		DC8E762B2CCDDB5700F9EB0E /* CommunityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB82F772CCB301200E81549 /* CommunityViewModel.swift */; };
+		DC8E762C2CCDDB5E00F9EB0E /* QuotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */; };
+		DC8E762D2CCDDB6300F9EB0E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B38E2CCA0F44002DED7A /* SearchViewModel.swift */; };
+		DC8E762E2CCDDB6700F9EB0E /* SingleQuoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2998F92C4D9C5C0025D32E /* SingleQuoteViewModel.swift */; };
+		DC8E762F2CCDDB6A00F9EB0E /* SubmitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCA1E2A52C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
 		DCA1E2A62C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
@@ -672,7 +679,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC8E762E2CCDDB6700F9EB0E /* SingleQuoteViewModel.swift in Sources */,
+				DC8E762A2CCDDB5100F9EB0E /* AuthorViewModel.swift in Sources */,
+				DC8E762D2CCDDB6300F9EB0E /* SearchViewModel.swift in Sources */,
+				DC8E76292CCDDB4500F9EB0E /* DropletsViewModel.swift in Sources */,
+				DC8E762F2CCDDB6A00F9EB0E /* SubmitViewModel.swift in Sources */,
 				DC5DD54B2CCDD62A00B80F5D /* AuthorHelper.swift in Sources */,
+				DC8E762B2CCDDB5700F9EB0E /* CommunityViewModel.swift in Sources */,
+				DC8E762C2CCDDB5E00F9EB0E /* QuotesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
