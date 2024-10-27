@@ -14,10 +14,10 @@ struct QuotesView: View {
     @ObservedObject var viewModel: QuotesViewModel
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @Environment(\.colorScheme) var colorScheme
-    
+
     @AppStorage("quoteCategory", store: UserDefaults(suiteName: "group.selectedSettings"))
     var quoteCategory: QuoteCategory = .all
-    
+
     init () {
         viewModel = QuotesViewModel(localQuotesService: LocalQuotesService(), apiService: APIService())
     }
@@ -134,12 +134,12 @@ extension QuotesView {
                 Text(
                     "\(viewModel.notificationScheduledTimeMessage)\(String(describing: getFormattedNotificationTime))"
                 )
-                .font(.title2)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
-                .padding()
-                .frame(alignment: .center)
-                .multilineTextAlignment(.center)
-                
+                    .font(.title2)
+                    .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue)
+                    .padding()
+                    .frame(alignment: .center)
+                    .multilineTextAlignment(.center)
+
                 notiTimePickerColor
                 Spacer()
             }
@@ -152,7 +152,7 @@ extension QuotesView {
                 viewModel.isTimePickerExpanded.toggle()
                 NotificationSchedulerService.shared.scheduleNotifications(notificationTime: viewModel.notificationTime,
                                                                           quoteCategory: quoteCategory, defaults: false)
-                
+
             }) {
                 Text("Done")
                     .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
@@ -181,7 +181,7 @@ extension QuotesView {
             }
         }
     }
-    
+
     private var quoteCategoryPicker: some View {
         Picker("", selection: $quoteCategory) {
             if viewModel.counts.isEmpty {
@@ -200,22 +200,13 @@ extension QuotesView {
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
         }
     }
-    
+
     private var quoteCategoryPickerSection: some View {
         HStack {
             Text("Quote Category:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+                .modifier(BasePicker_TextStyling())
             quoteCategoryPicker
         }
-        .padding(10)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
-        )
+        .modifier(BasePicker_OuterBackgroundStyling())
     }
 }

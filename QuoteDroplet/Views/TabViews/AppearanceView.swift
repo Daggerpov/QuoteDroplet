@@ -47,10 +47,8 @@ struct AppearanceView: View {
             .background(ColorPaletteView(colors: [colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? Color.clear]))
         }
     }
-    
-    
-    
 }
+
 @available(iOS 16.0, *)
 struct AppearanceView_Previews: PreviewProvider {
     static var previews: some View {
@@ -63,9 +61,7 @@ extension AppearanceView {
     private var fontSelector: some View {
         HStack {
             Text("Widget Font:")
-                .font(.headline)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.horizontal, 5)
+                .modifier(BasePicker_TextStyling())
             Picker("", selection: $selectedFontIndex) {
                 ForEach(0..<availableFonts.count, id: \.self) { index in
                     Text(availableFonts[index])
@@ -79,22 +75,12 @@ extension AppearanceView {
                 WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
             }
         }
-        .padding(10)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-                )
-        )
+        .modifier(BasePicker_OuterBackgroundStyling())
     }
     private var sampleColorSection: some View {
         VStack {
             Text("Sample Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
+                modifier(ColorPaletteTitleStyling())
             sampleColorPickers
         }
         .frame(alignment: .center)
@@ -132,9 +118,7 @@ extension AppearanceView {
     private var customColorSection: some View {
         VStack {
             Text("Custom Colors:")
-                .font(.title3)
-                .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-                .padding(.top, 10)
+                .modifier(ColorPaletteTitleStyling())
             customColorPickers
         }
         .frame(alignment: .center)

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
+@available(iOS 15.0, *)
 struct TimeIntervalPicker: View {
     @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
     @AppStorage("quoteFrequencySelected", store: UserDefaults(suiteName: "group.selectedSettings"))
@@ -23,9 +24,7 @@ struct TimeIntervalPicker: View {
     
     private var headerText: some View {
         Text("Reload Widget:")
-            .font(.headline)
-            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
-            .padding(.horizontal, 5)
+            .modifier(BasePicker_TextStyling())
     }
     
     private var picker: some View {
@@ -39,16 +38,7 @@ struct TimeIntervalPicker: View {
             WidgetCenter.shared.reloadTimelines(ofKind: "QuoteDropletWidgetWithIntents")
         }
     }
-    
-    private var background: some View {
-        RoundedRectangle(cornerRadius: 8)
-            .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
-            )
-    }
-    
+
     var body: some View {
         HStack {
             headerText
@@ -56,7 +46,6 @@ struct TimeIntervalPicker: View {
                 picker
             }
         }
-        .padding(10)
-        .background(background)
+        .modifier(BasePicker_OuterBackgroundStyling())
     }
 }

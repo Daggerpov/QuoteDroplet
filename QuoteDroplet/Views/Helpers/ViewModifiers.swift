@@ -83,3 +83,42 @@ struct QuotesPageTitleStyling: ViewModifier {
             .padding(.bottom, 5)
     }
 }
+
+@available(iOS 15.0, *)
+struct ColorPaletteTitleStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.title3)
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            .padding(.top, 10)
+    }
+}
+
+@available(iOS 15.0, *)
+struct BasePicker_OuterBackgroundStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .padding(10)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(colorPalettes[safe: sharedVars.colorPaletteIndex]?[0] ?? .clear)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(colorPalettes[safe: sharedVars.colorPaletteIndex]?[2] ?? .blue, lineWidth: 2)
+                    )
+            )
+    }
+}
+
+@available(iOS 15.0, *)
+struct BasePicker_TextStyling: ViewModifier {
+    @EnvironmentObject var sharedVars: SharedVarsBetweenTabs
+    func body(content: Content) -> some View {
+        content
+            .font(.headline)
+            .foregroundColor(colorPalettes[safe: sharedVars.colorPaletteIndex]?[1] ?? .white)
+            .padding(.horizontal, 5)
+    }
+}
