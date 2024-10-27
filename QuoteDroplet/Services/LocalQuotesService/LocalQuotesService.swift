@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Foundation
 
-class LocalQuotesService {
+class LocalQuotesService: ILocalQuotesService {
     func getLikedQuotes() -> [Quote] {
         @AppStorage("likedQuotes", store: UserDefaults(suiteName: "group.selectedSettings"))
         var likedQuotesData: Data = Data()
@@ -19,7 +19,7 @@ class LocalQuotesService {
         return []
     }
     
-    func saveLikedQuote(quote: Quote, isLiked: Bool) {
+    func saveLikedQuote(quote: Quote, isLiked: Bool) -> Void {
         var likedQuotes = getLikedQuotes()
         
         if isLiked {
@@ -44,8 +44,8 @@ class LocalQuotesService {
         return []
     }
     
-    func saveBookmarkedQuote(quote: Quote, isBookmarked: Bool) {
-        
+    func saveBookmarkedQuote(quote: Quote, isBookmarked: Bool) -> Void {
+
         var bookmarkedQuotes = getBookmarkedQuotes()
         
         if isBookmarked {
@@ -71,7 +71,7 @@ class LocalQuotesService {
         return []
     }
     
-    func saveRecentQuote(quote: Quote){
+    func saveRecentQuote(quote: Quote) -> Void {
         var recentQuotes = getRecentLocalQuotes()
         
         recentQuotes.append(quote)
