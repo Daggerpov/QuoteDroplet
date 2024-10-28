@@ -3,7 +3,7 @@
 import Foundation
 
 
-class APIService {
+class APIService: IAPIService {
     private let baseUrl = "http://quote-dropper-production.up.railway.app"
     
     func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void, isShortQuoteDesired: Bool = false) {

@@ -17,10 +17,10 @@ class QuotesViewModel: ObservableObject{
     private var showNotificationPicker = false
     private var notificationTimeCase: NotificationTime = .defaultScheduled
     
-    let localQuotesService: LocalQuotesService
-    let apiService: APIService
-    
-    init(localQuotesService: LocalQuotesService, apiService: APIService) {
+    let localQuotesService: ILocalQuotesService
+    let apiService: IAPIService
+
+    init(localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
         if UserDefaults.standard.value(forKey: "isFirstLaunch") as? Bool ?? true {
@@ -33,9 +33,7 @@ class QuotesViewModel: ObservableObject{
             self?.counts = fetchedCounts
         }
     }
-    
-    
-    
+
     public func fetchNotificationScheduledTimeInfo () {
         notificationTimeCase = getIsDefaultConfigOverwritten() ? .previouslySelected : .defaultScheduled
         

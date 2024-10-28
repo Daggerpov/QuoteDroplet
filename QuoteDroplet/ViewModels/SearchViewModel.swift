@@ -18,10 +18,10 @@ class SearchViewModel: ObservableObject {
     private let maxQuotes = 10
     private var totalQuotesLoaded = 0
     
-    let localQuotesService: LocalQuotesService
-    let apiService: APIService
-    
-    init(localQuotesService: LocalQuotesService, apiService: APIService) {
+    let localQuotesService: ILocalQuotesService
+    let apiService: IAPIService
+
+    init(localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }

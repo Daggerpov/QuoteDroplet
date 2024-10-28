@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -53,6 +53,14 @@
 		DC890E802C5F211900008838 /* LocalQuotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC890E7E2C5F211900008838 /* LocalQuotesService.swift */; };
 		DC8C1B042BB2337400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B032BB2337400B073B7 /* FirebaseAnalytics */; };
 		DC8C1B062BB2343400B073B7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DC8C1B052BB2343400B073B7 /* FirebaseAnalytics */; };
+		DC8E763B2CCDE16000F9EB0E /* ILocalQuotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E763A2CCDE15C00F9EB0E /* ILocalQuotesService.swift */; };
+		DC8E763C2CCDE16000F9EB0E /* ILocalQuotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E763A2CCDE15C00F9EB0E /* ILocalQuotesService.swift */; };
+		DC8E764E2CCDE43500F9EB0E /* MockLocalQuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */; };
+		DC8E764F2CCDE43500F9EB0E /* MockLocalQuoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */; };
+		DC8E76512CCDEAD000F9EB0E /* IAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */; };
+		DC8E76522CCDEAD000F9EB0E /* IAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */; };
+		DC8E76542CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */; };
+		DC8E76552CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCA1E2A52C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
 		DCA1E2A62C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
@@ -125,6 +133,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DC5DD5282CCDD0EE00B80F5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCAB2D932A9FA91300A822D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DCAB2D9A2A9FA91300A822D7;
+			remoteInfo = "Quote Droplet";
+		};
 		DCAB2DC32A9FA96100A822D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCAB2D932A9FA91300A822D7 /* Project object */;
@@ -174,12 +189,17 @@
 		DC5205B22B9CEF620007CB5B /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		DC5205B52B9CEF7B0007CB5B /* QuotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesView.swift; sourceTree = "<group>"; };
 		DC5DD51D2CCDC5C400B80F5D /* SubmitButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButtonView.swift; sourceTree = "<group>"; };
+		DC5DD5242CCDD0ED00B80F5D /* Quote DropletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quote DropletTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC7010E02BAE63DC008678CB /* QuotesBackup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuotesBackup.json; sourceTree = "<group>"; };
 		DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSchedulerService.swift; sourceTree = "<group>"; };
 		DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quote Droplet.entitlements"; sourceTree = "<group>"; };
 		DC8279422AA08EA2004E2BBF /* QuoteDropletWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuoteDropletWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DC8279432AA09134004E2BBF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		DC890E7E2C5F211900008838 /* LocalQuotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalQuotesService.swift; sourceTree = "<group>"; };
+		DC8E763A2CCDE15C00F9EB0E /* ILocalQuotesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILocalQuotesService.swift; sourceTree = "<group>"; };
+		DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocalQuoteService.swift; sourceTree = "<group>"; };
+		DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPIService.swift; sourceTree = "<group>"; };
+		DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
 		DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-for-noti-water-drip-pixabay.mp3"; path = "../../../../Downloads/sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quote Droplet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletApp.swift; sourceTree = "<group>"; };
@@ -223,7 +243,35 @@
 		DCE0F64E2C8EBCEE00F24BC6 /* SingleQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DC8E764B2CCDE20E00F9EB0E /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AuthorHelper_Tests.swift,
+				AuthorViewModel_Tests.swift,
+				CommunityViewModel_Tests.swift,
+				DropletsViewModel_Tests.swift,
+				QuotesViewModel_Tests.swift,
+				SearchViewModel_Tests.swift,
+				SingleQuoteViewModel_Tests.swift,
+				SubmitViewModel_Tests.swift,
+			);
+			target = DC5DD5232CCDD0ED00B80F5D /* Quote DropletTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		DC8E76472CCDE1F900F9EB0E /* QuoteDroplet_Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (DC8E764B2CCDE20E00F9EB0E /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = QuoteDroplet_Tests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		DC5DD5212CCDD0ED00B80F5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCAB2D982A9FA91300A822D7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -288,8 +336,8 @@
 		DC0EFB8D2C4CB79100B4D46A /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
-				DC890E7E2C5F211900008838 /* LocalQuotesService.swift */,
+				DC8E76372CCDDE2800F9EB0E /* APIService */,
+				DC8E76362CCDDE0500F9EB0E /* LocalQuotesService */,
 				DC7010E32BAE654F008678CB /* NotificationSchedulerService.swift */,
 				DCC0B3752CC9D4CA002DED7A /* APIErrors.swift */,
 			);
@@ -318,6 +366,26 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		DC8E76362CCDDE0500F9EB0E /* LocalQuotesService */ = {
+			isa = PBXGroup;
+			children = (
+				DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */,
+				DC8E763A2CCDE15C00F9EB0E /* ILocalQuotesService.swift */,
+				DC890E7E2C5F211900008838 /* LocalQuotesService.swift */,
+			);
+			path = LocalQuotesService;
+			sourceTree = "<group>";
+		};
+		DC8E76372CCDDE2800F9EB0E /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */,
+				DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */,
+				DCAB2DCA2A9FAACA00A822D7 /* APIService.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
 		DCAB2D922A9FA91300A822D7 = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +393,7 @@
 				DC8279412AA06325004E2BBF /* Quote Droplet.entitlements */,
 				DCAB2D9D2A9FA91300A822D7 /* QuoteDroplet */,
 				DCAB2DB62A9FA95A00A822D7 /* QuoteDropletWidget */,
+				DC8E76472CCDE1F900F9EB0E /* QuoteDroplet_Tests */,
 				DCAB2DB12A9FA95A00A822D7 /* Frameworks */,
 				DCAB2D9C2A9FA91300A822D7 /* Products */,
 				B65467DA69664EAF952E390B /* Pods */,
@@ -336,6 +405,7 @@
 			children = (
 				DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */,
 				DCAB2DB02A9FA95900A822D7 /* QuoteDropletWidgetExtension.appex */,
+				DC5DD5242CCDD0ED00B80F5D /* Quote DropletTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -409,14 +479,14 @@
 		DCC0B35E2CC9B057002DED7A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				DCB82F772CCB301200E81549 /* CommunityViewModel.swift */,
-				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
-				DC2998F92C4D9C5C0025D32E /* SingleQuoteViewModel.swift */,
 				DCC0B37F2CC9F561002DED7A /* AuthorViewModel.swift */,
-				DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */,
+				DCB82F772CCB301200E81549 /* CommunityViewModel.swift */,
 				DCC0B38B2CCA0903002DED7A /* DropletsViewModel.swift */,
-				DCC0B38E2CCA0F44002DED7A /* SearchViewModel.swift */,
 				DCB8445F2CCACD4D0023BCEF /* QuotesViewModel.swift */,
+				DCC0B38E2CCA0F44002DED7A /* SearchViewModel.swift */,
+				DC2998F92C4D9C5C0025D32E /* SingleQuoteViewModel.swift */,
+				DCC0B3882CCA01FB002DED7A /* SubmitViewModel.swift */,
+				DC2999062C4DBED40025D32E /* AuthorHelper.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -450,6 +520,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DC5DD5232CCDD0ED00B80F5D /* Quote DropletTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC5DD52A2CCDD0EE00B80F5D /* Build configuration list for PBXNativeTarget "Quote DropletTests" */;
+			buildPhases = (
+				DC5DD5202CCDD0ED00B80F5D /* Sources */,
+				DC5DD5212CCDD0ED00B80F5D /* Frameworks */,
+				DC5DD5222CCDD0ED00B80F5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC5DD5292CCDD0EE00B80F5D /* PBXTargetDependency */,
+			);
+			name = "Quote DropletTests";
+			packageProductDependencies = (
+			);
+			productName = "Quote DropletTests";
+			productReference = DC5DD5242CCDD0ED00B80F5D /* Quote DropletTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DCAB2D9A2A9FA91300A822D7 /* Quote Droplet */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCAB2DA92A9FA91900A822D7 /* Build configuration list for PBXNativeTarget "Quote Droplet" */;
@@ -503,9 +593,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					DC5DD5232CCDD0ED00B80F5D = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = DCAB2D9A2A9FA91300A822D7;
+					};
 					DCAB2D9A2A9FA91300A822D7 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -533,11 +627,19 @@
 			targets = (
 				DCAB2D9A2A9FA91300A822D7 /* Quote Droplet */,
 				DCAB2DAF2A9FA95900A822D7 /* QuoteDropletWidgetExtension */,
+				DC5DD5232CCDD0ED00B80F5D /* Quote DropletTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DC5DD5222CCDD0ED00B80F5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCAB2D992A9FA91300A822D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -611,6 +713,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DC5DD5202CCDD0ED00B80F5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCAB2D972A9FA91300A822D7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -627,6 +736,7 @@
 				DCB844632CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
 				DCC0B3792CC9DC08002DED7A /* DataService.swift in Sources */,
 				DCC0B3832CC9FC2F002DED7A /* GoogleImageModel.swift in Sources */,
+				DC8E76542CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */,
 				DC5DD51F2CCDC5C900B80F5D /* SubmitButtonView.swift in Sources */,
 				DCC0B3922CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */,
 				DC5205B32B9CEF620007CB5B /* CommunityView.swift in Sources */,
@@ -653,15 +763,18 @@
 				DCC0B3602CC9B136002DED7A /* QuoteCategoryEnum.swift in Sources */,
 				DC29990A2C4DCE0B0025D32E /* AuthorView.swift in Sources */,
 				DCDF64272CCC93F900FBA5B1 /* ViewModifiers.swift in Sources */,
+				DC8E76522CCDEAD000F9EB0E /* IAPIService.swift in Sources */,
 				DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCC0B3892CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
 				DC420D052CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 				DCB82F792CCB301700E81549 /* CommunityViewModel.swift in Sources */,
+				DC8E763C2CCDE16000F9EB0E /* ILocalQuotesService.swift in Sources */,
 				DCB1DA5A2CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */,
 				DC03AD502CCC6AC3000C6572 /* WidgetEnums.swift in Sources */,
 				DCB844602CCACD4D0023BCEF /* QuotesViewModel.swift in Sources */,
+				DC8E764F2CCDE43500F9EB0E /* MockLocalQuoteService.swift in Sources */,
 				DC03AD582CCC89B3000C6572 /* SingleQuoteSourceEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,6 +805,7 @@
 				DCAB2DCE2A9FAE8F00A822D7 /* APIService.swift in Sources */,
 				DCB722152B9D06E60094BAB8 /* GeneralVars.swift in Sources */,
 				DCC0B3812CC9F561002DED7A /* AuthorViewModel.swift in Sources */,
+				DC8E76552CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */,
 				DCB82F782CCB301700E81549 /* CommunityViewModel.swift in Sources */,
 				DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */,
 				DC5205B42B9CEF620007CB5B /* CommunityView.swift in Sources */,
@@ -702,8 +816,10 @@
 				DC0EFB882C4CB1C500B4D46A /* ColorHelper.swift in Sources */,
 				DC5205B12B9CED5B0007CB5B /* AppearanceView.swift in Sources */,
 				DCB844642CCAD37D0023BCEF /* NotificationTimeEnum.swift in Sources */,
+				DC8E76512CCDEAD000F9EB0E /* IAPIService.swift in Sources */,
 				DC03AD592CCC89B3000C6572 /* SingleQuoteSourceEnum.swift in Sources */,
 				DC03AD552CCC88CE000C6572 /* WidgetViewModel.swift in Sources */,
+				DC8E763B2CCDE16000F9EB0E /* ILocalQuotesService.swift in Sources */,
 				DCC0B38A2CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DC2998FB2C4D9C5C0025D32E /* SingleQuoteViewModel.swift in Sources */,
 				DC29990E2C4DF2350025D32E /* InfoView.swift in Sources */,
@@ -718,6 +834,7 @@
 				DC2999082C4DBED40025D32E /* AuthorHelper.swift in Sources */,
 				DCBA0C892C5C270700A2E949 /* HeaderView.swift in Sources */,
 				DCC0B3672CC9B1A4002DED7A /* QuoteJSON.swift in Sources */,
+				DC8E764E2CCDE43500F9EB0E /* MockLocalQuoteService.swift in Sources */,
 				DC8279442AA09134004E2BBF /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -725,6 +842,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DC5DD5292CCDD0EE00B80F5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DCAB2D9A2A9FA91300A822D7 /* Quote Droplet */;
+			targetProxy = DC5DD5282CCDD0EE00B80F5D /* PBXContainerItemProxy */;
+		};
 		DCAB2DC42A9FA96100A822D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DCAB2DAF2A9FA95900A822D7 /* QuoteDropletWidgetExtension */;
@@ -733,6 +855,49 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		DC5DD52B2CCDD0EE00B80F5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GUW483PXY6;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-DropletTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quote Droplet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quote Droplet";
+			};
+			name = Debug;
+		};
+		DC5DD52C2CCDD0EE00B80F5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GUW483PXY6;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Daggerpov.Quote-DropletTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quote Droplet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quote Droplet";
+			};
+			name = Release;
+		};
 		DCAB2DA72A9FA91900A822D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -990,6 +1155,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DC5DD52A2CCDD0EE00B80F5D /* Build configuration list for PBXNativeTarget "Quote DropletTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC5DD52B2CCDD0EE00B80F5D /* Debug */,
+				DC5DD52C2CCDD0EE00B80F5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DCAB2D962A9FA91300A822D7 /* Build configuration list for PBXProject "Quote Droplet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

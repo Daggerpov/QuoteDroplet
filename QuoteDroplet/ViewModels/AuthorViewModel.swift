@@ -17,10 +17,10 @@ class AuthorViewModel: ObservableObject {
     
     let quote: Quote // given when made
     
-    let apiService: APIService
-    let localQuotesService: LocalQuotesService
-    
-    init(quote: Quote, localQuotesService: LocalQuotesService, apiService: APIService) {
+    let apiService: IAPIService
+    let localQuotesService: ILocalQuotesService
+
+    init(quote: Quote, localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.quote = quote
         self.localQuotesService = localQuotesService
         self.apiService = apiService

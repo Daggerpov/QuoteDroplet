@@ -11,10 +11,10 @@ class CommunityViewModel: ObservableObject {
     
     @Published var recentQuotes: [Quote] = []
     
-    let localQuotesService: LocalQuotesService
-    let apiService: APIService
+    let localQuotesService: ILocalQuotesService
+    let apiService: IAPIService
     
-    init(localQuotesService: LocalQuotesService, apiService: APIService) {
+    init(localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }

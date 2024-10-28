@@ -21,10 +21,10 @@ class DropletsViewModel: ObservableObject {
     private var totalRecentQuotesLoaded = 0
     let maxQuotes = 15
     
-    let localQuotesService: LocalQuotesService
-    let apiService: APIService
-    
-    init(localQuotesService: LocalQuotesService, apiService: APIService) {
+    let localQuotesService: ILocalQuotesService
+    let apiService: IAPIService
+
+    init(localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }
@@ -87,14 +87,19 @@ class DropletsViewModel: ObservableObject {
         if selected == .feed {
             for _ in 0..<quotesPerPage {
                 group.enter()
-                apiService.getRandomQuoteByClassification(classification: "all") { quote, error in
-                    if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
-                        DispatchQueue.main.async {
-                            self.quotes.append(quote)
-                        }
-                    }
-                    group.leave()
-                }
+                apiService
+                    .getRandomQuoteByClassification(
+                        classification: "all",
+                        completion: { quote, error in
+                            if let quote = quote, !self.quotes.contains(where: { $0.id == quote.id }) {
+                                DispatchQueue.main.async {
+                                    self.quotes.append(quote)
+                                }
+                            }
+                            group.leave()
+                        },
+                        isShortQuoteDesired: false
+                    )
             }
         } else if selected == .saved {
             let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()

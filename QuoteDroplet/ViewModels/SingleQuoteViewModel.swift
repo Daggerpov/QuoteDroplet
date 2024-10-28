@@ -28,12 +28,12 @@ class SingleQuoteViewModel: ObservableObject {
     var from: SingleQuoteSource
     var searchText: String?
     
-    let localQuotesService: LocalQuotesService
-    let apiService: APIService
-    
+    let localQuotesService: ILocalQuotesService
+    let apiService: IAPIService
+
     init(
-        localQuotesService: LocalQuotesService,
-        apiService: APIService,
+        localQuotesService: ILocalQuotesService,
+        apiService: IAPIService,
         quote: Quote,
         from: SingleQuoteSource = .standardView,
         searchText: String = ""
