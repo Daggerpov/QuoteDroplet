@@ -32,7 +32,7 @@ import Foundation
         sut.getRecentQuotes()
 
         #expect(sut.recentQuotes.count == 3)
-        #expect(sut.recentQuotes == firstMockQuote)
+        #expect(sut.recentQuotes.contains(firstMockQuote))
     }
 
     @Test func getRecentQuotes_failure() async throws {

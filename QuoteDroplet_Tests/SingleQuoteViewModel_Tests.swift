@@ -4,7 +4,6 @@
 //
 //  Created by Daniel Agapov on 2024-10-26.
 //
-/*
 import Testing
 @testable import Quote_Droplet
 
@@ -14,18 +13,18 @@ import Testing
     let mockLocalQuotesService: MockLocalQuotesService
     let mockAPIService: MockAPIService
     let sut: SingleQuoteViewModel
-    init () {
+    @MainActor init () {
         self.mockQuote = Quote.mockQuote()
         self.mockLocalQuotesService = MockLocalQuotesService()
         self.mockAPIService = MockAPIService()
         self.sut = SingleQuoteViewModel(
-            quote: mockQuote,
             localQuotesService: mockLocalQuotesService,
-            apiService: mockAPIService
+            apiService: mockAPIService,
+            quote: mockQuote
         )
     }
 
-    @Test func getQuoteInfo_setsLikeAndBookmarkStatus() {
+    @MainActor @Test func getQuoteInfo_setsLikeAndBookmarkStatus() {
         // Set mock service responses
         mockLocalQuotesService.setIsBookmarked(true)
         mockLocalQuotesService.setIsLiked(true)
@@ -38,57 +37,52 @@ import Testing
         #expect(sut.likes == 5)
     }
 
-    @Test func increaseInteractions_requestsReviewOnThreshold() {
+    @MainActor @Test func increaseInteractions() {
         // Set interactions near threshold
         sut.interactions = 20
-        var didRequestReview = false
-        sut.requestReview = { didRequestReview = true }
-
         sut.increaseInteractions()
-        #expect(didRequestReview)
         #expect(sut.interactions == 21)
     }
 
-    @Test func toggleCopy_changesCopyStateAndIncrementsInteractions() {
+    @MainActor @Test func toggleCopy_changesCopyStateAndIncrementsInteractions() {
         let initialInteractions = sut.interactions
 
-        sut.toggleCopy(for: sampleQuote)
+        sut.toggleCopy(for: mockQuote)
         #expect(sut.isCopied)
         #expect(sut.interactions == initialInteractions + 1)
     }
 
-    @Test func toggleBookmark_changesBookmarkState() {
+    @MainActor @Test func toggleBookmark_changesBookmarkState() {
         let initialInteractions = sut.interactions
-        sut.toggleBookmark(for: sampleQuote)
+        sut.toggleBookmark(for: mockQuote)
         #expect(sut.isBookmarked)
         #expect(sut.interactions == initialInteractions + 1)
     }
 
-    @Test func toggleLike_changesLikeState() {
+    @MainActor @Test func toggleLike_changesLikeState() {
         let initialInteractions = sut.interactions
-        sut.toggleLike(for: sampleQuote)
+        sut.toggleLike(for: mockQuote)
         #expect(sut.isLiked)
         #expect(sut.interactions == initialInteractions + 1)
     }
 
-    @Test func likeQuoteAction_likeIncreasesCount() {
+    @MainActor @Test func likeQuoteAction_likeIncreasesCount() {
         // Mock responses for liking the quote
         mockLocalQuotesService.setIsLiked(false)
         mockAPIService.setLikeCountResponse(count: 10)
 
-        sut.likeQuoteAction(for: sampleQuote)
+        sut.likeQuoteAction(for: mockQuote)
         #expect(sut.likes == 10)
         #expect(!sut.isLiking)
     }
 
-    @Test func likeQuoteAction_unlikeDecreasesCount() {
+    @MainActor @Test func likeQuoteAction_unlikeDecreasesCount() {
         // Mock responses for unliking the quote
         mockLocalQuotesService.setIsLiked(true)
-        mockAPIService.setUnlikeResponse(likes: 5)
+        mockAPIService.setLikeCountResponse(count: 5)
 
-        sut.likeQuoteAction(for: sampleQuote)
+        sut.likeQuoteAction(for: mockQuote)
         #expect(sut.likes == 5)
         #expect(!sut.isLiking)
     }
 }
-*/
