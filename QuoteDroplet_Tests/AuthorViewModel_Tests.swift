@@ -8,10 +8,11 @@
 import Testing
 @testable import Quote_Droplet
 
-@Suite("Author View Model Tests") struct AuthorViewModel_Tests {
+@Suite("Author View Model Tests", .serialized) final class AuthorViewModel_Tests {
     let mockQuote: Quote
     let mockAPIService: MockAPIService
     let sut: AuthorViewModel
+	weak var weakSUT: AuthorViewModel?
     init () {
         self.mockQuote = Quote.mockQuote()
         self.mockAPIService = MockAPIService()
@@ -20,7 +21,12 @@ import Testing
             localQuotesService: MockLocalQuotesService(),
             apiService: mockAPIService
         )
+		self.weakSUT = self.sut
     }
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @Test func initialization() {
         // Test initial values

@@ -7,12 +7,14 @@
 import Testing
 @testable import Quote_Droplet
 
-@Suite("Single Quote View Model Tests") struct SingleQuoteViewModel_Tests {
+@Suite("Single Quote View Model Tests", .serialized) final class SingleQuoteViewModel_Tests {
 
     let mockQuote: Quote
     let mockLocalQuotesService: MockLocalQuotesService
     let mockAPIService: MockAPIService
     let sut: SingleQuoteViewModel
+	weak var weakSUT: SingleQuoteViewModel?
+
     @MainActor init () {
         self.mockQuote = Quote.mockQuote()
         self.mockLocalQuotesService = MockLocalQuotesService()
@@ -21,8 +23,13 @@ import Testing
             localQuotesService: mockLocalQuotesService,
             apiService: mockAPIService,
             quote: mockQuote
-        )
-    }
+		)
+		self.weakSUT = self.sut
+	}
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @MainActor @Test func getQuoteInfo_setsLikeAndBookmarkStatus() {
         // Set mock service responses

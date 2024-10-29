@@ -8,16 +8,22 @@
 import Testing
 @testable import Quote_Droplet
 
-@Suite("Droplets View Model Tests") struct DropletsViewModel_Tests {
+@Suite("Droplets View Model Tests", .serialized) final class DropletsViewModel_Tests {
     let mockAPIService: MockAPIService
     let sut: DropletsViewModel
+	weak var weakSUT: DropletsViewModel?
     init() {
         self.mockAPIService = MockAPIService()
         self.sut = DropletsViewModel(
             localQuotesService: MockLocalQuotesService(),
             apiService: mockAPIService
         )
+		self.weakSUT = self.sut
     }
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @Test func setSelected() {
         #expect(sut.selected == SelectedPage.feed)
