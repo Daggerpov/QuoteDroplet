@@ -1,0 +1,40 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: Swift
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
+    - name: Swift Doc
+      # You may pin to the exact commit or the version.
+      # uses: SwiftDocOrg/swift-doc@f935ebfe524a0ff27bda07dadc3662e3e45b5125
+      uses: SwiftDocOrg/swift-doc@1.0.0-rc.1
+      with: 
+        # A path to a directory containing Swift (`.swift`) files in your workspace
+        inputs: QuoteDroplet # default is ./Sources
+        # The name of the module
+        module-name: "QuoteDroplet"
+        # The output format (commonmark or html)
+        format: commonmark # optional, default is commonmark
+        # The base URL for all relative URLs generated in documents
+        base-url: ./ # optional, default is ./
+        # The path for generated output
+        output: ./.build/documentation # default is ./.build/documentation
+        # The minimum access level of the symbols which should be included (public, internal, or private)
+        minimum-access-level: public # optional, default is public
+          
