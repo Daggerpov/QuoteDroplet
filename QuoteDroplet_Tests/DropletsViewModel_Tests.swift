@@ -8,16 +8,22 @@
 import Testing
 @testable import Quote_Droplet
 
-@Suite("Droplets View Model Tests") struct DropletsViewModel_Tests {
+@Suite("Droplets View Model Tests", .serialized) final class DropletsViewModel_Tests {
     let mockAPIService: MockAPIService
     let sut: DropletsViewModel
+	weak var weakSUT: DropletsViewModel?
     init() {
         self.mockAPIService = MockAPIService()
         self.sut = DropletsViewModel(
             localQuotesService: MockLocalQuotesService(),
             apiService: mockAPIService
         )
+		self.weakSUT = self.sut
     }
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @Test func setSelected() {
         #expect(sut.selected == SelectedPage.feed)
@@ -53,13 +59,13 @@ import Testing
      */
 
     @Test func checkMoreQuotesNeeded() async throws {
-        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: sut.maxQuotes - 1)
+        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: DropletsViewModel.maxQuotes - 1)
         #expect(!sut.checkLimitReached())
 
         sut.checkMoreQuotesNeeded()
 
         #expect(sut.quotes.count > 0)
-        #expect(sut.quotes.count <= sut.maxQuotes)
+        #expect(sut.quotes.count <= DropletsViewModel.maxQuotes)
     }
 
     @Test func getPageSpecificQuotes_feed() {
@@ -78,7 +84,7 @@ import Testing
 
     @Test func checkLimitReached() {
         sut.setSelected(newValue: .feed)
-        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: sut.maxQuotes)
+        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: DropletsViewModel.maxQuotes)
 
         #expect(sut.checkLimitReached())
     }

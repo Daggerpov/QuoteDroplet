@@ -9,17 +9,23 @@ import Testing
 @testable import Quote_Droplet
 import Foundation
 
-@Suite("Quotes View Model Tests") struct QuotesViewModel_Tests {
+@Suite("Quotes View Model Tests", .serialized) final class QuotesViewModel_Tests {
     let mockAPIService: MockAPIService
     let sut: QuotesViewModel
+	weak var weakSUT: QuotesViewModel?
 
     init() {
         self.mockAPIService = MockAPIService()
         self.sut = QuotesViewModel(
             localQuotesService: MockLocalQuotesService(),
             apiService: mockAPIService
-        )
-    }
+		)
+		self.weakSUT = self.sut
+	}
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @Test func initializeCounts_success() async {
         // Configure the mock API to return expected category counts

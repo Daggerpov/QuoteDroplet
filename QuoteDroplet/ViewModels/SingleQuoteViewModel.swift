@@ -17,6 +17,7 @@ class SingleQuoteViewModel: ObservableObject {
     @Published var likes: Int = 0
     @Published var isLiking: Bool = false
     
+    // MARK: app review vars
     //------------------------------------------------------------------------------------
     @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
     var interactions: Int = 0
@@ -30,7 +31,7 @@ class SingleQuoteViewModel: ObservableObject {
     
     let localQuotesService: ILocalQuotesService
     let apiService: IAPIService
-
+    
     init(
         localQuotesService: ILocalQuotesService,
         apiService: IAPIService,
@@ -49,58 +50,63 @@ class SingleQuoteViewModel: ObservableObject {
         return isAuthorValid(authorGiven: quote.author) && from != .authorView
     }
     
-    public func getQuoteInfo() {
+    public func getQuoteInfo() -> Void {
         isBookmarked = localQuotesService.isQuoteBookmarked(quote)
         
-        getQuoteLikeCountMethod(for: quote) { [weak self] fetchedLikeCount in // to avoid memory leaks
-            self?.likes = fetchedLikeCount
+        getQuoteLikeCountMethod(for: quote) { [weak self] fetchedLikeCount in
+            guard let self = self else { return }
+            self.likes = fetchedLikeCount
         }
         isLiked = localQuotesService.isQuoteLiked(quote)
     }
     
-    func increaseInteractions() {
+    func increaseInteractions() -> Void {
         DispatchQueue.main.async { [weak self] in
-            self?.interactions += 1
-            if (self?.interactions == 21) {
+            guard let self = self else { return }
+            self.interactions += 1
+            if (self.interactions == 21) {
                 // within app, so review should show
-                self?.requestReview()
+                self.requestReview()
             }
         }
     }
     
-    func toggleCopy(for quote: Quote) {
+    func toggleCopy(for quote: Quote) -> Void {
         DispatchQueue.main.async { [weak self] in
-            self?.isCopied.toggle()
-            self?.increaseInteractions()
+            guard let self = self else { return }
+            self.isCopied.toggle()
+            self.increaseInteractions()
         }
     }
     
-    func toggleBookmark(for quote: Quote) {
+    func toggleBookmark(for quote: Quote) -> Void {
         DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
-            self?.isBookmarked.toggle()
+            guard let self = self else { return }
+            self.isBookmarked.toggle()
             
-            if let isBookmarked = self?.isBookmarked {
+            if self.isBookmarked {
                 
-                self?.localQuotesService.saveBookmarkedQuote(quote: quote, isBookmarked: isBookmarked)
+                self.localQuotesService.saveBookmarkedQuote(quote: quote, isBookmarked: isBookmarked)
             }
             
-            self?.increaseInteractions()
+            self.increaseInteractions()
         }
     }
     
-    func toggleLike(for quote: Quote) {
+    func toggleLike(for quote: Quote) -> Void {
         DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
-            self?.isLiked.toggle()
+            guard let self = self else { return }
+            self.isLiked.toggle()
             
-            if let isLiked = self?.isLiked {
-                self?.localQuotesService.saveLikedQuote(quote: quote, isLiked: isLiked)
+            if self.isLiked {
+                self.localQuotesService.saveLikedQuote(quote: quote, isLiked: isLiked)
             }
             
-            self?.increaseInteractions()
+            self.increaseInteractions()
         }
     }
     
-    func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) {
+    func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) -> Void {
         apiService.getLikeCountForQuote(quoteGiven: quote) { likeCount in
             DispatchQueue.main.async {
                 completion(likeCount)
@@ -108,19 +114,21 @@ class SingleQuoteViewModel: ObservableObject {
         }
     }
     
-    func likeQuoteAction(for quote: Quote) {
+    func likeQuoteAction(for quote: Quote) -> Void {
         guard !isLiking else { return }
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             self.isLiking = true
         }
         
         // Check if the quote is already liked
-        let isAlreadyLiked = localQuotesService.isQuoteLiked(quote)
+        let isAlreadyLiked: Bool = localQuotesService.isQuoteLiked(quote)
         
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
-            apiService.unlikeQuote(quoteID: quote.id) { updatedQuote, error in
+            apiService.unlikeQuote(quoteID: quote.id) { [weak self] updatedQuote, error in
+                guard let self = self else { return }
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
@@ -130,7 +138,8 @@ class SingleQuoteViewModel: ObservableObject {
                 }
             }
         } else {
-            apiService.likeQuote(quoteID: quote.id) { updatedQuote, error in
+            apiService.likeQuote(quoteID: quote.id) { [weak self] updatedQuote, error in
+                guard let self = self else { return }
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count

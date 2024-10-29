@@ -8,13 +8,13 @@
 import Foundation
 
 class SubmitViewModel: ObservableObject {
-    @Published var isAddingQuote = false
+    @Published var isAddingQuote: Bool = false
     @Published var selectedCategory: QuoteCategory = .all
-    @Published var submissionMessage = ""
-    @Published var showSubmissionReceivedAlert = false
-    @Published var showSubmissionInfoAlert = false
-    @Published var quoteText = ""
-    @Published var author = ""
+    @Published var submissionMessage: String = ""
+    @Published var showSubmissionReceivedAlert: Bool = false
+    @Published var showSubmissionInfoAlert: Bool = false
+    @Published var quoteText: String = ""
+    @Published var author: String = ""
     
     let apiService: IAPIService
     
@@ -22,8 +22,9 @@ class SubmitViewModel: ObservableObject {
         self.apiService = apiService
     }
     
-    func addQuote() {
-        apiService.addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
+    func addQuote() -> Void {
+        apiService.addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { [weak self] success, error in
+            guard let self = self else { return }
             if success {
                 self.submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
                 // Set showSubmissionReceivedAlert to true after successful submission

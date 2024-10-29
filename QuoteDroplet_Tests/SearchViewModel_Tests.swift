@@ -9,18 +9,24 @@ import Testing
 @testable import Quote_Droplet
 import Foundation
 
-@Suite("Search View Model Tests")
-struct SearchViewModel_Tests {
+@Suite("Search View Model Tests", .serialized)
+final class SearchViewModel_Tests {
     let mockAPIService: MockAPIService
     let sut: SearchViewModel
+	weak var weakSUT: SearchViewModel?
 
     init() {
         self.mockAPIService = MockAPIService()
         self.sut = SearchViewModel(
             localQuotesService: MockLocalQuotesService(),
             apiService: mockAPIService
-        )
-    }
+		)
+		self.weakSUT = self.sut
+	}
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @Test
     func loadQuotesBySearch_successfulFetch_updatesQuotesList() async {

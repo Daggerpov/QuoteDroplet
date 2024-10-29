@@ -62,8 +62,6 @@
 		DC8E76542CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */; };
 		DC8E76552CCDEB8E00F9EB0E /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */; };
 		DC96E93B2A9FE78300866D46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
-		DCA1E2A52C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
-		DCA1E2A62C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */; };
 		DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */; };
 		DCAB2DA12A9FA91300A822D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB2DA02A9FA91300A822D7 /* ContentView.swift */; };
 		DCAB2DA32A9FA91900A822D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */; };
@@ -180,7 +178,6 @@
 		DC26EB932BF96FD4004CA84F /* DropletsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropletsView.swift; sourceTree = "<group>"; };
 		DC2998F92C4D9C5C0025D32E /* SingleQuoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuoteViewModel.swift; sourceTree = "<group>"; };
 		DC2998FE2C4D9C820025D32E /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
-		DC2998FF2C4D9C910025D32E /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-for-noti-water-drip-pixabay.mp3"; path = "../../../../../Downloads/sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DC2999062C4DBED40025D32E /* AuthorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorHelper.swift; sourceTree = "<group>"; };
 		DC2999092C4DCE0B0025D32E /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC29990C2C4DF2350025D32E /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -200,7 +197,6 @@
 		DC8E764D2CCDE43000F9EB0E /* MockLocalQuoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocalQuoteService.swift; sourceTree = "<group>"; };
 		DC8E76502CCDEACB00F9EB0E /* IAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPIService.swift; sourceTree = "<group>"; };
 		DC8E76532CCDEB8A00F9EB0E /* MockAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
-		DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sound-for-noti-water-drip-pixabay.mp3"; path = "../../../../Downloads/sound-for-noti-water-drip-pixabay.mp3"; sourceTree = "<group>"; };
 		DCAB2D9B2A9FA91300A822D7 /* Quote Droplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quote Droplet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDropletApp.swift; sourceTree = "<group>"; };
 		DCAB2DA02A9FA91300A822D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -360,7 +356,6 @@
 			children = (
 				DCC0B3622CC9B154002DED7A /* Fonts.swift */,
 				DC2998FE2C4D9C820025D32E /* sound-for-noti-water-drip-pixabay.mp3 */,
-				DC2998FF2C4D9C910025D32E /* sound-for-noti-water-drip-pixabay.mp3 */,
 				DCAB2DA22A9FA91900A822D7 /* Assets.xcassets */,
 			);
 			path = Utils;
@@ -419,7 +414,6 @@
 				DCB1DA5B2CCC5FE900D823B0 /* Enums */,
 				DC0EFB8D2C4CB79100B4D46A /* Services */,
 				DC2998FC2C4D9C670025D32E /* Models */,
-				DCA1E2A42C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 */,
 				DC14DCBF2BB25B9400F87C12 /* GoogleService-Info.plist */,
 				DCAB2DD02A9FBAB800A822D7 /* Info.plist */,
 				DCAB2D9E2A9FA91300A822D7 /* QuoteDropletApp.swift */,
@@ -647,7 +641,6 @@
 				DCAB2DA62A9FA91900A822D7 /* Preview Assets.xcassets in Resources */,
 				DC14DCC02BB25B9400F87C12 /* GoogleService-Info.plist in Resources */,
 				DCAB2DA32A9FA91900A822D7 /* Assets.xcassets in Resources */,
-				DCA1E2A52C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */,
 				DC7010E12BAE63DC008678CB /* QuotesBackup.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,7 +649,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCA1E2A62C32576D00949BD3 /* sound-for-noti-water-drip-pixabay.mp3 in Resources */,
 				DC7010E22BAE63DC008678CB /* QuotesBackup.json in Resources */,
 				DCAB2DBF2A9FA96100A822D7 /* Assets.xcassets in Resources */,
 				DC14DCC12BB25B9400F87C12 /* GoogleService-Info.plist in Resources */,

@@ -137,7 +137,7 @@ extension DropletsView {
                         viewModel.checkMoreQuotesNeeded()
                     }
                 if viewModel.checkLimitReached() {
-                    Text("You've reached the quote limit of \(viewModel.maxQuotes). Maybe take a break?")
+                    Text("You've reached the quote limit of \(DropletsViewModel.maxQuotes). Maybe take a break?")
                         .modifier(QuotesPageTextStyling())
                 }
                 Spacer()

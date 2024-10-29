@@ -10,28 +10,26 @@ import Foundation
 class AuthorViewModel: ObservableObject {
     @Published var quotes: [Quote] = []
     @Published var isLoadingMore: Bool = false
-    static let quotesPerPage = 100
-    private var totalQuotesLoaded = 0
+    static let quotesPerPage: Int = 100
+    private var totalQuotesLoaded: Int = 0
+    static let maxQuotes: Int = 200
     
-    static let maxQuotes = 200
-    
-    let quote: Quote // given when made
-    
+    let quote: Quote
     let apiService: IAPIService
     let localQuotesService: ILocalQuotesService
-
+    
     init(quote: Quote, localQuotesService: ILocalQuotesService, apiService: IAPIService) {
         self.quote = quote
         self.localQuotesService = localQuotesService
         self.apiService = apiService
     }
     
-    func loadRemoteJSON<T: Decodable>(_ urlString: String, completion: @escaping  ((T) -> Void)) {
+    func loadRemoteJSON<T: Decodable>(_ urlString: String, completion: @escaping  ((T) -> Void)) -> Void {
         guard let url = URL(string: urlString) else {
             fatalError("Invalid URL")
         }
         
-        let request = URLRequest(url: url)
+        let request: URLRequest = URLRequest(url: url)
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 fatalError(error?.localizedDescription ?? "Unknown Error")
@@ -49,18 +47,21 @@ class AuthorViewModel: ObservableObject {
         }
     }
     
-    public func loadInitialQuotes() {
-        totalQuotesLoaded = 0
-        loadMoreQuotes() // Initial load
+    public func loadInitialQuotes() -> Void {
+        self.totalQuotesLoaded = 0
+        self.loadMoreQuotes() // Initial load
     }
     
-    public func loadMoreQuotes() {
-        guard !isLoadingMore else { return }
+    public func loadMoreQuotes() -> Void {
+        guard !self.isLoadingMore else { return }
         
-        isLoadingMore = true
-        let group = DispatchGroup()
+        self.isLoadingMore = true
+        let group: DispatchGroup = DispatchGroup()
         
-        apiService.getQuotesByAuthor(author: quote.author!) { [weak self] quotes, error in
+        guard let author: String = self.quote.author else { return }
+        
+        apiService.getQuotesByAuthor(author: author) { [weak self] quotes, error in
+            guard let self = self else { return }
             if let error = error {
                 print("Error fetching quotes: \(error)")
                 return
@@ -71,20 +72,22 @@ class AuthorViewModel: ObservableObject {
                 return
             }
             
-            let quotesToAppend = quotes.prefix(AuthorViewModel.quotesPerPage)
+            let quotesToAppend: [Quote] = Array(quotes.prefix(AuthorViewModel.quotesPerPage))
             
             for quote in quotesToAppend {
                 DispatchQueue.main.async {
-                    if !(self?.quotes.contains(where: { $0.id == quote.id }) ?? false) {
-                        self?.quotes.append(quote)
+                    if (self.quotes.contains(where: { $0.id == quote.id })){
+                        self.quotes.append(quote)
                     }
                 }
             }
         }
         
-        group.notify(queue: .main) {
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
             self.isLoadingMore = false
             self.totalQuotesLoaded += AuthorViewModel.quotesPerPage
         }
     }
 }
+

@@ -9,14 +9,20 @@ import Testing
 @testable import Quote_Droplet
 import Foundation
 
-@Suite("Submit View Model Tests") struct SubmitViewModel_Tests {
+@Suite("Submit View Model Tests", .serialized) final class SubmitViewModel_Tests {
     let mockAPIService: MockAPIService
     let sut: SubmitViewModel
+	weak var weakSUT: SubmitViewModel?
 
     init() {
         self.mockAPIService = MockAPIService()
-        self.sut = SubmitViewModel(apiService: mockAPIService)
-    }
+		self.sut = SubmitViewModel(apiService: mockAPIService)
+		self.weakSUT = self.sut
+	}
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @Test func addQuote_successfulSubmission_updatesState() async {
         // Configure the mock service for a successful submission

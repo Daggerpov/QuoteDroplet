@@ -123,12 +123,14 @@ extension SingleQuoteView {
                 Image(systemName: "doc.on.doc")
                     .modifier(QuoteInteractionButtonStyling())
             }.padding(.leading, 5)
-
-            ShareLink(item: URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603")!, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
-                Image(systemName: "square.and.arrow.up")
-                    .modifier(QuoteInteractionButtonStyling())
+            
+            if let url = URL(string: "https://apps.apple.com/us/app/quote-droplet/id6455084603") {
+                ShareLink(item: url, message: Text("From the Quote Droplet app:\n\n\"\(quote.text)\"\(wholeAuthorText)")) {
+                    Image(systemName: "square.and.arrow.up")
+                        .modifier(QuoteInteractionButtonStyling())
+                        .padding(.leading, 5)
+                }
             }
-            .padding(.leading, 5)
 
             Spacer()
 

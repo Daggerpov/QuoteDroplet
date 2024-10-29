@@ -9,15 +9,21 @@ import Testing
 @testable import Quote_Droplet
 import Foundation
 
-@Suite("Community View Model Tests") struct CommunityViewModel_Tests {
+@Suite("Community View Model Tests", .serialized) final class CommunityViewModel_Tests {
 
     let mockAPIService: MockAPIService
     let sut: CommunityViewModel
+	weak var weakSUT: CommunityViewModel?
 
     init() {
         self.mockAPIService = MockAPIService()
-        self.sut = CommunityViewModel(localQuotesService: MockLocalQuotesService(), apiService: mockAPIService)
-    }
+		self.sut = CommunityViewModel(localQuotesService: MockLocalQuotesService(), apiService: mockAPIService)
+		self.weakSUT = self.sut
+	}
+
+	deinit {
+		// #expect(weakSUT == nil)
+	}
 
     @Test func getRecentQuotes_success() async throws {
         let firstMockQuote: Quote = Quote.mockQuote()
