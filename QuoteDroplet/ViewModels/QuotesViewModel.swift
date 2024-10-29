@@ -30,14 +30,15 @@ class QuotesViewModel: ObservableObject{
     
     public func initializeCounts() {
         getCategoryCounts { [weak self] fetchedCounts in
-            self?.counts = fetchedCounts
+            guard let self = self else { return }
+            self.counts = fetchedCounts
         }
     }
 
     public func fetchNotificationScheduledTimeInfo () {
-        notificationTimeCase = getIsDefaultConfigOverwritten() ? .previouslySelected : .defaultScheduled
+        self.notificationTimeCase = getIsDefaultConfigOverwritten() ? .previouslySelected : .defaultScheduled
         
-        notificationScheduledTimeMessage = "You currently have daily notifications \((notificationTimeCase == .defaultScheduled) ? "automatically " : "")scheduled for: \n"
+        self.notificationScheduledTimeMessage = "You currently have daily notifications \((notificationTimeCase == .defaultScheduled) ? "automatically " : "")scheduled for: \n"
     }
     
     public func getNotificationTime() -> Date {
@@ -55,31 +56,33 @@ class QuotesViewModel: ObservableObject{
     
     public func scheduleNotificationsAction() {
         if NotificationSchedulerService.isDefaultConfigOverwritten {
-            notificationTime = NotificationSchedulerService.previouslySelectedNotificationTime
+            self.notificationTime = NotificationSchedulerService.previouslySelectedNotificationTime
         } else {
-            notificationTime = NotificationSchedulerService.defaultScheduledNotificationTime
+            self.notificationTime = NotificationSchedulerService.defaultScheduledNotificationTime
         }
         isTimePickerExpanded.toggle()
     }
     
     private func getCategoryCounts(completion: @escaping ([String: Int]) -> Void) {
         let group = DispatchGroup()
-        var counts: [String: Int] = [:]
         for category in QuoteCategory.allCases {
             group.enter()
             if category == .bookmarkedQuotes {
-                getBookmarkedQuotesCount { bookmarkedCount in
-                    counts[category.rawValue] = bookmarkedCount
+                getBookmarkedQuotesCount { [weak self] bookmarkedCount in
+                    guard let self = self else {return}
+                    self.counts[category.rawValue] = bookmarkedCount
                     group.leave()
                 }
             } else {
-                apiService.getCountForCategory(category: category) { categoryCount in
-                    counts[category.rawValue] = categoryCount
+                apiService.getCountForCategory(category: category) { [weak self] categoryCount in
+                    guard let self = self else {return}
+                    self.counts[category.rawValue] = categoryCount
                     group.leave()
                 }
             }
         }
-        group.notify(queue: .main) {
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else {return}
             completion(counts)
         }
     }

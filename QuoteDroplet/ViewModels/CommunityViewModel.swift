@@ -21,15 +21,16 @@ class CommunityViewModel: ObservableObject {
     
     public func getRecentQuotes() {
         // Fetch recent quotes when the view appears
-        apiService.getRecentQuotes(limit: 3) { quotes, error in
+        apiService.getRecentQuotes(limit: 3) { [weak self] quotes, error in
+            guard let self = self else {return}
             if let error = error {
                 print("Error fetching recent quotes: \(error)")
                 return
             }
             
             if let quotes = quotes {
-                DispatchQueue.main.async { [weak self] in
-                    self?.recentQuotes = quotes
+                DispatchQueue.main.async {
+                    self.recentQuotes = quotes
                 }
             }
         }

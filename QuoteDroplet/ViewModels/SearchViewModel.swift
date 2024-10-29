@@ -26,7 +26,7 @@ class SearchViewModel: ObservableObject {
         self.apiService = apiService
     }
     
-    public func loadQuotesBySearch() {
+    public func loadQuotesBySearch() { 
         guard !isLoadingMore else { return }
         
         self.quotes = []
@@ -35,6 +35,7 @@ class SearchViewModel: ObservableObject {
         let group = DispatchGroup()
         
         apiService.getQuotesBySearchKeyword(searchKeyword: searchText, searchCategory: activeCategory.rawValue.lowercased()) { [weak self] quotes, error in
+            guard let self = self else { return }
             if let error = error {
                 print("Error fetching quotes: \(error)")
                 return
@@ -49,14 +50,15 @@ class SearchViewModel: ObservableObject {
             
             for quote in quotesToAppend {
                 DispatchQueue.main.async {
-                    if !(self?.quotes.contains(where: { $0.id == quote.id }) ?? false) {
-                        self?.quotes.append(quote)
+                    if !self.quotes.contains(where: { $0.id == quote.id }) {
+                        self.quotes.append(quote)
                     }
                 }
             }
         }
         
-        group.notify(queue: .main) {
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else {return}
             self.isLoadingMore = false
             self.totalQuotesLoaded += SearchViewModel.quotesPerPage
         }

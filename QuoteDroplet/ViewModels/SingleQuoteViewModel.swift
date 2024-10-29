@@ -52,51 +52,56 @@ class SingleQuoteViewModel: ObservableObject {
     public func getQuoteInfo() {
         isBookmarked = localQuotesService.isQuoteBookmarked(quote)
         
-        getQuoteLikeCountMethod(for: quote) { [weak self] fetchedLikeCount in // to avoid memory leaks
-            self?.likes = fetchedLikeCount
+        getQuoteLikeCountMethod(for: quote) { [weak self] fetchedLikeCount in
+            guard let self = self else { return }
+            self.likes = fetchedLikeCount
         }
         isLiked = localQuotesService.isQuoteLiked(quote)
     }
     
     func increaseInteractions() {
         DispatchQueue.main.async { [weak self] in
-            self?.interactions += 1
-            if (self?.interactions == 21) {
+            guard let self = self else { return }
+            self.interactions += 1
+            if (self.interactions == 21) {
                 // within app, so review should show
-                self?.requestReview()
+                self.requestReview()
             }
         }
     }
     
     func toggleCopy(for quote: Quote) {
         DispatchQueue.main.async { [weak self] in
-            self?.isCopied.toggle()
-            self?.increaseInteractions()
+            guard let self = self else { return }
+            self.isCopied.toggle()
+            self.increaseInteractions()
         }
     }
     
     func toggleBookmark(for quote: Quote) {
         DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
-            self?.isBookmarked.toggle()
+            guard let self = self else { return }
+            self.isBookmarked.toggle()
             
-            if let isBookmarked = self?.isBookmarked {
+            if self.isBookmarked {
                 
-                self?.localQuotesService.saveBookmarkedQuote(quote: quote, isBookmarked: isBookmarked)
+                self.localQuotesService.saveBookmarkedQuote(quote: quote, isBookmarked: isBookmarked)
             }
             
-            self?.increaseInteractions()
+            self.increaseInteractions()
         }
     }
     
     func toggleLike(for quote: Quote) {
         DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
-            self?.isLiked.toggle()
+            guard let self = self else { return }
+            self.isLiked.toggle()
             
-            if let isLiked = self?.isLiked {
-                self?.localQuotesService.saveLikedQuote(quote: quote, isLiked: isLiked)
+            if self.isLiked {
+                self.localQuotesService.saveLikedQuote(quote: quote, isLiked: isLiked)
             }
             
-            self?.increaseInteractions()
+            self.increaseInteractions()
         }
     }
     
@@ -111,7 +116,8 @@ class SingleQuoteViewModel: ObservableObject {
     func likeQuoteAction(for quote: Quote) {
         guard !isLiking else { return }
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {return}
             self.isLiking = true
         }
         
@@ -120,7 +126,8 @@ class SingleQuoteViewModel: ObservableObject {
         
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
-            apiService.unlikeQuote(quoteID: quote.id) { updatedQuote, error in
+            apiService.unlikeQuote(quoteID: quote.id) { [weak self] updatedQuote, error in
+                guard let self = self else {return}
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
@@ -130,7 +137,8 @@ class SingleQuoteViewModel: ObservableObject {
                 }
             }
         } else {
-            apiService.likeQuote(quoteID: quote.id) { updatedQuote, error in
+            apiService.likeQuote(quoteID: quote.id) { [weak self] updatedQuote, error in
+                guard let self = self else {return}
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count

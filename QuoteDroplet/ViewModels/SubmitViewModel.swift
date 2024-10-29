@@ -23,7 +23,8 @@ class SubmitViewModel: ObservableObject {
     }
     
     func addQuote() {
-        apiService.addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { success, error in
+        apiService.addQuote(text: quoteText, author: author, classification: selectedCategory.rawValue) { [weak self] success, error in
+            guard let self = self else {return}
             if success {
                 self.submissionMessage = "Thanks for submitting a quote. It is now awaiting approval to be added to this app's quote database."
                 // Set showSubmissionReceivedAlert to true after successful submission
