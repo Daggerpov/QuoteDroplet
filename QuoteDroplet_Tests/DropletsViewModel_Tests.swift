@@ -59,13 +59,13 @@ import Testing
      */
 
     @Test func checkMoreQuotesNeeded() async throws {
-        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: sut.maxQuotes - 1)
+        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: DropletsViewModel.maxQuotes - 1)
         #expect(!sut.checkLimitReached())
 
         sut.checkMoreQuotesNeeded()
 
         #expect(sut.quotes.count > 0)
-        #expect(sut.quotes.count <= sut.maxQuotes)
+        #expect(sut.quotes.count <= DropletsViewModel.maxQuotes)
     }
 
     @Test func getPageSpecificQuotes_feed() {
@@ -84,7 +84,7 @@ import Testing
 
     @Test func checkLimitReached() {
         sut.setSelected(newValue: .feed)
-        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: sut.maxQuotes)
+        sut.quotes = [Quote](repeating: Quote.mockQuote(), count: DropletsViewModel.maxQuotes)
 
         #expect(sut.checkLimitReached())
     }
