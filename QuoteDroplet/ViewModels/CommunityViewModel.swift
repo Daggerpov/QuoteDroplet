@@ -19,10 +19,10 @@ class CommunityViewModel: ObservableObject {
         self.apiService = apiService
     }
     
-    public func getRecentQuotes() {
+    public func getRecentQuotes() -> Void {
         // Fetch recent quotes when the view appears
         apiService.getRecentQuotes(limit: 3) { [weak self] quotes, error in
-            guard let self = self else {return}
+            guard let self = self else { return }
             if let error = error {
                 print("Error fetching recent quotes: \(error)")
                 return

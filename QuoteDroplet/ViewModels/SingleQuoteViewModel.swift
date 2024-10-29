@@ -17,6 +17,7 @@ class SingleQuoteViewModel: ObservableObject {
     @Published var likes: Int = 0
     @Published var isLiking: Bool = false
     
+    // MARK: app review vars
     //------------------------------------------------------------------------------------
     @AppStorage("interactions", store: UserDefaults(suiteName: "group.selectedSettings"))
     var interactions: Int = 0
@@ -30,7 +31,7 @@ class SingleQuoteViewModel: ObservableObject {
     
     let localQuotesService: ILocalQuotesService
     let apiService: IAPIService
-
+    
     init(
         localQuotesService: ILocalQuotesService,
         apiService: IAPIService,
@@ -49,7 +50,7 @@ class SingleQuoteViewModel: ObservableObject {
         return isAuthorValid(authorGiven: quote.author) && from != .authorView
     }
     
-    public func getQuoteInfo() {
+    public func getQuoteInfo() -> Void {
         isBookmarked = localQuotesService.isQuoteBookmarked(quote)
         
         getQuoteLikeCountMethod(for: quote) { [weak self] fetchedLikeCount in
@@ -59,7 +60,7 @@ class SingleQuoteViewModel: ObservableObject {
         isLiked = localQuotesService.isQuoteLiked(quote)
     }
     
-    func increaseInteractions() {
+    func increaseInteractions() -> Void {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.interactions += 1
@@ -70,7 +71,7 @@ class SingleQuoteViewModel: ObservableObject {
         }
     }
     
-    func toggleCopy(for quote: Quote) {
+    func toggleCopy(for quote: Quote) -> Void {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.isCopied.toggle()
@@ -78,7 +79,7 @@ class SingleQuoteViewModel: ObservableObject {
         }
     }
     
-    func toggleBookmark(for quote: Quote) {
+    func toggleBookmark(for quote: Quote) -> Void {
         DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
             guard let self = self else { return }
             self.isBookmarked.toggle()
@@ -92,7 +93,7 @@ class SingleQuoteViewModel: ObservableObject {
         }
     }
     
-    func toggleLike(for quote: Quote) {
+    func toggleLike(for quote: Quote) -> Void {
         DispatchQueue.main.async { [weak self] in // weak self to avoid memory leaks
             guard let self = self else { return }
             self.isLiked.toggle()
@@ -105,7 +106,7 @@ class SingleQuoteViewModel: ObservableObject {
         }
     }
     
-    func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) {
+    func getQuoteLikeCountMethod(for quote: Quote, completion: @escaping (Int) -> Void) -> Void {
         apiService.getLikeCountForQuote(quoteGiven: quote) { likeCount in
             DispatchQueue.main.async {
                 completion(likeCount)
@@ -113,21 +114,21 @@ class SingleQuoteViewModel: ObservableObject {
         }
     }
     
-    func likeQuoteAction(for quote: Quote) {
+    func likeQuoteAction(for quote: Quote) -> Void {
         guard !isLiking else { return }
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {return}
+            guard let self = self else { return }
             self.isLiking = true
         }
         
         // Check if the quote is already liked
-        let isAlreadyLiked = localQuotesService.isQuoteLiked(quote)
+        let isAlreadyLiked: Bool = localQuotesService.isQuoteLiked(quote)
         
         // Call the like/unlike API based on the current like status
         if isAlreadyLiked {
             apiService.unlikeQuote(quoteID: quote.id) { [weak self] updatedQuote, error in
-                guard let self = self else {return}
+                guard let self = self else { return }
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count
@@ -138,7 +139,7 @@ class SingleQuoteViewModel: ObservableObject {
             }
         } else {
             apiService.likeQuote(quoteID: quote.id) { [weak self] updatedQuote, error in
-                guard let self = self else {return}
+                guard let self = self else { return }
                 DispatchQueue.main.async {
                     if let updatedQuote = updatedQuote {
                         // Update likes count

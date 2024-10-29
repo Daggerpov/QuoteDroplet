@@ -14,12 +14,13 @@ class DropletsViewModel: ObservableObject {
     @Published var recentQuotes: [Quote] = []
     @Published var selected: SelectedPage = .feed
     
+    static let quotesPerPage = 5
+    static let maxQuotes: Int = 15
+    
     private var isLoadingMore: Bool = false
-    let quotesPerPage = 5
-    private var totalQuotesLoaded = 0
-    private var totalSavedQuotesLoaded = 0
-    private var totalRecentQuotesLoaded = 0
-    let maxQuotes = 15
+    private var totalQuotesLoaded: Int = 0
+    private var totalSavedQuotesLoaded: Int = 0
+    private var totalRecentQuotesLoaded: Int = 0
     
     let localQuotesService: ILocalQuotesService
     let apiService: IAPIService
@@ -29,63 +30,63 @@ class DropletsViewModel: ObservableObject {
         self.apiService = apiService
     }
     
-    func setSelected(newValue: SelectedPage) {
-        selected = newValue
+    func setSelected(newValue: SelectedPage) -> Void {
+        self.selected = newValue
     }
     
     func getTitleText() -> String {
-        switch selected {
-        case .feed: return "Quotes Feed"
-        case .saved: return "Saved Quotes"
-        case .recent: return "Recent Quotes"
+        switch self.selected {
+            case .feed: return "Quotes Feed"
+            case .saved: return "Saved Quotes"
+            case .recent: return "Recent Quotes"
         }
     }
     
     func getPageSpecificQuotes() -> [Quote] {
-        switch selected {
-        case .feed: return quotes
-        case .saved: return savedQuotes
-        case .recent: return recentQuotes
+        switch self.selected {
+            case .feed: return self.quotes
+            case .saved: return self.savedQuotes
+            case .recent: return self.recentQuotes
         }
     }
     
     func getPageSpecificEmptyText() -> String {
-        switch selected {
-        case .feed:
-            return "Loading Quotes Feed..."
-        case .saved:
-            return "You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:"
-        case .recent:
-            return "You have no recent quotes. \n\nBe sure to enable notifications to see them listed here.\n\nQuotes shown from the app's widget will appear here soon. Stay tuned for that update."
+        switch self.selected {
+            case .feed:
+                return "Loading Quotes Feed..."
+            case .saved:
+                return "You have no saved quotes. \n\nPlease save some from the Quotes Feed by pressing this:"
+            case .recent:
+                return "You have no recent quotes. \n\nBe sure to enable notifications to see them listed here.\n\nQuotes shown from the app's widget will appear here soon. Stay tuned for that update."
         }
     }
     
-    func loadInitialQuotes() {
-        totalQuotesLoaded = 0
-        totalSavedQuotesLoaded = 0
-        totalRecentQuotesLoaded = 0
-        loadMoreQuotes() // Initial load
+    func loadInitialQuotes() -> Void {
+        self.totalQuotesLoaded = 0
+        self.totalSavedQuotesLoaded = 0
+        self.totalRecentQuotesLoaded = 0
+        self.loadMoreQuotes() // Initial load
     }
     
-    public func checkMoreQuotesNeeded() {
-        if !isLoadingMore && quotes.count < maxQuotes {
-            loadMoreQuotes()
+    public func checkMoreQuotesNeeded() -> Void {
+        if !self.isLoadingMore && self.quotes.count < Self.maxQuotes {
+            self.loadMoreQuotes()
         }
     }
     
     public func checkLimitReached() -> Bool {
-        return !isLoadingMore && (
-            (selected == .feed && quotes.count >= maxQuotes) || (selected == .saved && savedQuotes.count >= maxQuotes) || (selected == .recent && recentQuotes.count >= maxQuotes))
+        return !self.isLoadingMore && (
+            (self.selected == .feed && self.quotes.count >= Self.maxQuotes) || (self.selected == .saved && self.savedQuotes.count >= Self.maxQuotes) || (self.selected == .recent && self.recentQuotes.count >= Self.maxQuotes))
     }
     
-    private func loadMoreQuotes() {
-        guard !isLoadingMore else { return }
+    private func loadMoreQuotes() -> Void {
+        guard !self.isLoadingMore else { return }
         
-        isLoadingMore = true
+        self.isLoadingMore = true
         let group = DispatchGroup()
         
         if selected == .feed {
-            for _ in 0..<quotesPerPage {
+            for _ in 0..<Self.quotesPerPage {
                 group.enter()
                 apiService
                     .getRandomQuoteByClassification(
@@ -103,7 +104,7 @@ class DropletsViewModel: ObservableObject {
                     )
             }
         } else if selected == .saved {
-            let bookmarkedQuotes = localQuotesService.getBookmarkedQuotes()
+            let bookmarkedQuotes: [Quote] = self.localQuotesService.getBookmarkedQuotes()
             var bookmarkedQuoteIDs: [Int] = []
             for bookmarkedQuote in bookmarkedQuotes {
                 bookmarkedQuoteIDs.append(bookmarkedQuote.id)
@@ -111,7 +112,7 @@ class DropletsViewModel: ObservableObject {
             for id in bookmarkedQuoteIDs {
                 group.enter()
                 apiService.getQuoteByID(id: id) { [weak self] quote, error in
-                    guard let self = self else {return}
+                    guard let self = self else { return }
                     if let quote = quote, self.savedQuotes.contains(where: { $0.id == quote.id }) {
                         DispatchQueue.main.async {
                             self.savedQuotes.append(quote)
@@ -122,7 +123,7 @@ class DropletsViewModel: ObservableObject {
             }
         } else if selected == .recent {
             NotificationSchedulerService.shared.saveSentNotificationsAsRecents()
-            let recentQuotes = localQuotesService.getRecentLocalQuotes()
+            let recentQuotes = self.localQuotesService.getRecentLocalQuotes()
             var recentQuoteIDs: [Int] = []
             for recentQuote in recentQuotes {
                 recentQuoteIDs.append(recentQuote.id)
@@ -130,7 +131,7 @@ class DropletsViewModel: ObservableObject {
             for id in recentQuoteIDs {
                 group.enter()
                 apiService.getQuoteByID(id: id) { [weak self] quote, error in
-                    guard let self = self else {return}
+                    guard let self = self else { return }
                     if let quote = quote, self.recentQuotes.contains(where: { $0.id == quote.id }) {
                         DispatchQueue.main.async {
                             self.recentQuotes.append(quote)
@@ -142,14 +143,14 @@ class DropletsViewModel: ObservableObject {
         }
         
         group.notify(queue: .main) { [weak self] in
-            guard let self = self else {return}
+            guard let self = self else { return }
             self.isLoadingMore = false
             if self.selected == .feed {
-                self.totalQuotesLoaded += self.quotesPerPage
+                self.totalQuotesLoaded += Self.quotesPerPage
             } else if self.selected == .saved {
-                self.totalSavedQuotesLoaded += self.quotesPerPage
+                self.totalSavedQuotesLoaded += Self.quotesPerPage
             }else if self.selected == .recent {
-                self.totalRecentQuotesLoaded += self.quotesPerPage
+                self.totalRecentQuotesLoaded += Self.quotesPerPage
             }
         }
     }
