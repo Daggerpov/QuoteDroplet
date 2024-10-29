@@ -30,7 +30,7 @@ import Testing
 
     @Test func loadInitialQuotes() async {
         // Set mock response for initial load
-        let mockQuotes = [Quote.mockQuote(), Quote.mockQuote()]
+        let mockQuotes = [mockQuote]
         mockAPIService.setQuotesByAuthorResponse(quotes: mockQuotes, error: nil)
 
         // Test initial loading of quotes
