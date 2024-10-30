@@ -85,47 +85,37 @@ class APIService: IAPIService {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // Create the quote object to be sent in the request body
         let quoteObject: [String: Any] = [
             "text": text,
-            "author": author ?? "", // If author is nil, send an empty string
-            "classification": classification.lowercased(), // Convert classification to lowercase
-            "approved": false, // Set approved status to false for new quotes
+            "author": author ?? "",
+            "classification": classification.lowercased(),
+            "approved": false,
             "likes": 0
         ]
         
-        // Convert the quote object to JSON data
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: quoteObject, options: [])
-            request.httpBody = jsonData
+            request.httpBody = try JSONSerialization.data(withJSONObject: quoteObject, options: [])
         } catch {
             completion(false, error)
             return
         }
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        URLSession.shared.dataTask(with: request) { _, response, error in
             if let error = error {
                 completion(false, error)
                 return
             }
             
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 409 {
-                        // Handle the 409 error here
-                        let conflictError = NSError(domain: "ConflictError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Thanks for submitting a quote.\n\nIt happens to already exist in the database, though. Great minds think alike."])
-                        completion(false, conflictError)
-                    } else {
-                        completion(false, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
-                    }
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 409 {
+                    let conflictError = NSError(domain: "ConflictError", code: 409, userInfo: [NSLocalizedDescriptionKey: "Quote already exists in the database."])
+                    completion(false, conflictError)
                 } else {
                     completion(false, NSError(domain: "HTTPError", code: -1, userInfo: nil))
                 }
                 return
             }
             
-            // The quote was successfully added
             completion(true, nil)
         }.resume()
     }
@@ -137,6 +127,9 @@ class APIService: IAPIService {
     
     func unlikeQuote(quoteID: Int, completion: @escaping (Quote?, Error?) -> Void) {
         let urlString = "\(baseUrl)/quotes/unlike/\(quoteID)"
+        makePostRequest(urlString: urlString, completion: completion)
+    }
+    
     private func makePostRequest<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
@@ -185,3 +178,4 @@ class APIService: IAPIService {
         }
     }
 }
+
