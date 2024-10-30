@@ -1,32 +1,17 @@
-// Taken directly from Quote Droplet (MacOS XCode project)
+// Originally taken directly from MacOS version
 
 import Foundation
-
 
 class APIService: IAPIService {
     private let baseUrl = "http://quote-dropper-production.up.railway.app"
     
-    func getRandomQuoteByClassification(classification: String, completion: @escaping (Quote?, Error?) -> Void, isShortQuoteDesired: Bool = false) {
-        var urlString: String;
-        if classification == "all" {
-            // Modify the URL to include a filter for approved quotes
-            urlString = "\(baseUrl)/quotes"
-        } else {
-            // Modify the URL to include a filter for approved quotes and classification
-            urlString = "\(baseUrl)/quotes/classification=\(classification)"
-        }
-        
-        if isShortQuoteDesired {
-            urlString += "/maxQuoteLength=65"
-        }
-        
+    private func makeGetRequest<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil, NSError(domain: "InvalidURL", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
             return
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -36,11 +21,8 @@ class APIService: IAPIService {
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    completion(nil, NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
-                } else {
-                    completion(nil, NSError(domain: "HTTPError", code: -1, userInfo: nil))
-                }
+                let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+                completion(nil, NSError(domain: "HTTPError", code: code, userInfo: nil))
                 return
             }
             
@@ -50,16 +32,8 @@ class APIService: IAPIService {
             }
             
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let quotes = try decoder.decode([Quote].self, from: data)
-                
-                if quotes.isEmpty {
-                    completion(Quote(id: -1, text: "No Quote Found.", author: nil, classification: nil, likes: 0), nil)
-                } else {
-                    let randomIndex = Int.random(in: 0..<quotes.count)
-                    completion(quotes[randomIndex], nil)
-                }
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                completion(decodedData, nil)
             } catch {
                 completion(nil, error)
             }
