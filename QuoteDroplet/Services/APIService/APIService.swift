@@ -165,17 +165,26 @@ class APIService: IAPIService {
     }
     
     func getLikeCountForQuote(quoteGiven: Quote, completion: @escaping (Int) -> Void) {
-        makeGetRequest(urlString: "\(baseUrl)/quoteLikes/\(quoteGiven.id)") { (response: [String: Any]?, _) in
-            let likeCount = response?["likes"] as? Int ?? 0
+        makeGetRequest(urlString: "\(baseUrl)/quoteLikes/\(quoteGiven.id)") { (response: QuoteLikesResponse?, _) in
+            let likeCount = response?.likes ?? 0
             completion(likeCount)
         }
     }
     
     func getCountForCategory(category: QuoteCategory, completion: @escaping (Int) -> Void) {
-        makeGetRequest(urlString: "\(baseUrl)/quoteCount?category=\(category.rawValue.lowercased())") { (response: [String: Any]?, _) in
-            let count = response?["count"] as? Int ?? 0
+        makeGetRequest(urlString: "\(baseUrl)/quoteCount?category=\(category.rawValue.lowercased())") { (response: CategoryCountResponse?, _) in
+            let count = response?.count ?? 0
             completion(count)
         }
     }
+
+}
+
+struct QuoteLikesResponse: Decodable {
+    let likes: Int
+}
+
+struct CategoryCountResponse: Decodable {
+    let count: Int
 }
 
