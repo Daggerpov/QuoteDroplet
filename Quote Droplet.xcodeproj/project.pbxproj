@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		58C409FAC2AEF9737D7FBC0C /* Pods_QuoteDropletWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */; };
+		65C2EDEB2CF1AD11005C637D /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C2EDEA2CF1AD0E005C637D /* TabButtonView.swift */; };
+		65C2EDEC2CF1AD11005C637D /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C2EDEA2CF1AD0E005C637D /* TabButtonView.swift */; };
 		DC03AD4F2CCC6AC3000C6572 /* WidgetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */; };
 		DC03AD502CCC6AC3000C6572 /* WidgetEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD4E2CCC6AC0000C6572 /* WidgetEnums.swift */; };
 		DC03AD522CCC82AD000C6572 /* WidgetHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC03AD512CCC82AB000C6572 /* WidgetHelpers.swift */; };
@@ -165,6 +167,7 @@
 		07CE975B9D78A4874EB80AAB /* Pods_QuoteDropletWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuoteDropletWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C8BE2D0CF8DA61E79354E83 /* Pods-Quote Droplet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quote Droplet.release.xcconfig"; path = "Target Support Files/Pods-Quote Droplet/Pods-Quote Droplet.release.xcconfig"; sourceTree = "<group>"; };
 		593C1A394262CDDE062B3B7E /* Pods-QuoteDropletWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuoteDropletWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-QuoteDropletWidgetExtension/Pods-QuoteDropletWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		65C2EDEA2CF1AD0E005C637D /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		92EE9E79963F79E0C5F7FF15 /* Pods-QuoteDropletWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuoteDropletWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-QuoteDropletWidgetExtension/Pods-QuoteDropletWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		95461FB5248B4845B525336A /* Pods_Quote_Droplet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quote_Droplet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C193E55997D759D9D9F200 /* Pods-Quote Droplet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quote Droplet.debug.xcconfig"; path = "Target Support Files/Pods-Quote Droplet/Pods-Quote Droplet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -488,6 +491,7 @@
 		DCC0B3682CC9B2BF002DED7A /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				65C2EDEA2CF1AD0E005C637D /* TabButtonView.swift */,
 				DC5DD51D2CCDC5C400B80F5D /* SubmitButtonView.swift */,
 				DCB1DA5C2CCC64DB00D823B0 /* TimeIntervalPickerView.swift */,
 				DCBA0C872C5C270600A2E949 /* HeaderView.swift */,
@@ -759,6 +763,7 @@
 				DCE0F64F2C8EBCEF00F24BC6 /* SingleQuoteView.swift in Sources */,
 				DCC0B3892CCA01FB002DED7A /* SubmitViewModel.swift in Sources */,
 				DCAB2D9F2A9FA91300A822D7 /* QuoteDropletApp.swift in Sources */,
+				65C2EDEB2CF1AD11005C637D /* TabButtonView.swift in Sources */,
 				DC420D052CB65BD8003C7753 /* SubmitView.swift in Sources */,
 				DC5205B62B9CEF7B0007CB5B /* QuotesView.swift in Sources */,
 				DCB82F792CCB301700E81549 /* CommunityViewModel.swift in Sources */,
@@ -777,6 +782,7 @@
 			files = (
 				DCC0B3932CCA11F2002DED7A /* SelectedPageEnum.swift in Sources */,
 				DC26EB952BF96FD4004CA84F /* DropletsView.swift in Sources */,
+				65C2EDEC2CF1AD11005C637D /* TabButtonView.swift in Sources */,
 				DCC0B3772CC9D4CA002DED7A /* APIErrors.swift in Sources */,
 				DC7010E52BAE654F008678CB /* NotificationSchedulerService.swift in Sources */,
 				DCB1DA592CCC5FBE00D823B0 /* QuoteFrequencyEnum.swift in Sources */,

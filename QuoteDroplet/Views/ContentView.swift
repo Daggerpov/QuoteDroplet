@@ -10,37 +10,27 @@ struct ContentView: View {
             DropletsView()
                 .tabItem {
                     VStack {
-                        Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "drop.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Droplets")
+                        TabButtonView(imageSystemName: "drop.circle.fill", text: "Droplets")
                     }
                 }
             SearchView()
                 .tabItem {
                     VStack {
-                        Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "magnifyingglass.circle.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Search")
+                        TabButtonView(imageSystemName: "magnifyingglass.circle.fill", text: "Search")
                     }
                 }
             AppearanceView()
                 .tabItem {
-                    Spacer(minLength: 20)
-                    Image(uiImage: resizeImage(UIImage(systemName: "paintbrush.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                    Text("Appearance")
+                    TabButtonView(imageSystemName: "paintbrush.fill", text: "Appearance")
                 }
             QuotesView()
                 .tabItem {
-                    Spacer(minLength: 20)
-                    Image(uiImage: resizeImage(UIImage(systemName: "quote.bubble.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                    Text("Quotes")
+                    TabButtonView(imageSystemName: "quote.bubble.fill", text: "Quotes")
                 }
             CommunityView()
                 .tabItem {
                     VStack {
-                        Spacer(minLength: 20)
-                        Image(uiImage: resizeImage(UIImage(systemName: "house.fill")!, targetSize: CGSize(width: 30, height: 27))!)
-                        Text("Community")
+                        TabButtonView(imageSystemName: "house.fill", text: "Community")
                     }
                 }
         }
